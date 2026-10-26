@@ -29,8 +29,9 @@ Kết thúc buổi, người nhận cần tự giải thích được luồng Pa
 - Amendment 03 thay quy tắc tiền sau cổng 5% cũ; báo cáo phải nêu thay đổi và độ nhạy A/B.
 - Quà tặng được phân loại theo từng dòng. `inferred_subset` có độ tin cậy thấp; không loại cố định sản phẩm theo tên.
 - DEV có 18 tháng hiệu dụng và một Tết trọn vẹn. Nhãn DEV có 3.508 khách, 260 dương. Hủy/hoàn không fit vì fold dương lần lượt 30/13/6/1/18.
-- Mô hình chính: Logistic Regression C=10 — mô hình chính theo D-005. Mô hình phụ: Logistic Regression feature-v2 C=0,1 — khảo sát bổ sung theo Amendment 04; không thay mô hình chính. Amendment 05 ghi cận dưới CI ROC-AUC > 0,55 và cận dưới paired ΔAP CI > 0. Cả hai CI aggregate thỏa các cận về mặt số liệu theo lần chạy thực tế. Nêu tiếp: “Cấu hình ghi >T, evaluator dùng [T,end) (gồm ngày T); ảnh hưởng chưa xác định; đây là kết quả số liệu của lần chạy thực tế, không phải khẳng định tuân thủ đầy đủ giao thức, không gọi là 'đạt cổng ghi trước'.” Chênh lệch với DEV chưa được giải thích; lịch sử đặc trưng dài hơn, prevalence khác nhau và Tết 2026 là giả thuyết chưa kiểm chứng. Xem `docs/test_provenance_note.md`. Không chọn lại mô hình, đổi ngưỡng hoặc chạy evaluator lại.
-- 24 combo được đóng băng trước test; 21 cặp có lift > 1 trong test. Luật chỉ biểu thị đồng xuất hiện. Không có giá vốn.
+- Mô hình chính: Logistic Regression C=10 — mô hình chính theo D-005. Mô hình phụ: Logistic Regression feature-v2 C=0,1 — khảo sát bổ sung theo Amendment 04; không thay mô hình chính. DEV OOF ROC-AUC C=10 khoảng 0,51, gần ngẫu nhiên; test khoảng 0,70 chỉ là tín hiệu yếu chưa được DEV xác nhận, không đủ để kết luận mô hình hoạt động tốt. Test đã mở; không dùng để tinh chỉnh hoặc chọn lại. Nêu tiếp: “Cấu hình ghi >T, evaluator dùng [T,end) (gồm ngày T); ảnh hưởng chưa xác định; đây là kết quả số liệu của lần chạy thực tế, không phải khẳng định tuân thủ đầy đủ giao thức, không gọi là 'đạt cổng ghi trước'.” Xem `docs/test_provenance_note.md`.
+- K=2 chủ yếu tách khách mua một lần với khách mua lặp lại; chưa chứng minh các nhóm có ý nghĩa kinh doanh. 24 combo được đóng băng trước test; 21 cặp có lift > 1 trong test. Luật chỉ biểu thị đồng xuất hiện. Không có giá vốn nên không kết luận lợi nhuận combo.
+- Không so sánh doanh thu theo tỉnh/thành vì 91,92% mang nhãn `UNKNOWN`. Bài phân loại phản hồi bị bỏ qua vì thiếu dữ liệu phản hồi có nhãn.
 - Hạn nộp: 2026-10-27. Thời lượng chính thức và rubric chưa có trong hồ sơ. Mỗi thành viên tập trả lời ít nhất 10 câu thuộc phần của người kia.
 
 ## File và lệnh quan trọng
@@ -40,6 +41,7 @@ Kết thúc buổi, người nhận cần tự giải thích được luồng Pa
 - Cấu hình test: `config/amendment_05_test_open.yaml` và sidecar.
 - Khóa mở một lần: `outputs/metrics/test_opened.lock.json`.
 - Kết quả test: `outputs/metrics/test_eval.json`, `docs/test_report.md`.
+- Artifact đã commit cho người chấm: hai PDF cùng các bảng/JSON dashboard, xem `docs/submission_artifacts.md`.
 - Dashboard: `.venv\Scripts\python -m streamlit run src/app/streamlit_app.py`.
 - Hậu kiểm: `.venv\Scripts\python scripts/run_all.py`; sau khi mở test, runner tự chuyển sang chế độ xác minh không fit/rerun.
 

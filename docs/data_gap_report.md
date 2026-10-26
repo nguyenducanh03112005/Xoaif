@@ -34,3 +34,7 @@ Không phát hiện tên dòng hàng chứa các từ khóa `test`, `sample`, `d
 Sau khi loại các đơn trước ngày mở, tập phát triển có 6.517 đơn từ `2024-04-01` đến `2025-10-21`: status 3 = 6.400, status 5 = 13, status 6 = 104. Trong status 3, có 286 đơn thiếu `customer_id`, 5 đơn không có dòng hàng, và 726 dòng hàng thiếu `product_id`.
 
 Nguồn raw không bị xóa hoặc sửa. Kho DuckDB dev mới chỉ chứa ngày địa phương `[2024-04-01,2025-10-22)`; các trường tiền không được ghi vào kho đó.
+
+## Phân loại phản hồi không thực hiện
+
+Snapshot và allowlist hiện hành không cung cấp tập phản hồi/đánh giá có văn bản và nhãn đáng tin cậy để huấn luyện, kiểm định một bộ phân loại phản hồi. Các trường ghi chú/văn bản tự do cũng không được đưa vào kho phân tích. Vì vậy bài phân loại phản hồi bị bỏ qua; không suy diễn cảm xúc, chất lượng dịch vụ hoặc tỷ lệ vấn đề từ việc thiếu dữ liệu này.

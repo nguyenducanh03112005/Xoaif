@@ -111,7 +111,6 @@ def main() -> None:
 
     try:
         sales = read_csv("dashboard_sales_monthly.csv")
-        provinces = read_csv("dashboard_sales_province.csv")
         products = read_csv("dashboard_product_orders.csv")
         statuses = read_csv("dashboard_status_counts.csv")
         segments = read_csv("test_segment_profiles.csv")
@@ -167,22 +166,17 @@ def main() -> None:
             labels={"month": "Tháng", "recognized_revenue_vnd": "Doanh thu ghi nhận (VND)"},
         )
         st.plotly_chart(monthly_chart, use_container_width=True)
-        st.caption(f"Khoảng đang hiển thị {start_month} đến {end_month} ({len(month_view)} tháng). Dữ liệu mặc định 2024-04 đến 2026-04 gồm DEV và cửa sổ test, không phải chỉ DEV; 2026-04 chưa trọn tháng. Tổng bảng đủ 25 tháng: 9.104 đơn, 4.200.024.995 đ. Chỉ gồm status 3 và loại đơn quà cấp đơn; dữ liệu trước 04/2024 là giai đoạn bán thử. UNKNOWN chiếm 91,92% doanh thu trong bảng tỉnh/thành; nguyên nhân chưa phân tích.")
+        st.caption(f"Khoảng đang hiển thị {start_month} đến {end_month} ({len(month_view)} tháng). Dữ liệu mặc định 2024-04 đến 2026-04 gồm DEV và cửa sổ test, không phải chỉ DEV; 2026-04 chưa trọn tháng. Tổng bảng đủ 25 tháng: 9.104 đơn, 4.200.024.995 đ. Chỉ gồm status 3 và loại đơn quà cấp đơn; dữ liệu trước 04/2024 là giai đoạn bán thử.")
+        st.info("Không so sánh doanh thu theo tỉnh/thành: 91,92% doanh thu mang nhãn UNKNOWN; nguyên nhân chưa được phân tích. Bài phân loại phản hồi cũng bị bỏ qua vì thiếu dữ liệu phản hồi có nhãn.")
 
-        left, right = st.columns(2)
-        with left:
-            st.markdown("**Theo tỉnh/thành**")
-            prov_view = provinces.sort_values("recognized_revenue_vnd", ascending=False).head(15)
-        st.dataframe(localized_frame(prov_view), use_container_width=True, hide_index=True)
-        with right:
-            st.markdown("**Sản phẩm theo số đơn**")
-            prod_view = products.copy()
-            if selected_product != "Tất cả":
-                prod_view = prod_view[prod_view["product_name"] == selected_product]
-            else:
-                prod_view = prod_view.head(20)
-            st.dataframe(localized_frame(prod_view), use_container_width=True, hide_index=True)
-            st.caption("Không phân bổ doanh thu ghi nhận xuống sản phẩm vì giảm giá và điều chỉnh nằm ở cấp đơn.")
+        st.markdown("**Sản phẩm theo số đơn**")
+        prod_view = products.copy()
+        if selected_product != "Tất cả":
+            prod_view = prod_view[prod_view["product_name"] == selected_product]
+        else:
+            prod_view = prod_view.head(20)
+        st.dataframe(localized_frame(prod_view), use_container_width=True, hide_index=True)
+        st.caption("Không phân bổ doanh thu ghi nhận xuống sản phẩm vì giảm giá và điều chỉnh nằm ở cấp đơn.")
 
     with tabs[1]:
         st.subheader("Phân khúc theo quy tắc nghiệp vụ và K-Means")
@@ -207,7 +201,7 @@ def main() -> None:
             "test_window_revenue_share": "Tỷ trọng doanh thu test",
         })
         st.dataframe(localized_frame(display), use_container_width=True, hide_index=True)
-        st.info("Nhóm doanh nghiệp là proxy giá trị lớn/tần suất thấp, không phải nhận diện pháp lý. Phân phối RFM tại T dùng cùng snapshot phát triển; doanh thu test được trình bày riêng.")
+        st.info("K=2 chủ yếu tách khách mua một lần với khách mua lặp lại theo tần suất; chưa chứng minh đây là các nhóm có ý nghĩa kinh doanh hoặc giúp quyết định vận hành. Nhóm doanh nghiệp là proxy giá trị lớn/tần suất thấp, không phải nhận diện pháp lý. Phân phối RFM tại T dùng cùng snapshot phát triển; doanh thu test được trình bày riêng.")
         st.caption(f"Khoảng cách phân phối được khóa trước: TV = 0 trên cùng hồ sơ DEV tại T; F có IQR DEV bằng 0 nên Wasserstein chuẩn hóa không xác định.")
 
     with tabs[2]:
@@ -279,6 +273,7 @@ def main() -> None:
             f"**DEV OOF:** Logistic Regression C=10 — mô hình chính theo D-005: ROC-AUC {metric(primary_oof['roc_auc'])}, AP {metric(primary_oof['pr_auc'])}. "
             f"Logistic Regression feature-v2 C=0,1 — khảo sát bổ sung theo Amendment 04; không thay mô hình chính: ROC-AUC {metric(dev_metrics['roc_auc'])}, AP {metric(dev_metrics['pr_auc'])}."
         )
+        st.info("ROC-AUC DEV OOF C=10 gần mức ngẫu nhiên (0,5096). ROC-AUC test khoảng 0,70 là tín hiệu yếu chưa được development xác nhận; không kết luận mô hình hoạt động tốt. Test đã mở, không dùng để tinh chỉnh hoặc chọn lại mô hình.")
         st.markdown("Amendment 05 ghi ngưỡng tín hiệu cho các classifier: cận dưới CI ROC-AUC > 0,55 và cận dưới CI ΔAP paired > 0. CI aggregate của cả hai classifier thỏa các cận trong lần chạy thực tế; trường `feature_v2_signal_supported=True` chỉ được lưu cho v2.")
         st.warning("Cấu hình ghi >T, evaluator dùng [T,end) (gồm ngày T); ảnh hưởng chưa xác định; đây là kết quả số liệu của lần chạy thực tế, không phải khẳng định tuân thủ đầy đủ giao thức, không gọi là 'đạt cổng ghi trước'.")
         st.caption("Chênh lệch DEV OOF với test chưa được giải thích; lịch sử đặc trưng dài hơn, prevalence khác nhau và Tết 2026 là giả thuyết chưa kiểm chứng. Chi tiết: docs/test_provenance_note.md. Ngưỡng phân loại 0,5; bootstrap 2.000 lượt, seed 20261026.")

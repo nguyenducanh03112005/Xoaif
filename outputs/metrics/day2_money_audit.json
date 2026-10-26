@@ -1,0 +1,310 @@
+{
+  "snapshot_id": "20261024T052943Z",
+  "manifest_sha256": "3536a0e5303d83a6fbddd19e6f52375ed70dd53a070d1cadb8691a66ad4acf5c",
+  "amendment_03_sha256": "3d87751451fa17fe71644df7f0743331ee6dae6b34013a4b063e18b6da98eaf1",
+  "analysis_start": "2024-04-01",
+  "test_start_exclusive": "2025-10-22",
+  "test_labels_loaded": false,
+  "test_behavior_loaded": false,
+  "amendment_03_pre_label_access_audit_clean": true,
+  "scope": {
+    "status": 3,
+    "status3_orders": 6400,
+    "denominator_for_negative_gate": "all status-3 orders in effective development"
+  },
+  "money_fields_usable_orders": 6400,
+  "money_fields_missing_orders": 0,
+  "after_pattern_counts": {
+    "after_equals_total": 0,
+    "after_equals_total_minus_discount_plus_shipping": 5739,
+    "after_equals_total_minus_discount_ship_not_added": 2,
+    "after_equals_total_plus_shipping_discount_not_subtracted": 11,
+    "missing_fields": 0,
+    "other_distance_10001_50000": 325,
+    "other_distance_50001_100000": 93,
+    "other_distance_gt_100000": 124,
+    "other_distance_le_10000": 97,
+    "residual_minus_discount": 0,
+    "residual_minus_shipping": 0,
+    "residual_plus_discount": 0,
+    "residual_plus_shipping": 9
+  },
+  "identity": {
+    "comparable_orders": 6400,
+    "matches": 5739,
+    "match_rate": 0.89671875
+  },
+  "retail_line_reconciliation": {
+    "comparable_orders": 6395,
+    "matches": 6395,
+    "match_rate": 1.0,
+    "formula": "sum(items.variation_info.retail_price * items.quantity) = total_price"
+  },
+  "gifts": {
+    "count": 22,
+    "rate": 0.0034375
+  },
+  "negative_revenue": {
+    "count": 2,
+    "rate": 0.0003125,
+    "causes_by_after_pattern": {
+      "after_below_shipping_fee": 2,
+      "total_minus_discount_is_negative": 2
+    },
+    "stop_threshold": 0.01,
+    "stop": false
+  },
+  "adj_unexplained": {
+    "count": 639,
+    "rate": 0.09984375
+  },
+  "total_price_zero_after_positive_count": 5,
+  "price_adjustment": {
+    "eligible_non_gift_orders_with_adjustment": 6378,
+    "zero_count": 5719,
+    "zero_rate": 0.8966760740043901,
+    "positive_count": 651,
+    "positive_rate": 0.10206961429915334,
+    "negative_count": 8,
+    "negative_rate": 0.0012543116964565694,
+    "quantiles": {
+      "p00": "-450000",
+      "p25": "0.00",
+      "p50": "0.0",
+      "p75": "0.00",
+      "p90": "2000.0000000000000000",
+      "p95": "40000.0000000000000000",
+      "p99": "180000.00000000000000000",
+      "p100": "1368800"
+    },
+    "positive_sum": "52588532",
+    "negative_sum_signed": "-572000",
+    "net_sum": "52016532",
+    "positive_sum_as_percent_of_recognized_revenue": 2.000816106934505,
+    "negative_sum_as_percent_of_recognized_revenue": -0.021762668963007693,
+    "net_sum_as_percent_of_recognized_revenue": 1.9790534379714975
+  },
+  "monthly": {
+    "2024-04": {
+      "orders": 253,
+      "gifts": 7,
+      "adjusted": 8,
+      "unexplained": 8,
+      "negative": 0,
+      "adjustment_rate_non_gift": 0.032520325203252036,
+      "unexplained_rate": 0.03162055335968379,
+      "negative_rate": 0.0
+    },
+    "2024-05": {
+      "orders": 370,
+      "gifts": 10,
+      "adjusted": 11,
+      "unexplained": 9,
+      "negative": 0,
+      "adjustment_rate_non_gift": 0.030555555555555555,
+      "unexplained_rate": 0.024324324324324326,
+      "negative_rate": 0.0
+    },
+    "2024-06": {
+      "orders": 298,
+      "gifts": 3,
+      "adjusted": 9,
+      "unexplained": 9,
+      "negative": 0,
+      "adjustment_rate_non_gift": 0.030508474576271188,
+      "unexplained_rate": 0.030201342281879196,
+      "negative_rate": 0.0
+    },
+    "2024-07": {
+      "orders": 261,
+      "gifts": 1,
+      "adjusted": 7,
+      "unexplained": 7,
+      "negative": 0,
+      "adjustment_rate_non_gift": 0.026923076923076925,
+      "unexplained_rate": 0.02681992337164751,
+      "negative_rate": 0.0
+    },
+    "2024-08": {
+      "orders": 265,
+      "gifts": 0,
+      "adjusted": 8,
+      "unexplained": 8,
+      "negative": 0,
+      "adjustment_rate_non_gift": 0.03018867924528302,
+      "unexplained_rate": 0.03018867924528302,
+      "negative_rate": 0.0
+    },
+    "2024-09": {
+      "orders": 274,
+      "gifts": 0,
+      "adjusted": 17,
+      "unexplained": 16,
+      "negative": 0,
+      "adjustment_rate_non_gift": 0.06204379562043796,
+      "unexplained_rate": 0.058394160583941604,
+      "negative_rate": 0.0
+    },
+    "2024-10": {
+      "orders": 619,
+      "gifts": 0,
+      "adjusted": 61,
+      "unexplained": 60,
+      "negative": 1,
+      "adjustment_rate_non_gift": 0.09854604200323101,
+      "unexplained_rate": 0.09693053311793215,
+      "negative_rate": 0.0016155088852988692
+    },
+    "2024-11": {
+      "orders": 504,
+      "gifts": 0,
+      "adjusted": 128,
+      "unexplained": 125,
+      "negative": 0,
+      "adjustment_rate_non_gift": 0.25396825396825395,
+      "unexplained_rate": 0.24801587301587302,
+      "negative_rate": 0.0
+    },
+    "2024-12": {
+      "orders": 337,
+      "gifts": 0,
+      "adjusted": 77,
+      "unexplained": 73,
+      "negative": 0,
+      "adjustment_rate_non_gift": 0.228486646884273,
+      "unexplained_rate": 0.2166172106824926,
+      "negative_rate": 0.0
+    },
+    "2025-01": {
+      "orders": 317,
+      "gifts": 0,
+      "adjusted": 89,
+      "unexplained": 86,
+      "negative": 0,
+      "adjustment_rate_non_gift": 0.2807570977917981,
+      "unexplained_rate": 0.27129337539432175,
+      "negative_rate": 0.0
+    },
+    "2025-02": {
+      "orders": 248,
+      "gifts": 0,
+      "adjusted": 43,
+      "unexplained": 43,
+      "negative": 1,
+      "adjustment_rate_non_gift": 0.17338709677419356,
+      "unexplained_rate": 0.17338709677419356,
+      "negative_rate": 0.004032258064516129
+    },
+    "2025-03": {
+      "orders": 571,
+      "gifts": 1,
+      "adjusted": 128,
+      "unexplained": 126,
+      "negative": 0,
+      "adjustment_rate_non_gift": 0.22456140350877193,
+      "unexplained_rate": 0.22066549912434325,
+      "negative_rate": 0.0
+    },
+    "2025-04": {
+      "orders": 217,
+      "gifts": 0,
+      "adjusted": 27,
+      "unexplained": 27,
+      "negative": 0,
+      "adjustment_rate_non_gift": 0.12442396313364056,
+      "unexplained_rate": 0.12442396313364056,
+      "negative_rate": 0.0
+    },
+    "2025-05": {
+      "orders": 272,
+      "gifts": 0,
+      "adjusted": 12,
+      "unexplained": 12,
+      "negative": 0,
+      "adjustment_rate_non_gift": 0.04411764705882353,
+      "unexplained_rate": 0.04411764705882353,
+      "negative_rate": 0.0
+    },
+    "2025-06": {
+      "orders": 324,
+      "gifts": 0,
+      "adjusted": 11,
+      "unexplained": 11,
+      "negative": 0,
+      "adjustment_rate_non_gift": 0.033950617283950615,
+      "unexplained_rate": 0.033950617283950615,
+      "negative_rate": 0.0
+    },
+    "2025-07": {
+      "orders": 249,
+      "gifts": 0,
+      "adjusted": 4,
+      "unexplained": 4,
+      "negative": 0,
+      "adjustment_rate_non_gift": 0.01606425702811245,
+      "unexplained_rate": 0.01606425702811245,
+      "negative_rate": 0.0
+    },
+    "2025-08": {
+      "orders": 217,
+      "gifts": 0,
+      "adjusted": 3,
+      "unexplained": 2,
+      "negative": 0,
+      "adjustment_rate_non_gift": 0.013824884792626729,
+      "unexplained_rate": 0.009216589861751152,
+      "negative_rate": 0.0
+    },
+    "2025-09": {
+      "orders": 261,
+      "gifts": 0,
+      "adjusted": 3,
+      "unexplained": 3,
+      "negative": 0,
+      "adjustment_rate_non_gift": 0.011494252873563218,
+      "unexplained_rate": 0.011494252873563218,
+      "negative_rate": 0.0
+    },
+    "2025-10": {
+      "orders": 543,
+      "gifts": 0,
+      "adjusted": 13,
+      "unexplained": 10,
+      "negative": 0,
+      "adjustment_rate_non_gift": 0.02394106813996317,
+      "unexplained_rate": 0.01841620626151013,
+      "negative_rate": 0.0
+    }
+  },
+  "monthly_concentration": {
+    "first_five_months": [
+      "2024-04",
+      "2024-05",
+      "2024-06",
+      "2024-07",
+      "2024-08"
+    ],
+    "first_five_months_mean_adjustment_rate": 0.030139222300687746,
+    "peak_month": "2025-01",
+    "peak_adjustment_rate": 0.2807570977917981,
+    "interpretation": "adjustment rates do not peak in the opening months"
+  },
+  "revenue_comparison": {
+    "non_gift_orders_compared": 6378,
+    "revenue_recognized_total": "2628354091",
+    "revenue_A_total": "2576337559",
+    "difference_primary_minus_A": "52016532",
+    "difference_percent_of_abs_A": 2.0190107394230634,
+    "orders_different_by_more_than_1_percent": 642,
+    "orders_different_by_more_than_1_percent_rate": 0.1006585136406397,
+    "customer_monetary_spearman": 0.9952804216376063,
+    "customer_count_compared": 5169
+  },
+  "sensitivity_B_exclude_adjusted_or_unexplained": {
+    "excluded_status3_orders_including_gifts": 659,
+    "excluded_non_gift_orders": 659,
+    "retained_non_gift_orders": 5719,
+    "recognized_revenue_total": "2076771667"
+  },
+  "stop_gate_failed": false
+}

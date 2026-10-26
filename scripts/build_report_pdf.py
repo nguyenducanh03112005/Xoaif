@@ -302,14 +302,11 @@ def main(output_path: Path | None = None, font_override: str | None = None) -> N
         chart.grid(axis="y", color="#DDE7E2", lw=.6)
         chart.spines[["top","right"]].set_visible(False)
         ax.text(.13,.50,"Đường gạch là mốc bắt đầu test; tháng cuối chưa trọn tháng.",fontsize=8,color="#61736D",transform=ax.transAxes)
-        top_prov=provinces[provinces["province"]!="UNKNOWN"].sort_values("recognized_revenue_vnd",ascending=False).head(5)
-        ptxt="Top tỉnh/thành theo doanh thu ghi nhận (tổng hợp): " + "; ".join(f"{r.province}: {fvnd(r.recognized_revenue_vnd)}" for r in top_prov.itertuples())
-        text_block(ax,.10,.44,ptxt,width=102,fontsize=8.2)
         unknown = provinces.loc[provinces["province"] == "UNKNOWN"].iloc[0]
         province_total = float(provinces["recognized_revenue_vnd"].sum())
-        text_block(ax,.10,.35,
-            f"UNKNOWN: {fvnd(unknown['recognized_revenue_vnd'])} ({fpct(unknown['recognized_revenue_vnd']/province_total,2)} tổng doanh thu tỉnh/thành; {fint(unknown['orders'])} đơn). Nguyên nhân chưa phân tích.",width=102,fontsize=8.5)
-        text_block(ax,.10,.245,
+        text_block(ax,.10,.44,
+            f"Không so sánh doanh thu theo tỉnh/thành: UNKNOWN chiếm {fpct(unknown['recognized_revenue_vnd']/province_total,2)} tổng doanh thu ({fint(unknown['orders'])} đơn); nguyên nhân chưa phân tích.",width=102,fontsize=9.0)
+        text_block(ax,.10,.32,
             "Snapshot có 247 tên mặt hàng quan sát ở bảng sản phẩm; `product_profile.csv` mô tả support, quà theo dòng, ngày đầu/cuối và tháng bán. Tên sản phẩm không được dùng để xác định quà. 476 đơn bán thử 2022 được giữ riêng. Do chiết khấu và điều chỉnh ở cấp đơn, báo cáo chỉ nêu số đơn/dòng theo sản phẩm, không gán doanh thu ghi nhận cho sản phẩm.",width=102,fontsize=9.2)
         ax.text(.10,.09,"Nguồn số liệu: outputs/tables/dashboard_sales_monthly.csv, dashboard_sales_province.csv, dashboard_product_orders.csv.",fontsize=7.8,color="#61736D",transform=ax.transAxes)
         pdf.savefig(fig); plt.close(fig)
@@ -350,7 +347,7 @@ def main(output_path: Path | None = None, font_override: str | None = None) -> N
             f"Vòng DEV feature-v2 bổ sung có {fint(dev['repurchase_features_v2']['sample_count'])} khách trong tập nhãn, {fint(dev['repurchase_features_v2']['positive_count'])} dương ({fpct(dev['repurchase_features_v2']['positive_rate'])}). Ứng viên Logistic Regression feature-v2 có C={fnum(models['logistic_regression']['selected_parameters']['C'],1)} được chọn trong vòng bổ sung theo PR-AUC trung bình 5 fold. OOF pooled: ROC-AUC {fnum(dev_lr['roc_auc'],4)}, AP {fnum(dev_lr['pr_auc'],4)}; CI 95% ROC [{fnum(dev['repurchase_features_v2']['selected_model_bootstrap_ci']['roc_auc_95_ci'][0],4)}; {fnum(dev['repurchase_features_v2']['selected_model_bootstrap_ci']['roc_auc_95_ci'][1],4)}], CI AP [{fnum(dev['repurchase_features_v2']['selected_model_bootstrap_ci']['pr_auc_95_ci'][0],4)}; {fnum(dev['repurchase_features_v2']['selected_model_bootstrap_ci']['pr_auc_95_ci'][1],4)}].",
             width=102,fontsize=9.2)
         text_block(ax,.10,y-.025,
-            "Mô hình chính vẫn là Logistic Regression C=10 theo D-005; v2 C=0,1 là khảo sát bổ sung, không thay vai trò mô hình chính. Mọi preprocessing chỉ fit trong phần train của fold; khách tách biệt giữa train/validation; đặc trưng có ngày < T. Decision Tree dò max_depth từ 1 đến 20 và khóa tại 4. Kết quả DEV OOF của vòng bổ sung không cho thấy tín hiệu đủ mạnh theo quy tắc đã định trước; test không dùng để chọn cấu hình.",width=100,fontsize=9.2)
+            f"Mô hình chính vẫn là Logistic Regression C=10 theo D-005; v2 C=0,1 là khảo sát bổ sung, không thay vai trò mô hình chính. DEV OOF ROC-AUC C=10 là {fnum(primary_oof['roc_auc'],4)}, gần mức ngẫu nhiên; feature-v2 là {fnum(dev_lr['roc_auc'],4)}. DEV chưa xác nhận tín hiệu xếp hạng rõ. Mọi preprocessing chỉ fit trong train fold; test không dùng để chọn cấu hình.",width=100,fontsize=9.2)
         pdf.savefig(fig); plt.close(fig)
 
         # 10. Test
@@ -375,7 +372,7 @@ def main(output_path: Path | None = None, font_override: str | None = None) -> N
         text_block(ax,.09,.335,
             "Ngưỡng tín hiệu được ghi cho các classifier trong Amendment 05: cận dưới CI ROC-AUC > 0,55 và cận dưới CI ΔAP > 0; các CI aggregate của cả hai cấu hình thỏa các cận trong lần chạy thực tế. Vượt ngưỡng về mặt số liệu không xác nhận tuân thủ giao thức do sai khác ngày T.",width=104,fontsize=8.4)
         text_block(ax,.09,.225,
-            "Cấu hình ghi >T, evaluator dùng [T,end) (gồm ngày T); ảnh hưởng chưa xác định; đây là kết quả số liệu của lần chạy thực tế, không phải khẳng định tuân thủ đầy đủ giao thức, không gọi là 'đạt cổng ghi trước'. DEV OOF và test chênh nhau; nguyên nhân chưa được xác định.",width=104,fontsize=8.3)
+            f"DEV OOF ROC-AUC C=10 là {fnum(primary_oof['roc_auc'],4)}, gần mức ngẫu nhiên; ROC-AUC test {fnum(c10['roc_auc'],4)} chỉ là tín hiệu yếu chưa được DEV xác nhận. Không kết luận mô hình hoạt động tốt. Test đã mở; không dùng kết quả này để tinh chỉnh hoặc chọn lại mô hình. Cấu hình ghi >T, evaluator dùng [T,end) (gồm ngày T); ảnh hưởng chưa xác định; đây là kết quả số liệu của lần chạy thực tế, không phải khẳng định tuân thủ đầy đủ giao thức, không gọi là 'đạt cổng ghi trước'.",width=104,fontsize=8.3)
         pdf.savefig(fig); plt.close(fig)
 
         # 11. Segmentation
@@ -392,7 +389,7 @@ def main(output_path: Path | None = None, font_override: str | None = None) -> N
         text_block(ax,.09,.51,
             f"Bảng dùng cohort scoring: 4.530/5.169 khách (87,6%) có một đơn; DEV status 3 là 4.526/5.174 (87,5%). K={k} được chọn, silhouette={fnum(seg['chosen_silhouette'])}. Quy tắc nghiệp vụ có {fint(sum(seg['rule_segment_counts'].values()))} khách; proxy giá trị lớn có {fint(seg['business_like_proxy']['customers'])} khách theo ngưỡng p99, không xác minh pháp nhân.",width=100,fontsize=9.1)
         text_block(ax,.09,.38,
-            "Không fit lại trên test: frozen segmenter được áp lên cùng hồ sơ trước T. Vì vậy khoảng cách phân phối bằng 0 phản ánh cùng dữ liệu đầu vào/nhãn nhóm, không chứng minh hành vi tương lai ổn định. IQR của Frequency ở DEV bằng 0 nên Wasserstein chuẩn hóa không xác định. Doanh thu trong cửa sổ test báo riêng theo nhóm; không cập nhật tâm cụm.",width=100,fontsize=9.1)
+            "K=2 chủ yếu chia khách mua một lần với khách mua lặp lại; đây là khác biệt tần suất mô tả được, chưa chứng minh hai nhóm có ý nghĩa kinh doanh hay giúp ra quyết định tốt hơn. Không fit lại trên test: frozen segmenter được áp lên cùng hồ sơ trước T. Khoảng cách phân phối bằng 0 vì vậy không chứng minh hành vi tương lai ổn định. Doanh thu test chỉ báo riêng, không cập nhật tâm cụm.",width=100,fontsize=9.1)
         pdf.savefig(fig); plt.close(fig)
 
         # 12. Association
@@ -414,10 +411,10 @@ def main(output_path: Path | None = None, font_override: str | None = None) -> N
         fig, ax = fresh_page(pdf, 13, "11. Kết luận và giới hạn", "Kết quả học thuật cần được đọc cùng điều kiện dữ liệu")
         section_label(ax,.09,.86,"Kết luận")
         y=text_block(ax,.09,.825,
-            "Quy trình tạo kho Star Schema và kiểm toán nghiệp vụ có split thời gian, hash và nhật ký amendment. Phân khúc mô tả nhóm khách; 24 combo chính được khóa theo quy tắc ít nhất 4/6 ô. Amendment 05 ghi ngưỡng classifier: cận dưới CI ROC-AUC > 0,55 và cận dưới CI ΔAP > 0; CI aggregate của C=10 chính và feature-v2 bổ sung cùng thỏa các cận về mặt số liệu. Cấu hình ghi >T, evaluator dùng [T,end) (gồm ngày T); ảnh hưởng chưa xác định; đây là kết quả số liệu của lần chạy thực tế, không phải khẳng định tuân thủ đầy đủ giao thức, không gọi là 'đạt cổng ghi trước'. Chênh lệch DEV–test chưa được giải thích; các giả thuyết về lịch sử đặc trưng, tỷ lệ nhãn và Tết 2026 chưa kiểm chứng. Xem docs/test_provenance_note.md.",width=102,fontsize=9.0)
+            f"Quy trình tạo kho Star Schema và kiểm toán nghiệp vụ có split thời gian, hash và nhật ký amendment. K=2 chủ yếu tách khách mua một lần và khách mua lặp lại, chưa chứng minh ý nghĩa kinh doanh. 24 combo chính được khóa theo quy tắc ít nhất 4/6 ô. ROC-AUC DEV OOF C=10 là {fnum(primary_oof['roc_auc'],4)}, gần ngẫu nhiên; ROC-AUC test {fnum(c10['roc_auc'],4)} là tín hiệu yếu chưa được DEV xác nhận, không đủ để kết luận mô hình hoạt động tốt. Test đã mở; không tinh chỉnh theo kết quả test. Cấu hình ghi >T, evaluator dùng [T,end) (gồm ngày T); ảnh hưởng chưa xác định. Xem docs/test_provenance_note.md.",width=102,fontsize=9.0)
         section_label(ax,.09,y-.025,"Hạn chế")
         text_block(ax,.09,y-.06,
-            "• Khoảng hiệu dụng khoảng 18 tháng và chỉ có một Tết trọn vẹn trong DEV.\n• Phần lớn khách chỉ mua một lần; cửa sổ test có tỷ lệ dương thấp hơn DEV.\n• 903 dòng inferred_subset là suy luận có thể gán nhầm; cờ API không bật.\n• Không có giá vốn nên không thể đo hiệu quả lợi nhuận của combo.\n• Status hiện tại không phải lịch sử trạng thái; doanh thu ghi nhận theo xác nhận nghiệp vụ.\n• N=365, W=365 không khả thi với khoảng dữ liệu quan sát.\n• Một cửa sổ test không chứng minh khả năng tổng quát qua nhiều mùa.",width=100,fontsize=9.4)
+            f"• Khoảng hiệu dụng khoảng 18 tháng và chỉ có một Tết trọn vẹn trong DEV.\n• 91,92% doanh thu theo tỉnh/thành mang nhãn UNKNOWN; không so sánh địa lý.\n• Thiếu dữ liệu phản hồi có nhãn; không thực hiện bài phân loại phản hồi.\n• 903 dòng inferred_subset là suy luận có thể gán nhầm; cờ API không bật.\n• Không có giá vốn nên không thể kết luận lợi nhuận combo.\n• Status hiện tại không phải lịch sử trạng thái; doanh thu ghi nhận theo xác nhận nghiệp vụ.\n• Một cửa sổ test không chứng minh khả năng tổng quát qua nhiều mùa.",width=100,fontsize=9.4)
         pdf.savefig(fig); plt.close(fig)
 
         # 14. Reproducibility / glossary

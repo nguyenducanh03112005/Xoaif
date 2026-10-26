@@ -9,6 +9,7 @@
 - **Phân khúc:** K=2; silhouette=0,508. Trong cohort scoring có 4.530/5.169 khách một đơn (87,6%); F ít phân tách. Đặt tên cụm theo số liệu:
   - Cụm 0 — Chủ yếu mua một lần: 4.523 khách, tần suất TB 1,00, Monetary TB 370.154 đ, 65,72% Monetary toàn tập, 26 khách thuộc proxy giá trị lớn.
   - Cụm 1 — Khách mua lặp lại: 646 khách, tần suất TB 2,42, Monetary TB 1.351.787 đ, 34,28% Monetary toàn tập, 36 khách thuộc proxy giá trị lớn.
+  - Diễn giải K=2: chủ yếu tách khách mua một lần khỏi khách mua lặp lại theo tần suất; điều này không chứng minh các nhóm có ý nghĩa kinh doanh hoặc giúp ra quyết định tốt hơn.
 ### Phân loại quay lại
 
 Expanding temporal folds có khoảng đệm `N+L=187` ngày và khách rời nhau. Pipeline fit imputer, scaler và encoder chỉ trong train fold. Precision/Recall/F1 và ma trận nhầm lẫn bên dưới dùng ngưỡng xác suất mặc định 0,5.
@@ -127,7 +128,7 @@ Một lượt thử, 30 cấu hình đã đăng ký, 5 temporal folds và bootst
 
 Mô hình được chọn có CI 95% ROC-AUC [0,4330, 0,5599], CI PR-AUC [0,0490, 0,0914], CI chênh PR-AUC so baseline [-0,0193, 0,0204]. Tiêu chí tín hiệu yêu cầu cận dưới ROC >0,55 **và** cận dưới chênh AP >0. Kết quả: **không đủ bằng chứng để dự đoán mua lại từ dữ liệu hiện có**. Đây là kết luận hợp lệ; không chạy thêm biến thể. Chỉ số theo phân khúc có mẫu nhỏ được gắn cảnh báo.
 
-**Cập nhật sau lần mở test duy nhất:** đoạn trên mô tả kết quả DEV tại thời điểm Day 2B. Amendment 05 ghi cho classifier cận dưới CI ROC-AUC > 0,55 và cận dưới paired ΔAP CI > 0. CI aggregate của cả Logistic Regression C=10 — mô hình chính theo D-005 và Logistic Regression feature-v2 C=0,1 — khảo sát bổ sung theo Amendment 04; không thay mô hình chính thỏa các cận về mặt số liệu trong lần chạy thực tế. Cấu hình ghi `>T`, evaluator dùng `[T,end)` gồm ngày T; ảnh hưởng chưa xác định. **Cấu hình ghi >T, evaluator dùng [T,end) (gồm ngày T); ảnh hưởng chưa xác định; đây là kết quả số liệu của lần chạy thực tế, không phải khẳng định tuân thủ đầy đủ giao thức, không gọi là 'đạt cổng ghi trước'.** ROC-AUC OOF DEV 0,4969 so với test 0,7024 (C=10) và 0,7027 (feature-v2) chưa được giải thích; lịch sử đặc trưng dài hơn, tỷ lệ nhãn khác và Tết 2026 chưa kiểm chứng. Xem `docs/test_provenance_note.md`; không rerun test.
+**Cập nhật sau lần mở test duy nhất:** đoạn trên mô tả kết quả DEV tại thời điểm Day 2B. Amendment 05 ghi cho classifier cận dưới CI ROC-AUC > 0,55 và cận dưới paired ΔAP CI > 0. CI aggregate của cả Logistic Regression C=10 — mô hình chính theo D-005 và Logistic Regression feature-v2 C=0,1 — khảo sát bổ sung theo Amendment 04; không thay mô hình chính thỏa các cận về mặt số liệu trong lần chạy thực tế. Tuy nhiên ROC-AUC DEV OOF C=10 là 0,5096, gần ngẫu nhiên; ROC-AUC test khoảng 0,70 chỉ là tín hiệu yếu chưa được development xác nhận, không đủ để kết luận mô hình hoạt động tốt. Test đã mở; không dùng để tiếp tục tinh chỉnh hay chọn lại mô hình. Cấu hình ghi `>T`, evaluator dùng `[T,end)` gồm ngày T; ảnh hưởng chưa xác định. **Cấu hình ghi >T, evaluator dùng [T,end) (gồm ngày T); ảnh hưởng chưa xác định; đây là kết quả số liệu của lần chạy thực tế, không phải khẳng định tuân thủ đầy đủ giao thức, không gọi là 'đạt cổng ghi trước'.** Xem `docs/test_provenance_note.md`; không rerun test.
 
 | Nhóm theo quy tắc nghiệp vụ | Mẫu OOF | Dương | PR-AUC | ROC-AUC | Cảnh báo |
 |---|---:|---:|---:|---:|---|

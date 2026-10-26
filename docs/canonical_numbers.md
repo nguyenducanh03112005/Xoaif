@@ -67,7 +67,7 @@ Cấu hình ghi >T, evaluator dùng [T,end) (gồm ngày T); ảnh hưởng chư
 |---|---|---|
 | Tổng doanh thu dashboard mặc định | 4.200.024.995 đ và 9.104 đơn status 3 không tặng, 25 bucket tháng từ 2024-04 đến 2026-04; gồm DEV và cửa sổ test, tháng 2026-04 không trọn tháng | `outputs/tables/dashboard_sales_monthly.csv`: tổng cột `recognized_revenue_vnd`, tổng cột `orders`, min/max `month`. |
 | UNKNOWN trên bảng tỉnh/thành | 3.860.511.662 đ, 8.403 đơn, bằng 91,92% tổng doanh thu trong bảng tỉnh/thành; nguyên nhân chưa phân tích | `outputs/tables/dashboard_sales_province.csv`: dòng `province=UNKNOWN`, cột `recognized_revenue_vnd`, `orders`; tổng cùng cột doanh thu trên bảng. |
-| Dashboard | 5 tab; 11 CSV tổng hợp + 6 JSON tổng hợp; 427 dòng aggregate được smoke kiểm tra | Kết quả `scripts/dashboard_smoke.py`; danh sách nguồn trong `src/app/streamlit_app.py`. |
+| Dashboard | 5 tab; 10 CSV tổng hợp + 6 JSON tổng hợp; tổng số dòng được kiểm tra bởi `scripts/dashboard_smoke.py` | Danh sách nguồn trong `src/app/streamlit_app.py`; bảng tỉnh/thành không còn là đầu vào dashboard. |
 | Báo cáo | 15 trang A4 | `pdfinfo report/xoaif_report.pdf`: `Pages`. |
 | Slide in | 14 trang ngang | `pdfinfo slides/xoaif_print.pdf`: `Pages`. Không tạo PPTX vì môi trường thiếu `python-pptx`. |
 | Kiểm thử | 74 pytest ở lần hậu kiểm cuối | Log cuối của `scripts/run_all.py` và `pytest`; không chạy evaluator, notebook hay fit/refit model. |

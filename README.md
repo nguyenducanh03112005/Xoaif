@@ -8,7 +8,7 @@ Dự án Python cho snapshot Pancake POS, kho DuckDB và phần khai phá dữ l
 - Chủ dự án xác nhận cửa hàng mở từ `2024-04-01`. Mốc này ghi trong `config/amendment_01_analysis_start.yaml`; `config/split.yaml` không bị sửa.
 - Kho dev hiệu dụng: `[2024-04-01, 2025-10-22)`, 6.517 đơn; 6.400 status 3; 5.174 khách có đơn status 3.
 - Split giữ nguyên: `N=180`, `L=7`, `W=180`, test T `[2025-10-22, 2026-04-20)`. Test đã mở đúng một lần theo cấu hình Amendment 05; xem `outputs/metrics/test_eval.json` và `docs/test_report.md`.
-- Vai trò mô hình được giữ thống nhất: Logistic Regression C=10 — mô hình chính theo D-005; Logistic Regression feature-v2 C=0,1 — khảo sát bổ sung theo Amendment 04; không thay mô hình chính. Điểm số, CI và cách diễn giải sai khác ngày T nằm trong `docs/test_report.md` và `docs/test_provenance_note.md`.
+- Vai trò mô hình được giữ thống nhất: Logistic Regression C=10 — mô hình chính theo D-005; Logistic Regression feature-v2 C=0,1 — khảo sát bổ sung theo Amendment 04; không thay mô hình chính. ROC-AUC DEV OOF C=10 khoảng 0,51, gần mức ngẫu nhiên; ROC-AUC test khoảng 0,70 là tín hiệu yếu chưa được development xác nhận, không đủ để kết luận mô hình hoạt động tốt. Test đã mở và không dùng để tiếp tục tinh chỉnh. Xem `docs/test_report.md` và `docs/test_provenance_note.md`.
 - Amendment 03 là quy tắc tiền đang có hiệu lực; amendment 02 giữ làm lịch sử. Audit DEV ghi nhận 22 đơn quà, 2/6.400 đơn doanh thu âm (0,03%), đạt cổng 1%. Quy tắc quà tặng theo từng dòng và các combo đã được khóa trước khi mở test.
 - Hạn nộp: **2026-10-27**. Thời lượng thuyết trình và rubric chính thức chưa có trong hồ sơ; xem [lịch](docs/schedule.md).
 - Sản phẩm Ngày 3: dashboard Streamlit, PDF, slide in dạng PDF, kịch bản demo, QA và hướng dẫn bàn giao ở các đường dẫn bên dưới. Không có file PPTX vì môi trường không cài `python-pptx`; đã dùng phương án PDF fallback mà không cài gói mới.
@@ -39,8 +39,9 @@ Sau khi test đã mở, `run_all.py` chỉ xác minh split, API GET-only, hash k
 - Bộ slide thuyết trình dạng PDF in 14 trang: `slides/xoaif_print.pdf`; ghi chú từng slide và phân vai ở `slides/speaker_notes.md`. Không tạo PPTX do `python-pptx` không có trong môi trường; không cài gói mới.
 - Demo dự phòng, QA và bàn giao: `docs/demo_script.md`, `docs/qa.md`, `docs/qa_roles.md`, `docs/handover.md`.
 - Kết quả test: `outputs/metrics/test_eval.json`, `docs/test_report.md`.
+- Các artifact phục vụ người chấm được commit gồm hai PDF và các CSV/JSON aggregate mà dashboard đọc trực tiếp; danh sách đầy đủ ở `docs/submission_artifacts.md`. Dashboard không cần raw/restricted data.
 
-Dashboard chỉ đọc bảng tổng hợp từ `outputs/`; không gọi API. Do giảm giá/điều chỉnh ở cấp đơn, dashboard không phân bổ doanh thu ghi nhận cho từng sản phẩm.
+Dashboard chỉ đọc bảng tổng hợp từ `outputs/`; không gọi API. Không so sánh doanh thu theo tỉnh/thành vì 91,92% doanh thu mang nhãn `UNKNOWN`. Bài phân loại phản hồi bị bỏ qua do thiếu dữ liệu phản hồi có nhãn. K-Means K=2 chủ yếu tách khách mua một lần với khách mua lặp lại; chưa chứng minh ý nghĩa kinh doanh của các nhóm. Không có giá vốn nên không kết luận lợi nhuận combo. Do giảm giá/điều chỉnh ở cấp đơn, dashboard không phân bổ doanh thu ghi nhận cho từng sản phẩm.
 
 ## Dữ liệu và an toàn
 

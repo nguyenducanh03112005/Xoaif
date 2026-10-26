@@ -1,0 +1,5 @@
+﻿development_order_value_quartile,line_count,gift_line_count,gift_line_rate,flag_count,zero_price_count,inferred_subset_count,not_gift_count
+Q1,5438,82,0.015079073188672305,0,1,81,5356
+Q2,6901,275,0.039849297203303866,0,2,273,6626
+Q3,7410,218,0.02941970310391363,0,0,218,7192
+Q4,10300,332,0.03223300970873787,0,1,331,9968

@@ -44,3 +44,10 @@ Phạm vi scan: tên/vai trò mô hình; caveat ở mọi vị trí nêu tín hi
 - Một literal lịch sử trong YAML Amendment 04 đã khóa và trường metadata/code tương ứng không được sửa theo ranh giới bảo vệ; không dùng trong narrative bàn giao.
 
 Trước hạn 2026-10-27, hai thành viên tự chạy kiểm tra an toàn và mở đủ 5 tab trên máy riêng; tập demo 4 phút có mạng và không mạng; kiểm bản in đen trắng; mỗi người luyện ít nhất 10 câu hỏi chéo. Xem `docs/final_consistency_report.md`, `docs/handover.md` và `docs/qa_roles.md`.
+
+## Cập nhật hồ sơ nộp — 2026-10-26
+
+- Đưa diễn giải về ROC-AUC DEV gần 0,51 và test khoảng 0,70 về mức tín hiệu test yếu, chưa được DEV xác nhận; nêu rõ không tinh chỉnh sau khi test đã mở.
+- Làm rõ K=2 chủ yếu chia khách một lần/mua lặp lại, chưa chứng minh ý nghĩa kinh doanh; ghi nhận bài phân loại phản hồi bị bỏ qua do thiếu nhãn.
+- Bỏ bảng tỉnh/thành khỏi dashboard và ảnh tổng quan cũ vì 91,92% doanh thu mang nhãn UNKNOWN; PDF nêu caveat thay cho xếp hạng khu vực.
+- Dựng lại hai PDF và commit 10 CSV/6 JSON aggregate dashboard sau khi smoke/schema và PII regex đạt. Không đưa raw, restricted hoặc bảng khách/đơn từng dòng vào repo.

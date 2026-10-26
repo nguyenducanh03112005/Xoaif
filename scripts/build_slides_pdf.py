@@ -129,6 +129,7 @@ def build(output_path: Path | None = None, font_override: str | None = None) -> 
     output_path = output_path or OUT
     test = read_json("test_eval.json")
     dev = read_json("dev_final_models_v2.json")
+    dev_primary = read_json("dev_final_model.json")
     money = read_json("day2_money_audit.json")
     seg = read_json("day2_segmentation.json")
     combo_dev = read_json("day3_combo_prereg.json")
@@ -255,8 +256,9 @@ def build(output_path: Path | None = None, font_override: str | None = None) -> 
         card(ax, .09, .55, .35, .27, "Mô hình chính theo D-005", "Logistic C=10", "Logistic Regression C=10 — mô hình chính theo D-005")
         card(ax, .56, .55, .35, .27, "Khảo sát bổ sung · Amendment 04", "feature-v2 · C=0,1", "không thay mô hình chính")
         v2 = dev["repurchase_features_v2"]["selected_oof_metrics"]
-        body(ax, .10, .42, f"Feature-v2 DEV OOF: ROC-AUC {fnum(v2['roc_auc'])}, PR-AUC {fnum(v2['pr_auc'])}. Kết quả gộp không cho thấy tín hiệu đủ mạnh theo quy tắc đã định trước.", size=12, width=.80)
-        body(ax, .10, .23, "Nhìn thấy metric test không được dùng để đổi mô hình, ngưỡng, feature hay luật. Mô hình test được áp dụng từ artifact đã freeze.", size=11, color=COLORS["muted"], width=.80)
+        primary = dev_primary["best_model_oof_metrics"]
+        body(ax, .10, .42, f"DEV OOF C=10: ROC-AUC {fnum(primary['roc_auc'])}, gần mức ngẫu nhiên; feature-v2: {fnum(v2['roc_auc'])}. Development chưa xác nhận tín hiệu xếp hạng rõ.", size=12, width=.80)
+        body(ax, .10, .23, "Test đạt ROC-AUC khoảng 0,70 nhưng đây chỉ là tín hiệu yếu chưa được DEV xác nhận, không đủ để kết luận mô hình hoạt động tốt. Test đã mở; không dùng nó để tinh chỉnh mô hình.", size=11, color=COLORS["muted"], width=.80)
         pdf.savefig(fig); plt.close(fig)
 
         # 10. One-time test
@@ -287,7 +289,7 @@ def build(output_path: Path | None = None, font_override: str | None = None) -> 
         body(ax, .07, .40, f"Logistic Regression feature-v2 C=0,1 — khảo sát bổ sung theo Amendment 04; không thay mô hình chính: ROC {fnum(v2['roc_auc'])} (CI {fnum(v2_ci['roc_auc']['lower'])}–{fnum(v2_ci['roc_auc']['upper'])}), AP {fnum(v2['average_precision'])}, ΔAP {fsigned(v2['average_precision']-models['majority_baseline']['average_precision'])} (CI {fsigned(v2_delta['lower'])}–{fsigned(v2_delta['upper'])}).", size=9.1, width=.86)
         ax.add_patch(FancyBboxPatch((.06, .13), .88, .20, boxstyle="round,pad=.012,rounding_size=.01", transform=ax.transAxes,
                                    fc=COLORS["warning"], ec="#E8C980", lw=.8))
-        ax.text(.08, .305, "Ngưỡng Amendment 05: cận dưới CI ROC-AUC > 0,55 và cận dưới CI ΔAP > 0; CI aggregate của cả hai mô hình thỏa các cận về mặt số liệu.", fontsize=8.5, color=COLORS["ink"], va="top", wrap=True, transform=ax.transAxes)
+        ax.text(.08, .305, "ROC-AUC test khoảng 0,70 là tín hiệu yếu trên một tập test đã mở; DEV C=10 gần ngẫu nhiên (0,5096) và chưa xác nhận tín hiệu này. Không kết luận mô hình tốt; không tinh chỉnh trên test.", fontsize=8.5, color=COLORS["ink"], va="top", wrap=True, transform=ax.transAxes)
         ax.text(.08, .255, "Cấu hình ghi >T, evaluator dùng [T,end) (gồm ngày T); ảnh hưởng chưa xác định; đây là kết quả số liệu của lần chạy thực tế, không phải khẳng định tuân thủ đầy đủ giao thức, không gọi là 'đạt cổng ghi trước'.",
                 fontsize=8.2, color=COLORS["red"], va="top", wrap=True, transform=ax.transAxes)
         pdf.savefig(fig); plt.close(fig)
@@ -298,7 +300,7 @@ def build(output_path: Path | None = None, font_override: str | None = None) -> 
         card(ax, .38, .57, .24, .23, "Khách một đơn · scoring", "4.530 / 5.169", "87,6%; DEV: 4.526 / 5.174 = 87,5%")
         card(ax, .68, .57, .24, .23, "Proxy giá trị lớn", str(seg["business_like_proxy"]["customers"]), "không phải xác minh pháp nhân")
         heading(ax, .09, .45, "Cách diễn giải")
-        body(ax, .09, .39, "K-Means K=2 được giữ; K=3/4 dùng làm độ nhạy. Nhóm quy tắc nghiệp vụ đứng riêng với nhãn cluster. RFM phản ánh lịch sử trước T và không chứng minh xác suất rời bỏ hay doanh nghiệp đã xác minh.", size=11, width=.83)
+        body(ax, .09, .39, "K-Means K=2 chủ yếu tách khách mua một lần với khách mua lặp lại. Điều này chưa chứng minh các nhóm có ý nghĩa kinh doanh hay hỗ trợ quyết định tốt hơn; K=3/4 chỉ là độ nhạy. RFM mô tả lịch sử trước T, không chứng minh nguy cơ rời bỏ.", size=11, width=.83)
         body(ax, .09, .22, "Không fit lại trên test. Metric phân phối bằng 0 trong một số so sánh phát sinh do dùng cùng profile trước T, không phải bằng chứng hành vi tương lai ổn định.", size=10.5, color=COLORS["muted"], width=.83)
         pdf.savefig(fig); plt.close(fig)
 
@@ -315,10 +317,11 @@ def build(output_path: Path | None = None, font_override: str | None = None) -> 
 
         # 13. Dashboard
         fig, ax = slide(pdf, 13, "Dashboard offline và demo", "Năm tab, dữ liệu aggregate cục bộ, không cần API key")
-        image_panel(ax, "docs/demo_screens/01-overview.png", [.05, .14, .62, .70])
-        heading(ax, .70, .78, "Tabs")
-        body(ax, .70, .72, "1. Tổng quan doanh số\n2. Phân khúc khách\n3. Combo gợi ý\n4. Chất lượng & kiểm toán\n5. Mô hình mua lại", size=10, width=.26)
-        body(ax, .70, .38, "Smoke đã xác nhận 5 tab, 11 aggregate CSV và 6 aggregate JSON. Màn hình mô hình nêu rõ khác biệt ngày T; không hiển thị khách/đơn từng dòng.", size=9.5, width=.25)
+        heading(ax, .08, .80, "Năm tab")
+        body(ax, .08, .73, "1. Tổng quan doanh số\n2. Phân khúc khách\n3. Combo gợi ý\n4. Chất lượng & kiểm toán\n5. Mô hình mua lại", size=13, width=.37)
+        heading(ax, .53, .80, "Giới hạn luôn hiển thị")
+        body(ax, .53, .73, "Không so sánh doanh thu tỉnh/thành vì 91,92% là UNKNOWN.\n\nBài phân loại phản hồi bị bỏ qua vì thiếu dữ liệu có nhãn.\n\nTest ROC-AUC khoảng 0,70 là tín hiệu yếu mà DEV (~0,51) chưa xác nhận; không tinh chỉnh theo test đã mở.\n\nK=2 chủ yếu phân biệt khách mua một lần và mua lặp lại, chưa chứng minh ý nghĩa kinh doanh.", size=10.5, color=COLORS["ink"], width=.37)
+        body(ax, .08, .30, "Smoke xác nhận 5 tab, 10 aggregate CSV và 6 aggregate JSON. Không hiển thị khách hoặc đơn hàng từng dòng; dashboard chỉ đọc dữ liệu cục bộ.", size=10.5, color=COLORS["muted"], width=.82)
         pdf.savefig(fig); plt.close(fig)
 
         # 14. Limits and preparation
@@ -330,7 +333,7 @@ def build(output_path: Path | None = None, font_override: str | None = None) -> 
         heading(ax, .07, .52, "Cả hai")
         body(ax, .07, .47, "Tập demo 4 phút bằng dashboard/ảnh/PDF; kiểm tra máy trình chiếu và thống nhất câu trả lời về cohort chưa đối soát, một cửa sổ test, thiếu giá vốn và kết luận không nhân quả.", size=9.5, width=.39)
         heading(ax, .53, .52, "Giới hạn cần nói rõ")
-        body(ax, .53, .47, "Một Tết trọn vẹn trong DEV; 903 inferred_subset có thể gán nhầm; status hiện tại không phải status history; cohort 5.499/5.174/5.169 chưa phân rã; không chạy evaluator/notebook lại.", size=9.5, width=.39)
+        body(ax, .53, .47, "Một Tết trọn vẹn trong DEV; 91,92% doanh thu tỉnh là UNKNOWN; thiếu dữ liệu phản hồi có nhãn; 903 inferred_subset có thể gán nhầm; status hiện tại không phải status history; không chạy evaluator/notebook lại.", size=9.5, width=.39)
         ax.text(.07, .20, "Hạn nộp: 2026-10-27. Thời lượng chính thức và rubric chưa có trong hồ sơ. Mỗi người cần tập trả lời ít nhất 10 câu thuộc phần của người kia.", fontsize=9.1, color=COLORS["muted"], transform=ax.transAxes)
         pdf.savefig(fig); plt.close(fig)
 

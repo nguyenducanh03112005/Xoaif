@@ -1,0 +1,81 @@
+{
+  "customer_count": 5169,
+  "single_order_customer_rate": 0.8763784097504352,
+  "single_order_customer_count": 4530,
+  "k_candidates": [
+    2,
+    3,
+    4,
+    5,
+    6,
+    7,
+    8
+  ],
+  "elbow_inertia_by_k": {
+    "2": 10471.507114520651,
+    "3": 7147.205048828915,
+    "4": 5698.451627245369,
+    "5": 4940.524843190192,
+    "6": 4352.172561516809,
+    "7": 3911.318757799801,
+    "8": 3515.8874575137424
+  },
+  "mean_silhouette_by_k": {
+    "2": 0.5093657569124209,
+    "3": 0.39014634620099925,
+    "4": 0.3853336384967297,
+    "5": 0.39239782077777746,
+    "6": 0.3570985170255686,
+    "7": 0.3394542596561184,
+    "8": 0.34614419326345186
+  },
+  "seed_stability_ari_by_k": {
+    "2": 1.0,
+    "3": 0.9997179374169441,
+    "4": 0.993364108160916,
+    "5": 0.9911274404204539,
+    "6": 0.9765969519587795,
+    "7": 0.8690450674511624,
+    "8": 0.8645296896433683
+  },
+  "chosen_k": 2,
+  "chosen_silhouette": 0.5075411954131032,
+  "chosen_seed": 42,
+  "cluster_names_by_id": {
+    "0": "Chủ yếu mua một lần",
+    "1": "Khách mua lặp lại"
+  },
+  "rule_segment_counts": {
+    "Khách mua một lần": 4530,
+    "Khách mua lặp lại": 625,
+    "Giá trị lớn, tần suất thấp": 14
+  },
+  "business_like_proxy": {
+    "rule": "Monetary or maximum order value at/above development p99",
+    "customers": 62,
+    "p99_monetary": 3439575.9999999832,
+    "p99_max_order_value": 3082175.99999998
+  },
+  "large_value_customers_by_cluster": {
+    "0": 26,
+    "1": 36
+  },
+  "sensitivity": {
+    "A": {
+      "silhouette": 0.509192628848754,
+      "silhouette_delta_from_primary": 0.0016514334356508842,
+      "aligned_customer_cluster_change_rate": 0.0001934610176049789
+    },
+    "B": {
+      "silhouette": 0.7460738630378162,
+      "silhouette_delta_from_primary": 0.23853266762471304,
+      "aligned_customer_cluster_change_rate": 0.20468175662603982
+    }
+  },
+  "dbscan_geography": {
+    "run": false,
+    "reason": "Nguồn chỉ có tỉnh/thành; không có tọa độ hoặc mã vùng đủ chi tiết cho DBSCAN."
+  },
+  "test_labels_loaded": false,
+  "test_behavior_loaded": false
+}

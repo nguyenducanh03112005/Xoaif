@@ -26,4 +26,6 @@ Hai CI số liệu trên đều thỏa các cận đã ghi trước theo metric 
 
 DEV OOF của Logistic Regression C=10 có ROC-AUC 0,5096 và AP 0,0699 trên 1.558 dự đoán OOF; feature-v2 có ROC-AUC 0,4969 và AP 0,0645 trên cùng số mẫu. Chênh lệch với test chưa được giải thích. Lịch sử đặc trưng dài hơn, tỷ lệ nhãn DEV/test khác nhau và cửa sổ có Tết 2026 là giả thuyết chưa kiểm chứng; không phân tách tác động.
 
+ROC-AUC test khoảng 0,70 vì vậy chỉ được trình bày là tín hiệu yếu trên tập test mà development chưa xác nhận; không đủ cơ sở kết luận mô hình hoạt động tốt hoặc sẵn sàng triển khai. Test đã mở nên không dùng các kết quả test để tiếp tục tinh chỉnh, chọn mô hình hoặc thay đổi ngưỡng.
+
 Test chỉ mở một lần. Tách metric riêng cho ngày T cần nạp lại dữ liệu test, trái khóa và quyết định bảo vệ; do đó ảnh hưởng của ngày T chưa xác định. Các metric là mô tả của lần chạy thực tế, không chứng minh khả năng tổng quát qua cửa sổ khác.

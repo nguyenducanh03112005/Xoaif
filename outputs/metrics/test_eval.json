@@ -1,0 +1,308 @@
+{
+  "status": "completed_single_test_open",
+  "opened_at_utc": "2026-10-25T17:41:31.534320+00:00",
+  "test_open_count": 1,
+  "test_interval": {
+    "start_inclusive": "2025-10-22",
+    "end_exclusive": "2026-04-20",
+    "label_horizon_days": 180,
+    "eligible_customer_rule": "at least one status-3, non-order-gift purchase with customer ID strictly before T",
+    "outcome_rule": "at least one status-3, non-order-gift purchase with local date > T and < the locked test_end_exclusive; the exclusive endpoint is not read",
+    "nominal_horizon_note": "The locked 180-day calendar interval has 179 post-T local dates because its end is exclusive.",
+    "test_order_gift_rule": "active amendment 03 money assessment; exclude order-level gifts"
+  },
+  "effective_post_T_calendar_dates": 179,
+  "split_boundary_note": "Locked end is exclusive; labels include dates > T and < test_end_exclusive; the nominal 180-day interval contributes 179 post-T dates.",
+  "cohort": {
+    "eligible_customers_with_pre_T_purchase": 5169,
+    "test_positive_customers": 237,
+    "test_positive_rate": 0.045850261172373764,
+    "development_positive_rate": 0.07411630558722919,
+    "test_minus_dev_positive_rate": -0.028266044414855425,
+    "development_positive_rate_source": "outputs/metrics/dev_final_models_v2.json",
+    "test_window_orders_by_status": {
+      "3": 2726,
+      "6": 10,
+      "5": 4
+    },
+    "eligible_test_window_orders_status3": 2726,
+    "order_gifts_excluded_from_labels": 0
+  },
+  "models": {
+    "majority_baseline": {
+      "precision": 0.0,
+      "recall": 0.0,
+      "f1": 0.0,
+      "roc_auc": 0.5,
+      "average_precision": 0.045850261172373764,
+      "confusion_matrix_tn_fp_fn_tp": [
+        [
+          4932,
+          0
+        ],
+        [
+          237,
+          0
+        ]
+      ],
+      "threshold": 0.5,
+      "customer_count": 5169,
+      "positive_count": 237,
+      "positive_rate": 0.045850261172373764
+    },
+    "amendment_03_logistic_regression": {
+      "precision": 0.16701902748414377,
+      "recall": 0.3333333333333333,
+      "f1": 0.22253521126760564,
+      "roc_auc": 0.7024379664705821,
+      "average_precision": 0.12342766741336175,
+      "confusion_matrix_tn_fp_fn_tp": [
+        [
+          4538,
+          394
+        ],
+        [
+          158,
+          79
+        ]
+      ],
+      "threshold": 0.5,
+      "customer_count": 5169,
+      "positive_count": 237,
+      "positive_rate": 0.045850261172373764
+    },
+    "repurchase_features_v2_logistic_regression": {
+      "precision": 0.15173674588665448,
+      "recall": 0.350210970464135,
+      "f1": 0.21173469387755103,
+      "roc_auc": 0.7027288422118876,
+      "average_precision": 0.12329095018177023,
+      "confusion_matrix_tn_fp_fn_tp": [
+        [
+          4468,
+          464
+        ],
+        [
+          154,
+          83
+        ]
+      ],
+      "threshold": 0.5,
+      "customer_count": 5169,
+      "positive_count": 237,
+      "positive_rate": 0.045850261172373764
+    }
+  },
+  "development_reference": {
+    "positive_rate": 0.07411630558722919,
+    "amendment_03_logistic_regression": {
+      "precision": 0.05874499332443257,
+      "recall": 0.46808510638297873,
+      "f1": 0.10438908659549229,
+      "roc_auc": 0.5096064411114987,
+      "pr_auc": 0.06988502530655509,
+      "confusion_matrix_tn_fp_fn_tp": [
+        [
+          759,
+          705
+        ],
+        [
+          50,
+          44
+        ]
+      ],
+      "positive_count": 94,
+      "sample_count": 1558
+    },
+    "repurchase_features_v2_logistic_regression": {
+      "precision": 0.056776556776556776,
+      "recall": 0.32978723404255317,
+      "f1": 0.096875,
+      "roc_auc": 0.49686083013603066,
+      "pr_auc": 0.06450816685142155,
+      "confusion_matrix_tn_fp_fn_tp_at_threshold_0_5": [
+        [
+          949,
+          515
+        ],
+        [
+          63,
+          31
+        ]
+      ],
+      "positive_count": 94,
+      "sample_count": 1558
+    },
+    "repurchase_features_v2_bootstrap_ci": {
+      "method": "paired row bootstrap over pooled OOF predictions; each customer appears once",
+      "repeats_requested": 2000,
+      "repeats_used": 2000,
+      "seed": 20261025,
+      "roc_auc_95_ci": [
+        0.43297890055696137,
+        0.5598535447690364
+      ],
+      "pr_auc_95_ci": [
+        0.049043541919447466,
+        0.09138965980023446
+      ],
+      "pr_auc_delta_vs_majority_95_ci": [
+        -0.019270681447742348,
+        0.02039082645731598
+      ]
+    }
+  },
+  "bootstrap_95_ci": {
+    "majority_baseline": {
+      "metrics_95_ci": {
+        "precision": {
+          "lower": 0.0,
+          "upper": 0.0
+        },
+        "recall": {
+          "lower": 0.0,
+          "upper": 0.0
+        },
+        "f1": {
+          "lower": 0.0,
+          "upper": 0.0
+        },
+        "roc_auc": {
+          "lower": 0.5,
+          "upper": 0.5
+        },
+        "average_precision": {
+          "lower": 0.0404333526794351,
+          "upper": 0.05165409170052235
+        }
+      },
+      "valid_roc_bootstrap_repetitions": 2000
+    },
+    "amendment_03_logistic_regression": {
+      "metrics_95_ci": {
+        "precision": {
+          "lower": 0.13507324021053851,
+          "upper": 0.2008832485808893
+        },
+        "recall": {
+          "lower": 0.273972602739726,
+          "upper": 0.3914898635086311
+        },
+        "f1": {
+          "lower": 0.1813029123443455,
+          "upper": 0.2627742274181987
+        },
+        "roc_auc": {
+          "lower": 0.6651440995633056,
+          "upper": 0.7365063574058013
+        },
+        "average_precision": {
+          "lower": 0.1004693050773294,
+          "upper": 0.15808382687097236
+        }
+      },
+      "valid_roc_bootstrap_repetitions": 2000
+    },
+    "repurchase_features_v2_logistic_regression": {
+      "metrics_95_ci": {
+        "precision": {
+          "lower": 0.12252161668066604,
+          "upper": 0.18307219143612435
+        },
+        "recall": {
+          "lower": 0.28870292887029286,
+          "upper": 0.41203703703703703
+        },
+        "f1": {
+          "lower": 0.17312025812304138,
+          "upper": 0.24969414938558043
+        },
+        "roc_auc": {
+          "lower": 0.6650787842134245,
+          "upper": 0.7373246227469529
+        },
+        "average_precision": {
+          "lower": 0.09943433023400144,
+          "upper": 0.15819002631176549
+        }
+      },
+      "valid_roc_bootstrap_repetitions": 2000
+    },
+    "paired_average_precision_delta_vs_baseline_95_ci": {
+      "amendment_03_logistic_regression": {
+        "lower": 0.05597485818295204,
+        "upper": 0.11086345267357234
+      },
+      "repurchase_features_v2_logistic_regression": {
+        "lower": 0.05540076055433714,
+        "upper": 0.11110831043249719
+      }
+    },
+    "repetitions": 2000,
+    "seed": 20261026
+  },
+  "preregistered_signal_rule": "signal only if lower ROC-AUC 95% CI > 0.55 AND lower paired AP-difference 95% CI > 0",
+  "feature_v2_signal_supported": true,
+  "feature_v2_conclusion": "có tín hiệu theo quy tắc ghi trước",
+  "segmentation": {
+    "assignment": "frozen dev model/thresholds applied to pre-T features; no refit",
+    "kmeans_and_rule_comparison": {
+      "K=2": {
+        "customer_mix_total_variation_distance": 0.0,
+        "recency_days_wasserstein_over_dev_iqr": 0.0,
+        "frequency_wasserstein_over_dev_iqr": null,
+        "monetary_wasserstein_over_dev_iqr": 0.0
+      },
+      "K=3": {
+        "customer_mix_total_variation_distance": 0.0,
+        "recency_days_wasserstein_over_dev_iqr": 0.0,
+        "frequency_wasserstein_over_dev_iqr": null,
+        "monetary_wasserstein_over_dev_iqr": 0.0
+      },
+      "K=4": {
+        "customer_mix_total_variation_distance": 0.0,
+        "recency_days_wasserstein_over_dev_iqr": 0.0,
+        "frequency_wasserstein_over_dev_iqr": null,
+        "monetary_wasserstein_over_dev_iqr": 0.0
+      },
+      "Quy tắc nghiệp vụ": {
+        "customer_mix_total_variation_distance": 0.0,
+        "recency_days_wasserstein_over_dev_iqr": 0.0,
+        "frequency_wasserstein_over_dev_iqr": null,
+        "monetary_wasserstein_over_dev_iqr": 0.0
+      }
+    },
+    "profiles_path": "outputs/tables/test_segment_profiles.csv",
+    "test_eligible_customers": 5169,
+    "test_window_recognized_revenue_vnd": 179585848.0,
+    "test_labels_loaded": true
+  },
+  "association_rules": {
+    "frozen_combo_count": 24,
+    "test_eligible_basket_count": 2174,
+    "test_status3_line_count_audited": 10134,
+    "combo_metrics_path": "outputs/tables/test_combos_frozen.csv",
+    "test_lift_gt_1_count": 21,
+    "no_new_rules_selected": true
+  },
+  "dashboard_tables": {
+    "sales_monthly": "outputs/tables/dashboard_sales_monthly.csv",
+    "sales_province": "outputs/tables/dashboard_sales_province.csv",
+    "product_orders": "outputs/tables/dashboard_product_orders.csv",
+    "status_counts": "outputs/tables/dashboard_status_counts.csv"
+  },
+  "access_audit": {
+    "pre_open_reserved_log_sha256": "6354e3f7b6de499fe10aa874fa21dcdee71255ba051de164d4e5deaa8a237d58",
+    "pre_open_reserved_log_entries": 2,
+    "post_open_access_log": "outputs/logs/test_eval_access.jsonl",
+    "test_labels_and_behavior_read_after_exclusive_open_lock": true,
+    "raw_values_or_customer_identifiers_written": false
+  },
+  "limitations": [
+    "development contains only one complete Tet cycle; test includes Tet 2026",
+    "line-level inferred_subset gift assignments are low confidence and may be wrong",
+    "current order status is not a historical status timeline",
+    "no unit cost is available, so combo profitability cannot be estimated",
+    "association rules describe co-occurrence and not causation"
+  ]
+}

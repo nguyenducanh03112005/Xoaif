@@ -67,7 +67,7 @@ def main() -> int:
 
     csv_names = _literal_reader_calls(tree, "read_csv")
     json_names = _literal_reader_calls(tree, "read_json")
-    if len(csv_names) != 11 or len(json_names) != 6:
+    if len(csv_names) != 10 or len(json_names) != 6:
         raise ValueError(f"Unexpected dashboard inputs: {len(csv_names)} CSV and {len(json_names)} JSON")
 
     rows_checked = 0

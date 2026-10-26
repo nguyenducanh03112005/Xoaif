@@ -4,11 +4,11 @@ Updated: 2026-10-26
 
 ## Trạng thái chốt hiện tại — 2026-10-26
 
-- Hồ sơ nộp gồm dashboard offline 5 tab, báo cáo A4 15 trang, slide PDF in 14 trang, speaker notes, sổ số chuẩn, nhật ký nhất quán và báo cáo chốt. Dashboard smoke đếm 11 CSV, 6 JSON, 427 dòng aggregate. Hạn nộp là 2026-10-27; thời lượng và rubric chính thức chưa có trong hồ sơ.
-- Test đã mở đúng một lần. Logistic Regression C=10 — mô hình chính theo D-005; Logistic Regression feature-v2 C=0,1 — khảo sát bổ sung theo Amendment 04; không thay mô hình chính. CI aggregate của cả hai thỏa cận số liệu theo lần chạy thực tế. Cấu hình ghi >T, evaluator dùng [T,end) (gồm ngày T); ảnh hưởng chưa xác định; đây là kết quả số liệu của lần chạy thực tế, không phải khẳng định tuân thủ đầy đủ giao thức, không gọi là 'đạt cổng ghi trước'.
-- Cohort 5.499 preflight, 5.174 khách DEV status 3 và 5.169 scoring chưa đối soát. Combo chính là 24 cặp theo quy tắc ít nhất 4/6; 21/24 có lift > 1 trên 2.174 giỏ test. UNKNOWN province chiếm 91,92% doanh thu bảng tỉnh/thành; nguyên nhân chưa phân tích.
+- Hồ sơ nộp gồm dashboard offline 5 tab, báo cáo A4 15 trang, slide PDF in 14 trang, speaker notes, sổ số chuẩn, nhật ký nhất quán và báo cáo chốt. Dashboard smoke kiểm tra 10 CSV và 6 JSON aggregate. Hai PDF và các đầu vào dashboard được commit; xem `docs/submission_artifacts.md`. Hạn nộp là 2026-10-27; thời lượng và rubric chính thức chưa có trong hồ sơ.
+- Test đã mở đúng một lần. Logistic Regression C=10 — mô hình chính theo D-005; Logistic Regression feature-v2 C=0,1 — khảo sát bổ sung theo Amendment 04; không thay mô hình chính. ROC-AUC DEV OOF C=10 là 0,5096, gần ngẫu nhiên; ROC-AUC test khoảng 0,70 là tín hiệu yếu chưa được DEV xác nhận, không đủ để kết luận mô hình hoạt động tốt. Không dùng test để tinh chỉnh. Cấu hình ghi >T, evaluator dùng [T,end) (gồm ngày T); ảnh hưởng chưa xác định; không khẳng định tuân thủ đầy đủ giao thức.
+- Cohort 5.499 preflight, 5.174 khách DEV status 3 và 5.169 scoring chưa đối soát. Combo chính là 24 cặp theo quy tắc ít nhất 4/6; 21/24 có lift > 1 trên 2.174 giỏ test. Không so sánh tỉnh/thành vì 91,92% doanh thu mang nhãn UNKNOWN. Bài phân loại phản hồi bị bỏ qua do thiếu dữ liệu có nhãn. K=2 chủ yếu phân biệt mua một lần/lặp lại, chưa xác nhận ý nghĩa kinh doanh.
 - D-022 giữ chẩn đoán anchor ở trạng thái chưa làm: không mở Amendment 06, không fit mới. Hai thành viên cần tự chạy kiểm tra hậu mở an toàn, thử dashboard, tập demo 4 phút và trả lời ít nhất 10 câu chéo.
-- Hậu kiểm hiện tại: `run_all.py` pass (74 pytest, split/GET-only/locks/PII); dashboard smoke pass (5 tab, 11 CSV, 6 JSON, 427 aggregate rows); standalone PII, pytest (74) và `verify_day3_locks.py` đều pass. 17 hash bảo vệ khớp baseline; test-open lock giữ count=1; access log giữ đúng một `label_load` và một `behavior_load`.
+- Hậu kiểm trước cập nhật artifact: `run_all.py` pass (74 pytest, split/GET-only/locks/PII); dashboard smoke pass (5 tab, 11 CSV, 6 JSON); 17 hash bảo vệ khớp baseline; test-open lock giữ count=1; access log giữ đúng một `label_load` và một `behavior_load`. Sau cập nhật dashboard, smoke được chạy lại với 10 CSV.
 
 ## Locked scope and active decisions
 
@@ -75,7 +75,7 @@ Updated: 2026-10-26
 
 ## Giai đoạn 3 — dashboard, báo cáo và trình bày
 
-- Tạo `scripts/dashboard_smoke.py`; kiểm tra tĩnh/data-contract xác nhận 5 tab, 11 CSV tổng hợp, 6 JSON tổng hợp, 427 dòng tổng hợp; không AppTest/API. Đã mở app offline và chụp thật đủ 5 tab vào `docs/demo_screens/`; các ảnh đã được rà trực quan.
+- Lần smoke ban đầu có 11 CSV; sau đó bỏ tỉnh/thành khỏi dashboard và gỡ ảnh tổng quan cũ. Trạng thái hiện hành: 5 tab, 10 CSV và 6 JSON aggregate, được smoke kiểm tra; không AppTest/API. Còn 4 ảnh tab trong `docs/demo_screens/` cùng PDF in làm phương án demo offline.
 - Tạo lại `report/xoaif_report.pdf`: 15 trang A4, đã render và rà tiêu đề, bảng, chân trang cùng các trang về OOF, test một lần và quyết định. Trang test nêu đúng C=10 chính, v2 khảo sát bổ sung, và khác biệt `>T`/`[T,end)` chưa rõ ảnh hưởng.
 - Tạo `slides/xoaif_print.pdf` gồm 14 trang ngang và `slides/speaker_notes.md` với lời dẫn, nguồn repo, phân vai A/B và việc cần tập trước bảo vệ. Bản in đã render/rà trực quan. `python-pptx` không có trong môi trường; không cài gói mới và không tạo PPTX. README nêu rõ PDF fallback.
 - `scripts/run_all.py` hậu mở đạt lần cuối: split/GET-only/Day 3 lock pass, 74 pytest pass, PII scan pass. Một helper chụp ảnh CDP dùng một lần bị quét nhầm như HTTP ngoài client; helper đã được gỡ sau khi chụp đủ ảnh và lần hậu kiểm cuối đạt.

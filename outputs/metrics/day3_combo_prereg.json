@@ -1,0 +1,142 @@
+{
+  "amendment_05_sha256": "27bda2f81cfc963921ecb7a0da235777031996b26563d6425fbfa8d525eed720",
+  "snapshot_id": "20261024T052943Z",
+  "status3_dev_orders": 6400,
+  "status3_order_gifts_excluded_from_baskets": 22,
+  "gift_line_audit": {
+    "line_count_by_source": {
+      "flag": 0,
+      "zero_price": 4,
+      "inferred_subset": 903,
+      "not_gift": 29142
+    },
+    "distinct_orders_with_source": {
+      "flag": 0,
+      "zero_price": 4,
+      "inferred_subset": 716,
+      "not_gift": 6391
+    },
+    "gift_line_count": 907,
+    "line_count": 30049,
+    "low_confidence_inferred_line_count": 903,
+    "test_labels_loaded": false,
+    "test_behavior_loaded": false
+  },
+  "source_counts_by_order": {
+    "flag": 0,
+    "zero_price": 4,
+    "inferred_subset": 716,
+    "not_gift": 6391
+  },
+  "gift_line_rates_by_month_path": "outputs/tables/gift_line_rates_monthly.csv",
+  "gift_line_rates_by_order_size_path": "outputs/tables/gift_line_rates_order_size.csv",
+  "order_value_thresholds_vnd": {
+    "p25": 180000.0,
+    "p50": 270000.0,
+    "p75": 425000.0,
+    "p90": 700000.0
+  },
+  "large_order_definition": ">= development p90 of total_price",
+  "eligible_baskets_before_gift_line_removal": 6031,
+  "eligible_baskets_after_all_gift_line_removal": 6006,
+  "sensitivity_eligible_baskets": {
+    "all_lines": 6031,
+    "explicit_only": 6031,
+    "all_gift_sources": 6006
+  },
+  "missing_product_id_line_count": 726,
+  "min_support_values": [
+    0.01,
+    0.05
+  ],
+  "minimum_rule_occurrences": 5,
+  "stable_combo_rule": "pair present in at least 4/6 cleaning x support cells and in primary all_gift_sources support 0.05",
+  "sensitivity_cells": [
+    {
+      "cell": "all_lines_support_0.01",
+      "cleaning": "all_lines",
+      "min_support": 0.01,
+      "eligible_baskets": 6031,
+      "qualifying_product_pairs": 157,
+      "rule_occurrences_floor": 5
+    },
+    {
+      "cell": "all_lines_support_0.05",
+      "cleaning": "all_lines",
+      "min_support": 0.05,
+      "eligible_baskets": 6031,
+      "qualifying_product_pairs": 24,
+      "rule_occurrences_floor": 5
+    },
+    {
+      "cell": "explicit_only_support_0.01",
+      "cleaning": "explicit_only",
+      "min_support": 0.01,
+      "eligible_baskets": 6031,
+      "qualifying_product_pairs": 157,
+      "rule_occurrences_floor": 5
+    },
+    {
+      "cell": "explicit_only_support_0.05",
+      "cleaning": "explicit_only",
+      "min_support": 0.05,
+      "eligible_baskets": 6031,
+      "qualifying_product_pairs": 24,
+      "rule_occurrences_floor": 5
+    },
+    {
+      "cell": "all_gift_sources_support_0.01",
+      "cleaning": "all_gift_sources",
+      "min_support": 0.01,
+      "eligible_baskets": 6006,
+      "qualifying_product_pairs": 145,
+      "rule_occurrences_floor": 5
+    },
+    {
+      "cell": "all_gift_sources_support_0.05",
+      "cleaning": "all_gift_sources",
+      "min_support": 0.05,
+      "eligible_baskets": 6006,
+      "qualifying_product_pairs": 24,
+      "rule_occurrences_floor": 5
+    }
+  ],
+  "qualifying_product_pairs_across_cells": {
+    "all_lines_support_0.01": 157,
+    "all_lines_support_0.05": 24,
+    "explicit_only_support_0.01": 157,
+    "explicit_only_support_0.05": 24,
+    "all_gift_sources_support_0.01": 145,
+    "all_gift_sources_support_0.05": 24
+  },
+  "stable_pair_count": 24,
+  "main_combo_count": 24,
+  "seasonal_pair_metrics_path": "outputs/tables/seasonal_pair_metrics.csv",
+  "tet_cycles_in_development": 1,
+  "seasonal_label_window_days": 14,
+  "product_profile_top20_support_keys": [
+    "42e4ba50f45e12cac68f362cae686221278bf2d5ca9afe4ba1023323e0ca8f7e",
+    "7be2ecca7b875993d397d72e456402eb5d4ed61dc3354d07539ed9266a4459eb",
+    "b261d9843cddc8ba6453ba429917227a38b8002ef18719fa35e89f22fbe36723",
+    "cd578ab04d722f5038773f65af50799710913b150fba91861f48399411c2b222",
+    "22380ac7f784b15b12f9ce172b8c5c7804f884202f3a058e8fb65292141ecece",
+    "2321cc94dcf1642a590fd8eca9acc407bcf46a3061a75df7c235cc97f051d02f",
+    "4182b38a37e9fca4408f1d9844b535b260e16668b0a4b64ea23f30d72d91f535",
+    "3ef68ce1ebd0ae27fbfd969a0a428382412f27554fed63b8e5882c671161a38a",
+    "46420d7927c5038f4991977f20e090cff2307d63458e4b7ac3e94fc94c41f8bd",
+    "aa2b7baa65ad6b96891f2d76bcbce6483102495b44b95c4e63448d0c1b5a84fe",
+    "2dcce2aa9326000b5310fba953887c04d9664bf63314cded2acbacdf435acc91",
+    "563832306dad844a53f8444830f52f4e0d1b38553b3ba6eac7773f7dfd0d7941",
+    "72d9dd8db54c3239b071da376f995b99e6232e2848cc3c93a2f08493c6ad5d0d",
+    "ec2f23c91db112c454767d97eec5b8956f28f8e012bbc4fe276b3aeb6a9f809e",
+    "3836b4a619a6e0d1d6d073adbe0ea37f32e608aacb5f68327a8a491d05248ff0",
+    "14c5cd011495370e0fbc017be19f8cc65a4f5b63f0c77790b1a914c2caad1f8d",
+    "f220ab461c6ade9086ae829360014127b42140a2f4d65ea3ecb4a3d8e8fd3130",
+    "0c5f4846545ab9a861ff151f9120af82f939cf5663eab0ccb2cd8b0addbb8ef1",
+    "b9b032127cea7782b2904f0861a61d463299369186fcdb84397d203e5f56b51a",
+    "f2cce3f0e10c16b0b9308037ad364c7aeca0a1c016f13004020a327470db2f0d"
+  ],
+  "product_profile_path": "outputs/tables/product_profile.csv",
+  "test_labels_loaded": false,
+  "test_behavior_loaded": false
+}

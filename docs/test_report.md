@@ -10,6 +10,8 @@ Trước lần mở, khu vực dành riêng có hai bản ghi `eligibility_count
 
 Cohort scoring gồm 5.169 khách đã mua trước T; có 237 dương (4,59%). DEV có 3.508 mẫu nhãn và 260 dương (7,41%). Các hàng precision, recall, F1 và confusion matrix dùng ngưỡng 0,5.
 
+**Diễn giải cần ưu tiên:** ROC-AUC DEV OOF của mô hình chính C=10 là 0,5096, gần mức đoán ngẫu nhiên; development chưa cho thấy tín hiệu xếp hạng rõ. ROC-AUC test khoảng 0,70 là tín hiệu yếu trên tập test mà DEV chưa xác nhận, không đủ để kết luận mô hình hoạt động tốt hay sẵn sàng triển khai. Test đã được mở; không dùng kết quả test để tinh chỉnh đặc trưng, ngưỡng, mô hình hoặc luật, và không chạy evaluator lần nữa.
+
 | Mô hình | Vai trò | Precision | Recall | F1 | ROC-AUC | AP | ROC-AUC 95% CI | AP 95% CI | ΔAP vs baseline 95% CI | TN / FP / FN / TP |
 |---|---|---:|---:|---:|---:|---:|---:|---:|---:|---:|
 | Baseline majority | Mốc so sánh | 0,000 | 0,000 | 0,000 | 0,500 | 0,046 | 0,5000–0,5000 | 0,0404–0,0517 | — | 4.932 / 0 / 237 / 0 |
@@ -20,11 +22,11 @@ Cohort scoring gồm 5.169 khách đã mua trước T; có 237 dương (4,59%). 
 
 **Cấu hình ghi >T, evaluator dùng [T,end) (gồm ngày T); ảnh hưởng chưa xác định; đây là kết quả số liệu của lần chạy thực tế, không phải khẳng định tuân thủ đầy đủ giao thức, không gọi là 'đạt cổng ghi trước'.** Xem [ghi chú provenance](test_provenance_note.md).
 
-DEV OOF của Logistic Regression C=10 có ROC-AUC 0,5096, AP 0,0699 và PR-AUC trung bình 5 fold 0,1093; feature-v2 có ROC-AUC 0,4969 và AP 0,0645. Baseline DEV OOF có ROC-AUC 0,5362 vì score baseline dùng prevalence riêng của train ở từng fold; khác test baseline dùng một score cố định nên ROC-AUC 0,500. Chênh lệch DEV–test chưa được giải thích. Lịch sử đặc trưng dài hơn, prevalence khác nhau và cửa sổ có Tết 2026 là các giả thuyết chưa kiểm chứng.
+DEV OOF của Logistic Regression C=10 có ROC-AUC 0,5096, AP 0,0699 và PR-AUC trung bình 5 fold 0,1093; feature-v2 có ROC-AUC 0,4969 và AP 0,0645. Cả hai ROC-AUC DEV đều gần mức ngẫu nhiên. Baseline DEV OOF có ROC-AUC 0,5362 vì score baseline dùng prevalence riêng của train ở từng fold; khác test baseline dùng một score cố định nên ROC-AUC 0,500. Test point estimate khoảng 0,70 được xem là tín hiệu yếu chưa được development xác nhận; không kết luận mô hình hoạt động tốt. Chênh lệch chưa được giải thích. Lịch sử đặc trưng dài hơn, prevalence khác nhau và cửa sổ có Tết 2026 là các giả thuyết chưa kiểm chứng. Vì test đã mở, không dùng nó để tiếp tục tinh chỉnh hoặc chọn mô hình.
 
 ## Phân khúc
 
-K-Means K=2/3/4 và nhóm quy tắc được gán bằng scaler, mô hình và ngưỡng DEV đã khóa. Cohort scoring có 5.169 khách. Khoảng cách TV bằng 0 vì DEV tại T và scoring dùng cùng hồ sơ đầu vào đã khóa; Wasserstein chuẩn hóa theo IQR của Frequency không xác định vì IQR DEV bằng 0. Đây là đặc điểm của thiết kế so sánh, không phải bằng chứng hành vi tương lai ổn định. Proxy giá trị lớn không xác minh pháp nhân.
+K-Means K=2/3/4 và nhóm quy tắc được gán bằng scaler, mô hình và ngưỡng DEV đã khóa. K=2 chủ yếu tách khách mua một lần với khách mua lặp lại; đây là phân biệt theo tần suất, chưa chứng minh các nhóm có ý nghĩa kinh doanh hoặc giá trị cho quyết định vận hành. Cohort scoring có 5.169 khách. Khoảng cách TV bằng 0 vì DEV tại T và scoring dùng cùng hồ sơ đầu vào đã khóa; Wasserstein chuẩn hóa theo IQR của Frequency không xác định vì IQR DEV bằng 0. Đây là đặc điểm của thiết kế so sánh, không phải bằng chứng hành vi tương lai ổn định. Proxy giá trị lớn không xác minh pháp nhân.
 
 ## Luật kết hợp
 
@@ -33,3 +35,5 @@ K-Means K=2/3/4 và nhóm quy tắc được gán bằng scaler, mô hình và n
 ## Diễn giải và hạn chế
 
 Tập DEV có một mùa Tết trọn vẹn. Chênh lệch DEV–test và khả năng liên quan của cửa sổ test/Tết chưa được kiểm chứng. Suy luận tập con gán quà có thể sai; dữ liệu hiện trạng không lưu lịch sử thay đổi trạng thái. Chưa có giá vốn nên không đánh giá được hiệu quả kinh tế combo.
+
+Không có đủ dữ liệu phản hồi/đánh giá với nhãn phù hợp trong snapshot để xây dựng hoặc kiểm định bài phân loại phản hồi; bài toán này được bỏ qua, không diễn giải là phản hồi tiêu cực hay không có vấn đề.
