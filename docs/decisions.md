@@ -187,4 +187,9 @@
 - **Lý do:** Một đánh giá hợp lệ theo từng anchor cần rolling-origin, mỗi mô hình chỉ được fit trên dữ liệu có trước anchor. Mô hình đã fit trên DEV đầy đủ có thể đã thấy dữ liệu tương lai của anchor lịch sử; chấm trực tiếp sẽ rò rỉ thời gian. Chạy rolling-origin cần fit mới, hiện bị cấm; test đã mở và hạn nộp là 2026-10-27.
 - **Điều kiện nếu xem xét sau này:** Chủ dự án phải duyệt phạm vi riêng và Amendment 06 mới. Phân tích chỉ mang tính thăm dò, phải báo cả kết quả không ủng hộ giả thuyết và không đổi kết luận hiện hành. Metric theo fold DEV OOF đã lưu có thể được trích mô tả mà không tính lại; không có metric anchor dựng mới trong phạm vi hiện tại.
 
+## D-023 — Đóng gói bàn giao
+
+- **Ngày:** 2026-10-26.
+- **Quyết định:** Đóng gói bàn giao: dọn file tạm, thêm dữ liệu mẫu tổng hợp (data/sample, không từ dữ liệu thật), thêm docs/INDEX.md; không đổi kết luận, không di chuyển docs.
+
 

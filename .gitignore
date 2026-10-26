@@ -39,3 +39,19 @@ dist/
 .idea/
 Thumbs.db
 Desktop.ini
+
+# Environment lock files
+Pipfile.lock
+poetry.lock
+uv.lock
+pdm.lock
+conda-lock.yml
+environment.lock.yml
+
+# Share only the explicitly synthetic demonstration data under data/
+!data/
+data/*
+!data/sample/
+data/sample/*
+!data/sample/README.md
+!data/sample/*.csv

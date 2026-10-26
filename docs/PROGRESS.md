@@ -9,6 +9,7 @@ Updated: 2026-10-26
 - Cohort 5.499 preflight, 5.174 khách DEV status 3 và 5.169 scoring chưa đối soát. Combo chính là 24 cặp theo quy tắc ít nhất 4/6; 21/24 có lift > 1 trên 2.174 giỏ test. Không so sánh tỉnh/thành vì 91,92% doanh thu mang nhãn UNKNOWN. Bài phân loại phản hồi bị bỏ qua do thiếu dữ liệu có nhãn. K=2 chủ yếu phân biệt mua một lần/lặp lại, chưa xác nhận ý nghĩa kinh doanh.
 - D-022 giữ chẩn đoán anchor ở trạng thái chưa làm: không mở Amendment 06, không fit mới. Hai thành viên cần tự chạy kiểm tra hậu mở an toàn, thử dashboard, tập demo 4 phút và trả lời ít nhất 10 câu chéo.
 - Hậu kiểm trước cập nhật artifact: `run_all.py` pass (74 pytest, split/GET-only/locks/PII); dashboard smoke pass (5 tab, 11 CSV, 6 JSON); 17 hash bảo vệ khớp baseline; test-open lock giữ count=1; access log giữ đúng một `label_load` và một `behavior_load`. Sau cập nhật dashboard, smoke được chạy lại với 10 CSV.
+- Đóng gói bàn giao theo D-023: thêm dữ liệu mẫu tổng hợp tại `data/sample/`, mục lục `docs/INDEX.md` và nhật ký `docs/cleanup_log.md`; không đổi kết luận và không di chuyển tài liệu trong `docs/`.
 
 ## Locked scope and active decisions
 

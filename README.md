@@ -51,3 +51,6 @@ Dashboard chỉ đọc bảng tổng hợp từ `outputs/`; không gọi API. Kh
 - Pancake Open API dùng API key qua query string và key có quyền cao. Không đưa key vào chat hoặc commit. Client dự án chỉ cho phép GET.
 
 Thông tin API và các giới hạn đã biết nằm ở [docs/api_notes.md](docs/api_notes.md); từ điển trường ở [docs/data_dictionary.md](docs/data_dictionary.md).
+
+- Mục lục bàn giao: [docs/INDEX.md](docs/INDEX.md).
+- `data/sample/` là dữ liệu tổng hợp để minh họa, không phải dữ liệu cửa hàng và không dùng để suy ra kết quả dự án.
