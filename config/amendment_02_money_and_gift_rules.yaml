@@ -1,0 +1,63 @@
+amendment_id: 02
+status: approved_owner_decision
+decision_date: "2026-10-25"
+timezone: Asia/Ho_Chi_Minh
+scope: development_behavior_and_recorded_sales
+source_hashes:
+  split_lock_sha256: cb6d983a9b32f43bfcbb671f7d71af1b012a70b8af999efbed3691ceb3e04440
+  amendment_01_sha256: 23da1216cf06c32003d52eb7831ed528dc4a4259d3480a9e3025fcb394100cfd
+analysis_start: "2024-04-01"
+revenue_field_rule:
+  expression: "total_price - total_discount"
+  name: revenue_recognized
+  eligible_status: 3
+  date_scope: "[analysis_start, test_start)"
+  shipping_included: false
+  excluded_payment_evidence_fields:
+    - cash
+    - cod
+    - prepaid
+    - transfer_money
+    - money_to_collect
+    - total_price_after_sub_discount
+  evidence:
+    owner_sample_orders: 13
+    after_equals_total_minus_discount_plus_shipping: "12/13"
+    total_price_equals_sum_variation_info_retail_price_times_quantity: "13/13"
+    owner_reports_after_sub_discount_includes_shipping_and_matches_money_to_collect: true
+    dashboard_columns_completed_in_template: false
+    seller_confirmation: "Counter sales were paid in cash; early staff did not reliably record payment in the app, so app payment fields are not evidence of payment."
+gift_rule:
+  is_gift_if_any:
+    - "total_price - total_discount == 0"
+    - "total_price == 0 and total_price_after_sub_discount == 0"
+  treatment: "Exclude from Frequency, Recency, labels, baskets, revenue_recognized, and Monetary; retain raw and count separately."
+anomaly_rule:
+  money_anomaly_if_any:
+    - "total_price_after_sub_discount != total_price - total_discount + shipping_fee"
+    - "total_price == 0 and total_price_after_sub_discount > 0"
+    - "cod < 0"
+    - "total_discount < 0"
+  primary_treatment: "Exclude from revenue_recognized and Monetary; otherwise keep non-gift orders in behavioral purchase counts and labels."
+  sensitivity_treatment: "Keep gift orders excluded; include non-gift anomalies using total_price_after_sub_discount - shipping_fee."
+  stop_if_union_share_exceeds: 0.05
+  share_denominator: "all status-3 orders in effective development"
+H_obs:
+  rule: "All available valid purchase history from analysis_start up to but excluding T."
+  interval: "[analysis_start, T)"
+  timezone: Asia/Ho_Chi_Minh
+pre_opening_period:
+  description: "Giai đoạn bán thử đầu tiên (2022-06 through 2022-09); excluded from behavior analyses; raw retained."
+feasibility:
+  N365_W365: "not feasible; 0 eligible development customers; do not relax dates"
+pre_label_access_audit:
+  reserved_access_log_entries: 2
+  reserved_access_log_kinds: [eligibility_count]
+  label_load_entries: 0
+  test_behavior_load_entries: 0
+  day1_warehouse_test_labels_loaded: false
+  dev_quality_test_labels_loaded: false
+  reserved_access_log_sha256: 6354e3f7b6de499fe10aa874fa21dcdee71255ba051de164d4e5deaa8a237d58
+  day1_warehouse_manifest_sha256: ab551f8bce521b426a61d9f52dab6fcbcee8a52ff0e4a537f0fb216d0e6ebafb
+  dev_quality_summary_sha256: 456a2c1d6c227403a2746431e544a4e018478ca212c06e564ebbc95b1d06db17
+decision_precedes_label_generation_and_modeling: true

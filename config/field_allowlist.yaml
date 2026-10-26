@@ -1,0 +1,22 @@
+version: 1
+status: approved_for_day1_development_eda
+
+# Minimum fields for development-only structural and transaction-count EDA.
+# This list is not permission to use money, notes, contact fields, or histories.
+allowed_fields:
+  - id
+  - inserted_at
+  - status
+  - customer.customer_id
+  - items.product_id
+
+# HMAC before these values enter DuckDB; keep all resulting keys restricted.
+pseudonymous_fields:
+  - id
+  - customer.customer_id
+  - items.product_id
+free_text_fields: []
+identifier_fields:
+  - id
+  - customer.customer_id
+  - items.product_id

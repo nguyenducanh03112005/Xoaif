@@ -1,0 +1,129 @@
+amendment_id: 04
+status: preregistered_followup
+decision_date: "2026-10-25"
+timezone: Asia/Ho_Chi_Minh
+scope: "Day 2B bounded development-only follow-up; no test access and no Day 3"
+timebox_hours: 6
+source_hashes:
+  split_lock_sha256: cb6d983a9b32f43bfcbb671f7d71af1b012a70b8af999efbed3691ceb3e04440
+  amendment_01_sha256: 23da1216cf06c32003d52eb7831ed528dc4a4259d3480a9e3025fcb394100cfd
+  amendment_02_sha256: 668d9b717597bb9131a66c02c4f0ca53003a20374bbbce76e1fc3242413fe66b
+  amendment_03_sha256: 3d87751451fa17fe71644df7f0743331ee6dae6b34013a4b063e18b6da98eaf1
+test_policy:
+  test_remains_closed: true
+  test_label_reads_allowed: false
+  test_behavior_reads_allowed: false
+  day_3_allowed: false
+  recorded_reserved_label_reads: 0
+  recorded_reserved_behavior_reads: 0
+frozen_reference_model:
+  task: "repurchase within the existing locked development label definition"
+  estimator: logistic_regression
+  parameters: {C: 10.0}
+  selection_rule: "highest mean PR-AUC across the five preregistered temporal folds"
+  original_dev_model_path: outputs/models/day2_dev_final_model.joblib
+  original_dev_model_sha256: 0ac767d24c641f50bdc19634e590dc45a92d9e4cd5513d02871fac50b109cd4a
+  pooled_oof_discrepancy_to_report: "decision_tree PR-AUC 0.079803 vs logistic_regression 0.069885; retain LR because choice was made by mean-fold PR-AUC"
+  may_be_reselected_after_pooled_metrics: false
+registered_work:
+  combo_v2:
+    maximum_runs: 1
+    data: "status-3 development orders only; exclude gifts; HMAC product keys"
+    basket_rule: "drop line items with observed retail_price == 0; keep non-zero or missing-price lines; require at least two distinct product_id after filtering"
+    support_denominator: "eligible baskets after zero-price item removal and two-product minimum"
+    support_values: [0.005, 0.01, 0.02, 0.03, 0.05]
+    minimum_rule_occurrences: 5
+    rule_filter: "at least five occurrences and lift > 1; report support, confidence, lift, leverage"
+    selection_rule: "highest tested min_support yielding at least five qualifying rules; if none, use 0.005 and report the limited result"
+    companion_product_proposal:
+      top_products: 20
+      support_threshold: 0.30
+      auto_companion_if: "support > 30% OR normalized product name matches registered packaging/accessory terms"
+      terms_packaging: ["túi", "giấy", "bao bì", "hộp", "gói", "bịch", "mica"]
+      terms_accessory: ["phụ kiện", "portcard", "bảng tên", "thẻ", "tag", "que", "kẹp", "móc"]
+      owner_confirmation: "pending; proposal does not block analysis"
+    fallback: "if fewer than 100 eligible baskets OR fewer than five qualifying rules at 0.005, report low confidence and test the already-available category-code basket once; do not invent category names"
+    outputs:
+      - outputs/tables/companion_products_v2.csv
+      - outputs/tables/rules_v2.csv
+      - outputs/tables/combos_v2.csv
+      - outputs/metrics/day2b_baskets.json
+    economics: "no discount allocation, margin, or profit calculation"
+  segmentation_v2:
+    maximum_runs: 1
+    frozen_k2: "retain existing K=2 as the primary statistical reference"
+    candidate_k: [2, 3, 4]
+    seeds: [13, 42, 87, 2025, 7]
+    stability_metrics: ["pairwise ARI across seeds", "ARI on common customers between primary and sensitivity-B inputs", "silhouette"]
+    rule_based_segments:
+      name_prefix: "Theo quy tắc nghiệp vụ —"
+      development_quantiles: [0.25, 0.5, 0.75, 0.99]
+      precedence:
+        - "large-value low-frequency proxy: Monetary >= p99 OR max order value >= p99, and Frequency <= development p25"
+        - "high value: Monetary >= p75 after the proxy group"
+        - "repeat buyer: Frequency >= 2 after prior groups"
+        - "single recent: Frequency == 1 and Recency <= median Recency among one-order customers"
+        - "single long-ago: remaining Frequency == 1 customers"
+      labels_must_not_say: ["churn risk", "likely to leave"]
+    outputs:
+      - outputs/tables/segments_v2.csv
+      - outputs/tables/segment_profiles_v2.csv
+      - outputs/metrics/day2b_segmentation.json
+      - outputs/figures/segments_v2_stability.png
+  repurchase_features_v2:
+    maximum_experiment_runs: 1
+    task: "same locked dev repurchase labels and five temporal folds as amendment 03; development data only"
+    new_order_source: "most recent eligible order strictly before each customer T"
+    registered_features:
+      - most_recent_order_distinct_products
+      - most_recent_order_primary_product_group
+      - most_recent_order_discount_rate
+      - most_recent_order_revenue_recognized
+      - most_recent_order_channel_if_present
+      - most_recent_order_province
+      - most_recent_order_month
+      - most_recent_order_nearest_holiday_distance_days
+    missing_data_rule: "fit imputer and encoder inside each train fold; missing source channel/category stays missing, not inferred"
+    models:
+      logistic_regression_C: [0.1, 1.0, 10.0]
+      decision_tree_max_depth: "1..20 inclusive; min_samples_leaf=5"
+      random_forest: "n_estimators=150, max_depth in [None, 8, 16], min_samples_leaf in [1, 5], max_features=sqrt"
+      baseline: "majority prediction/probability fit within each train fold"
+    selection_rule: "highest mean PR-AUC across the five existing folds; tie-break by mean F1 then shallower/simpler model"
+    signal_rule: "signal only if paired customer-bootstrap 95% lower bound for OOF ROC-AUC > 0.55 AND 95% lower bound for OOF PR-AUC improvement over majority baseline > 0"
+    bootstrap: {method: "paired OOF row resampling; one row per customer", repeats: 2000, seed: 20261025, interval: "percentile 95%"}
+    importance: "permutation importance on held-out folds only, five repeats per fold"
+    stop_if_no_signal: "record 'không đủ bằng chứng để dự đoán mua lại từ dữ liệu hiện có'; no further repurchase feature/model trial"
+    outputs:
+      - outputs/metrics/dev_final_models_v2.json
+      - outputs/models/repurchase_features_v2.joblib
+      - outputs/figures/decision_tree_depth_curve_v2.png
+      - outputs/tables/repurchase_feature_importance_v2.csv
+  cancel_return_optional:
+    maximum_experiment_runs: 1
+    label: "status 5 or 6 versus status 3; exclude statuses 0, 1, 4 and all other statuses"
+    gift_handling: "exclude status-3 gifts from this behavior label in accordance with amendment 03; count separately"
+    fold_plan: "after 180 initial training-only days, split remaining development dates into five contiguous, near-equal validation windows; each train fold uses only earlier development orders"
+    features_allowed: ["distinct_item_count", "order_value_total_price_if_present_at_creation", "channel_order_sources_name_if_present", "province", "creation_month", "new_or_returning_customer"]
+    features_forbidden: ["status_history", "updated_at", "cash", "cod", "prepaid", "transfer_money", "money_to_collect", "all payment fields", "post-creation fields", "direct identifiers", "free text"]
+    gate: "do not fit any cancel/refund model if positive status-5/6 examples are below 20 in any of the five validation folds; report fold counts and skip"
+    models_if_gate_passes: "same fixed LR/DT/RF/baseline grids and temporal-only selection/importance procedure as repurchase_features_v2"
+    outputs:
+      - outputs/metrics/day2b_cancel_model.json
+      - outputs/models/cancel_refund_dev_v2.joblib
+      - docs/leakage_review_cancel.md
+experiment_accounting:
+  candidate_evaluation_unit: "one model configuration across all five registered temporal folds; baseline counts as one configuration"
+  max_runs:
+    combo_v2: 1
+    segmentation_v2: 1
+    repurchase_features_v2: 1
+    cancel_return_optional: 1
+  candidate_evaluations_repurchase: 30
+  candidate_evaluations_cancel_if_gate_passes: 30
+  no_unregistered_retry_or_post_result_feature_change: true
+  report_all_candidates_and_skips: true
+owner_decisions:
+  keep_test_closed: true
+  keep_original_repurchase_model_locked: true
+  no_test_or_day3_until_explicit_ok: true

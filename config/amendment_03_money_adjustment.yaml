@@ -1,0 +1,81 @@
+amendment_id: 03
+status: approved_owner_decision
+decision_date: "2026-10-25"
+timezone: Asia/Ho_Chi_Minh
+supersedes: amendment_02_money_and_gift_rules.yaml
+source_hashes:
+  split_lock_sha256: cb6d983a9b32f43bfcbb671f7d71af1b012a70b8af999efbed3691ceb3e04440
+  amendment_01_sha256: 23da1216cf06c32003d52eb7831ed528dc4a4259d3480a9e3025fcb394100cfd
+  amendment_02_sha256: 668d9b717597bb9131a66c02c4f0ca53003a20374bbbce76e1fc3242413fe66b
+analysis_start: "2024-04-01"
+revenue_rule:
+  primary_expression: "total_price_after_sub_discount - shipping_fee"
+  special_case_if: "total_price_after_sub_discount == total_price - total_discount and shipping_fee > 0"
+  special_case_expression: "total_price_after_sub_discount"
+  adjustment_expression: "revenue_recognized - (total_price - total_discount)"
+  adjustment_positive: "additional_fee_or_higher_selling_price"
+  adjustment_negative: "additional_discount_or_promotion"
+  adjustment_zero: "matches_list_price_after_discount"
+  gross_list_value: "total_price"
+  applies_to: "status 3 in [analysis_start, test_start), excluding gifts for customer behavior/value"
+  payment_fields_are_not_filters_or_payment_proof:
+    - cash
+    - cod
+    - prepaid
+    - transfer_money
+    - money_to_collect
+  evidence:
+    sample_orders_reviewed: 13
+    identity_after_equals_total_minus_discount_plus_shipping: "12/13"
+    total_price_equals_retail_line_total: "13/13 in reviewed sample; current dev audit comparable coverage recorded in outputs"
+    dashboard_columns_completed_in_template: false
+    owner_dashboard_status_reconciliation: true
+    owner_verbal_confirmation: "Status 3 means received/recognized; counter orders were paid cash, early app payment fields are unreliable."
+gift_rule:
+  is_gift_if_any:
+    - "revenue_recognized == 0"
+    - "total_price == 0 and total_price_after_sub_discount == 0"
+  treatment: "Exclude from F/R, labels, baskets, recognized revenue, Monetary, AOV; retain raw and count separately."
+adjustment_rule:
+  price_adjustment: "revenue_recognized - (total_price - total_discount)"
+  adj_unexplained: "true only when after does not match the expected equation or any recognized exact pattern (special case, after=total+shipping, after=total, residual=+/-shipping, residual=+/-discount); classify as other-distance."
+  no_order_exclusion_for_adjustment: true
+negative_revenue_rule:
+  condition: "revenue_recognized < 0 and not a gift"
+  flag: negative_revenue
+  monetary_contribution: 0
+  keep_order_in_frequency_recency: true
+  stop_if_count_share_exceeds: 0.01
+  denominator: "all status-3 orders in effective development"
+sensitivity_rules:
+  - id: definition_A
+    expression: "total_price - total_discount"
+    treatment: "Report-only comparison and customer Monetary sensitivity; keep gift exclusion and set negative order contributions to zero."
+  - id: exclude_price_adjustments
+    expression: "exclude the union of price_adjustment != 0 or adj_unexplained"
+    treatment: "Rerun audit, segment and classifier sensitivity with the same time/customer split."
+revenue_comparison:
+  difference_over_one_percent_rule: "abs(primary - A) > 0.01 * abs(A); if A == 0, any non-zero difference counts."
+  spearman_unit: customer_level_Monetary
+  comparison_is_report_only: true
+H_obs:
+  rule: "All valid purchase history from analysis_start up to but excluding T."
+  interval: "[analysis_start, T)"
+  timezone: Asia/Ho_Chi_Minh
+old_gate_context:
+  previous_money_anomaly_orders: 701
+  previous_status3_orders: 6400
+  previous_share: "10.95%"
+  previous_threshold: "5%"
+  reason_for_change: "Owner's business knowledge that status 3 is realized revenue and price differences are fees/promotions; not test labels or test behavior."
+pre_label_access_audit:
+  reserved_access_log_entries: 2
+  reserved_access_log_kinds: [eligibility_count]
+  label_load_entries: 0
+  test_behavior_load_entries: 0
+  day1_warehouse_test_labels_loaded: false
+  dev_quality_test_labels_loaded: false
+  reserved_access_log_sha256: 6354e3f7b6de499fe10aa874fa21dcdee71255ba051de164d4e5deaa8a237d58
+  day1_warehouse_manifest_sha256: ab551f8bce521b426a61d9f52dab6fcbcee8a52ff0e4a537f0fb216d0e6ebafb
+  dev_quality_summary_sha256: 456a2c1d6c227403a2746431e544a4e018478ca212c06e564ebbc95b1d06db17
+decision_precedes_day2_label_generation_and_modeling: true

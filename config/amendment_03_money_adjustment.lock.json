@@ -1,0 +1,12 @@
+{
+  "amendment_path": "config/amendment_03_money_adjustment.yaml",
+  "amendment_sha256": "3d87751451fa17fe71644df7f0743331ee6dae6b34013a4b063e18b6da98eaf1",
+  "split_lock_path": "config/split.lock.json",
+  "split_lock_sha256": "cb6d983a9b32f43bfcbb671f7d71af1b012a70b8af999efbed3691ceb3e04440",
+  "amendment_01_path": "config/amendment_01_analysis_start.yaml",
+  "amendment_01_sha256": "23da1216cf06c32003d52eb7831ed528dc4a4259d3480a9e3025fcb394100cfd",
+  "amendment_02_path": "config/amendment_02_money_and_gift_rules.yaml",
+  "amendment_02_sha256": "668d9b717597bb9131a66c02c4f0ca53003a20374bbbce76e1fc3242413fe66b",
+  "snapshot_id": "20261024T052943Z",
+  "sealed_date": "2026-10-25"
+}

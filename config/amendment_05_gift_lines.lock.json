@@ -1,0 +1,17 @@
+{
+  "amendment_path": "config/amendment_05_gift_lines.yaml",
+  "amendment_sha256": "27bda2f81cfc963921ecb7a0da235777031996b26563d6425fbfa8d525eed720",
+  "split_config_sha256": "38d0e35ee8b34016d1246d111eed0315974390ab255daee8b48002373331553e",
+  "split_lock_sha256": "cb6d983a9b32f43bfcbb671f7d71af1b012a70b8af999efbed3691ceb3e04440",
+  "snapshot_manifest_sha256": "3536a0e5303d83a6fbddd19e6f52375ed70dd53a070d1cadb8691a66ad4acf5c",
+  "amendment_01_sha256": "23da1216cf06c32003d52eb7831ed528dc4a4259d3480a9e3025fcb394100cfd",
+  "amendment_02_sha256": "668d9b717597bb9131a66c02c4f0ca53003a20374bbbce76e1fc3242413fe66b",
+  "amendment_03_sha256": "3d87751451fa17fe71644df7f0743331ee6dae6b34013a4b063e18b6da98eaf1",
+  "amendment_04_sha256": "e76ee390e227a569a39ab5f4fe7c7489572a06323d6d2f1bc6c8b72fa52ea6f8",
+  "amendment_04_lock_sha256": "54bcf6166a06a428f7829d9154e94f91622632ab4c3c84b0008500217dd806b6",
+  "survey_sha256": "2a21adbce8f8ecd1e550a41b13db096b82f24b12171289f58069d04a8b14dab9",
+  "pre_open_access_log_sha256": "6354e3f7b6de499fe10aa874fa21dcdee71255ba051de164d4e5deaa8a237d58",
+  "sealed_date": "2026-10-26",
+  "pre_open_label_reads": 0,
+  "pre_open_behavior_reads": 0
+}

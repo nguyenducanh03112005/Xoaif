@@ -1,0 +1,15 @@
+status: not_locked
+timezone: Asia/Ho_Chi_Minh
+snapshot_id: null
+data_cutoff: null
+window_days: null
+n_candidates_days: []
+l_candidates_days: []
+dev_cutoff: null
+test_start: null
+test_end_exclusive: null
+# After approval, store the exact file SHA-256 and lock timestamp in
+# config/split.lock.json. Do not embed a file's own hash in that file.
+
+# Do not fill this from guessed dates. Lock only after a real immutable
+# snapshot and the CP1 decision. See docs/data_protocol.md.

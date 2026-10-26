@@ -1,0 +1,277 @@
+amendment_id: 05-test-open
+status: locked_before_one_time_test_open
+registered_at_utc: '2026-10-25T17:40:17.836311+00:00'
+timezone: Asia/Ho_Chi_Minh
+snapshot_id: 20261024T052943Z
+test_interval:
+  start_inclusive: '2025-10-22'
+  end_exclusive: '2026-04-20'
+  label_horizon_days: 180
+  eligible_customer_rule: at least one status-3, non-order-gift purchase with customer ID strictly before
+    T
+  outcome_rule: at least one status-3, non-order-gift purchase with local date > T and < the locked test_end_exclusive;
+    the exclusive endpoint is not read
+  nominal_horizon_note: The locked 180-day calendar interval has 179 post-T local dates because its end
+    is exclusive.
+  test_order_gift_rule: active amendment 03 money assessment; exclude order-level gifts
+models:
+- name: majority_baseline
+  score: development positive prevalence from dev_final_models_v2.json
+  threshold: 0.5
+  artifact: null
+  score_value: 0.07411630558722919
+- name: amendment_03_logistic_regression
+  parameters:
+    C: 10.0
+  threshold: 0.5
+  artifact: outputs/models/day2_dev_final_model.joblib
+  artifact_sha256: 0ac767d24c641f50bdc19634e590dc45a92d9e4cd5513d02871fac50b109cd4a
+  feature_schema: src/models/classify.py NUMERIC_COLUMNS + CATEGORICAL_COLUMNS
+- name: repurchase_features_v2_logistic_regression
+  parameters:
+    C: 0.1
+  threshold: 0.5
+  artifact: outputs/models/repurchase_features_v2.joblib
+  artifact_sha256: 5cbe48bb9b4944d91dfba7b85dd5d1608eb836b68574b16d3ac6a6319f8a2f80
+  feature_schema: feature_columns in dev_final_models_v2.json; latest order strictly before T
+classification:
+  numeric_features_v1:
+  - recency_days
+  - frequency
+  - monetary
+  - average_order_value
+  - max_order_value
+  - total_quantity
+  - distinct_products
+  - mean_days_between_orders
+  - first_order_month
+  - first_order_month_sin
+  - first_order_month_cos
+  - nearest_holiday_distance_days
+  - adjustment_positive_rate
+  - adjustment_negative_rate
+  - no_history_after_sensitivity
+  categorical_features_v1:
+  - province
+  feature_columns_v2:
+  - recency_days
+  - frequency
+  - monetary
+  - average_order_value
+  - max_order_value
+  - total_quantity
+  - distinct_products
+  - mean_days_between_orders
+  - first_order_month
+  - first_order_month_sin
+  - first_order_month_cos
+  - nearest_holiday_distance_days
+  - adjustment_positive_rate
+  - adjustment_negative_rate
+  - no_history_after_sensitivity
+  - last_order_product_count
+  - last_order_discount_rate
+  - last_order_revenue_recognized
+  - last_order_month
+  - last_order_month_sin
+  - last_order_month_cos
+  - last_order_holiday_distance_days
+  - province
+  - last_order_primary_product_group
+  - last_order_channel
+  - last_order_province
+  threshold_selection: fixed 0.5; no test threshold search
+  metrics:
+  - precision
+  - recall
+  - f1
+  - roc_auc
+  - average_precision
+  - confusion_matrix_tn_fp_fn_tp
+  bootstrap:
+    repetitions: 2000
+    seed: 20261026
+    unit: customer row, paired across models and baseline
+    interval: percentile 95%
+  baseline_comparison: paired average-precision difference versus constant dev positive prevalence
+  dev_prevalence_source: outputs/metrics/dev_final_models_v2.json repurchase_features_v2.positive_rate
+  signal_rule: signal only if lower ROC-AUC 95% CI > 0.55 AND lower paired AP-difference 95% CI > 0
+segmentation:
+  population: eligible customers at T with at least one prior status-3 non-gift purchase
+  rfm_as_of: '2025-10-22'
+  kmeans_values:
+  - 2
+  - 3
+  - 4
+  model_bundle: outputs/models/segmenters_dev_frozen_v1.joblib
+  model_bundle_sha256: 5babaa2352921f840385bdfe6681948f329b0ee276de2aef1cc8500c9146b93f
+  rule_thresholds_source: outputs/metrics/frozen_segmenters_dev.json business_rule_thresholds and business_like_proxy_thresholds
+  business_rule_thresholds:
+    frequency_p25: 1.0
+    frequency_p50: 1.0
+    frequency_p75: 1.0
+    monetary_p75: 480000.0
+    monetary_p99: 3439575.9999999832
+    max_order_value_p99: 3082175.99999998
+    one_order_recency_p50: 285.5
+  business_like_proxy_thresholds:
+    frequency_p25: 1.0
+    monetary_p99: 3439575.9999999832
+    max_order_value_p99: 3082175.99999998
+  no_fit_or_threshold_update: true
+  comparison: size, customer share, pre-T recognized-revenue share and mean R/F/M versus locked development
+    profile; total-variation distance for mix and normalized Wasserstein-1 (dev IQR) for R/F/M; test-window
+    recognized revenue share also descriptive
+  business_like_proxy_label: proxy only; not a verified enterprise-customer identity
+association_rules:
+  frozen_tables:
+  - outputs/tables/rules_v2.csv
+  - outputs/tables/combos_v2.csv
+  frozen_pair_keys_from: combos_v2.csv product_a_key_hmac/product_b_key_hmac; exact hash in freeze manifest
+  frozen_combo_count: 24
+  frozen_pairs:
+  - product_a_key_hmac: 22380ac7f784b15b12f9ce172b8c5c7804f884202f3a058e8fb65292141ecece
+    product_b_key_hmac: 42e4ba50f45e12cac68f362cae686221278bf2d5ca9afe4ba1023323e0ca8f7e
+    display_name: PHỤ KIỆN BẢNG TÊN + PORTCARD HƯỚNG DẪN CHĂM CÂY
+  - product_a_key_hmac: 22380ac7f784b15b12f9ce172b8c5c7804f884202f3a058e8fb65292141ecece
+    product_b_key_hmac: 7be2ecca7b875993d397d72e456402eb5d4ed61dc3354d07539ed9266a4459eb
+    display_name: PHỤ KIỆN BẢNG TÊN + TÚI GIẤY XOAIF GARDEN
+  - product_a_key_hmac: 22380ac7f784b15b12f9ce172b8c5c7804f884202f3a058e8fb65292141ecece
+    product_b_key_hmac: b261d9843cddc8ba6453ba429917227a38b8002ef18719fa35e89f22fbe36723
+    display_name: PHỤ KIỆN BẢNG TÊN + CHẬU TRỤ
+  - product_a_key_hmac: 22380ac7f784b15b12f9ce172b8c5c7804f884202f3a058e8fb65292141ecece
+    product_b_key_hmac: cd578ab04d722f5038773f65af50799710913b150fba91861f48399411c2b222
+    display_name: PHỤ KIỆN BẢNG TÊN + CẨM NHUNG
+  - product_a_key_hmac: 2321cc94dcf1642a590fd8eca9acc407bcf46a3061a75df7c235cc97f051d02f
+    product_b_key_hmac: 3ef68ce1ebd0ae27fbfd969a0a428382412f27554fed63b8e5882c671161a38a
+    display_name: SEN ĐÁ + CHẬU KIM CƯƠNG THẤP
+  - product_a_key_hmac: 2321cc94dcf1642a590fd8eca9acc407bcf46a3061a75df7c235cc97f051d02f
+    product_b_key_hmac: 42e4ba50f45e12cac68f362cae686221278bf2d5ca9afe4ba1023323e0ca8f7e
+    display_name: SEN ĐÁ + PORTCARD HƯỚNG DẪN CHĂM CÂY
+  - product_a_key_hmac: 2321cc94dcf1642a590fd8eca9acc407bcf46a3061a75df7c235cc97f051d02f
+    product_b_key_hmac: 7be2ecca7b875993d397d72e456402eb5d4ed61dc3354d07539ed9266a4459eb
+    display_name: SEN ĐÁ + TÚI GIẤY XOAIF GARDEN
+  - product_a_key_hmac: 2dcce2aa9326000b5310fba953887c04d9664bf63314cded2acbacdf435acc91
+    product_b_key_hmac: 42e4ba50f45e12cac68f362cae686221278bf2d5ca9afe4ba1023323e0ca8f7e
+    display_name: KIM TIỀN + PORTCARD HƯỚNG DẪN CHĂM CÂY
+  - product_a_key_hmac: 2dcce2aa9326000b5310fba953887c04d9664bf63314cded2acbacdf435acc91
+    product_b_key_hmac: 7be2ecca7b875993d397d72e456402eb5d4ed61dc3354d07539ed9266a4459eb
+    display_name: KIM TIỀN + TÚI GIẤY XOAIF GARDEN
+  - product_a_key_hmac: 3ef68ce1ebd0ae27fbfd969a0a428382412f27554fed63b8e5882c671161a38a
+    product_b_key_hmac: 42e4ba50f45e12cac68f362cae686221278bf2d5ca9afe4ba1023323e0ca8f7e
+    display_name: CHẬU KIM CƯƠNG THẤP + PORTCARD HƯỚNG DẪN CHĂM CÂY
+  - product_a_key_hmac: 3ef68ce1ebd0ae27fbfd969a0a428382412f27554fed63b8e5882c671161a38a
+    product_b_key_hmac: 7be2ecca7b875993d397d72e456402eb5d4ed61dc3354d07539ed9266a4459eb
+    display_name: CHẬU KIM CƯƠNG THẤP + TÚI GIẤY XOAIF GARDEN
+  - product_a_key_hmac: 4182b38a37e9fca4408f1d9844b535b260e16668b0a4b64ea23f30d72d91f535
+    product_b_key_hmac: 42e4ba50f45e12cac68f362cae686221278bf2d5ca9afe4ba1023323e0ca8f7e
+    display_name: ĐÔ LA NGỌC BÍCH + PORTCARD HƯỚNG DẪN CHĂM CÂY
+  - product_a_key_hmac: 4182b38a37e9fca4408f1d9844b535b260e16668b0a4b64ea23f30d72d91f535
+    product_b_key_hmac: b261d9843cddc8ba6453ba429917227a38b8002ef18719fa35e89f22fbe36723
+    display_name: ĐÔ LA NGỌC BÍCH + CHẬU TRỤ
+  - product_a_key_hmac: 42e4ba50f45e12cac68f362cae686221278bf2d5ca9afe4ba1023323e0ca8f7e
+    product_b_key_hmac: 46420d7927c5038f4991977f20e090cff2307d63458e4b7ac3e94fc94c41f8bd
+    display_name: PORTCARD HƯỚNG DẪN CHĂM CÂY + CHẬU MOCHI
+  - product_a_key_hmac: 42e4ba50f45e12cac68f362cae686221278bf2d5ca9afe4ba1023323e0ca8f7e
+    product_b_key_hmac: 563832306dad844a53f8444830f52f4e0d1b38553b3ba6eac7773f7dfd0d7941
+    display_name: PORTCARD HƯỚNG DẪN CHĂM CÂY + HỒNG MÔN
+  - product_a_key_hmac: 42e4ba50f45e12cac68f362cae686221278bf2d5ca9afe4ba1023323e0ca8f7e
+    product_b_key_hmac: 72d9dd8db54c3239b071da376f995b99e6232e2848cc3c93a2f08493c6ad5d0d
+    display_name: PORTCARD HƯỚNG DẪN CHĂM CÂY + KIM NGÂN
+  - product_a_key_hmac: 42e4ba50f45e12cac68f362cae686221278bf2d5ca9afe4ba1023323e0ca8f7e
+    product_b_key_hmac: 7be2ecca7b875993d397d72e456402eb5d4ed61dc3354d07539ed9266a4459eb
+    display_name: PORTCARD HƯỚNG DẪN CHĂM CÂY + TÚI GIẤY XOAIF GARDEN
+  - product_a_key_hmac: 42e4ba50f45e12cac68f362cae686221278bf2d5ca9afe4ba1023323e0ca8f7e
+    product_b_key_hmac: aa2b7baa65ad6b96891f2d76bcbce6483102495b44b95c4e63448d0c1b5a84fe
+    display_name: PORTCARD HƯỚNG DẪN CHĂM CÂY + TÚI MICA HÌNH THANG
+  - product_a_key_hmac: 42e4ba50f45e12cac68f362cae686221278bf2d5ca9afe4ba1023323e0ca8f7e
+    product_b_key_hmac: b261d9843cddc8ba6453ba429917227a38b8002ef18719fa35e89f22fbe36723
+    display_name: PORTCARD HƯỚNG DẪN CHĂM CÂY + CHẬU TRỤ
+  - product_a_key_hmac: 42e4ba50f45e12cac68f362cae686221278bf2d5ca9afe4ba1023323e0ca8f7e
+    product_b_key_hmac: cd578ab04d722f5038773f65af50799710913b150fba91861f48399411c2b222
+    display_name: PORTCARD HƯỚNG DẪN CHĂM CÂY + CẨM NHUNG
+  - product_a_key_hmac: 42e4ba50f45e12cac68f362cae686221278bf2d5ca9afe4ba1023323e0ca8f7e
+    product_b_key_hmac: ec2f23c91db112c454767d97eec5b8956f28f8e012bbc4fe276b3aeb6a9f809e
+    display_name: PORTCARD HƯỚNG DẪN CHĂM CÂY + CHẬU MOCHI KẺ
+  - product_a_key_hmac: 7be2ecca7b875993d397d72e456402eb5d4ed61dc3354d07539ed9266a4459eb
+    product_b_key_hmac: b261d9843cddc8ba6453ba429917227a38b8002ef18719fa35e89f22fbe36723
+    display_name: TÚI GIẤY XOAIF GARDEN + CHẬU TRỤ
+  - product_a_key_hmac: 7be2ecca7b875993d397d72e456402eb5d4ed61dc3354d07539ed9266a4459eb
+    product_b_key_hmac: cd578ab04d722f5038773f65af50799710913b150fba91861f48399411c2b222
+    display_name: TÚI GIẤY XOAIF GARDEN + CẨM NHUNG
+  - product_a_key_hmac: b261d9843cddc8ba6453ba429917227a38b8002ef18719fa35e89f22fbe36723
+    product_b_key_hmac: cd578ab04d722f5038773f65af50799710913b150fba91861f48399411c2b222
+    display_name: CHẬU TRỤ + CẨM NHUNG
+  basket_rule: status-3 non-order-gift order; classify line gifts by locked amendment 05; remove gift_line=true;
+    aggregate variations to product_id; require >=2 distinct product IDs
+  metrics:
+  - support
+  - confidence_both_directions
+  - lift
+  - delta_support_vs_dev
+  - delta_confidence_vs_dev
+  - delta_lift_vs_dev
+  - test_lift_gt_1
+  no_new_rule_discovery: true
+predeclared_interpretation:
+  nonstationarity: if test differs clearly from dev, describe as evidence of temporal/nonstationary behavior;
+    test includes Tet 2026; do not adjust models or rules
+  association_caveat: co-occurrence only; not causal
+  known_limitations:
+  - only one complete Tet cycle in development
+  - line-level inferred_subset may be wrong
+  - no cost basis
+  - current status is not a historical status timeline
+frozen_sources_sha256:
+  config/split.yaml: 38d0e35ee8b34016d1246d111eed0315974390ab255daee8b48002373331553e
+  config/split.lock.json: cb6d983a9b32f43bfcbb671f7d71af1b012a70b8af999efbed3691ceb3e04440
+  config/amendment_01_analysis_start.yaml: 23da1216cf06c32003d52eb7831ed528dc4a4259d3480a9e3025fcb394100cfd
+  config/amendment_01_analysis_start.lock.json: 27fb532ac0ea1f76e0edd82a0733ba4d0d5f1231eaa057b09ddafaffa0106b21
+  config/amendment_02_money_and_gift_rules.yaml: 668d9b717597bb9131a66c02c4f0ca53003a20374bbbce76e1fc3242413fe66b
+  config/amendment_02_money_and_gift_rules.lock.json: 04ed73fe4f89096d40bd38e37932f412c520cb2c6c73465b89d3a9c1744f7c49
+  config/amendment_03_money_adjustment.yaml: 3d87751451fa17fe71644df7f0743331ee6dae6b34013a4b063e18b6da98eaf1
+  config/amendment_03_money_adjustment.lock.json: c1a4560aeacac39f2e8234abedb365f6c10f4a950b24040e422e488dfc94c076
+  config/amendment_04_followup.yaml: e76ee390e227a569a39ab5f4fe7c7489572a06323d6d2f1bc6c8b72fa52ea6f8
+  config/amendment_04_followup.lock.json: 54bcf6166a06a428f7829d9154e94f91622632ab4c3c84b0008500217dd806b6
+  config/amendment_05_gift_lines.yaml: 27bda2f81cfc963921ecb7a0da235777031996b26563d6425fbfa8d525eed720
+  config/amendment_05_gift_lines.lock.json: 5c627f1abde20211356c8cefd956216701142fc6bd247efd822294f8cbdb72f2
+  config/field_allowlist.yaml: 2ce08aa4d9b587ef89880b10f1a69e60e622ce4d86f5ede2531115017553fe7c
+  outputs/metrics/dev_final_models_v2.json: 27c2f011a52bf45816b82153270db56522b639c0aada82e777ace1d0611b5c83
+  outputs/metrics/dev_final_model.json: 7b0002e4d7c6b61a0b8929dd4af80b47a4a43ed352a066de508167fe97958221
+  outputs/metrics/day3_pretest_freeze.json: be57e7a73fb0844ac46ebd3707e65db5008f0cc23f57c46c93afd40bf975727d
+  outputs/metrics/day3_combo_prereg.json: 823bbfbacfea76a342cf8eeb0a7e3e0de44a9ed2a1b3b5e5a2f08ff353c80088
+  outputs/metrics/frozen_segmenters_dev.json: 307e6ced38704c5e29789cf503ceb1a8c3d19f14d8318db1707c5624fb3d3b0c
+  outputs/models/day2_dev_final_model.joblib: 0ac767d24c641f50bdc19634e590dc45a92d9e4cd5513d02871fac50b109cd4a
+  outputs/models/repurchase_features_v2.joblib: 5cbe48bb9b4944d91dfba7b85dd5d1608eb836b68574b16d3ac6a6319f8a2f80
+  outputs/models/segmenters_dev_frozen_v1.joblib: 5babaa2352921f840385bdfe6681948f329b0ee276de2aef1cc8500c9146b93f
+  outputs/tables/day2_features_primary.csv: 46d5bbc6e4d0992bc799bf5fbd1b3b864da16dd3ae3d324e4cab76e5170e1372
+  outputs/tables/segments.csv: a1ca2a39587e4aeddee6cb80fd9e67d2e0a1a63f17cbf7851e855c76d0fedb28
+  outputs/tables/segments_v2.csv: 542546832838a1e9e95a1d069f3dbd61d7b82e225e35cf38ea4f229712d9efbd
+  outputs/tables/rules_v2.csv: e8d74922d5a0658fdb4487e61abcf233778892c32bb6023425a7ce1c7c2d8786
+  outputs/tables/combos_v2.csv: ae7df8760857a9a7aa2cd667704829e71b076a70b5ca2f0a41fd6396ef0538d6
+  outputs/tables/seasonal_pair_metrics.csv: 5bb4646bcff6aa1545074487fd47464305dbb4e3c0b5e939cc75d15835930819
+  outputs/logs/reserved_access.jsonl: 6354e3f7b6de499fe10aa874fa21dcdee71255ba051de164d4e5deaa8a237d58
+  outputs/metrics/day3_gift_field_survey.json: 2a21adbce8f8ecd1e550a41b13db096b82f24b12171289f58069d04a8b14dab9
+  data/raw/pancake_orders/20261024T052943Z/manifest.json: 3536a0e5303d83a6fbddd19e6f52375ed70dd53a070d1cadb8691a66ad4acf5c
+  scripts/evaluate_test_once.py: ffe5ed9cb83ebacb20f913418cc981b026eca543ffbcc1949a841cb8a2018ffd
+  src/features/gift_lines.py: be43bb7caa54a240f60c890e9f56bbdd2c6b537ced8eb60cc9be5ce889385dd0
+  src/features/day2_data.py: c8091e7faa4f59f644994ba471fcbc565a1a72878f793044f433f136dba3d52f
+  src/features/day2b_data.py: 2e8c79c79a0aef51ec522542e4c6e9879317c3d72027c79cf7825d75fa9147fe
+  src/features/money.py: 7a22b4da01bdb1c2ca31f5d1a3089177dbd0838ead2c417b9abd828d4b668a3f
+  src/models/classify.py: 35ed02908eeeec0a4ce89893ee1aa0c439bb30eb8e1c47d30609975c66de46fa
+  src/models/classify_v2.py: eab950787f56bd42016ceb6c05156946e1b969edc3b73e3b6b3f8a9712642301
+  src/models/frozen_segmenters.py: 1c56234602933d495b0ef5bc665bd4b4f76d9f17a9e8a01320117fb88eae65cf
+  src/ingest/test_open_lock.py: 48f1c9a5e2f196bc0a6a45a6123a044b5306a82648d10502cfa8ce267b4d1dfc
+frozen_manifest_sha256: be57e7a73fb0844ac46ebd3707e65db5008f0cc23f57c46c93afd40bf975727d
+pre_open_evidence:
+  reserved_access_log_sha256: 6354e3f7b6de499fe10aa874fa21dcdee71255ba051de164d4e5deaa8a237d58
+  reserved_access_log_entries: 2
+  pre_open_label_reads: 0
+  pre_open_behavior_reads: 0
+  test_labels_loaded: false
+  test_behavior_loaded: false
+constraints:
+  test_openings: 1
+  after_open_do_not_refit_reselect_or_rerun_evaluation: true
+  cancel_refund_model: not fitted; registered positive-support gate failed in development
+  no_pii_outputs: true

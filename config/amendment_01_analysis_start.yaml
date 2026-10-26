@@ -1,0 +1,27 @@
+amendment_id: 01
+status: approved_owner_decision
+decision_date: "2026-10-25"
+analysis_start: "2024-04-01"
+timezone: Asia/Ho_Chi_Minh
+reason: >-
+  The owner states Xoaif Garden opened and began trading in April 2024.
+  Orders created before this local date are treated as test/setup records and
+  excluded from all behavioral, RFM, label, basket, and recorded-sales analysis.
+  Raw source records are retained unchanged.
+applies_to: all_behavioral_analysis
+split_lock_sha256: cb6d983a9b32f43bfcbb671f7d71af1b012a70b8af999efbed3691ceb3e04440
+split_dates_unchanged:
+  test_start: "2025-10-22"
+  test_end_exclusive: "2026-04-20"
+  N_days: 180
+  L_days: 7
+  W_days: 180
+decision_precedes_test_open_and_label_access: true
+local_evidence:
+  - outputs/logs/reserved_access.jsonl contains eligibility_count entries only
+  - outputs/tables/dev_quality_summary.json reports test_labels_loaded=false
+  - outputs/restricted warehouse manifest reports test_labels_loaded=false
+amendment_sha256_recorded_in: config/amendment_01_analysis_start.lock.json
+hash_note: >-
+  A file cannot contain its own stable SHA-256 without a self-referential hash.
+  The exact amendment file hash is sealed in the sidecar named above.

@@ -1,0 +1,49 @@
+status: locked
+snapshot_id: 20261024T052943Z
+snapshot_manifest_sha256: 3536a0e5303d83a6fbddd19e6f52375ed70dd53a070d1cadb8691a66ad4acf5c
+source_timestamp_timezone: UTC
+timezone: Asia/Ho_Chi_Minh
+
+# Eligibility preflight gate; set before inspecting the reserved region.
+# A floor of 30 distinct eligible customers is an operational minimum to avoid
+# reporting test metrics from a very small cohort; it is not a power guarantee.
+min_test_eligible_customers: 30
+customer_eligibility_rule: at least one owner-valid purchase (current status 3)
+  with a non-missing customer ID and local purchase date strictly before the
+  scenario's test_start; count distinct HMAC-pseudonymized customers.
+# Exclusive start of the day after the last complete local date.
+# Snapshot finished on 2026-10-24 local time; that partial day is excluded.
+data_cutoff: 2026-10-24
+
+# Owner-selected primary configuration, locked after eligibility preflight.
+window_days: 180
+sensitivity_window_days:
+  - 90
+  - 365
+n_candidates_days:
+  - 180
+  - 365
+l_candidates_days:
+  - 7
+
+# N=180 is the only test evaluation. N=365 and W=90 are development-only
+# sensitivities. Dev EDA uses dates strictly before test_start.
+dev_cutoff_primary_w180: 2025-04-20
+dev_cutoff_sensitivity_w90: 2025-07-19
+dev_cutoff_sensitivity_w365: 2024-10-17
+primary_n_days: 180
+test_start: 2025-10-22
+test_end_exclusive: 2026-04-20
+development_sensitivity_n_days:
+  - 365
+development_sensitivity_window_days:
+  - 90
+  - 365
+development_eda_exclusive_end: 2025-10-22
+
+# Pre-lock eligibility-only candidate cohort count; N=365 is not test evaluation.
+eligibility_preflight_candidates:
+  N180: 2025-10-22
+  N365: 2025-04-20
+
+# SHA-256 of this exact file and lock timestamp are in config/split.lock.json.

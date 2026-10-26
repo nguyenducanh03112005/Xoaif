@@ -1,0 +1,204 @@
+amendment_id: 05
+status: preregistered
+decision_date: "2026-10-26"
+timezone: Asia/Ho_Chi_Minh
+scope: >-
+  Development-only line-level gift classification, product profiles, basket
+  seasonality and stability analysis before the one-time test opening.
+timebox_hours: 36
+source_hashes:
+  split_config_sha256: 38d0e35ee8b34016d1246d111eed0315974390ab255daee8b48002373331553e
+  split_lock_sha256: cb6d983a9b32f43bfcbb671f7d71af1b012a70b8af999efbed3691ceb3e04440
+  amendment_01_sha256: 23da1216cf06c32003d52eb7831ed528dc4a4259d3480a9e3025fcb394100cfd
+  amendment_02_sha256: 668d9b717597bb9131a66c02c4f0ca53003a20374bbbce76e1fc3242413fe66b
+  amendment_03_sha256: 3d87751451fa17fe71644df7f0743331ee6dae6b34013a4b063e18b6da98eaf1
+  amendment_04_sha256: e76ee390e227a569a39ab5f4fe7c7489572a06323d6d2f1bc6c8b72fa52ea6f8
+  amendment_04_lock_sha256: 54bcf6166a06a428f7829d9154e94f91622632ab4c3c84b0008500217dd806b6
+  pre_open_reserved_access_log_sha256: 6354e3f7b6de499fe10aa874fa21dcdee71255ba051de164d4e5deaa8a237d58
+  gift_field_survey_sha256: 2a21adbce8f8ecd1e550a41b13db096b82f24b12171289f58069d04a8b14dab9
+  gift_field_survey_code_sha256: 568bd2912c9633fb9860722e9df19378f8c2e08d8172f7be09657a6666006aa8
+test_policy:
+  test_remains_closed: true
+  test_label_reads_allowed: false
+  test_behavior_reads_allowed: false
+  day_3_starts_only_after_the_single_locked_test_evaluation: true
+  no_retraining_or_model_reselection_after_test: true
+  pre_open_reserved_access_log_entries: 2
+  pre_open_label_load_entries: 0
+  pre_open_behavior_load_entries: 0
+data_source:
+  snapshot_id: "20261024T052943Z"
+  interval: "[2024-04-01,2025-10-22) Asia/Ho_Chi_Minh"
+  scope: "status-3 development orders only"
+  access: "checksum-verified raw order snapshot previously obtained with PancakeClient GET"
+  existing_api_read_allowlist:
+    - GET /shops
+    - GET /shops/{shop_id}/orders
+  product_inventory_endpoint_added: false
+  reason: >-
+    Historical order-line variation_info already includes product_id,
+    retail_price and category_ids. A live product or inventory endpoint would
+    describe the current catalog/stock, not the historical state of each order.
+field_survey:
+  output: outputs/metrics/day3_gift_field_survey.json
+  output_sha256: 2a21adbce8f8ecd1e550a41b13db096b82f24b12171289f58069d04a8b14dab9
+  status3_dev_orders: 6400
+  item_lines: 30049
+  max_item_lines_per_order: 26
+  product_id_and_variation_id_coverage: "29323/30049 lines; 726 missing"
+  category_ids_coverage: "category_ids field present on 30049/30049 line variation objects; IDs are not category names"
+  product_metadata:
+    items.is_bonus_product:
+      coverage: "30049/30049"
+      true_count: 0
+      false_count: 30049
+      meaning: "bonus-product gift flag; confirmed by Pancake promotion documentation"
+    items.discount_each_product:
+      coverage: "30049/30049"
+      nonzero_count: 7
+      meaning: "per-product discount amount; cross-referenced against Pancake client SDK field mapping"
+    items.is_discount_percent:
+      coverage: "30049/30049"
+      true_count: 1
+      meaning: "discount_each_product uses a percent; cross-referenced against Pancake client SDK field mapping"
+    items.total_discount:
+      coverage: "30049/30049"
+      nonzero_count: 7
+      meaning: "line-level discount field; retained as an audit cross-check"
+    variation_info.retail_price:
+      coverage: "30049/30049"
+      zero_count: 6984
+      meaning: "listed retail price; zero alone is not evidence of actual zero selling price"
+    order.total_discount:
+      coverage: "6400/6400 orders"
+      nonzero_count: 2568
+    actual_sale_price_field:
+      found: false
+      note: "No exact price/sale_price/unit_price/final_price field was present on item rows."
+    unverified_auxiliary_fields:
+      - variation_info.exact_price
+      - variation_info.avg_price
+      - variation_info.is_upsale_product
+      - variation_info.last_imported_price
+      - variation_info.retail_price_original
+      - items.same_price_discount
+      - items.added_to_cart_quantity
+    field_semantics_note: >-
+      The API snapshot field names are preserved. No ambiguous price, status,
+      upsale or inventory field is treated as a gift signal. Direct discount
+      fields are used only for exact 100-percent equality; otherwise they remain
+      audit flags.
+    reference_urls:
+      - https://docs.pancake.biz/pos/st-f3/st-p2/st-s1?lang=en
+      - https://epoxyteam.github.io/pancake-client-sdk/api/orders.html
+gift_line_rule:
+  applies_to: "each status-3 development order line independently"
+  priority:
+    - source: flag
+      rule: "items.is_bonus_product == true"
+      meaning: "explicit gift flag from the API"
+    - source: zero_price
+      rule: >-
+        For an unclassified line with positive retail_price: if
+        is_discount_percent is false and discount_each_product equals
+        retail_price, or if is_discount_percent is true and
+        discount_each_product equals 100, the line net sale is exactly zero.
+        A zero retail_price without this evidence is not enough.
+    - source: inferred_subset
+      rule: >-
+        For an order with positive order.total_discount, examine every subset
+        of 1 through 6 remaining product lines with positive retail_price and
+        positive quantity. A subset matches only when the exact Decimal sum of
+        retail_price * quantity equals order.total_discount. Classify only when
+        exactly one subset matches; set low_confidence=true. If direct line
+        fields were already used, subset inference applies only to unclassified
+        lines and still compares against the full order.total_discount.
+    - source: not_gift
+      rule: "all remaining lines"
+  arithmetic:
+    currency_precision: "exact Decimal VND; no rounding tolerance"
+    maximum_subset_size: 6
+    only_positive_list_value_lines_in_inference: true
+    product_names_or_name_matching: forbidden
+    low_price_or_support_as_gift_evidence: forbidden
+  reporting:
+    - line_count_by_source
+    - distinct_order_count_by_source
+    - gift_line_rate_by_month
+    - gift_line_rate_by_development_order_value_quartile
+    - product_profile_by_product_id
+    - missing_product_id_line_count
+  large_order_definition:
+    value: "order.total_price from the locked development snapshot"
+    threshold: "development p90, computed before test"
+    inequality: ">="
+  product_profile:
+    output: outputs/tables/product_profile.csv
+    fields:
+      - product_key_hmac
+      - product_name_from_order_api
+      - category_ids_from_order_api
+      - line_support
+      - line_count
+      - gift_line_rate
+      - first_sold_date
+      - last_sold_date
+      - active_month_count
+      - share_of_product_orders_that_are_large
+      - observed_nonzero_retail_price
+    top_20: "sorted by basket support before line gift removal; descriptive only"
+baskets_and_rules:
+  input_scope: "status 3, non-order-gift development orders; product IDs HMAC-pseudonymized"
+  product_variants: "aggregate all line variants to product_id"
+  eligible_basket: "at least 2 distinct product_id values"
+  primary_cleaning: "remove gift_line=true from each line, then require at least 2 distinct product IDs"
+  sensitive_cleaning_groups:
+    - id: all_lines
+      rule: "retain all lines"
+    - id: explicit_only
+      rule: "remove flag and zero_price lines; retain inferred_subset lines"
+    - id: all_gift_sources
+      rule: "remove flag, zero_price and inferred_subset lines"
+  min_support_values: [0.01, 0.05]
+  minimum_rule_occurrences: 5
+  algorithm: "FP-Growth; pair itemsets only; report both directional rules"
+  stable_combo_rule: "a pair appears in at least 4 of the 6 cleaning x min_support cells (at least two thirds)"
+  primary_min_support: 0.05
+  outputs:
+    product_profile: outputs/tables/product_profile.csv
+    gift_line_audit: outputs/tables/gift_line_audit.csv
+    monthly_gift_rates: outputs/tables/gift_line_rates_monthly.csv
+    size_gift_rates: outputs/tables/gift_line_rates_order_size.csv
+    seasonal_pairs: outputs/tables/seasonal_pair_metrics.csv
+    rules: outputs/tables/rules_v2.csv
+    combos: outputs/tables/combos_v2.csv
+    metrics: outputs/metrics/day3_combo_prereg.json
+  seasonality:
+    cooccurrence_window: "calendar month"
+    pair_denominator: "eligible baskets in months in which both products were present"
+    overlap_month_count: true
+    development_holiday_dates:
+      "Ngày Phụ nữ Việt Nam": ["2024-10-20", "2025-10-20"]
+      "Ngày Nhà giáo Việt Nam": ["2024-11-20"]
+      "Giáng sinh": ["2024-12-25"]
+      "Tết Nguyên đán": ["2025-01-29"]
+      "Ngày Quốc tế Phụ nữ": ["2025-03-08"]
+    holiday_window: "14 calendar days before or after the holiday date"
+    seasonal_label: >-
+      theo mùa only if all pair occurrences (minimum 5) fall within the window
+      around exactly one listed holiday; descriptive flag, not a causal claim.
+    limitation: "Development data contain only one complete Tet season; annual seasonality cannot be established."
+  economics:
+    listed_price_only: true
+    no_discount_allocation: true
+    no_cost_or_profit_claim: true
+    limitations:
+      - "inferred_subset may misclassify lines"
+      - "there is no cost basis for combo effectiveness"
+      - "current inventory/catalog state is not historical"
+experiment_limits:
+  gift_line_classification_runs: 1
+  combo_mining_cells: 6
+  extra_retries: 0
+  no_post_result_rule_changes: true
+  no_test_access_during_development_processing: true

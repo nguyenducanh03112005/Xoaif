@@ -1,0 +1,7 @@
+{
+  "config_path": "config/split.yaml",
+  "config_sha256": "38d0e35ee8b34016d1246d111eed0315974390ab255daee8b48002373331553e",
+  "snapshot_id": "20261024T052943Z",
+  "snapshot_manifest_sha256": "3536a0e5303d83a6fbddd19e6f52375ed70dd53a070d1cadb8691a66ad4acf5c",
+  "locked_at_utc": "2026-10-24T07:11:30Z"
+}
