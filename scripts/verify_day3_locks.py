@@ -5,7 +5,6 @@ from __future__ import annotations
 import hashlib
 import json
 from pathlib import Path
-import sys
 
 import yaml
 
@@ -81,4 +80,4 @@ if __name__ == "__main__":
         verify()
     except (OSError, UnicodeError, json.JSONDecodeError, KeyError, TypeError, ValueError, yaml.YAMLError) as exc:
         print(f"Day 3 lock verification failed ({type(exc).__name__}).")
-        raise SystemExit(1)
+        raise SystemExit(1) from None

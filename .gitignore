@@ -14,10 +14,39 @@ data/
 *.csv
 *.jsonl
 
-# Generated outputs may contain sensitive aggregates until reviewed
-outputs/
-report/
-slides/
+# Generated outputs may contain sensitive aggregates until reviewed.
+# Use "dir/*" (not "dir/") so the reviewed deliverables below can be re-included.
+outputs/*
+report/*
+slides/*
+
+# Reviewed, aggregate-only deliverables (see docs/submission_artifacts.md)
+!outputs/metrics/
+outputs/metrics/*
+!outputs/metrics/test_eval.json
+!outputs/metrics/dev_final_model.json
+!outputs/metrics/dev_final_models_v2.json
+!outputs/metrics/day2_money_audit.json
+!outputs/metrics/day2_segmentation.json
+!outputs/metrics/day3_combo_prereg.json
+# Integrity evidence needed by scripts/verify_day3_locks.py and run_all.py
+# (committable once present locally; they hold hashes/flags, no raw values)
+!outputs/metrics/test_opened.lock.json
+!outputs/metrics/day3_pretest_freeze.json
+!outputs/logs/
+outputs/logs/*
+!outputs/logs/test_eval_access.jsonl
+!outputs/tables/
+outputs/tables/*
+!outputs/tables/dashboard_*.csv
+!outputs/tables/test_segment_profiles.csv
+!outputs/tables/test_combos_frozen.csv
+!outputs/tables/combos_v2.csv
+!outputs/tables/seasonal_pair_metrics.csv
+!outputs/tables/gift_line_*.csv
+!report/xoaif_report.pdf
+!slides/xoaif_print.pdf
+!slides/speaker_notes.md
 
 # Python
 .venv/
@@ -33,6 +62,9 @@ dist/
 
 # Notebooks
 .ipynb_checkpoints/
+
+# Tool scratch / render output
+.codex/
 
 # IDE / operating system
 .vscode/

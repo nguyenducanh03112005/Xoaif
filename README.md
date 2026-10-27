@@ -27,8 +27,18 @@ Xem [tổng kết Ngày 2](docs/day2_summary.md), [hướng dẫn kiểm tra](do
 Luôn gọi đúng Python của repo:
 
 ```powershell
+# Windows
 .venv\Scripts\python scripts/run_all.py
 ```
+
+```bash
+# macOS / Linux
+.venv/bin/python scripts/run_all.py
+```
+
+Cài phụ thuộc: `pip install -r requirements.txt` (bản khóa) hoặc `pip install -e ".[analysis,dashboard,dev]"`.
+
+Nếu clone thiếu `outputs/metrics/test_opened.lock.json` trong khi `test_eval.json` đã ghi nhận lần mở test duy nhất, `run_all.py` dừng với mã 2 thay vì chạy pipeline trước test. Ba file chứng cứ toàn vẹn cần được commit cùng repo: `outputs/metrics/test_opened.lock.json`, `outputs/metrics/day3_pretest_freeze.json`, `outputs/logs/test_eval_access.jsonl` (`.gitignore` đã cho phép).
 
 Sau khi test đã mở, `run_all.py` chỉ xác minh split, API GET-only, hash khóa, chạy pytest và quét PII. Nó không chạy lại evaluator, notebook hay bước fit/chọn mô hình. Không chạy lại `scripts/evaluate_test_once.py`: script từ chối khi `outputs/metrics/test_opened.lock.json` tồn tại.
 

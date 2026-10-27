@@ -1,0 +1,119 @@
+{
+  "status": "development_inputs_and_outputs_frozen_before_test",
+  "amendment_05_sha256": "27bda2f81cfc963921ecb7a0da235777031996b26563d6425fbfa8d525eed720",
+  "model_registry_sha256": "27c2f011a52bf45816b82153270db56522b639c0aada82e777ace1d0611b5c83",
+  "models": [
+    {
+      "name": "majority_baseline",
+      "threshold": 0.5,
+      "score": "development positive prevalence",
+      "artifact": null
+    },
+    {
+      "name": "amendment_03_logistic_regression",
+      "threshold": 0.5,
+      "parameters": {
+        "C": 10.0
+      },
+      "artifact": "outputs/models/day2_dev_final_model.joblib",
+      "sha256": "0ac767d24c641f50bdc19634e590dc45a92d9e4cd5513d02871fac50b109cd4a"
+    },
+    {
+      "name": "repurchase_features_v2_logistic_regression",
+      "threshold": 0.5,
+      "parameters": {
+        "C": 0.1
+      },
+      "artifact": "outputs/models/repurchase_features_v2.joblib",
+      "sha256": "5cbe48bb9b4944d91dfba7b85dd5d1608eb836b68574b16d3ac6a6319f8a2f80"
+    }
+  ],
+  "repurchase_threshold": 0.5,
+  "segmenter_bundle": {
+    "status": "development_fitted_and_frozen_before_test",
+    "model_path": "outputs/models/segmenters_dev_frozen_v1.joblib",
+    "model_sha256": "5babaa2352921f840385bdfe6681948f329b0ee276de2aef1cc8500c9146b93f",
+    "seed": 42,
+    "kmeans_recipe": {
+      "2": {
+        "n_init": 20,
+        "max_iter": 500
+      },
+      "3": {
+        "n_init": 10,
+        "max_iter": 500
+      },
+      "4": {
+        "n_init": 10,
+        "max_iter": 500
+      }
+    },
+    "development_assignment_reproduction": {
+      "2": {
+        "development_ari": 1.0,
+        "aligned_assignment_agreement": 1.0,
+        "seed": 42
+      },
+      "3": {
+        "development_ari": 1.0,
+        "aligned_assignment_agreement": 1.0,
+        "seed": 42
+      },
+      "4": {
+        "development_ari": 1.0,
+        "aligned_assignment_agreement": 1.0,
+        "seed": 42
+      }
+    },
+    "business_rule_thresholds": {
+      "frequency_p25": 1.0,
+      "frequency_p50": 1.0,
+      "frequency_p75": 1.0,
+      "monetary_p75": 480000.0,
+      "monetary_p99": 3439575.9999999832,
+      "max_order_value_p99": 3082175.99999998,
+      "one_order_recency_p50": 285.5
+    },
+    "business_like_proxy_thresholds": {
+      "frequency_p25": 1.0,
+      "monetary_p99": 3439575.9999999832,
+      "max_order_value_p99": 3082175.99999998
+    },
+    "no_test_features_or_labels_used": true,
+    "test_labels_loaded": false,
+    "test_behavior_loaded": false
+  },
+  "outputs_sha256": {
+    "outputs/tables/product_profile.csv": "c328979b7758b8221f4e5a6283e164cf6920db157afc57e0d3a59b181549a53e",
+    "outputs/tables/gift_line_audit.csv": "357702bcc78804daaa2c83ff7c3ee8f76bff0d51cc04ab01a180d78bb457b090",
+    "outputs/tables/gift_line_rates_monthly.csv": "c878681ed2a8eb15f7584dedf1408d38b5199813a4d6f632b4f87630f0c0f99a",
+    "outputs/tables/gift_line_rates_order_size.csv": "5389f82540b3165abb4b028ef5b71fb5dd141dfcedf4ef052cbfa417d1f624cc",
+    "outputs/tables/rules_v2.csv": "e8d74922d5a0658fdb4487e61abcf233778892c32bb6023425a7ce1c7c2d8786",
+    "outputs/tables/combos_v2.csv": "ae7df8760857a9a7aa2cd667704829e71b076a70b5ca2f0a41fd6396ef0538d6",
+    "outputs/tables/seasonal_pair_metrics.csv": "5bb4646bcff6aa1545074487fd47464305dbb4e3c0b5e939cc75d15835930819",
+    "outputs/metrics/day3_combo_prereg.json": "823bbfbacfea76a342cf8eeb0a7e3e0de44a9ed2a1b3b5e5a2f08ff353c80088",
+    "outputs/models/segmenters_dev_frozen_v1.joblib": "5babaa2352921f840385bdfe6681948f329b0ee276de2aef1cc8500c9146b93f",
+    "outputs/metrics/frozen_segmenters_dev.json": "307e6ced38704c5e29789cf503ceb1a8c3d19f14d8318db1707c5624fb3d3b0c"
+  },
+  "inputs_sha256": {
+    "config/split.yaml": "38d0e35ee8b34016d1246d111eed0315974390ab255daee8b48002373331553e",
+    "config/split.lock.json": "cb6d983a9b32f43bfcbb671f7d71af1b012a70b8af999efbed3691ceb3e04440",
+    "config/amendment_04_followup.yaml": "e76ee390e227a569a39ab5f4fe7c7489572a06323d6d2f1bc6c8b72fa52ea6f8",
+    "config/amendment_05_gift_lines.yaml": "27bda2f81cfc963921ecb7a0da235777031996b26563d6425fbfa8d525eed720",
+    "config/amendment_05_gift_lines.lock.json": "5c627f1abde20211356c8cefd956216701142fc6bd247efd822294f8cbdb72f2",
+    "outputs/metrics/dev_final_models_v2.json": "27c2f011a52bf45816b82153270db56522b639c0aada82e777ace1d0611b5c83",
+    "outputs/metrics/dev_final_model.json": "7b0002e4d7c6b61a0b8929dd4af80b47a4a43ed352a066de508167fe97958221",
+    "outputs/tables/day2_features_primary.csv": "46d5bbc6e4d0992bc799bf5fbd1b3b864da16dd3ae3d324e4cab76e5170e1372",
+    "outputs/tables/day2_features_B.csv": "6d63f9a84d488226ab35d041af5bab7441ca0afbefc29dead75e604ffee041db",
+    "outputs/tables/segments.csv": "a1ca2a39587e4aeddee6cb80fd9e67d2e0a1a63f17cbf7851e855c76d0fedb28",
+    "outputs/tables/segments_v2.csv": "542546832838a1e9e95a1d069f3dbd61d7b82e225e35cf38ea4f229712d9efbd",
+    "outputs/metrics/day2b_segmentation.json": "3b73667585afe1b42681d517818510d79fa171a324079d1ee0847999ea7f531f",
+    "outputs/metrics/day3_gift_field_survey.json": "2a21adbce8f8ecd1e550a41b13db096b82f24b12171289f58069d04a8b14dab9",
+    "outputs/models/day2_dev_final_model.joblib": "0ac767d24c641f50bdc19634e590dc45a92d9e4cd5513d02871fac50b109cd4a",
+    "outputs/models/repurchase_features_v2.joblib": "5cbe48bb9b4944d91dfba7b85dd5d1608eb836b68574b16d3ac6a6319f8a2f80"
+  },
+  "access_log_before_test_sha256": "6354e3f7b6de499fe10aa874fa21dcdee71255ba051de164d4e5deaa8a237d58",
+  "test_labels_loaded": false,
+  "test_behavior_loaded": false,
+  "day3_started": false
+}

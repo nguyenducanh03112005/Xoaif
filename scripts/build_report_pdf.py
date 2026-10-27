@@ -196,8 +196,6 @@ def main(output_path: Path | None = None, font_override: str | None = None) -> N
             box(ax, x, .37, .25, .12, head, value, fill="#E7F0EC", label_size=10, detail_size=8.6)
         ax.text(.08, .23, f"Cửa sổ test: [{dates['start_inclusive']}, {dates['end_exclusive']}) · mở đúng một lần",
                 fontsize=10, color="#3C514A", transform=ax.transAxes)
-        ax.text(.08, .18, "Bản nháp để chủ dự án và thành viên thứ hai đọc trước khi chốt.",
-                fontsize=9.5, color="#61736D", transform=ax.transAxes)
         ax.text(.08, .065, "26/10/2026", fontsize=9, color="#61736D", transform=ax.transAxes)
         pdf.savefig(fig); plt.close(fig)
 

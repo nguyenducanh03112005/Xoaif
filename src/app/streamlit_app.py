@@ -165,7 +165,7 @@ def main() -> None:
             month_view, x="month", y="recognized_revenue_vnd", markers=True,
             labels={"month": "Tháng", "recognized_revenue_vnd": "Doanh thu ghi nhận (VND)"},
         )
-        st.plotly_chart(monthly_chart, use_container_width=True)
+        st.plotly_chart(monthly_chart, width="stretch")
         st.caption(f"Khoảng đang hiển thị {start_month} đến {end_month} ({len(month_view)} tháng). Dữ liệu mặc định 2024-04 đến 2026-04 gồm DEV và cửa sổ test, không phải chỉ DEV; 2026-04 chưa trọn tháng. Tổng bảng đủ 25 tháng: 9.104 đơn, 4.200.024.995 đ. Chỉ gồm status 3 và loại đơn quà cấp đơn; dữ liệu trước 04/2024 là giai đoạn bán thử.")
         st.info("Không so sánh doanh thu theo tỉnh/thành: 91,92% doanh thu mang nhãn UNKNOWN; nguyên nhân chưa được phân tích. Bài phân loại phản hồi cũng bị bỏ qua vì thiếu dữ liệu phản hồi có nhãn.")
 
@@ -175,7 +175,7 @@ def main() -> None:
             prod_view = prod_view[prod_view["product_name"] == selected_product]
         else:
             prod_view = prod_view.head(20)
-        st.dataframe(localized_frame(prod_view), use_container_width=True, hide_index=True)
+        st.dataframe(localized_frame(prod_view), width="stretch", hide_index=True)
         st.caption("Không phân bổ doanh thu ghi nhận xuống sản phẩm vì giảm giá và điều chỉnh nằm ở cấp đơn.")
 
     with tabs[1]:
@@ -200,9 +200,9 @@ def main() -> None:
             "test_window_recognized_revenue_vnd": "Doanh thu test (VND)",
             "test_window_revenue_share": "Tỷ trọng doanh thu test",
         })
-        st.dataframe(localized_frame(display), use_container_width=True, hide_index=True)
+        st.dataframe(localized_frame(display), width="stretch", hide_index=True)
         st.info("K=2 chủ yếu tách khách mua một lần với khách mua lặp lại theo tần suất; chưa chứng minh đây là các nhóm có ý nghĩa kinh doanh hoặc giúp quyết định vận hành. Nhóm doanh nghiệp là proxy giá trị lớn/tần suất thấp, không phải nhận diện pháp lý. Phân phối RFM tại T dùng cùng snapshot phát triển; doanh thu test được trình bày riêng.")
-        st.caption(f"Khoảng cách phân phối được khóa trước: TV = 0 trên cùng hồ sơ DEV tại T; F có IQR DEV bằng 0 nên Wasserstein chuẩn hóa không xác định.")
+        st.caption("Khoảng cách phân phối được khóa trước: TV = 0 trên cùng hồ sơ DEV tại T; F có IQR DEV bằng 0 nên Wasserstein chuẩn hóa không xác định.")
 
     with tabs[2]:
         st.subheader("Các cặp đã đóng băng trước khi mở test")
@@ -230,33 +230,33 @@ def main() -> None:
             "Giá niêm yết gộp (VND)", "Tháng chồng lấp",
             "Support trong khoảng chồng lấp", "Nhãn mô tả theo lịch lễ", "Cấu hình ổn định / 6",
         ] if c in view.columns]
-        st.dataframe(localized_frame(view[columns]), use_container_width=True, hide_index=True)
+        st.dataframe(localized_frame(view[columns]), width="stretch", hide_index=True)
         st.caption("Luật chỉ nói các sản phẩm đồng xuất hiện trong cùng giỏ. Giá gộp là giá niêm yết quan sát được; không có giá vốn hay phân bổ giảm giá.")
 
     with tabs[3]:
         st.subheader("Chất lượng dữ liệu và kiểm toán")
         st.markdown("**Số đơn theo trạng thái hiện tại**")
-        st.dataframe(localized_frame(statuses), use_container_width=True, hide_index=True)
+        st.dataframe(localized_frame(statuses), width="stretch", hide_index=True)
         c1, c2, c3 = st.columns(3)
         c1.metric("Status 3 DEV", f"{money_audit['scope']['status3_orders']:,}".replace(",", "."))
         c2.metric("Đơn quà cấp đơn", f"{money_audit['gifts']['count']:,}".replace(",", "."))
         c3.metric("Đơn âm", f"{money_audit['negative_revenue']['count']:,}".replace(",", "."))
         st.markdown("**Kiểm toán dòng quà tặng DEV**")
-        st.dataframe(localized_frame(gift_audit), use_container_width=True, hide_index=True)
+        st.dataframe(localized_frame(gift_audit), width="stretch", hide_index=True)
         st.caption("903 dòng inferred_subset có độ tin cậy thấp; quy tắc dựa vào tổng giảm giá có thể gán nhầm.")
         left, right = st.columns(2)
         with left:
             st.markdown("**Tỷ lệ dòng quà theo tháng**")
             monthly_gift_view = monthly_gifts.copy()
             monthly_gift_view["gift_line_rate"] = monthly_gift_view["gift_line_rate"].map(pct)
-            st.dataframe(localized_frame(monthly_gift_view[["month", "line_count", "gift_line_count", "gift_line_rate"]]), use_container_width=True, hide_index=True)
+            st.dataframe(localized_frame(monthly_gift_view[["month", "line_count", "gift_line_count", "gift_line_rate"]]), width="stretch", hide_index=True)
         with right:
             st.markdown("**Tỷ lệ dòng quà theo kích thước đơn**")
             size_gift_view = size_gifts.copy()
             size_gift_view["gift_line_rate"] = size_gift_view["gift_line_rate"].map(pct)
-            st.dataframe(localized_frame(size_gift_view[["development_order_value_quartile", "line_count", "gift_line_count", "gift_line_rate"]]), use_container_width=True, hide_index=True)
+            st.dataframe(localized_frame(size_gift_view[["development_order_value_quartile", "line_count", "gift_line_count", "gift_line_rate"]]), width="stretch", hide_index=True)
         st.markdown("**Độ nhạy luật kết hợp**")
-        st.dataframe(localized_frame(pd.DataFrame(day3["sensitivity_cells"])), use_container_width=True, hide_index=True)
+        st.dataframe(localized_frame(pd.DataFrame(day3["sensitivity_cells"])), width="stretch", hide_index=True)
         st.markdown("**Tỷ lệ gift line**")
         st.caption("Ngưỡng đơn lớn = phân vị 90 giá trị đơn DEV: " + money(day3["order_value_thresholds_vnd"]["p90"]))
         st.caption(f"Snapshot: {split.get('snapshot_id', '20261024T052943Z')} · hash split: {split_lock.get('config_sha256', '')} · manifest: {snapshot_hash}")

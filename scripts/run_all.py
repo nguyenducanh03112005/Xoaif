@@ -3,6 +3,7 @@
 from __future__ import annotations
 
 from pathlib import Path
+import json
 import os
 import subprocess
 import sys
@@ -14,6 +15,17 @@ RUN_ENV["PATH"] = str(Path(sys.executable).resolve().parent) + os.pathsep + RUN_
 RUN_ENV["IPYTHONDIR"] = str(Path(tempfile.gettempdir()) / "xoaif_ipython")
 RUN_ENV["PYTHONPATH"] = str(PROJECT_ROOT / "scripts") + os.pathsep + RUN_ENV.get("PYTHONPATH", "")
 STEP_TIMEOUT_SECONDS = 1200
+
+
+def _test_result_says_opened() -> bool:
+    result = PROJECT_ROOT / "outputs" / "metrics" / "test_eval.json"
+    if not result.is_file():
+        return False
+    try:
+        data = json.loads(result.read_text(encoding="utf-8"))
+    except (OSError, ValueError):
+        return False
+    return data.get("status") == "completed_single_test_open"
 
 
 def run_step(label: str, command: list[str]) -> int:
@@ -39,7 +51,21 @@ def main() -> int:
     # Opening test is irreversible. Once the exclusive lock exists, the runner
     # must only validate frozen artifacts and safe checks; it must never
     # execute notebooks, model selection, or the test evaluator again.
-    if (PROJECT_ROOT / "outputs" / "metrics" / "test_opened.lock.json").exists():
+    lock_path = PROJECT_ROOT / "outputs" / "metrics" / "test_opened.lock.json"
+    if not lock_path.exists() and _test_result_says_opened():
+        # A fresh clone may miss the (git-ignored) lock file while the committed
+        # result already records the one-time test opening. Never fall through to
+        # the pre-test pipeline in that state.
+        print(
+            "Stopped: outputs/metrics/test_eval.json records a completed single test opening, "
+            "but outputs/metrics/test_opened.lock.json is missing from this checkout.\n"
+            "Refusing to run the pre-test pipeline. Restore the lock file from the original "
+            "workspace (git add -f outputs/metrics/test_opened.lock.json) or run only: "
+            "python -m pytest -q; python scripts/verify_pii.py; python scripts/verify_readonly.py",
+            flush=True,
+        )
+        return 2
+    if lock_path.exists():
         safe_steps = [
             ("verify locked split and snapshot metadata", [python, "scripts/verify_split_lock.py"]),
             ("verify GET-only API policy", [python, "scripts/verify_readonly.py"]),
