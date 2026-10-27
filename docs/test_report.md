@@ -26,7 +26,7 @@ DEV OOF của Logistic Regression C=10 có ROC-AUC 0,5096, AP 0,0699 và PR-AUC 
 
 ## Phân khúc
 
-K-Means K=2/3/4 và nhóm quy tắc được gán bằng scaler, mô hình và ngưỡng DEV đã khóa. K=2 chủ yếu tách khách mua một lần với khách mua lặp lại; đây là phân biệt theo tần suất, chưa chứng minh các nhóm có ý nghĩa kinh doanh hoặc giá trị cho quyết định vận hành. Cohort scoring có 5.169 khách. Khoảng cách TV bằng 0 vì DEV tại T và scoring dùng cùng hồ sơ đầu vào đã khóa; Wasserstein chuẩn hóa theo IQR của Frequency không xác định vì IQR DEV bằng 0. Đây là đặc điểm của thiết kế so sánh, không phải bằng chứng hành vi tương lai ổn định. Proxy giá trị lớn không xác minh pháp nhân.
+K-Means K=2/3/4 và nhóm quy tắc được gán bằng scaler, mô hình và ngưỡng DEV đã khóa. K=2 là phân đoạn mô tả theo tần suất mua (một lần / lặp lại); đây là phân biệt theo tần suất, chưa chứng minh các nhóm có ý nghĩa kinh doanh hoặc giá trị cho quyết định vận hành. Cohort scoring có 5.169 khách. Khoảng cách TV bằng 0 vì DEV tại T và scoring dùng cùng hồ sơ đầu vào đã khóa; Wasserstein chuẩn hóa theo IQR của Frequency không xác định vì IQR DEV bằng 0. Đây là đặc điểm của thiết kế so sánh, không phải bằng chứng hành vi tương lai ổn định. Proxy giá trị lớn không xác minh pháp nhân.
 
 ## Luật kết hợp
 

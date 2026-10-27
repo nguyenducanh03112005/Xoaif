@@ -300,7 +300,7 @@ def build(output_path: Path | None = None, font_override: str | None = None) -> 
         card(ax, .38, .57, .24, .23, "Khách một đơn · scoring", "4.530 / 5.169", "87,6%; DEV: 4.526 / 5.174 = 87,5%")
         card(ax, .68, .57, .24, .23, "Proxy giá trị lớn", str(seg["business_like_proxy"]["customers"]), "không phải xác minh pháp nhân")
         heading(ax, .09, .45, "Cách diễn giải")
-        body(ax, .09, .39, "K-Means K=2 chủ yếu tách khách mua một lần với khách mua lặp lại. Điều này chưa chứng minh các nhóm có ý nghĩa kinh doanh hay hỗ trợ quyết định tốt hơn; K=3/4 chỉ là độ nhạy. RFM mô tả lịch sử trước T, không chứng minh nguy cơ rời bỏ.", size=11, width=.83)
+        body(ax, .09, .39, "K-Means K=2 là phân đoạn mô tả theo tần suất mua (một lần / lặp lại). Điều này chưa chứng minh các nhóm có ý nghĩa kinh doanh hay hỗ trợ quyết định tốt hơn; K=3/4 chỉ là độ nhạy. RFM mô tả lịch sử trước T, không chứng minh nguy cơ rời bỏ.", size=11, width=.83)
         body(ax, .09, .22, "Không fit lại trên test. Metric phân phối bằng 0 trong một số so sánh phát sinh do dùng cùng profile trước T, không phải bằng chứng hành vi tương lai ổn định.", size=10.5, color=COLORS["muted"], width=.83)
         pdf.savefig(fig); plt.close(fig)
 
@@ -320,7 +320,7 @@ def build(output_path: Path | None = None, font_override: str | None = None) -> 
         heading(ax, .08, .80, "Năm tab")
         body(ax, .08, .73, "1. Tổng quan doanh số\n2. Phân khúc khách\n3. Combo gợi ý\n4. Chất lượng & kiểm toán\n5. Mô hình mua lại", size=13, width=.37)
         heading(ax, .53, .80, "Giới hạn luôn hiển thị")
-        body(ax, .53, .73, "Không so sánh doanh thu tỉnh/thành vì 91,92% là UNKNOWN.\n\nBài phân loại phản hồi bị bỏ qua vì thiếu dữ liệu có nhãn.\n\nTest ROC-AUC khoảng 0,70 là tín hiệu yếu mà DEV (~0,51) chưa xác nhận; không tinh chỉnh theo test đã mở.\n\nK=2 chủ yếu phân biệt khách mua một lần và mua lặp lại, chưa chứng minh ý nghĩa kinh doanh.", size=10.5, color=COLORS["ink"], width=.37)
+        body(ax, .53, .73, "Không so sánh doanh thu tỉnh/thành vì 91,92% là UNKNOWN.\n\nBài phân loại phản hồi bị bỏ qua vì thiếu dữ liệu có nhãn.\n\nTest ROC-AUC khoảng 0,70 là tín hiệu yếu mà DEV (~0,51) chưa xác nhận; không tinh chỉnh theo test đã mở.\n\nK=2 là phân đoạn mô tả theo tần suất mua (một lần / lặp lại), chưa chứng minh ý nghĩa kinh doanh.", size=10.5, color=COLORS["ink"], width=.37)
         body(ax, .08, .30, "Smoke xác nhận 5 tab, 10 aggregate CSV và 6 aggregate JSON. Không hiển thị khách hoặc đơn hàng từng dòng; dashboard chỉ đọc dữ liệu cục bộ.", size=10.5, color=COLORS["muted"], width=.82)
         pdf.savefig(fig); plt.close(fig)
 

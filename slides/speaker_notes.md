@@ -282,10 +282,10 @@ Sau kết quả mua lại, slide tiếp theo quay về phân khúc như mô tả
 B — khoảng 1 phút; A nhấn mạnh giới hạn nhãn.
 
 ### Thông điệp một câu
-K=2 chủ yếu chia theo tần suất mua trong hồ sơ trước T, không phải nhãn về hành vi tương lai.
+K=2 là phân đoạn mô tả theo tần suất mua (một lần / lặp lại) trong hồ sơ trước T, không phải nhãn về hành vi tương lai.
 
 ### Lời thoại
-K-Means K=2 là phương án chính với silhouette 0,508. Trong cohort scoring, 4.530 trên 5.169 khách có một đơn, tương đương 87,6%; nhóm proxy giá trị lớn có 62 khách. RFM mô tả lịch sử trước T chứ không dự báo tình trạng tương lai. Proxy giá trị lớn không xác minh pháp nhân và chưa chứng minh ý nghĩa kinh doanh của các nhóm.
+K-Means K=2 là phân đoạn mô tả theo tần suất mua (một lần / lặp lại) với silhouette 0,508. Trong cohort scoring, 4.530 trên 5.169 khách có một đơn, tương đương 87,6%; nhóm proxy giá trị lớn có 62 khách. RFM mô tả lịch sử trước T chứ không dự báo tình trạng tương lai. Proxy giá trị lớn không xác minh pháp nhân và chưa chứng minh ý nghĩa kinh doanh của các nhóm.
 
 ### Số cần nhớ
 - K=2, silhouette 0,508 — docs/canonical_numbers.md, outputs/metrics/day2_segmentation.json.
@@ -295,7 +295,7 @@ K-Means K=2 là phương án chính với silhouette 0,508. Trong cohort scoring
 Không gọi proxy là pháp nhân đã xác minh. Không fit lại trên test; metric so sánh bằng 0 phát sinh từ cùng profile trước T, không chứng minh ổn định tương lai.
 
 ### Câu hỏi dễ gặp
-- K=2 có nghĩa là hai phân khúc kinh doanh khác nhau không? — Chưa chứng minh; chủ yếu phân biệt theo tần suất mua. Mở docs/test_report.md.
+- K=2 có nghĩa là hai phân khúc kinh doanh khác nhau không? — Chưa chứng minh; phân đoạn mô tả theo tần suất mua (một lần / lặp lại). Mở docs/test_report.md.
 - Proxy giá trị lớn có phải nhãn doanh nghiệp thật không? — Không, đây là proxy theo phân vị DEV. Mở docs/qa.md.
 
 ### Chuyển slide

@@ -9,7 +9,7 @@
 - **Phân khúc:** K=2; silhouette=0,508. Trong cohort scoring có 4.530/5.169 khách một đơn (87,6%); F ít phân tách. Đặt tên cụm theo số liệu:
   - Cụm 0 — Chủ yếu mua một lần: 4.523 khách, tần suất TB 1,00, Monetary TB 370.154 đ, 65,72% Monetary toàn tập, 26 khách thuộc proxy giá trị lớn.
   - Cụm 1 — Khách mua lặp lại: 646 khách, tần suất TB 2,42, Monetary TB 1.351.787 đ, 34,28% Monetary toàn tập, 36 khách thuộc proxy giá trị lớn.
-  - Diễn giải K=2: chủ yếu tách khách mua một lần khỏi khách mua lặp lại theo tần suất; điều này không chứng minh các nhóm có ý nghĩa kinh doanh hoặc giúp ra quyết định tốt hơn.
+  - Diễn giải K=2: phân đoạn mô tả theo tần suất mua (một lần / lặp lại); điều này không chứng minh các nhóm có ý nghĩa kinh doanh hoặc giúp ra quyết định tốt hơn.
 ### Phân loại quay lại
 
 Expanding temporal folds có khoảng đệm `N+L=187` ngày và khách rời nhau. Pipeline fit imputer, scaler và encoder chỉ trong train fold. Precision/Recall/F1 và ma trận nhầm lẫn bên dưới dùng ngưỡng xác suất mặc định 0,5.

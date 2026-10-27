@@ -201,7 +201,7 @@ def main() -> None:
             "test_window_revenue_share": "Tỷ trọng doanh thu test",
         })
         st.dataframe(localized_frame(display), width="stretch", hide_index=True)
-        st.info("K=2 chủ yếu tách khách mua một lần với khách mua lặp lại theo tần suất; chưa chứng minh đây là các nhóm có ý nghĩa kinh doanh hoặc giúp quyết định vận hành. Nhóm doanh nghiệp là proxy giá trị lớn/tần suất thấp, không phải nhận diện pháp lý. Phân phối RFM tại T dùng cùng snapshot phát triển; doanh thu test được trình bày riêng.")
+        st.info("K=2 là phân đoạn mô tả theo tần suất mua (một lần / lặp lại); chưa chứng minh đây là các nhóm có ý nghĩa kinh doanh hoặc giúp quyết định vận hành. Nhóm doanh nghiệp là proxy giá trị lớn/tần suất thấp, không phải nhận diện pháp lý. Phân phối RFM tại T dùng cùng snapshot phát triển; doanh thu test được trình bày riêng.")
         st.caption("Khoảng cách phân phối được khóa trước: TV = 0 trên cùng hồ sơ DEV tại T; F có IQR DEV bằng 0 nên Wasserstein chuẩn hóa không xác định.")
 
     with tabs[2]:

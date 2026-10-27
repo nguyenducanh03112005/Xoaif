@@ -53,7 +53,7 @@ Sau khi test đã mở, `run_all.py` chỉ xác minh split, API GET-only, hash k
 - Kết quả test: `outputs/metrics/test_eval.json`, `docs/test_report.md`.
 - Các artifact phục vụ người chấm được commit gồm hai PDF và các CSV/JSON aggregate mà dashboard đọc trực tiếp; danh sách đầy đủ ở `docs/submission_artifacts.md`. Dashboard không cần raw/restricted data.
 
-Dashboard chỉ đọc bảng tổng hợp từ `outputs/`; không gọi API. Không so sánh doanh thu theo tỉnh/thành vì 91,92% doanh thu mang nhãn `UNKNOWN`. Bài phân loại phản hồi bị bỏ qua do thiếu dữ liệu phản hồi có nhãn. K-Means K=2 chủ yếu tách khách mua một lần với khách mua lặp lại; chưa chứng minh ý nghĩa kinh doanh của các nhóm. Không có giá vốn nên không kết luận lợi nhuận combo. Do giảm giá/điều chỉnh ở cấp đơn, dashboard không phân bổ doanh thu ghi nhận cho từng sản phẩm.
+Dashboard chỉ đọc bảng tổng hợp từ `outputs/`; không gọi API. Không so sánh doanh thu theo tỉnh/thành vì 91,92% doanh thu mang nhãn `UNKNOWN`. Bài phân loại phản hồi bị bỏ qua do thiếu dữ liệu phản hồi có nhãn. K-Means K=2 là **phân đoạn mô tả theo tần suất mua (một lần / lặp lại)**; chưa chứng minh ý nghĩa kinh doanh của các nhóm. Không có giá vốn nên không kết luận lợi nhuận combo. Do giảm giá/điều chỉnh ở cấp đơn, dashboard không phân bổ doanh thu ghi nhận cho từng sản phẩm.
 
 ## Dữ liệu và an toàn
 
