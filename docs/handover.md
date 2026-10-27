@@ -23,6 +23,10 @@ Kết thúc buổi, người nhận cần tự giải thích được luồng Pa
 4. ID khách/sản phẩm được HMAC trước khi vào DuckDB. Star Schema gồm `fact_orders`, `fact_order_items`, `dim_customer`, `dim_date`, `dim_order_status`, `dim_product`.
 5. Dashboard dùng bảng tổng hợp trong `outputs/tables/`; không nối API và không đọc khóa khách/order.
 
+## Phân công và đóng góp
+
+Theo `docs/qa_roles.md`, Thành viên A trả lời chính về bài toán, kiến trúc, status 3/công thức tiền, mua lại DEV/test và CI, cổng hủy/hoàn, nhật ký amendment và khóa test. Thành viên B trả lời chính về snapshot/ETL/DQ/HMAC, phân khúc và proxy, luật kết hợp/gift line/mùa vụ/combo, cùng hạn chế và cách bàn giao. Người bổ sung nêu đúng phần trong bảng phân vai; không suy rộng thành phân công triển khai hoặc tỷ lệ đóng góp cá nhân.
+
 ## Những quyết định phải nhớ
 
 - `revenue_recognized` là doanh thu ghi nhận theo xác nhận nghiệp vụ status 3, không phải đối soát ngân hàng và không phải lợi nhuận.
@@ -30,7 +34,7 @@ Kết thúc buổi, người nhận cần tự giải thích được luồng Pa
 - Quà tặng được phân loại theo từng dòng. `inferred_subset` có độ tin cậy thấp; không loại cố định sản phẩm theo tên.
 - DEV có 18 tháng hiệu dụng và một Tết trọn vẹn. Nhãn DEV có 3.508 khách, 260 dương. Hủy/hoàn không fit vì fold dương lần lượt 30/13/6/1/18.
 - Mô hình chính: Logistic Regression C=10 — mô hình chính theo D-005. Mô hình phụ: Logistic Regression feature-v2 C=0,1 — khảo sát bổ sung theo Amendment 04; không thay mô hình chính. DEV OOF ROC-AUC C=10 khoảng 0,51, gần ngẫu nhiên; test khoảng 0,70 chỉ là tín hiệu yếu chưa được DEV xác nhận, không đủ để kết luận mô hình hoạt động tốt. Test đã mở; không dùng để tinh chỉnh hoặc chọn lại. Nêu tiếp: “Cấu hình ghi >T, evaluator dùng [T,end) (gồm ngày T); ảnh hưởng chưa xác định; đây là kết quả số liệu của lần chạy thực tế, không phải khẳng định tuân thủ đầy đủ giao thức, không gọi là 'đạt cổng ghi trước'.” Xem `docs/test_provenance_note.md`.
-- K=2 chủ yếu tách khách mua một lần với khách mua lặp lại; chưa chứng minh các nhóm có ý nghĩa kinh doanh. 24 combo được đóng băng trước test; 21 cặp có lift > 1 trong test. Luật chỉ biểu thị đồng xuất hiện. Không có giá vốn nên không kết luận lợi nhuận combo.
+- K=2 là phân đoạn mô tả theo tần suất mua (một lần / lặp lại); chưa chứng minh các nhóm có ý nghĩa kinh doanh. 24 combo được đóng băng trước test; 21 cặp có lift > 1 trong test. Luật chỉ biểu thị đồng xuất hiện. Không có giá vốn nên không kết luận lợi nhuận combo.
 - Không so sánh doanh thu theo tỉnh/thành vì 91,92% mang nhãn `UNKNOWN`. Bài phân loại phản hồi bị bỏ qua vì thiếu dữ liệu phản hồi có nhãn.
 - Hạn nộp: 2026-10-27. Thời lượng chính thức và rubric chưa có trong hồ sơ. Mỗi thành viên tập trả lời ít nhất 10 câu thuộc phần của người kia.
 

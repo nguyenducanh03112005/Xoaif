@@ -48,6 +48,15 @@ Trước hạn 2026-10-27, hai thành viên tự chạy kiểm tra an toàn và 
 ## Cập nhật hồ sơ nộp — 2026-10-26
 
 - Đưa diễn giải về ROC-AUC DEV gần 0,51 và test khoảng 0,70 về mức tín hiệu test yếu, chưa được DEV xác nhận; nêu rõ không tinh chỉnh sau khi test đã mở.
-- Làm rõ K=2 chủ yếu chia khách một lần/mua lặp lại, chưa chứng minh ý nghĩa kinh doanh; ghi nhận bài phân loại phản hồi bị bỏ qua do thiếu nhãn.
+- Làm rõ K=2 là phân đoạn mô tả theo tần suất mua (một lần / lặp lại), chưa chứng minh ý nghĩa kinh doanh; ghi nhận bài phân loại phản hồi bị bỏ qua do thiếu nhãn.
 - Bỏ bảng tỉnh/thành khỏi dashboard và ảnh tổng quan cũ vì 91,92% doanh thu mang nhãn UNKNOWN; PDF nêu caveat thay cho xếp hạng khu vực.
 - Dựng lại hai PDF và commit 10 CSV/6 JSON aggregate dashboard sau khi smoke/schema và PII regex đạt. Không đưa raw, restricted hoặc bảng khách/đơn từng dòng vào repo.
+
+## Cập nhật rà soát — 2026-10-27
+
+- Đối soát read-only: 6.517 đơn DEV = 6.400 status 3 + 117 status khác 3. Ba cohort khách 5.499/5.174/5.169 vẫn **chưa giải thích được**; không có bảng cầu nối aggregate, nên ghi rõ giới hạn và không gỡ mục này khỏi báo cáo cuối.
+- Không có prediction artifact đã lưu trong `outputs/`; Amendment 06 sensitivity dừng theo điều kiện, không tạo lại prediction, không đọc test restricted.
+- Schema warehouse không có source/channel/type/address/province; UNKNOWN diagnostic kết luận **chưa xác định**.
+- K=2 được chuẩn hóa thành “phân đoạn mô tả theo tần suất mua (một lần / lặp lại)” trong narrative, dashboard và PDF/slide builders. Tạo hướng dẫn refresh theo lô; extractor không chạy.
+- Hygiene: `git ls-files` không tìm thấy env secret, raw/restricted data, DuckDB hay artifact dòng khách/nhãn/prediction; kết quả `xoaif.env.example` là mẫu cấu hình. `.codex/` không được track và đã nằm trong `.gitignore`.
+- Hậu kiểm sau cập nhật: Day 3 locks và hash bảo vệ đạt; `run_all.py` hậu mở đạt, 75 pytest, PII scan, dashboard smoke (5 tab/10 CSV/6 JSON/405 dòng) đều đạt. Không evaluator, notebook hoặc fit/refit.
