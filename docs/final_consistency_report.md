@@ -1,6 +1,6 @@
 # Báo cáo rà soát nhất quán cuối
 
-**Ngày:** 2026-10-26 · **Hạn nộp:** 2026-10-27
+**Ngày cập nhật:** 2026-10-27 · **Hạn nộp:** 2026-10-27
 
 ## Kết quả
 
@@ -8,13 +8,13 @@
 
 **Cấu hình ghi >T, evaluator dùng [T,end) (gồm ngày T); ảnh hưởng chưa xác định; đây là kết quả số liệu của lần chạy thực tế, không phải khẳng định tuân thủ đầy đủ giao thức, không gọi là 'đạt cổng ghi trước'.**
 
-Đã chuẩn hóa cohort và tỷ lệ theo đúng mẫu số; combo báo 24 cặp theo điều kiện ổn định ít nhất 4/6 ô và 21/24 lift > 1 trên 2.174 giỏ. K=2 được mô tả là chủ yếu chia khách mua một lần và khách mua lặp lại, chưa xác minh ý nghĩa kinh doanh. Bỏ so sánh tỉnh/thành khỏi dashboard vì 91,92% doanh thu mang nhãn UNKNOWN; ghi rõ bài phân loại phản hồi bị bỏ qua do thiếu nhãn. Dashboard có 5 tab, 10 CSV và 6 JSON aggregate. Hai PDF cùng các đầu vào dashboard được commit; xem [danh sách artifact và kiểm tra an toàn](submission_artifacts.md). Không có PPTX.
+Đã chuẩn hóa cohort và tỷ lệ theo đúng mẫu số; combo báo 24 cặp theo điều kiện ổn định ít nhất 4/6 ô và 21/24 lift > 1 trên 2.174 giỏ. K=2 được gọi là phân đoạn mô tả theo tần suất mua (một lần / lặp lại), chưa xác minh ý nghĩa kinh doanh. Bỏ so sánh tỉnh/thành khỏi dashboard vì 91,92% doanh thu mang nhãn UNKNOWN; ghi rõ bài phân loại phản hồi bị bỏ qua do thiếu nhãn. Dashboard có 5 tab, 10 CSV và 6 JSON aggregate. Hai PDF cùng các đầu vào dashboard được dựng lại sau cập nhật; xem [danh sách artifact và kiểm tra an toàn](submission_artifacts.md). `python-pptx` không có trong `.venv`; không tạo PPTX.
 
-Hậu kiểm trước cập nhật đạt 74 pytest và xác minh split/lock, GET-only, PII; 17 hash bảo vệ khớp baseline; access log có đúng một `label_load` và một `behavior_load`. Sau cập nhật dashboard, smoke kiểm tra 5 tab, 10 CSV, 6 JSON và 405 dòng aggregate; pytest 74, PII regex và `git diff --check` đều đạt. Test vẫn chỉ mở một lần; không chạy evaluator, notebook hay fit/refit.
+Hậu kiểm lần này xác minh split/lock, GET-only, Day 3 và 17 hash bảo vệ; `run_all.py` hậu mở cùng pytest riêng đều đạt 75 test, PII scan và dashboard smoke (5 tab, 10 CSV, 6 JSON, 405 dòng). Test vẫn chỉ mở một lần; không chạy evaluator, notebook hay fit/refit.
 
 ## Giới hạn còn lại
 
-Chưa đối soát quan hệ giữa cohort 5.499/5.174/5.169; chưa phân tích nguyên nhân UNKNOWN doanh thu; giả thuyết DEV–test chưa kiểm chứng; thời lượng/rubric chưa có. D-022 ghi rằng mọi chẩn đoán bổ sung cần rolling-origin, amendment mới và duyệt chủ dự án. Chi tiết cùng các vòng consistency scan: [nhật ký](consistency_log.md).
+Đã đối chiếu aggregate và định nghĩa cohort; phần chênh lệch 5.499/5.174/5.169 chưa giải thích được do không có bảng cầu nối aggregate hợp lệ. Nguyên nhân UNKNOWN doanh thu chưa xác định; giả thuyết DEV–test chưa kiểm chứng; thời lượng/rubric chưa có. D-022 ghi rằng mọi chẩn đoán bổ sung cần rolling-origin, amendment mới và duyệt chủ dự án. Chi tiết cùng các vòng consistency scan: [nhật ký](consistency_log.md).
 
 ## Việc cần làm trước buổi bảo vệ
 

@@ -15,7 +15,7 @@ Các số dưới đây đến từ manifest/tóm tắt aggregate đã có và k
 
 ## Cần giữ riêng
 
-- 5.499, 5.174 và 5.169 không phải ba bước giảm đã được xác minh. Chưa có phân rã chính xác nối ba số này; không gán nguyên nhân chênh lệch hoặc tự tái dựng row-level cohort.
+- 5.499, 5.174 và 5.169 đều là số khách nhưng đến từ nguồn, mốc và quy tắc khác nhau. Chưa giải thích được phần chênh lệch; xem [đối soát aggregate](cohort_reconciliation.md). Không gán nguyên nhân hoặc tự tái dựng row-level cohort.
 - 6.517 là số đơn của warehouse DEV, còn 5.174 là khách duy nhất có đơn status 3. Chúng không cùng đơn vị.
 - 3.508 là mẫu supervised DEV qua nhiều mốc T; không phải toàn bộ khách scoring và không phải cohort test.
 - EDA mới dùng warehouse trước T và bảng nhãn DEV. Không dùng hành vi/nhãn test hoặc bảng feature test để vẽ hình DEV.
