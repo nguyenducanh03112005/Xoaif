@@ -14,7 +14,7 @@ Hậu kiểm lần này xác minh split/lock, GET-only, Day 3 và 17 hash bảo 
 
 ## Giới hạn còn lại
 
-Đã đối chiếu aggregate và định nghĩa cohort; phần chênh lệch 5.499/5.174/5.169 chưa giải thích được do không có bảng cầu nối aggregate hợp lệ. Nguyên nhân UNKNOWN doanh thu chưa xác định; giả thuyết DEV–test chưa kiểm chứng; thời lượng/rubric chưa có. D-022 ghi rằng mọi chẩn đoán bổ sung cần rolling-origin, amendment mới và duyệt chủ dự án. Chi tiết cùng các vòng consistency scan: [nhật ký](consistency_log.md).
+Đã đếm các điều kiện/intersection có trong schema và ghi cầu số học 5.499 − 325 − 5 = 5.169. Delta 325 (lower bound) và 5 (đơn quà) chưa được xác minh bằng COUNT DISTINCT theo từng điều kiện; **phần dư chưa giải thích: 330** delta chưa có attribution trực tiếp. Mục cohort chưa đối soát vẫn còn. Nguyên nhân UNKNOWN doanh thu chưa xác định; giả thuyết DEV–test chưa kiểm chứng; thời lượng/rubric chưa có. D-022 ghi rằng mọi chẩn đoán bổ sung cần rolling-origin, amendment mới và duyệt chủ dự án. Chi tiết cùng các vòng consistency scan: [nhật ký](consistency_log.md).
 
 ## Việc cần làm trước buổi bảo vệ
 
