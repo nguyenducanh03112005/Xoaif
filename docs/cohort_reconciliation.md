@@ -1,39 +1,32 @@
-# Đối soát cohort (aggregate-only)
+# Đối soát cohort bằng đếm trực tiếp
 
-Ngày chạy: 2026-10-27. Kho DuckDB được mở `read_only=True`; truy vấn chỉ trả số đếm aggregate, không xuất khóa hay bản ghi.
+Phạm vi: snapshot 20261024T052943Z; chỉ status 3 có local_date < T được đưa vào cohort A. Đếm ID khác biệt bằng HMAC chuẩn của dự án trong RAM; không in/lưu ID. DuckDB được mở read-only.
 
-| Bước / cohort | Số | Đơn vị | Định nghĩa, nguồn |
-|---|---:|---|---|
-| DEV hiệu dụng | 6,517 | đơn | `2024-04-01 <= local_date < 2025-10-22`; warehouse `fact_orders`. |
-| Status 3 DEV | 6,400 | đơn | `status_code=3` trong DEV. |
-| Status khác 3 DEV | 117 | đơn | `status_code<>3` trong DEV. |
-| Khách có status 3 DEV | 5,174 | khách | Distinct customer key không thiếu, status 3; tính aggregate trực tiếp trong warehouse. |
-| Eligibility preflight N=180 | 5,499 | khách | Candidate `2025-10-22` trong `outputs/tables/eligibility_preflight.csv`; snapshot và định nghĩa preflight riêng. |
-| Cohort scoring đã freeze | 5,169 | khách | `outputs/metrics/day2_segmentation.json`; pipeline scoring áp dụng quy tắc loại đơn quà đã khóa. |
+## Cầu nối khách
 
-## Đếm distinct theo điều kiện trong DuckDB
+| Cohort/bước | Định nghĩa | Khách distinct | Đếm trực tiếp và đối chiếu |
+|---|---|---:|---|
+| A | >=1 đơn status 3, có ID, local_date < 2025-10-22; không cận dưới | 5.499 | khớp với preflight 5.499 |
+| A − B | Chỉ có đơn status 3 trước 2024-04-01 | 325 | Trực tiếp từ set HMAC A trừ B; trong đó 325 có ít nhất một đơn thuộc 476 đơn bán thử 2022-06-04 đến 2022-09-21. |
+| B | >=1 đơn status 3, ID không NULL, [2024-04-01, 2025-10-22) | 5.174 | khớp với DuckDB 5.174 |
+| B bị loại | Mọi đơn status 3 DEV của khách đều là đơn quà theo Amendment 03 | 5 | Trực tiếp bằng cờ is_gift từ assess_order_money |
+| Scoring | B trừ khách chỉ có status-3 order quà; customer ID hợp lệ và trước T | 5.169 | So với metric đóng băng 5.169: khớp |
 
-| Điều kiện (khách có khóa) | Số distinct | Diễn giải |
-|---|---:|---|
-| Khách distinct trên toàn bộ DEV | 5,174 | Toàn bộ `fact_orders` không thiếu customer key. |
-| Có ít nhất một đơn DEV status 3 | 5,174 | Cohort DEV; mọi hàng kho nằm trong `[2024-04-01, 2025-10-22)`. |
-| Có ít nhất một đơn DEV status khác 3 | 0 | Trong số khách có khóa. |
-| Có status 3 và status khác 3 (giao nhau) | 0 | Giao theo customer key; chỉ số count trả ra, không xuất key. |
-| Status 3 trước `analysis_start` trong warehouse | 0 | Bằng 0 vì warehouse đã cắt từ `2024-04-01`; không đo được khách chỉ có lịch sử trước mốc này. |
-| Status 3 từ T trở đi trong warehouse | 0 | Bằng 0 vì warehouse DEV kết thúc trước T. |
-| Đơn status 3 thiếu customer key | 286 đơn distinct | Không thể gọi là số khách distinct; khóa NULL không phân biệt được cá thể. |
-| Có status 3 không quà / bị loại do quà | Không tính được | Schema không có cờ quà hay trường tiền để xác định điều kiện. |
+Số học: 5.499 − 325 − 5 = 5.169. **phần dư chưa giải thích: 0**.
 
-## Cầu số học và giới hạn xác minh
+Giao điều kiện: A−B với 476 đơn bán thử = 325 khách. A−B với gift-only B = 0; hai nhóm nằm hai phía lower-bound nên rời nhau.
 
-| Bước | Số khách | Delta | Điều kiện dự kiến | Được đếm bằng điều kiện trong kho? |
-|---|---:|---:|---|---|
-| Eligibility preflight N=180 | 5,499 | — | Status 3, có ID, trước `2025-10-22` trên snapshot; không áp dụng lower bound `analysis_start`. | Aggregate preflight đã lưu; không có cohort key trong warehouse để nối trực tiếp. |
-| Sau lower bound vào DEV | 5,174 | −325 | Bỏ người chỉ có giao dịch status 3 trước `2024-04-01`. | Không. Warehouse bắt đầu tại lower bound nên không chứa nhóm bị loại; 0 distinct pre-analysis trong kho. Delta là hiệu số aggregate, chưa xác nhận nguyên nhân theo khách. |
-| Scoring đã freeze | 5,169 | −5 | Loại khách không còn đơn status 3 không quà trước T. | Không. DuckDB không có trường quà; chênh lệch delta không chứng minh số khách quà-only. |
+## Bộ lọc pipeline scoring chính
 
-Số học khớp: 5,499 − 325 − 5 = 5,169. Tuy vậy, hai delta chưa được xác nhận bằng COUNT DISTINCT theo đúng điều kiện loại, và các giao nhau với điều kiện quà không có trong schema. **phần dư chưa giải thích: 330** (tổng các delta chưa được gán nguyên nhân bằng truy vấn trên kho). Không được trình bày đây là funnel đã xác minh.
+- status 3, ID không NULL, local_date trong [analysis_start,T), rồi giữ khách nếu có ít nhất một đơn không quà. COUNT DISTINCT trực tiếp cho thấy 5 khách B chỉ có đơn quà; còn 5.169.
+- exclude_adjusted không bật trong cohort chính (chỉ dùng ở độ nhạy B); không loại thêm khách.
+- Có dòng hàng không phải điều kiện tạo customer set; không loại khách thiếu item lines khỏi cohort scoring.
+- Có 286 đơn status 3 DEV thiếu ID; đây là số đơn, không phải khách distinct. Số đơn quà status 3 DEV: 22.
 
-Phễu đơn riêng khớp: 6,517 = 6,400 status 3 + 117 status khác 3.
+## Kiểm tra cấu trúc DuckDB (không phải phát hiện hành vi)
 
-Không gỡ ghi chú chênh lệch cohort khỏi báo cáo nhất quán: cầu số học đóng nhưng cầu điều kiện/intersection chưa được xác minh.
+- Đơn DEV: 6.517; status 3: 6.400; status khác 3: 117.
+- Customer key NULL: status khác 3 117 đơn; status 3 286 đơn. Đây là kiểm kê cấu trúc kho. Có: builder chỉ tạo `customer_key` trong nhánh `status == 3`; đơn status khác 3 được giữ `customer_key=NULL` (xem `scripts/build_dev_warehouse.py`).
+- Khách có status khác 3 trong kho: 0; giao khách status 3/status khác 3: 0. Các số 0 là kiểm tra cấu trúc kho, không phải phát hiện về hành vi.
+
+Nguồn: docs/cohort_definitions.md; outputs/tables/eligibility_preflight.csv; outputs/metrics/day2_segmentation.json; COUNT DISTINCT read-only trong scripts/build_pretest_evidence.py; chính sách cohort ở scripts/prepare_day2.py và src/features/day2_data.py.

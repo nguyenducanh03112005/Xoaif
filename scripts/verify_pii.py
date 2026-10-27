@@ -8,7 +8,7 @@ import re
 from typing import Iterable
 
 PROJECT_ROOT = Path(__file__).resolve().parents[1]
-TEXT_SUFFIXES = {".csv", ".md", ".txt", ".json", ".ipynb", ".html", ".xml", ".yaml", ".yml"}
+TEXT_SUFFIXES = {".csv", ".md", ".txt", ".json", ".ipynb", ".html", ".xml", ".yaml", ".yml", ".py"}
 EMAIL = re.compile(r"\b[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}\b", re.IGNORECASE)
 VIETNAMESE_PHONE = re.compile(r"(?<!\d)(?:\+?84|0(?![.,]\d))(?:[ \t().-]?\d){8,10}(?!\d)")
 HASH_DIGEST = re.compile(r"(?<![0-9A-Fa-f])[0-9A-Fa-f]{64}(?![0-9A-Fa-f])")
@@ -57,7 +57,17 @@ def _scan_files(paths: Iterable[Path]) -> list[tuple[str, str, int]]:
             findings.append((str(path), "unreadable", 1))
             continue
         for category, pattern in PATTERNS.items():
-            count = sum(1 for _ in pattern.finditer(text))
+            matches = list(pattern.finditer(text))
+            if path.suffix.lower() == ".py" and category == "sensitive_field_value":
+                # The key-value tripwire also matches ordinary Python field
+                # access (for example customer.get("customer_id")); these
+                # expressions contain no data value. Keep scanning all other
+                # source text and retain the same PII pattern.
+                matches = [
+                    match for match in matches
+                    if not re.search(r"=\s*\w+\.get\(", match.group(0), re.IGNORECASE)
+                ]
+            count = len(matches)
             if count:
                 findings.append((str(path.relative_to(PROJECT_ROOT)), category, count))
     return findings
@@ -65,16 +75,20 @@ def _scan_files(paths: Iterable[Path]) -> list[tuple[str, str, int]]:
 
 def main() -> int:
     candidates: set[Path] = set()
-    for folder in (PROJECT_ROOT / "outputs", PROJECT_ROOT / "notebooks", PROJECT_ROOT / "docs"):
+    for folder in (
+        PROJECT_ROOT / "outputs", PROJECT_ROOT / "notebooks", PROJECT_ROOT / "docs",
+        PROJECT_ROOT / "slides", PROJECT_ROOT / "report", PROJECT_ROOT / "src",
+    ):
         if folder.exists():
             candidates.update(folder.rglob("*"))
+    candidates.add(PROJECT_ROOT / "README.md")
     findings = _scan_files(sorted(candidates))
     if findings:
         print("Potential PII patterns found (matched values suppressed):")
         for file_name, category, count in findings:
             print(f"- {file_name}: {category} matches={count}")
         return 1
-    print("PII regex scan passed for docs/, notebooks/, and outputs/; raw/restricted data were not scanned or copied.")
+    print("PII regex scan passed for text files in docs/, notebooks/, outputs/, slides/, report/, src/, and README.md; raw/restricted data and binary PDFs were not scanned or copied.")
     return 0
 
 

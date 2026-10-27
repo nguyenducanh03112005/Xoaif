@@ -5,7 +5,7 @@ Các file dưới đây được đưa vào Git để người chấm xem trực
 ## PDF
 
 - Báo cáo: [`report/xoaif_report.pdf`](../report/xoaif_report.pdf)
-- Slide in 14 trang: [`slides/xoaif_print.pdf`](../slides/xoaif_print.pdf)
+- Slide in 15 trang: [`slides/xoaif_print.pdf`](../slides/xoaif_print.pdf)
 
 ## Đầu vào tổng hợp của dashboard
 
@@ -36,6 +36,8 @@ Dashboard Streamlit đọc các bảng từ `outputs/tables/` và `outputs/metri
 
 Đây là bảng/metric tổng hợp, không phải dữ liệu từng đơn hoặc từng khách. Bảng tỉnh/thành không còn là đầu vào dashboard vì phần lớn doanh thu bị gắn nhãn `UNKNOWN`.
 
+T1/T2 evidence aggregate: `outputs/tables/cohort_bridge_verified.json`; chứa số đếm và nhóm nguồn ẩn danh, không có ID hay giá trị nguồn.
+
 ## Chứng cứ toàn vẹn của lần mở test
 
 - `outputs/metrics/test_opened.lock.json`, `outputs/metrics/day3_pretest_freeze.json`, `outputs/logs/test_eval_access.jsonl` được commit để người chấm kiểm tra rằng test chỉ mở một lần. Các file này chỉ chứa hash, cờ và mốc thời gian, không chứa giá trị hay định danh.
@@ -45,7 +47,7 @@ Dashboard Streamlit đọc các bảng từ `outputs/tables/` và `outputs/metri
 ## Rà soát dữ liệu
 
 - `scripts/dashboard_smoke.py` kiểm tra 10 CSV và 6 JSON được dashboard dùng, schema cột và các tên trường định danh bị cấm.
-- `scripts/verify_pii.py` đã chạy trên tài liệu, notebook và outputs; không phát hiện mẫu email, số điện thoại, địa chỉ hoặc giá trị trường nhạy cảm.
+- `scripts/verify_pii.py` quét docs, notebooks, outputs, slides, report, src và README; kết quả lượt bàn giao ghi trong bundle.
 - Báo cáo và slide được dựng từ các bảng/metric aggregate trên, không đọc `data/raw/` hoặc `data/restricted/`.
 - Không đưa snapshot raw, DuckDB restricted, bảng khách/đơn từng dòng, model artifact hoặc file môi trường vào danh sách nộp.
 

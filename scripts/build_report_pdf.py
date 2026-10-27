@@ -158,6 +158,7 @@ def main(output_path: Path | None = None, font_override: str | None = None) -> N
     seg = load_json("day2_segmentation.json")
     money = load_json("day2_money_audit.json")
     combo = load_json("day3_combo_prereg.json")
+    cohort_bridge = json.loads((ROOT / "outputs/tables/cohort_bridge_verified.json").read_text(encoding="utf-8"))
     monthly = pd.read_csv(ROOT / "outputs" / "tables" / "dashboard_sales_monthly.csv")
     provinces = pd.read_csv(ROOT / "outputs" / "tables" / "dashboard_sales_province.csv")
     products = pd.read_csv(ROOT / "outputs" / "tables" / "dashboard_product_orders.csv")
@@ -223,7 +224,7 @@ def main(output_path: Path | None = None, font_override: str | None = None) -> N
         fig, ax = fresh_page(pdf, 3, "1. Giới thiệu", "Cửa hàng mở 04/2024; dữ liệu trước đó được giữ trong raw như giai đoạn bán thử")
         section_label(ax, .09, .86, "Bối cảnh")
         y = text_block(ax, .09, .825,
-            "Dự án khai thác dữ liệu bán hàng từ Pancake POS nhằm phục vụ học phần Kho và Khai phá dữ liệu. Chủ dự án xác nhận cửa hàng bắt đầu hoạt động ngày 2024-04-01. Snapshot còn có 476 đơn giai đoạn bán thử từ 2022-06 đến 2022-09; các đơn này không tham gia doanh thu phân tích, hành vi khách, nhãn hay giỏ hàng.", width=102)
+            "Dự án khai thác dữ liệu bán hàng từ Pancake POS nhằm phục vụ học phần Kho và Khai phá dữ liệu. Chủ dự án xác nhận cửa hàng bắt đầu hoạt động ngày 2024-04-01. Snapshot có 476 đơn bán thử từ 2022-06-04 đến 2022-09-21; các đơn này không tham gia doanh thu phân tích, hành vi khách, nhãn hay giỏ hàng.", width=102)
         section_label(ax, .09, y-.025, "Ba câu hỏi kinh doanh")
         y = text_block(ax, .09, y-.06,
             "1. Khách hàng nào có hành vi giá trị hoặc mua lặp lại theo lịch sử quan sát?\n2. Có đủ bằng chứng để xếp hạng khả năng mua lại trong cửa sổ thời gian kế tiếp không?\n3. Những sản phẩm nào đồng xuất hiện trong một giỏ đủ điều kiện, sau khi xử lý quà theo từng dòng?",
@@ -302,8 +303,9 @@ def main(output_path: Path | None = None, font_override: str | None = None) -> N
         ax.text(.13,.50,"Đường gạch là mốc bắt đầu test; tháng cuối chưa trọn tháng.",fontsize=8,color="#61736D",transform=ax.transAxes)
         unknown = provinces.loc[provinces["province"] == "UNKNOWN"].iloc[0]
         province_total = float(provinces["recognized_revenue_vnd"].sum())
+        t2 = cohort_bridge["t2"]
         text_block(ax,.10,.44,
-            f"Không so sánh doanh thu theo tỉnh/thành: UNKNOWN chiếm {fpct(unknown['recognized_revenue_vnd']/province_total,2)} tổng doanh thu ({fint(unknown['orders'])} đơn); nguyên nhân chưa phân tích.",width=102,fontsize=9.0)
+            f"Không so sánh doanh thu theo tỉnh/thành: UNKNOWN chiếm {fpct(unknown['recognized_revenue_vnd']/province_total,2)} trên dashboard DEV+test ({fint(unknown['orders'])} đơn). Riêng DEV, tỉnh rỗng ở {fpct(t2['province_missing_rate_percent']/100,2)} đơn và chiếm {fpct(t2['missing_province_revenue_share_percent']/100,2)} doanh thu; chưa suy ra nguyên nhân nghiệp vụ.",width=102,fontsize=8.6)
         text_block(ax,.10,.32,
             "Snapshot có 247 tên mặt hàng quan sát ở bảng sản phẩm; `product_profile.csv` mô tả support, quà theo dòng, ngày đầu/cuối và tháng bán. Tên sản phẩm không được dùng để xác định quà. 476 đơn bán thử 2022 được giữ riêng. Do chiết khấu và điều chỉnh ở cấp đơn, báo cáo chỉ nêu số đơn/dòng theo sản phẩm, không gán doanh thu ghi nhận cho sản phẩm.",width=102,fontsize=9.2)
         ax.text(.10,.09,"Nguồn số liệu: outputs/tables/dashboard_sales_monthly.csv, dashboard_sales_province.csv, dashboard_product_orders.csv.",fontsize=7.8,color="#61736D",transform=ax.transAxes)
@@ -438,7 +440,7 @@ def main(output_path: Path | None = None, font_override: str | None = None) -> N
             ["Amendment 04","Một vòng feature v2 trên DEV; không chọn lại sau kết quả."],
             ["Amendment 05","Quà theo dòng; subset sum low-confidence; 24 combo đóng băng trước test."],
             ["D-010","Ghi rõ `>T` so với `[T,end)` thực tế; ảnh hưởng chưa xác định."],
-            ["D-019/020","Cohort chưa đối soát giữ riêng; EDA DEV only, notebook fit đóng băng."],
+            ["D-019/020","Cầu 5.499 → 5.174 → 5.169 đã đếm trực tiếp, dư 0; EDA DEV only, notebook fit đóng băng."],
             ["D-021/022","Diễn giải test có caveat thống nhất; chưa chạy chẩn đoán anchor trên DEV."],
             ["Cancel/refund","Không fit vì một số fold có dưới 20 dương; không thử lại."],
         ]

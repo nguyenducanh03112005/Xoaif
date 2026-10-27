@@ -43,6 +43,7 @@ outputs/tables/*
 !outputs/tables/test_combos_frozen.csv
 !outputs/tables/combos_v2.csv
 !outputs/tables/seasonal_pair_metrics.csv
+!outputs/tables/cohort_bridge_verified.json
 !outputs/tables/gift_line_*.csv
 !report/xoaif_report.pdf
 !slides/xoaif_print.pdf

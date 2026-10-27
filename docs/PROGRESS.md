@@ -1,12 +1,12 @@
 # Project progress
 
-Updated: 2026-10-26
+Updated: 2026-10-27
 
-## Trạng thái chốt hiện tại — 2026-10-26
+## Trạng thái chốt hiện tại — 2026-10-27
 
-- Hồ sơ nộp gồm dashboard offline 5 tab, báo cáo A4 15 trang, slide PDF in 14 trang, speaker notes, sổ số chuẩn, nhật ký nhất quán và báo cáo chốt. Dashboard smoke kiểm tra 10 CSV và 6 JSON aggregate. Hai PDF và các đầu vào dashboard được commit; xem `docs/submission_artifacts.md`. Hạn nộp là 2026-10-27; thời lượng và rubric chính thức chưa có trong hồ sơ.
+- Hồ sơ nộp gồm dashboard offline 5 tab, báo cáo A4 15 trang, slide PDF in 15 trang, speaker notes, sổ số chuẩn, nhật ký nhất quán và báo cáo chốt. Dashboard smoke kiểm tra 10 CSV và 6 JSON aggregate. Hạn nộp là 2026-10-27; thời lượng và rubric chính thức chưa có trong hồ sơ.
 - Test đã mở đúng một lần. Logistic Regression C=10 — mô hình chính theo D-005; Logistic Regression feature-v2 C=0,1 — khảo sát bổ sung theo Amendment 04; không thay mô hình chính. ROC-AUC DEV OOF C=10 là 0,5096, gần ngẫu nhiên; ROC-AUC test khoảng 0,70 là tín hiệu yếu chưa được DEV xác nhận, không đủ để kết luận mô hình hoạt động tốt. Không dùng test để tinh chỉnh. Cấu hình ghi >T, evaluator dùng [T,end) (gồm ngày T); ảnh hưởng chưa xác định; không khẳng định tuân thủ đầy đủ giao thức.
-- Cohort 5.499 preflight, 5.174 khách DEV status 3 và 5.169 scoring chưa đối soát. Combo chính là 24 cặp theo quy tắc ít nhất 4/6; 21/24 có lift > 1 trên 2.174 giỏ test. Không so sánh tỉnh/thành vì 91,92% doanh thu mang nhãn UNKNOWN. Bài phân loại phản hồi bị bỏ qua do thiếu dữ liệu có nhãn. K=2 là phân đoạn mô tả theo tần suất mua (một lần / lặp lại), chưa xác nhận ý nghĩa kinh doanh.
+- Cohort đã đếm trực tiếp: 5.499 − 325 khách chỉ có status 3 trước `analysis_start` = 5.174; − 5 khách chỉ có đơn quà = 5.169; phần dư chưa giải thích: 0. Combo chính là 24 cặp theo quy tắc ít nhất 4/6; 21/24 có lift > 1 trên 2.174 giỏ test. Dashboard UNKNOWN là 91,92% trên DEV+test; DEV-only 91,56% đơn và 90,73% doanh thu. Bài phân loại phản hồi bị bỏ qua do thiếu dữ liệu có nhãn. K=2 là phân đoạn mô tả theo tần suất mua (một lần / lặp lại), chưa xác nhận ý nghĩa kinh doanh.
 - D-022 giữ chẩn đoán anchor ở trạng thái chưa làm: không mở Amendment 06, không fit mới. Hai thành viên cần tự chạy kiểm tra hậu mở an toàn, thử dashboard, tập demo 4 phút và trả lời ít nhất 10 câu chéo.
 - Hậu kiểm trước cập nhật artifact: `run_all.py` pass (74 pytest, split/GET-only/locks/PII); dashboard smoke pass (5 tab, 11 CSV, 6 JSON); 17 hash bảo vệ khớp baseline; test-open lock giữ count=1; access log giữ đúng một `label_load` và một `behavior_load`. Sau cập nhật dashboard, smoke được chạy lại với 10 CSV.
 - Đóng gói bàn giao theo D-023: thêm dữ liệu mẫu tổng hợp tại `data/sample/`, mục lục `docs/INDEX.md` và nhật ký `docs/cleanup_log.md`; không đổi kết luận và không di chuyển tài liệu trong `docs/`.
@@ -91,7 +91,7 @@ Updated: 2026-10-26
 - Đã dựng lại báo cáo 15 trang và slide in 14 trang; rà trực quan các trang báo cáo 7–15 và slide 6–14, gồm caveat, metric, combo và checklist trình bày. Ảnh tổng quan/mô hình trong `docs/demo_screens/` đã được cập nhật và kiểm tra. Consistency scan ban đầu tìm 5 thiếu sót về caveat/tên chuẩn ở `qa_roles.md` và nhật ký; đã sửa, đồng thời smoke test phát hiện và sửa kỳ vọng JSON 5→6 để khớp sáu file dashboard thực đọc. Hai lượt consistency scan cuối không còn findings. Không chạy evaluator, notebook hoặc fit/refit.
 # Cập nhật bàn giao — 2026-10-27
 
-- Cohort: `scripts/reconcile_cohorts.py` so sánh aggregate read-only; phễu đơn 6.517 = 6.400 status 3 + 117 status khác 3 khớp. 5.499 / 5.174 / 5.169 đều là số khách nhưng phần chênh lệch **chưa giải thích được**; không có bảng cầu nối aggregate hợp lệ. Xem `docs/cohort_reconciliation.md`.
+- Cohort (trạng thái trước đếm raw pre-T ngày 2026-10-27): script reconcile chỉ so sánh aggregate warehouse; chưa có cầu nối theo điều kiện. Đã được supersede bởi đếm trực tiếp tại `docs/cohort_reconciliation.md` và `outputs/tables/cohort_bridge_verified.json`.
 - Sai khác ngày T: không tìm thấy artifact prediction đã lưu trong `outputs/`; theo phạm vi Amendment 06, không tái tạo prediction và dừng tiểu mục. Không có metric sensitivity mới.
-- UNKNOWN: schema warehouse không có source/channel/type/address/province; kết quả chẩn đoán là chưa xác định, xem `docs/unknown_region_diagnostic.md`.
+- UNKNOWN (ghi chú trước chẩn đoán raw pre-T ngày 2026-10-27): warehouse khi đó không chứa các trường source/address; đã được supersede bởi đếm DEV-only trong `docs/unknown_region_diagnostic.md`.
 - Handover/refesh: ghi phân vai theo `docs/qa_roles.md` và quy trình refresh theo lô, không chạy extractor.

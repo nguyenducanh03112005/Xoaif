@@ -1,0 +1,409 @@
+{
+  "snapshot_id": "20261024T052943Z",
+  "analysis_start": "2024-04-01",
+  "test_start_exclusive": "2025-10-22",
+  "snapshot_manifest_sha256": "3536a0e5303d83a6fbddd19e6f52375ed70dd53a070d1cadb8691a66ad4acf5c",
+  "amendment_03_sha256": "3d87751451fa17fe71644df7f0743331ee6dae6b34013a4b063e18b6da98eaf1",
+  "test_labels_loaded": false,
+  "test_behavior_loaded": false,
+  "unit_note": "No source identifiers or raw values are stored; HMAC pseudonyms exist only in memory during the run.",
+  "t1": {
+    "unit": "distinct_customers_with_nonnull_id",
+    "A_all_status3_before_T": 5499,
+    "preflight_reference": 5499,
+    "A_matches_preflight": true,
+    "B_status3_in_DEV": 5174,
+    "B_matches_DuckDB": true,
+    "A_minus_B_only_pre_analysis": 325,
+    "A_minus_B_customers_with_any_476_trial_order": 325,
+    "trial_orders_in_profile_window": 476,
+    "B_customers_with_only_gift_status3_orders": 5,
+    "B_after_non_gift_customer_filter": 5169,
+    "scoring_reference": 5169,
+    "scoring_matches_reference": true,
+    "pre_analysis_only_x_gift_only_intersection": 0,
+    "preflight_minus_direct_removals_minus_scoring_residual": 0,
+    "status3_dev_missing_customer_id_orders": 286,
+    "status3_dev_gift_orders": 22,
+    "primary_feature_filters": {
+      "status3": "required before customer set",
+      "customer_id_nonnull": "required before customer set",
+      "local_date": "analysis_start <= date < T",
+      "order_gift": "customer kept if at least one non-gift status-3 DEV order exists",
+      "exclude_adjusted": false,
+      "line_items_required_for_customer_cohort": false,
+      "other_customer_filters": []
+    }
+  },
+  "duckdb": {
+    "dev_orders": 6517,
+    "dev_status3_orders": 6400,
+    "dev_other_status_orders": 117,
+    "dev_customers_nonnull": 5174,
+    "dev_customers_status3": 5174,
+    "dev_customers_other_status": 0,
+    "dev_customers_status3_only": 5174,
+    "dev_customers_other_status_only": 0,
+    "dev_customers_status3_other_status_intersection": 0,
+    "dev_customers_status3_nonnull": 5174,
+    "other_status_null_customer_orders": 117,
+    "status3_null_customer_orders": 286,
+    "available": true
+  },
+  "t2": {
+    "scope": "status3 DEV orders with local_date in [2024-04-01, 2025-10-22)",
+    "unit": "orders",
+    "status3_dev_orders": 6400,
+    "province_field": "shipping_address.province_name",
+    "province_missing_orders": 5860,
+    "province_missing_rate_percent": 91.5625,
+    "province_and_revenue_groups": [
+      {
+        "group": "missing_province",
+        "orders": 5860,
+        "revenue_vnd": 2384693718,
+        "revenue_share_percent": 90.7295,
+        "suppressed": false
+      },
+      {
+        "group": "province_present",
+        "orders": 540,
+        "revenue_vnd": 243660373,
+        "revenue_share_percent": 9.2705,
+        "suppressed": false
+      }
+    ],
+    "revenue_recognized_orders": 6400,
+    "revenue_missing_orders": 0,
+    "revenue_recognized_total_vnd": 2628354091,
+    "missing_province_revenue_vnd": 2384693718,
+    "missing_province_revenue_share_percent": 90.7295,
+    "source_address_field_names_present": [
+      "ads_source",
+      "customer.shop_customer_addresses",
+      "order_sources",
+      "order_sources_name",
+      "p_utm_source",
+      "shipping_address",
+      "shipping_address.address",
+      "shipping_address.district_id",
+      "shipping_address.district_name",
+      "shipping_address.full_address",
+      "shipping_address.marketplace_address",
+      "shipping_address.new_full_address",
+      "shipping_address.new_province_id",
+      "shipping_address.province_id",
+      "shipping_address.province_name"
+    ],
+    "source_channel_fields_analyzed": [
+      "order_sources_name",
+      "order_sources",
+      "ads_source",
+      "p_utm_source"
+    ],
+    "source_channel_group_distributions": {
+      "order_sources_name": {
+        "nonempty_orders": 3996,
+        "missing_orders": 2404,
+        "small_cell_suppressed": false,
+        "groups": [
+          {
+            "group": "khác",
+            "orders": null,
+            "revenue_vnd": null,
+            "suppressed": true
+          },
+          {
+            "group": "nhóm 1",
+            "orders": 3722,
+            "revenue_vnd": 1758212700,
+            "revenue_share_percent": 66.8941,
+            "suppressed": false
+          },
+          {
+            "group": "nhóm 2",
+            "orders": 273,
+            "revenue_vnd": 87424750,
+            "revenue_share_percent": 3.3262,
+            "suppressed": false
+          },
+          {
+            "group": "thiếu trường",
+            "orders": 2404,
+            "revenue_vnd": 782651641,
+            "revenue_share_percent": 29.7773,
+            "suppressed": false
+          }
+        ],
+        "province_missing_intersection": [
+          {
+            "province": "missing",
+            "source_group": "nhóm 1",
+            "orders": 3232,
+            "revenue_vnd": 1545383113,
+            "revenue_share_percent": 58.7966,
+            "suppressed": false
+          },
+          {
+            "province": "missing",
+            "source_group": "nhóm 2",
+            "orders": 244,
+            "revenue_vnd": 75533250,
+            "revenue_share_percent": 2.8738,
+            "suppressed": false
+          },
+          {
+            "province": "missing",
+            "source_group": "thiếu trường",
+            "orders": 2384,
+            "revenue_vnd": 763777355,
+            "revenue_share_percent": 29.0591,
+            "suppressed": false
+          },
+          {
+            "province": "present",
+            "source_group": "other",
+            "orders": null,
+            "revenue_vnd": null,
+            "suppressed": true
+          },
+          {
+            "province": "present",
+            "source_group": "nhóm 1",
+            "orders": 490,
+            "revenue_vnd": 212829587,
+            "revenue_share_percent": 8.0974,
+            "suppressed": false
+          },
+          {
+            "province": "present",
+            "source_group": "nhóm 2",
+            "orders": 29,
+            "revenue_vnd": 11891500,
+            "revenue_share_percent": 0.4524,
+            "suppressed": false
+          },
+          {
+            "province": "present",
+            "source_group": "thiếu trường",
+            "orders": 20,
+            "revenue_vnd": 18874286,
+            "revenue_share_percent": 0.7181,
+            "suppressed": false
+          }
+        ]
+      },
+      "order_sources": {
+        "nonempty_orders": 3996,
+        "missing_orders": 2404,
+        "small_cell_suppressed": false,
+        "groups": [
+          {
+            "group": "khác",
+            "orders": null,
+            "revenue_vnd": null,
+            "suppressed": true
+          },
+          {
+            "group": "nhóm 1",
+            "orders": 273,
+            "revenue_vnd": 87424750,
+            "revenue_share_percent": 3.3262,
+            "suppressed": false
+          },
+          {
+            "group": "nhóm 2",
+            "orders": 3721,
+            "revenue_vnd": 1757912700,
+            "revenue_share_percent": 66.8826,
+            "suppressed": false
+          },
+          {
+            "group": "thiếu trường",
+            "orders": 2404,
+            "revenue_vnd": 782651641,
+            "revenue_share_percent": 29.7773,
+            "suppressed": false
+          }
+        ],
+        "province_missing_intersection": [
+          {
+            "province": "missing",
+            "source_group": "other",
+            "orders": null,
+            "revenue_vnd": null,
+            "suppressed": true
+          },
+          {
+            "province": "missing",
+            "source_group": "nhóm 1",
+            "orders": 244,
+            "revenue_vnd": 75533250,
+            "revenue_share_percent": 2.8738,
+            "suppressed": false
+          },
+          {
+            "province": "missing",
+            "source_group": "nhóm 2",
+            "orders": 3231,
+            "revenue_vnd": 1545083113,
+            "revenue_share_percent": 58.7852,
+            "suppressed": false
+          },
+          {
+            "province": "missing",
+            "source_group": "thiếu trường",
+            "orders": 2384,
+            "revenue_vnd": 763777355,
+            "revenue_share_percent": 29.0591,
+            "suppressed": false
+          },
+          {
+            "province": "present",
+            "source_group": "other",
+            "orders": null,
+            "revenue_vnd": null,
+            "suppressed": true
+          },
+          {
+            "province": "present",
+            "source_group": "nhóm 1",
+            "orders": 29,
+            "revenue_vnd": 11891500,
+            "revenue_share_percent": 0.4524,
+            "suppressed": false
+          },
+          {
+            "province": "present",
+            "source_group": "nhóm 2",
+            "orders": 490,
+            "revenue_vnd": 212829587,
+            "revenue_share_percent": 8.0974,
+            "suppressed": false
+          },
+          {
+            "province": "present",
+            "source_group": "thiếu trường",
+            "orders": 20,
+            "revenue_vnd": 18874286,
+            "revenue_share_percent": 0.7181,
+            "suppressed": false
+          }
+        ]
+      },
+      "ads_source": {
+        "nonempty_orders": 970,
+        "missing_orders": 5430,
+        "small_cell_suppressed": false,
+        "groups": [
+          {
+            "group": "nhóm 1",
+            "orders": 927,
+            "revenue_vnd": 418293103,
+            "revenue_share_percent": 15.9146,
+            "suppressed": false
+          },
+          {
+            "group": "nhóm 2",
+            "orders": 43,
+            "revenue_vnd": 10311500,
+            "revenue_share_percent": 0.3923,
+            "suppressed": false
+          },
+          {
+            "group": "thiếu trường",
+            "orders": 5430,
+            "revenue_vnd": 2199749488,
+            "revenue_share_percent": 83.693,
+            "suppressed": false
+          }
+        ],
+        "province_missing_intersection": [
+          {
+            "province": "missing",
+            "source_group": "nhóm 1",
+            "orders": 852,
+            "revenue_vnd": 381082503,
+            "revenue_share_percent": 14.4989,
+            "suppressed": false
+          },
+          {
+            "province": "missing",
+            "source_group": "nhóm 2",
+            "orders": 42,
+            "revenue_vnd": 10081500,
+            "revenue_share_percent": 0.3836,
+            "suppressed": false
+          },
+          {
+            "province": "missing",
+            "source_group": "thiếu trường",
+            "orders": 4966,
+            "revenue_vnd": 1993529715,
+            "revenue_share_percent": 75.8471,
+            "suppressed": false
+          },
+          {
+            "province": "present",
+            "source_group": "other",
+            "orders": null,
+            "revenue_vnd": null,
+            "suppressed": true
+          },
+          {
+            "province": "present",
+            "source_group": "nhóm 1",
+            "orders": 75,
+            "revenue_vnd": 37210600,
+            "revenue_share_percent": 1.4157,
+            "suppressed": false
+          },
+          {
+            "province": "present",
+            "source_group": "thiếu trường",
+            "orders": 464,
+            "revenue_vnd": 206219773,
+            "revenue_share_percent": 7.846,
+            "suppressed": false
+          }
+        ]
+      },
+      "p_utm_source": {
+        "nonempty_orders": null,
+        "missing_orders": 6400,
+        "small_cell_suppressed": true,
+        "groups": [
+          {
+            "group": "thiếu trường",
+            "orders": 6400,
+            "revenue_vnd": 2628354091,
+            "revenue_share_percent": 100.0,
+            "suppressed": false
+          }
+        ],
+        "province_missing_intersection": [
+          {
+            "province": "missing",
+            "source_group": "thiếu trường",
+            "orders": 5860,
+            "revenue_vnd": 2384693718,
+            "revenue_share_percent": 90.7295,
+            "suppressed": false
+          },
+          {
+            "province": "present",
+            "source_group": "thiếu trường",
+            "orders": 540,
+            "revenue_vnd": 243660373,
+            "revenue_share_percent": 9.2705,
+            "suppressed": false
+          }
+        ]
+      }
+    },
+    "source_channel_values_printed": false,
+    "small_cells_suppressed": true,
+    "total_revenue_unit": "VND; Amendment 03 assess_order_money.revenue_recognized",
+    "revenue_expression": "total_price_after_sub_discount - shipping_fee"
+  }
+}

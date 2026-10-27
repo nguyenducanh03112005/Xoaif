@@ -1,21 +1,21 @@
 # Sổ số chuẩn Xoaif Garden
 
-Cập nhật: 2026-10-26. Mỗi số dưới đây gắn với đơn vị, cohort và nguồn aggregate. Không đọc dữ liệu đơn/khách từng dòng. Dấu chấm phân tách hàng nghìn, dấu phẩy phân tách thập phân. Với số đã làm tròn, nguồn giữ giá trị đầy đủ.
+Cập nhật: 2026-10-27. Mỗi số dưới đây gắn với đơn vị, cohort và nguồn aggregate. Dấu chấm phân tách hàng nghìn, dấu phẩy phân tách thập phân. Với số đã làm tròn, nguồn giữ giá trị đầy đủ.
 
 ## Cohort và thời gian
 
 | Đại lượng | Số chuẩn và đơn vị/cohort | Nguồn sự thật |
 |---|---|---|
-| Snapshot hiện hành | 12.011 đơn; 601 trang; `20261024T052943Z` | `outputs/tables/day1_analysis_start_profile.json`: `snapshot_order_count`, `snapshot_id`; 601 trang là metadata snapshot đã ghi trong `docs/api_notes.md` (không đọc raw pages). |
+| Snapshot hiện hành | 12.011 đơn; 601 trang; `20261024T052943Z` | `outputs/tables/day1_analysis_start_profile.json`: `snapshot_order_count`, `snapshot_id`; 601 trang là metadata snapshot đã ghi trong `docs/api_notes.md`. |
 | Trước `analysis_start` | 476 đơn bán thử, 2022-06 đến 2022-09 | `outputs/tables/day1_analysis_start_profile.json`: `pre_analysis_order_count`, `pre_analysis_date_min`, `pre_analysis_date_max`. |
 | Kho DEV | 6.517 đơn, `[2024-04-01, 2025-10-22)` | `outputs/tables/day1_analysis_start_profile.json`: `effective_development_order_count`, `analysis_start`, `development_exclusive_end`. |
 | DEV status 3 | 6.400 đơn trong cùng khoảng DEV | `outputs/tables/day1_analysis_start_profile.json`: `effective_development_status3_count`; xác nhận trong `outputs/metrics/day2_money_audit.json`: `scope.status3_orders`. |
 | DEV status khác 3 | 117 đơn; đối soát đơn: 6.517 = 6.400 + 117 | Aggregate `status_code<>3` trong `fact_orders`; kiểm tra read-only được ghi ở `docs/cohort_reconciliation.md`. |
 | Khách DEV có status 3 | 5.174 khách có ID, cohort status 3 DEV | `outputs/tables/day1_development_cohort_summary.json`: `development_customer_count_status3_nonmissing`. |
-| Khách distinct toàn bộ warehouse DEV | 5.174 khách có khóa; đều có ít nhất một đơn status 3 trong warehouse | COUNT DISTINCT read-only trên `fact_orders`; chi tiết điều kiện và intersection trong `docs/cohort_reconciliation.md`. |
+| Khách distinct toàn bộ warehouse DEV | 5.174 khách có khóa; đều có ít nhất một đơn status 3 trong warehouse | COUNT DISTINCT read-only trên `fact_orders`; đây là kiểm tra cấu trúc kho. |
 | Preflight N=180 | 5.499 khách ở mốc 2025-10-22; số tiền kiểm, chưa phải số nhãn/test | `outputs/tables/eligibility_preflight.csv`: dòng `candidate=N180`, cột `eligible_customers`. |
 | Cohort scoring/test | 5.169 khách đủ điều kiện trước T | `outputs/metrics/test_eval.json`: `cohort.eligible_customers_with_pre_T_purchase`; đối chiếu pre-open với `outputs/metrics/day2_segmentation.json`: `customer_count`. |
-| Cầu số học 5.499 → 5.174 → 5.169 | Delta −325 rồi −5; arithmetic khép về 5.169. **Phần dư chưa giải thích: 330** delta chưa gán được bằng điều kiện đo trực tiếp | `docs/cohort_reconciliation.md`. COUNT DISTINCT trong kho không xác minh preflight lower-bound exclusion hay khách chỉ có đơn quà; không gọi là funnel đã đối soát. |
+| Cầu nối cohort 5.499 → 5.174 → 5.169 | 5.499 khách trước T − 325 khách chỉ có status 3 trước `analysis_start` = 5.174; − 5 khách B chỉ có đơn quà = 5.169. **phần dư chưa giải thích: 0** | Đếm trực tiếp bằng HMAC chuẩn trên snapshot pre-T và `assess_order_money` Amendment 03; đối chiếu DuckDB, preflight và metric scoring. `docs/cohort_reconciliation.md`; JSON tổng hợp: `outputs/tables/cohort_bridge_verified.json`. |
 | Thiếu customer ID | 286 đơn status 3 DEV | `outputs/tables/dev_quality_summary.json`: `valid_status_3_orders_missing_customer_id`; đối chiếu `outputs/metrics/day2_preprocessing.json`: `missing_customer_id_orders`. |
 | Cửa sổ test thực thi | `[2025-10-22, 2026-04-20)`; gồm ngày T và 179 ngày lịch sau T | `outputs/metrics/test_eval.json`: `test_interval`, `effective_post_T_calendar_dates`; sai khác quy tắc `>T` ghi ở D-010. |
 | DATA_CUTOFF | 2026-10-24, loại trừ | `config/split.yaml` (khóa, chỉ đọc); `docs/PROGRESS.md`. |
@@ -68,9 +68,9 @@ Cấu hình ghi >T, evaluator dùng [T,end) (gồm ngày T); ảnh hưởng chư
 | Đại lượng | Số chuẩn và phạm vi | Nguồn sự thật |
 |---|---|---|
 | Tổng doanh thu dashboard mặc định | 4.200.024.995 đ và 9.104 đơn status 3 không tặng, 25 bucket tháng từ 2024-04 đến 2026-04; gồm DEV và cửa sổ test, tháng 2026-04 không trọn tháng | `outputs/tables/dashboard_sales_monthly.csv`: tổng cột `recognized_revenue_vnd`, tổng cột `orders`, min/max `month`. |
-| UNKNOWN trên bảng tỉnh/thành | 3.860.511.662 đ, 8.403 đơn, bằng 91,92% tổng doanh thu trong bảng tỉnh/thành; nguyên nhân chưa phân tích | `outputs/tables/dashboard_sales_province.csv`: dòng `province=UNKNOWN`, cột `recognized_revenue_vnd`, `orders`; tổng cùng cột doanh thu trên bảng. |
+| UNKNOWN trên bảng tỉnh/thành | 3.860.511.662 đ, 8.403 đơn, bằng 91,92% tổng doanh thu trong bảng tỉnh/thành (DEV+test). Trong DEV riêng: 5.860/6.400 đơn thiếu `shipping_address.province_name` (91,56%); doanh thu tương ứng 2.384.693.718/2.628.354.091 đ (90,73%). | `outputs/tables/dashboard_sales_province.csv`; đếm DEV pre-T và công thức Amendment 03 ở `docs/unknown_region_diagnostic.md` và `outputs/tables/cohort_bridge_verified.json`. |
 | Dashboard | 5 tab; 10 CSV tổng hợp + 6 JSON tổng hợp; tổng số dòng được kiểm tra bởi `scripts/dashboard_smoke.py` | Danh sách nguồn trong `src/app/streamlit_app.py`; bảng tỉnh/thành không còn là đầu vào dashboard. |
 | Báo cáo | 15 trang A4 | `pdfinfo report/xoaif_report.pdf`: `Pages`. |
-| Slide in | 14 trang ngang | `pdfinfo slides/xoaif_print.pdf`: `Pages`. Không tạo PPTX vì môi trường thiếu `python-pptx`. |
-| Kiểm thử | 74 pytest ở lần hậu kiểm cuối | Log cuối của `scripts/run_all.py` và `pytest`; không chạy evaluator, notebook hay fit/refit model. |
+| Slide in | 15 trang ngang | `pdfinfo slides/xoaif_print.pdf`: `Pages`. Không tạo PPTX vì môi trường thiếu `python-pptx`. |
+| Kiểm thử | 78 pytest ở lần hậu kiểm cuối | Log cuối của `scripts/run_all.py` và `pytest`; không chạy evaluator, notebook hay fit/refit model. |
 | Hạn nộp | 2026-10-27; thời lượng và rubric chính thức chưa có | Chủ dự án cung cấp trong yêu cầu ngày 2026-10-26; được ghi ở `docs/schedule.md`. |

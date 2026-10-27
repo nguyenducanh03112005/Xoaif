@@ -108,7 +108,7 @@ B — khoảng 1 phút; A bổ sung mốc lọc và nhãn.
 Các cohort có định nghĩa riêng, và quan hệ giữa một số tổng đếm chưa được phân rã xác minh.
 
 ### Lời thoại
-Mốc phân tích DEV bắt đầu ngày 2024-04-01 và kết thúc trước T là 2025-10-22. Preflight N=180 có 5.499 khách, DEV có 5.174 khách status 3 có mã, còn cohort scoring có 5.169 khách. Ba con số này chưa có phân rã được xác minh, nên không trình bày như một chuỗi giảm đã đối soát. Cửa sổ test thực thi gồm ngày T; sai khác với quy tắc ghi trước sẽ được giải thích ở slide 10.
+Mốc phân tích DEV bắt đầu ngày 2024-04-01 và kết thúc trước T là 2025-10-22. Cầu khách đã được đếm trực tiếp: 5.499 khách status 3 có ID trước T, trừ 325 khách chỉ có status 3 trước analysis_start, còn 5.174 khách DEV; trừ 5 khách chỉ có đơn quà, còn 5.169 scoring. Phần dư chưa giải thích: 0. Trong nhóm 325, toàn bộ 325 có ít nhất một đơn trong 476 đơn bán thử ngày 2022-06-04 đến 2022-09-21. Cửa sổ test thực thi gồm ngày T; sai khác với quy tắc ghi trước sẽ được giải thích ở slide 10. Nguồn: docs/cohort_reconciliation.md.
 
 ### Số cần nhớ
 - DEV: 6.517 đơn, gồm 6.400 đơn status 3; preflight: 5.499 khách; DEV status 3: 5.174 khách; scoring: 5.169 khách — docs/canonical_numbers.md.
@@ -170,7 +170,7 @@ Trong DEV, 4.526 trên 5.174 khách status 3 có một đơn, tương đương 8
 
 ### Câu hỏi dễ gặp
 - Dữ liệu có chứng minh mùa vụ không? — Không; DEV có một mùa Tết trọn vẹn và biểu đồ không kiểm định nguyên nhân. Mở docs/metric_rationale.md.
-- Vì sao không so sánh doanh thu theo tỉnh? — 91,92% doanh thu trên bảng địa lý là UNKNOWN; mở docs/canonical_numbers.md.
+- Vì sao không so sánh doanh thu theo tỉnh? — 91,92% doanh thu UNKNOWN trên phạm vi dashboard DEV+test; DEV riêng là 91,56% đơn và 90,73% doanh thu trong nhóm thiếu tỉnh. Mở docs/unknown_region_diagnostic.md.
 
 ### Chuyển slide
 Một quyết định ảnh hưởng trực tiếp đến giỏ là cách nhận diện quà theo từng dòng hàng.
@@ -361,10 +361,10 @@ B — khoảng 1 phút; A bổ sung phần mô hình/test.
 Câu trả lời bảo vệ cần nêu được điều dữ liệu cho phép nói và điều còn chưa được xác minh.
 
 ### Lời thoại
-Các giới hạn chính là một mùa Tết trọn vẹn trong DEV, tỷ lệ UNKNOWN cao trên bảng địa lý và 903 dòng inferred subset có thể gán nhầm. Cohort 5.499/5.174/5.169 chưa có phân rã được xác minh; kết quả test cũng có sai khác ranh giới ngày đã công khai. Hạn nộp là 2026-10-27, còn thời lượng và rubric chính thức chưa có trong hồ sơ. Hai thành viên sẽ tập trả lời chéo và giữ nguyên ranh giới test đã khóa.
+Các giới hạn chính là một mùa Tết trọn vẹn trong DEV, tỷ lệ UNKNOWN cao trên bảng địa lý và 903 dòng inferred subset có thể gán nhầm. Cầu cohort đã khớp bằng đếm trực tiếp; kết quả test vẫn có sai khác ranh giới ngày đã công khai. Hạn nộp là 2026-10-27, còn thời lượng và rubric chính thức chưa có trong hồ sơ. Hai thành viên sẽ tập trả lời chéo và giữ nguyên ranh giới test đã khóa.
 
 ### Số cần nhớ
-- 91,92% UNKNOWN; 903 inferred subset; ba cohort chưa đối soát — docs/canonical_numbers.md.
+- 91,92% UNKNOWN trên dashboard DEV+test; DEV thiếu tỉnh 91,56% đơn/90,73% doanh thu; 903 inferred subset — docs/canonical_numbers.md, docs/unknown_region_diagnostic.md.
 - Hạn nộp 2026-10-27; rubric và thời lượng chính thức chưa có — docs/qa_roles.md, docs/schedule.md.
 
 ### Giới hạn phải nói
@@ -384,7 +384,18 @@ Xin mời hội đồng đặt câu hỏi; người phụ trách trả lời tr�
 - Khi nói về test, dùng nguyên văn: “Cấu hình ghi >T, evaluator dùng [T,end) (gồm ngày T); ảnh hưởng chưa xác định; đây là kết quả số liệu của lần chạy thực tế, không phải khẳng định tuân thủ đầy đủ giao thức, không gọi là 'đạt cổng ghi trước'.”
 - Gọi là doanh thu ghi nhận theo status 3 và Amendment 03; không gọi là lợi nhuận hoặc đối soát ngân hàng.
 - Chỉ gọi luật kết hợp là đồng xuất hiện; không nói combo có lợi nhuận hay làm tăng doanh thu.
-- Không khẳng định cohort 5.499/5.174/5.169 đã đối soát; không so sánh địa bàn khi 91,92% là UNKNOWN.
+- Trình bày cầu 5.499 → 5.174 → 5.169 với điều kiện và số đếm trực tiếp; không so sánh địa bàn khi 91,92% dashboard là UNKNOWN.
+
+## Slide 15 — Vận hành: làm mới dữ liệu
+
+**Thời lượng đề xuất:** 30–40 giây. **Người dẫn:** B.
+
+Chu kỳ đề xuất là snapshot mới mỗi tuần. Mỗi snapshot có timestamp và manifest/checksum; giữ snapshot cũ và so sánh tổng đơn cùng số đơn có đổi trạng thái. Huấn luyện lại tách riêng, theo tháng hoặc khi đủ dữ liệu; cần rolling-origin và amendment mới, không mở lại test cũ.
+
+API cho phép lấy đơn mới nên gần real-time khả thi; nhóm chọn snapshot bất biến để tái lập; chưa khảo sát lọc theo thời gian cập nhật; chưa tự động hóa trong bản nộp. API không có snapshot token, status hiện tại không phải lịch sử trạng thái, split/test/cohort khóa bằng hash và mô hình chưa có tín hiệu xác nhận.
+
+- Số đơn/ngày toàn snapshot: **KHÔNG LÀM ĐƯỢC** — `day1_analysis_start_profile.json` không có mốc ngày đầu/cuối cho toàn bộ 12.011 đơn; không thay bằng khoảng DEV hoặc nhóm bán thử.
+- Nguồn: `docs/refresh_procedure.md`, `docs/canonical_numbers.md`.
 - Không gọi proxy giá trị lớn là pháp nhân đã xác minh; RFM chỉ mô tả lịch sử trước T.
 - Nêu rõ test đã mở một lần; không đề nghị chạy lại evaluator, notebook hay tinh chỉnh trên test.
 - Không gán nhãn phản hồi khi chưa có dữ liệu đủ tin cậy.

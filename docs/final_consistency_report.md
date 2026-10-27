@@ -8,13 +8,13 @@
 
 **Cấu hình ghi >T, evaluator dùng [T,end) (gồm ngày T); ảnh hưởng chưa xác định; đây là kết quả số liệu của lần chạy thực tế, không phải khẳng định tuân thủ đầy đủ giao thức, không gọi là 'đạt cổng ghi trước'.**
 
-Đã chuẩn hóa cohort và tỷ lệ theo đúng mẫu số; combo báo 24 cặp theo điều kiện ổn định ít nhất 4/6 ô và 21/24 lift > 1 trên 2.174 giỏ. K=2 được gọi là phân đoạn mô tả theo tần suất mua (một lần / lặp lại), chưa xác minh ý nghĩa kinh doanh. Bỏ so sánh tỉnh/thành khỏi dashboard vì 91,92% doanh thu mang nhãn UNKNOWN; ghi rõ bài phân loại phản hồi bị bỏ qua do thiếu nhãn. Dashboard có 5 tab, 10 CSV và 6 JSON aggregate. Hai PDF cùng các đầu vào dashboard được dựng lại sau cập nhật; xem [danh sách artifact và kiểm tra an toàn](submission_artifacts.md). `python-pptx` không có trong `.venv`; không tạo PPTX.
+Đã đếm trực tiếp cầu cohort: 5.499 − 325 khách chỉ có status 3 trước `analysis_start` = 5.174; 5.174 − 5 khách chỉ có status 3 đơn quà = 5.169; **phần dư chưa giải thích: 0**. Các định nghĩa và đơn vị được ghi ở [cohort reconciliation](cohort_reconciliation.md). UNKNOWN tương ứng trường tỉnh/thành rỗng theo mapping; DEV riêng là 91,56% số đơn và 90,73% doanh thu, còn dashboard 91,92% có phạm vi DEV+test. Combo báo 24 cặp theo điều kiện ổn định ít nhất 4/6 ô và 21/24 lift > 1 trên 2.174 giỏ. K=2 được gọi là phân đoạn mô tả theo tần suất mua (một lần / lặp lại), chưa xác minh ý nghĩa kinh doanh. Dashboard có 5 tab, 10 CSV và 6 JSON aggregate. Hai PDF cùng các đầu vào dashboard được dựng lại sau cập nhật; xem [danh sách artifact và kiểm tra an toàn](submission_artifacts.md). `python-pptx` không có trong `.venv`; không tạo PPTX.
 
-Hậu kiểm lần này xác minh split/lock, GET-only, Day 3 và 17 hash bảo vệ; `run_all.py` hậu mở cùng pytest riêng đều đạt 75 test, PII scan và dashboard smoke (5 tab, 10 CSV, 6 JSON, 405 dòng). Test vẫn chỉ mở một lần; không chạy evaluator, notebook hay fit/refit.
+Hậu kiểm gần nhất trước đồng bộ tài liệu xác minh split/lock, GET-only, Day 3 và 17 hash bảo vệ; `run_all.py` hậu mở cùng pytest riêng đều đạt 75 test, PII scan và dashboard smoke. Kết quả kiểm tra sau thay đổi ghi trong bundle lần này. Test vẫn chỉ mở một lần; không chạy evaluator, notebook hay fit/refit.
 
 ## Giới hạn còn lại
 
-Đã đếm các điều kiện/intersection có trong schema và ghi cầu số học 5.499 − 325 − 5 = 5.169. Delta 325 (lower bound) và 5 (đơn quà) chưa được xác minh bằng COUNT DISTINCT theo từng điều kiện; **phần dư chưa giải thích: 330** delta chưa có attribution trực tiếp. Mục cohort chưa đối soát vẫn còn. Nguyên nhân UNKNOWN doanh thu chưa xác định; giả thuyết DEV–test chưa kiểm chứng; thời lượng/rubric chưa có. D-022 ghi rằng mọi chẩn đoán bổ sung cần rolling-origin, amendment mới và duyệt chủ dự án. Chi tiết cùng các vòng consistency scan: [nhật ký](consistency_log.md).
+Việc đếm cohort trực tiếp đã hoàn tất và phần dư bằng 0. Nguyên nhân nghiệp vụ khiến trường tỉnh/thành thiếu chưa xác định; không suy diễn từ nhóm nguồn. Giả thuyết chênh lệch DEV–test chưa kiểm chứng; thời lượng/rubric chưa có. D-022 yêu cầu mọi chẩn đoán mô hình mới theo rolling-origin và amendment mới. Chi tiết cùng các vòng consistency scan: [nhật ký](consistency_log.md).
 
 ## Việc cần làm trước buổi bảo vệ
 

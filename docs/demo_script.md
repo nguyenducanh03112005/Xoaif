@@ -12,7 +12,7 @@
 | Thời gian | Màn hình | Lời dẫn |
 |---|---|---|
 | 0:00–0:25 | Mở dashboard | “Đây là bản chạy offline từ snapshot đã khóa. Không có thông tin khách hàng và không có nút ghi dữ liệu lên API.” |
-| 0:25–1:05 | Tab Tổng quan doanh số | Chọn khoảng tháng. Mặc định 2024-04–2026-04 gồm DEV và test, không chỉ DEV; tháng cuối chưa trọn. Đọc doanh thu ghi nhận và số đơn. Không hiển thị so sánh theo tỉnh/thành vì 91,92% doanh thu mang nhãn UNKNOWN; nguyên nhân chưa phân tích. Không phân bổ doanh thu xuống từng sản phẩm. |
+| 0:25–1:05 | Tab Tổng quan doanh số | Chọn khoảng tháng. Mặc định 2024-04–2026-04 gồm DEV và test, không chỉ DEV; tháng cuối chưa trọn. Đọc doanh thu ghi nhận và số đơn. Không hiển thị so sánh theo tỉnh/thành vì 91,92% UNKNOWN trên dashboard; DEV riêng có 91,56% đơn thiếu tỉnh và 90,73% doanh thu ở nhóm thiếu tỉnh. Chưa kết luận nguyên nhân nghiệp vụ. Không phân bổ doanh thu xuống từng sản phẩm. |
 | 1:05–1:40 | Tab Phân khúc khách | Chọn K=2 rồi quy tắc nghiệp vụ. Gọi K=2 là phân đoạn mô tả theo tần suất mua (một lần / lặp lại); chưa chứng minh ý nghĩa kinh doanh. Giải thích nhóm doanh nghiệp là proxy; doanh thu test được trình bày tách khỏi RFM trước T. |
 | 1:40–2:15 | Tab Combo gợi ý | Chỉ vào support, confidence, lift dev/test và giá niêm yết gộp. Nhắc đây là đồng xuất hiện, không phải nguyên nhân hay lợi nhuận. |
 | 2:15–2:55 | Tab Chất lượng & kiểm toán | Nêu status, đơn quà, 903 dòng inferred_subset độ tin cậy thấp, snapshot và hash split. |

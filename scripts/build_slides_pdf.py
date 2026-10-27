@@ -1,4 +1,4 @@
-"""Build a 14-slide print PDF from frozen aggregate project outputs."""
+"""Build a 15-slide print PDF from frozen aggregate project outputs."""
 from __future__ import annotations
 
 import argparse
@@ -75,7 +75,7 @@ def slide(pdf: PdfPages, number: int, title: str, subtitle: str = ""):
         ax.text(.06, .875, subtitle, fontsize=10, color=COLORS["muted"], va="top", transform=ax.transAxes)
     ax.plot([.055, .945], [.075, .075], color=COLORS["line"], lw=.8, transform=ax.transAxes)
     ax.text(.06, .043, "Xoaif Garden · Kho & Khai phá dữ liệu", fontsize=8, color=COLORS["muted"], transform=ax.transAxes)
-    ax.text(.94, .043, f"{number:02d} / 14", fontsize=8, color=COLORS["muted"], ha="right", transform=ax.transAxes)
+    ax.text(.94, .043, f"{number:02d} / 15", fontsize=8, color=COLORS["muted"], ha="right", transform=ax.transAxes)
     return fig, ax
 
 
@@ -194,7 +194,7 @@ def build(output_path: Path | None = None, font_override: str | None = None) -> 
         ax.plot([x1, x2], [.68, .68], color=COLORS["leaf"], lw=7, solid_capstyle="round", transform=ax.transAxes)
         ax.plot([x2, x3], [.68, .68], color=COLORS["teal"], lw=7, solid_capstyle="round", transform=ax.transAxes)
         for x in [x0, x1, x2, x3]: ax.scatter([x], [.68], s=55, color=COLORS["green"], zorder=5, transform=ax.transAxes)
-        ax.text(x0, .75, "2022–2023", fontsize=9, ha="center", color=COLORS["muted"], transform=ax.transAxes)
+        ax.text(x0, .75, "2022-06-04–2022-09-21", fontsize=8, ha="center", color=COLORS["muted"], transform=ax.transAxes)
         ax.text(x1, .75, "2024-04-01", fontsize=9, ha="center", color=COLORS["muted"], transform=ax.transAxes)
         ax.text(x2, .75, "T = 2025-10-22", fontsize=9, ha="center", color=COLORS["muted"], transform=ax.transAxes)
         ax.text(x3, .75, "2026-04-20", fontsize=9, ha="center", color=COLORS["muted"], transform=ax.transAxes)
@@ -208,7 +208,7 @@ def build(output_path: Path | None = None, font_override: str | None = None) -> 
             ["Nhãn DEV", "3.508 mẫu · 260 dương"],
         ]
         add_table(ax, [.12, .17, .76, .27], rows, ["Cohort", "Quy mô"], widths=[.65, .35], fontsize=10)
-        ax.text(.12, .11, "5.499 / 5.174 / 5.169 chưa có phân rã được xác minh; không coi là chuỗi giảm đã đối soát.", fontsize=9.2, color=COLORS["red"], weight="bold", transform=ax.transAxes)
+        ax.text(.12, .11, "Cầu trực tiếp: 5.499 − 325 pre-analysis-only = 5.174 − 5 gift-only = 5.169; dư 0.", fontsize=9.2, color=COLORS["red"], weight="bold", transform=ax.transAxes)
         pdf.savefig(fig); plt.close(fig)
 
         # 5. Data quality / money
@@ -289,9 +289,9 @@ def build(output_path: Path | None = None, font_override: str | None = None) -> 
         body(ax, .07, .40, f"Logistic Regression feature-v2 C=0,1 — khảo sát bổ sung theo Amendment 04; không thay mô hình chính: ROC {fnum(v2['roc_auc'])} (CI {fnum(v2_ci['roc_auc']['lower'])}–{fnum(v2_ci['roc_auc']['upper'])}), AP {fnum(v2['average_precision'])}, ΔAP {fsigned(v2['average_precision']-models['majority_baseline']['average_precision'])} (CI {fsigned(v2_delta['lower'])}–{fsigned(v2_delta['upper'])}).", size=9.1, width=.86)
         ax.add_patch(FancyBboxPatch((.06, .13), .88, .20, boxstyle="round,pad=.012,rounding_size=.01", transform=ax.transAxes,
                                    fc=COLORS["warning"], ec="#E8C980", lw=.8))
-        ax.text(.08, .305, "ROC-AUC test khoảng 0,70 là tín hiệu yếu trên một tập test đã mở; DEV C=10 gần ngẫu nhiên (0,5096) và chưa xác nhận tín hiệu này. Không kết luận mô hình tốt; không tinh chỉnh trên test.", fontsize=8.5, color=COLORS["ink"], va="top", wrap=True, transform=ax.transAxes)
+        ax.text(.08, .305, "ROC-AUC test khoảng 0,70 là tín hiệu yếu trên một tập test đã mở; DEV C=10 gần ngẫu nhiên (0,5096) và chưa xác nhận tín hiệu này. Không kết luận mô hình tốt; không tinh chỉnh trên test.", fontsize=9, color=COLORS["ink"], va="top", wrap=True, transform=ax.transAxes)
         ax.text(.08, .255, "Cấu hình ghi >T, evaluator dùng [T,end) (gồm ngày T); ảnh hưởng chưa xác định; đây là kết quả số liệu của lần chạy thực tế, không phải khẳng định tuân thủ đầy đủ giao thức, không gọi là 'đạt cổng ghi trước'.",
-                fontsize=8.2, color=COLORS["red"], va="top", wrap=True, transform=ax.transAxes)
+                fontsize=8.6, color=COLORS["red"], va="top", wrap=True, transform=ax.transAxes)
         pdf.savefig(fig); plt.close(fig)
 
         # 11. Segmentation
@@ -331,10 +331,23 @@ def build(output_path: Path | None = None, font_override: str | None = None) -> 
         heading(ax, .53, .80, "Thành viên B")
         body(ax, .53, .75, "Trình bày Star Schema, status/tiền, phân loại quà, phân khúc và giới hạn association. Nhấn mạnh proxy không xác minh doanh nghiệp.", size=9.5, width=.39)
         heading(ax, .07, .52, "Cả hai")
-        body(ax, .07, .47, "Tập demo 4 phút bằng dashboard/ảnh/PDF; kiểm tra máy trình chiếu và thống nhất câu trả lời về cohort chưa đối soát, một cửa sổ test, thiếu giá vốn và kết luận không nhân quả.", size=9.5, width=.39)
+        body(ax, .07, .47, "Tập demo 4 phút bằng dashboard/ảnh/PDF; kiểm tra máy trình chiếu và thống nhất câu trả lời về cầu cohort đã đếm trực tiếp, một cửa sổ test, thiếu giá vốn và kết luận không nhân quả.", size=9.5, width=.39)
         heading(ax, .53, .52, "Giới hạn cần nói rõ")
-        body(ax, .53, .47, "Một Tết trọn vẹn trong DEV; 91,92% doanh thu tỉnh là UNKNOWN; thiếu dữ liệu phản hồi có nhãn; 903 inferred_subset có thể gán nhầm; status hiện tại không phải status history; không chạy evaluator/notebook lại.", size=9.5, width=.39)
+        body(ax, .53, .47, "Một Tết trọn vẹn trong DEV; dashboard DEV+test có 91,92% doanh thu UNKNOWN, còn DEV riêng là 91,56% đơn thiếu tỉnh và 90,73% doanh thu; thiếu dữ liệu phản hồi có nhãn; 903 inferred_subset có thể gán nhầm; status hiện tại không phải status history; test chỉ mở một lần.", size=9.2, width=.39)
         ax.text(.07, .20, "Hạn nộp: 2026-10-27. Thời lượng chính thức và rubric chưa có trong hồ sơ. Mỗi người cần tập trả lời ít nhất 10 câu thuộc phần của người kia.", fontsize=9.1, color=COLORS["muted"], transform=ax.transAxes)
+        pdf.savefig(fig); plt.close(fig)
+
+        # 15. Operations and refresh
+        fig, ax = slide(pdf, 15, "Vận hành: làm mới dữ liệu", "Snapshot bất biến giúp đối soát được; huấn luyện và đánh giá theo chu kỳ riêng")
+        heading(ax, .08, .80, "Mỗi tuần")
+        body(ax, .08, .73, "Tạo snapshot mới có timestamp và manifest/checksum. Giữ nguyên snapshot cũ. So sánh tổng đơn và các đơn đổi trạng thái giữa hai snapshot.", size=11, width=.37)
+        heading(ax, .53, .80, "Huấn luyện riêng")
+        body(ax, .53, .73, "Làm mới dữ liệu không tự động huấn luyện. Đánh giá huấn luyện lại theo tháng hoặc khi đủ dữ liệu, bằng rolling-origin và amendment mới. Không mở lại test cũ.", size=11, width=.38)
+        heading(ax, .08, .48, "Vì sao chưa real-time")
+        body(ax, .08, .41, "API cho phép lấy đơn mới nên gần real-time khả thi; nhóm chọn snapshot bất biến để tái lập; chưa khảo sát lọc theo thời gian cập nhật; chưa tự động hóa trong bản nộp.", size=10.5, width=.37)
+        heading(ax, .53, .48, "Giới hạn vận hành")
+        body(ax, .53, .41, "API không có snapshot token; status hiện tại không phải lịch sử trạng thái; split/test/cohort đang khóa bằng hash; mô hình chưa có tín hiệu xác nhận.", size=10.5, width=.38)
+        ax.text(.08, .19, "Bản nộp không chạy extractor/API và không sửa snapshot đã khóa.", fontsize=9.5, color=COLORS["muted"], transform=ax.transAxes)
         pdf.savefig(fig); plt.close(fig)
 
     print(f"Wrote {output_path}")
