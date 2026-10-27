@@ -22,8 +22,9 @@ Tài liệu này giúp hai thành viên trình bày thống nhất với bộ sl
 | 12 | B | A nhấn mạnh đồng xuất hiện, không nhân quả |
 | 13 | Cả hai | A thao tác dashboard; B dẫn lời theo kịch bản demo |
 | 14 | B | A bổ sung phần mô hình và test |
+| 15 | B | A bổ sung chu kỳ refresh và ranh giới dữ liệu |
 
-Thời lượng và rubric chính thức chưa có trong hồ sơ. Ghi chú chia khoảng 1 phút/slide (tổng khoảng 14 phút, demo 4 phút ở slide 13); slide 6 và 7 có thể rút gọn nếu bị giới hạn thời gian.
+Thời lượng và rubric chính thức chưa có trong hồ sơ. Tổng thời lượng đề xuất khoảng 14 phút 30–40 giây, gồm demo 4 phút ở slide 13 và thêm 30–40 giây cho slide 15; slide 6 và 7 có thể rút gọn nếu bị giới hạn thời gian.
 
 ## Slide 1 — Mở đầu
 
@@ -105,22 +106,22 @@ Sau kiến trúc, cần phân biệt các mốc thời gian và cohort trước 
 B — khoảng 1 phút; A bổ sung mốc lọc và nhãn.
 
 ### Thông điệp một câu
-Các cohort có định nghĩa riêng, và quan hệ giữa một số tổng đếm chưa được phân rã xác minh.
+Cầu khách 5.499 → 5.174 → 5.169 đã được đếm trực tiếp theo điều kiện pre-analysis-only và gift-only, dư 0.
 
 ### Lời thoại
 Mốc phân tích DEV bắt đầu ngày 2024-04-01 và kết thúc trước T là 2025-10-22. Cầu khách đã được đếm trực tiếp: 5.499 khách status 3 có ID trước T, trừ 325 khách chỉ có status 3 trước analysis_start, còn 5.174 khách DEV; trừ 5 khách chỉ có đơn quà, còn 5.169 scoring. Phần dư chưa giải thích: 0. Trong nhóm 325, toàn bộ 325 có ít nhất một đơn trong 476 đơn bán thử ngày 2022-06-04 đến 2022-09-21. Cửa sổ test thực thi gồm ngày T; sai khác với quy tắc ghi trước sẽ được giải thích ở slide 10. Nguồn: docs/cohort_reconciliation.md.
 
 ### Số cần nhớ
 - DEV: 6.517 đơn, gồm 6.400 đơn status 3; preflight: 5.499 khách; DEV status 3: 5.174 khách; scoring: 5.169 khách — docs/canonical_numbers.md.
-- DEV có 3.508 mẫu nhãn và 260 dương — docs/canonical_numbers.md.
+- DEV có 3.508 mẫu nhãn qua nhiều mốc T và 260 dương — docs/canonical_numbers.md.
 - Cửa sổ thực thi [2025-10-22, 2026-04-20) — outputs/metrics/test_eval.json.
 
 ### Giới hạn phải nói
-Không nói chuỗi 5.499/5.174/5.169 đã đối soát. Cửa sổ có ngày T; ảnh hưởng sai khác giao thức chưa xác định.
+Đây là đếm HMAC trong RAM trên snapshot, chỉ xét đơn có local date trước T; không in/lưu ID. A−B gồm 325 khách chỉ có đơn status 3 trước 2024-04-01 và cả 325 đều có ít nhất một đơn trong 476 đơn bán thử. Phần dư của cầu bằng 0. Cửa sổ test có ngày T; ảnh hưởng sai khác giao thức chưa xác định.
 
 ### Câu hỏi dễ gặp
 - Vì sao giữ 476 đơn trước analysis_start nhưng loại khỏi phân tích? — Đó là giai đoạn bán thử theo hồ sơ; mở docs/cohort_definitions.md.
-- Ba cohort trên có phải cùng một mẫu được lọc tuần tự không? — Chưa có phân rã đủ để khẳng định; mở docs/canonical_numbers.md.
+- Ba cohort 5.499/5.174/5.169 liên hệ thế nào? — 5.499 − 325 khách chỉ có status 3 trước 2024-04-01 (cả 325 thuộc nhóm có đơn trong 476 đơn bán thử) = 5.174 − 5 khách chỉ có đơn quà theo Amendment 03 = 5.169; dư 0. Đây là đếm HMAC trong RAM trên snapshot, chỉ đơn local date < T. Nguồn: docs/cohort_reconciliation.md, outputs/tables/cohort_bridge_verified.json.
 
 ### Chuyển slide
 Khi đã rõ mẫu số, slide kế tiếp giải thích quy tắc chất lượng dữ liệu và doanh thu ghi nhận.
@@ -209,10 +210,10 @@ A — khoảng 1 phút.
 Đánh giá mua lại dùng đặc trưng trước T, nhãn N=180 và validation theo thời gian để hạn chế rò rỉ.
 
 ### Lời thoại
-Đặc trưng được tạo từ dữ liệu trước T, còn nhãn xem có mua lại trong N=180 ngày hay không. DEV có 3.508 mẫu nhãn, trong đó 260 là dương, tương đương 7,41%. Vì lớp dương hiếm, accuracy đơn lẻ không đủ để mô tả chất lượng xếp hạng. Chúng tôi xem ROC-AUC và AP cùng baseline, rồi mới đọc precision, recall và confusion matrix tại ngưỡng đã khóa.
+Đặc trưng được tạo từ dữ liệu trước T, còn nhãn xem có mua lại trong N=180 ngày hay không. DEV có 3.508 mẫu nhãn qua nhiều mốc T, trong đó 260 là dương, tương đương 7,41%. Vì lớp dương hiếm, accuracy đơn lẻ không đủ để mô tả chất lượng xếp hạng. Chúng tôi xem ROC-AUC và AP cùng baseline, rồi mới đọc precision, recall và confusion matrix tại ngưỡng đã khóa.
 
 ### Số cần nhớ
-- N=180; DEV: 3.508 mẫu, 260 dương, 7,41% — docs/canonical_numbers.md, outputs/metrics/day2_label_audit.json.
+- N=180; DEV: 3.508 mẫu nhãn qua nhiều mốc T, 260 dương, 7,41% — docs/canonical_numbers.md, outputs/metrics/day2_label_audit.json.
 - Validation temporal expanding 5 folds; ngưỡng 0,5 — docs/metric_rationale.md, outputs/metrics/dev_final_model.json.
 
 ### Giới hạn phải nói
@@ -394,7 +395,7 @@ Chu kỳ đề xuất là snapshot mới mỗi tuần. Mỗi snapshot có timest
 
 API cho phép lấy đơn mới nên gần real-time khả thi; nhóm chọn snapshot bất biến để tái lập; chưa khảo sát lọc theo thời gian cập nhật; chưa tự động hóa trong bản nộp. API không có snapshot token, status hiện tại không phải lịch sử trạng thái, split/test/cohort khóa bằng hash và mô hình chưa có tín hiệu xác nhận.
 
-- Số đơn/ngày toàn snapshot: **KHÔNG LÀM ĐƯỢC** — `day1_analysis_start_profile.json` không có mốc ngày đầu/cuối cho toàn bộ 12.011 đơn; không thay bằng khoảng DEV hoặc nhóm bán thử.
+- Ước lượng theo bảng tháng: khoảng 2024-04-01 đến 2026-04-19 (ngày cuối tính được; tháng cuối chưa trọn), 749 ngày; công thức `9.104 đơn status 3 không quà / 749 ngày = 12,15`, xấp xỉ 12,2 đơn/ngày. Đây là tốc độ của giai đoạn dashboard, không phải trung bình toàn snapshot. Nguồn: `outputs/tables/dashboard_sales_monthly.csv`, `docs/canonical_numbers.md`.
 - Nguồn: `docs/refresh_procedure.md`, `docs/canonical_numbers.md`.
 - Không gọi proxy giá trị lớn là pháp nhân đã xác minh; RFM chỉ mô tả lịch sử trước T.
 - Nêu rõ test đã mở một lần; không đề nghị chạy lại evaluator, notebook hay tinh chỉnh trên test.

@@ -74,7 +74,7 @@ P0/P1/P2 là số finding duy nhất trong bảng này; các dòng checklist có
 | Cohort 5.169 / 5.174 / 5.499 | Test/v2 dùng 5.169; DEV status-3 customer count 5.174; eligibility_preflight.csv giữ 5.499 lịch sử. | Có thể là filter/mốc/cohort khác nhau; exact decomposition chưa xác minh. Số trùng 5.169 không chứng minh identity. |
 | Test positive vs DEV | 237/5.169 = 4,59%; DEV 7,41%. | Khớp. |
 | Test ROC/AP/CI | C=10: ROC .702438/AP .123428; feature-v2: ROC .702729/AP .123291; v2 CI ROC .665079–.737325; ΔAP-baseline CI +.055401–+.111108. | V2 nên báo ROC .703, AP .1233; .702 thuộc C=10 khi làm tròn. Test report thiếu point estimate theo model. |
-| DEV OOF v2 | ROC .496861, PR/AP .064508; 260/3.508 dương (7,41%). | Khớp khi làm tròn; là tập DEV khác test. |
+| DEV OOF v2 | ROC .496861, PR/AP .064508; 260/3.508 mẫu nhãn dương (7,41%). | Khớp khi làm tròn; là tập DEV khác test. |
 | Combo test | 24 frozen; 2.174 giỏ; 21 lift>1. | Metrics/docs khớp; PDF builder ghi sai 24/24. |
 | K=2 silhouette | .507541 → .508. | Khớp. |
 | ARI K=3/K=4 | Seed .999718/.993364; revenue sensitivity .621359/.587616. | Khớp. |

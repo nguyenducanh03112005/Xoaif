@@ -26,7 +26,7 @@ Cập nhật: 2026-10-27. Mỗi số dưới đây gắn với đơn vị, cohor
 |---|---|---|
 | Quà cấp đơn | 22/6.400 đơn status 3 DEV (0,34%) | `outputs/metrics/day2_money_audit.json`: `gifts.count`, `gifts.rate`, `scope.status3_orders`. |
 | Doanh thu âm | 2/6.400 đơn status 3 DEV (0,03%); dưới ngưỡng dừng 1% | `outputs/metrics/day2_money_audit.json`: `negative_revenue.count`, `negative_revenue.rate`, `negative_revenue.stop_threshold`. |
-| Nhãn DEV | 3.508 mẫu khách; 260 dương; 7,41% | `outputs/metrics/day2_label_audit.json`: `customer_samples`, `positive_samples`, `positive_rate`. |
+| Nhãn DEV | 3.508 mẫu nhãn qua nhiều mốc T; 260 dương; 7,41% | `outputs/metrics/day2_label_audit.json`: `customer_samples`, `positive_samples`, `positive_rate`. |
 | Test | 5.169 khách; 237 dương; 4,59% trong cửa sổ test thực thi | `outputs/metrics/test_eval.json`: `cohort.eligible_customers_with_pre_T_purchase`, `test_positive_customers`, `test_positive_rate`. |
 | Dòng hàng DEV | 30.049 dòng = 4 direct zero-price + 903 inferred subset + 29.142 không phải quà | `outputs/metrics/day3_combo_prereg.json`: `gift_line_audit.line_count_by_source`, `gift_line_audit.line_count`. 903 dòng inferred có độ tin cậy thấp. |
 | Giỏ Day 3 | 6.031 giỏ trước; 6.006 sau áp dụng phân loại tất cả nguồn quà | `outputs/metrics/day3_combo_prereg.json`: `eligible_baskets_before_gift_line_removal`, `eligible_baskets_after_all_gift_line_removal`. |
@@ -72,5 +72,5 @@ Cấu hình ghi >T, evaluator dùng [T,end) (gồm ngày T); ảnh hưởng chư
 | Dashboard | 5 tab; 10 CSV tổng hợp + 6 JSON tổng hợp; tổng số dòng được kiểm tra bởi `scripts/dashboard_smoke.py` | Danh sách nguồn trong `src/app/streamlit_app.py`; bảng tỉnh/thành không còn là đầu vào dashboard. |
 | Báo cáo | 15 trang A4 | `pdfinfo report/xoaif_report.pdf`: `Pages`. |
 | Slide in | 15 trang ngang | `pdfinfo slides/xoaif_print.pdf`: `Pages`. Không tạo PPTX vì môi trường thiếu `python-pptx`. |
-| Kiểm thử | 78 pytest ở lần hậu kiểm cuối | Log cuối của `scripts/run_all.py` và `pytest`; không chạy evaluator, notebook hay fit/refit model. |
+| Kiểm thử | 78 passed, 1 skipped ở lần hậu kiểm clone-mode | Log `scripts/run_all.py`: test cần DuckDB restricted được skip vì clone không chứa DB; không chạy evaluator, notebook hay fit/refit model. |
 | Hạn nộp | 2026-10-27; thời lượng và rubric chính thức chưa có | Chủ dự án cung cấp trong yêu cầu ngày 2026-10-26; được ghi ở `docs/schedule.md`. |

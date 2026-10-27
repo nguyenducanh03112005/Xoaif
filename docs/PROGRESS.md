@@ -19,7 +19,7 @@ Updated: 2026-10-27
 
 ## [LỊCH SỬ — trước khi mở test] Day 2 completed
 
-- Preprocess: 286 missing-customer orders excluded from customer-level features; 22 gifts excluded from customer behavior; 5 no-line orders excluded from baskets. DEV label cohort: 3.508 unique customers, 260 positive (7,41%); at that historical point, test labels and behavior were not loaded.
+- Preprocess: 286 missing-customer orders excluded from customer-level features; 22 gifts excluded from customer behavior; 5 no-line orders excluded from baskets. DEV labels across multiple historical T: 3.508 samples, 260 positive (7,41%); at that historical point, test labels and behavior were not loaded.
 - Segmentation: K=2, silhouette=0,508. Single-order counts are reported by cohort: DEV status 3 4.526/5.174 (87,5%); scoring 4.530/5.169 (87,6%). Profiles and A/B sensitivity are in `outputs/metrics/day2_segmentation.json`.
 - Classifier: best=logistic_regression, PR-AUC=0,0699, ROC-AUC=0,5096; temporal folds are customer-disjoint and all preprocessing fit inside train folds. Model is development-only.
 - Baskets: 6.031 product baskets eligible, 68 rules and 23 combos. No cost/profit calculation was made.
@@ -67,7 +67,7 @@ Updated: 2026-10-27
 
 ## Giai đoạn 2 — cohort, EDA DEV, kiến trúc và ranh giới test
 
-- Tạo `docs/cohort_definitions.md`: định nghĩa riêng snapshot 12.011, 476 pre-analysis, 6.517 DEV, 6.400 status 3, 5.174 khách DEV status 3, 5.499 preflight N=180, 5.169 scoring đã freeze, và 3.508 mẫu nhãn DEV/260 dương. Quan hệ giữa ba cohort 5.499/5.174/5.169 được ghi **chưa xác minh**, không tái dựng từ dòng khách.
+- Tạo `docs/cohort_definitions.md`: định nghĩa riêng snapshot 12.011, 476 pre-analysis, 6.517 DEV, 6.400 status 3, 5.174 khách DEV status 3, 5.499 preflight N=180, 5.169 scoring đã freeze, và 3.508 mẫu nhãn DEV qua nhiều mốc T/260 dương. Tại thời điểm ghi lịch sử, quan hệ cohort 5.499/5.174/5.169 chưa xác minh; cầu trực tiếp được bổ sung sau đó ở phần trạng thái hiện hành.
 - Tạo script chỉ đọc `scripts/build_eda_dev_artifacts.py`, JSON aggregate và 5 hình `outputs/figures/eda_dev_*.png`; tạo `notebooks/01b_eda_dev.ipynb` chỉ trình bày JSON/hình đã lưu, chưa chạy notebook. EDA dùng `[2024-04-01, 2025-10-22)`, mẫu nhãn historical DEV, không đọc feature scoring của cohort 5.169, raw snapshot hay dữ liệu test. Output không chứa khóa/định danh hoặc dữ liệu từng dòng.
 - Notebook 01b ghi 10 quan sát có số lượng/cỡ mẫu và giới hạn diễn giải. Tạo `docs/architecture_matrix.md` với năm tầng, câu hỏi nghiệp vụ và Mermaid; `docs/metric_rationale.md` giải thích metric phân loại; `docs/test_audit.md` ghi rà soát tĩnh và khác biệt ngày T.
 - Notebook 02–05 có ghi chú lịch sử và guard đầu cell trước import project/model. Canonical SHA-256 của code-cell outputs trước sửa và sau sửa trùng nhau; notebooks 01–05 chưa bị chạy. Hash baseline: 01 `d151ae1616828fd03842e91abde39960f92235102bfee7b219a44026c64a4300`; 02 `1ee8273bee80d3e2f4a5143c8e6f67a75d27a3114e2b20079b6fa27e62b6de4d`; 03 `366332e0ed4948bad8ec3ea13cf50d5937bbf04a9a3ca3638d5dc4fb73d93baf`; 04 `2793eeb1afacb26ae5c9eee1344187bfb65aa901ca9f0a0b051ccb4e56237d2c`; 05 `a06536c5391b6d6b6bb5cf3ea61d7f3c146203db89acd1660c8cd5dd7c04c28f`.

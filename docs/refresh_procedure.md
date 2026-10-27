@@ -11,4 +11,4 @@ Chu kỳ đề xuất là tạo snapshot mỗi tuần. Quy trình này là hư�
 
 Nhóm chọn snapshot bất biến để tái lập. API cho phép lấy đơn mới nên gần real-time khả thi; chưa khảo sát lọc theo thời gian cập nhật; chưa tự động hóa trong bản nộp. API không có snapshot token; status hiện tại không phải lịch sử trạng thái; split/test/cohort khóa bằng hash và mô hình chưa có tín hiệu xác nhận.
 
-Không thể tính số đơn/ngày đáng tin cậy từ 12.011 đơn: `day1_analysis_start_profile.json` không cung cấp khoảng ngày tối thiểu/tối đa cho toàn snapshot. Không dùng riêng khoảng DEV hoặc 476 đơn bán thử làm mẫu số thay thế.
+Ước lượng theo bảng tháng: từ 2024-04-01 đến hết 2026-04-19; ngày 2026-04-20 là mốc kết thúc loại trừ của cửa sổ khóa, nên tháng cuối chưa trọn. Có 749 ngày lịch trong khoảng này. Công thức: tổng `orders` trong `outputs/tables/dashboard_sales_monthly.csv` cho 25 tháng từ 2024-04 đến 2026-04, tức 9.104 đơn status 3 không quà, chia 749 ngày. Tốc độ là xấp xỉ 12,2 đơn/ngày (12,15 trước khi làm tròn), chỉ cho giai đoạn dashboard, không đại diện toàn snapshot.

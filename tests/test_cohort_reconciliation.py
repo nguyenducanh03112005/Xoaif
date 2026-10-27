@@ -1,5 +1,6 @@
 import json
 from pathlib import Path
+import re
 
 import duckdb
 import pytest
@@ -81,3 +82,19 @@ def test_dev_duckdb_counts_match_canonical_when_available():
         db["dev_customers_status3_nonnull"], db["other_status_null_customer_orders"],
         db["status3_null_customer_orders"],
     )
+
+
+def test_current_cohort_references_do_not_claim_unreconciled_counts():
+    stale_phrases = ("chưa đối soát", "chưa có phân rã đủ")
+    cohort_numbers = re.compile(r"5[.,]499.*5[.,]174.*5[.,]169|5[.,]174.*5[.,]169.*5[.,]499", re.IGNORECASE)
+    for relative in ("docs/qa.md", "README.md", "slides/speaker_notes.md"):
+        lines = (ROOT / relative).read_text(encoding="utf-8").splitlines()
+        historical = False
+        for number, line in enumerate(lines, start=1):
+            if line.startswith("#"):
+                historical = "[LỊCH SỬ]" in line.upper()
+            if "[LỊCH SỬ]" in line.upper():
+                historical = True
+            stale = any(phrase in line.lower() for phrase in stale_phrases)
+            if stale and cohort_numbers.search(line) and not historical:
+                pytest.fail(f"stale cohort caveat in {relative}:{number}")

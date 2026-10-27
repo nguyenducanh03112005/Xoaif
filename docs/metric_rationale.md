@@ -12,6 +12,6 @@ Mục tiêu supervised là dự đoán nhãn nhị phân “có ít nhất một
 
 ## Cách diễn giải
 
-DEV có 260 mẫu dương trên 3.508 (7,41%). Trong tình huống này accuracy có thể cao chỉ bằng cách đoán lớp âm phần lớn thời gian, vì vậy không dùng accuracy làm tiêu chí chọn mô hình. ROC-AUC và AP được xem cùng prevalence; precision/recall/F1 và confusion matrix được xem tại ngưỡng đã đăng ký. Kết quả test được trình bày như ước lượng trên một cohort theo lần chạy thực tế. Cấu hình ghi >T, evaluator dùng [T,end) (gồm ngày T); ảnh hưởng chưa xác định; đây là kết quả số liệu của lần chạy thực tế, không phải khẳng định tuân thủ đầy đủ giao thức, không gọi là 'đạt cổng ghi trước'.
+DEV có 260 mẫu nhãn dương trên 3.508 mẫu nhãn qua nhiều mốc T (7,41%). Trong tình huống này accuracy có thể cao chỉ bằng cách đoán lớp âm phần lớn thời gian, vì vậy không dùng accuracy làm tiêu chí chọn mô hình. ROC-AUC và AP được xem cùng prevalence; precision/recall/F1 và confusion matrix được xem tại ngưỡng đã đăng ký. Kết quả test được trình bày như ước lượng trên một cohort theo lần chạy thực tế. Cấu hình ghi >T, evaluator dùng [T,end) (gồm ngày T); ảnh hưởng chưa xác định; đây là kết quả số liệu của lần chạy thực tế, không phải khẳng định tuân thủ đầy đủ giao thức, không gọi là 'đạt cổng ghi trước'.
 
 Metric này không chứng minh tác động nhân quả, giá trị kinh doanh của can thiệp, chất lượng hiệu chỉnh xác suất hay khả năng khái quát sang cửa hàng/thời kỳ khác. Cỡ mẫu positive nhỏ nên phải giữ khoảng tin cậy và tránh tuyên bố mạnh.
