@@ -5,6 +5,7 @@ from __future__ import annotations
 import hashlib
 import json
 from pathlib import Path
+import sys
 
 import yaml
 
@@ -15,7 +16,7 @@ def digest(path: Path) -> str:
     return hashlib.sha256(path.read_bytes()).hexdigest()
 
 
-def verify() -> None:
+def verify(shipped_only: bool = False) -> None:
     config_path = ROOT / "config" / "amendment_05_test_open.yaml"
     sidecar_path = ROOT / "config" / "amendment_05_test_open.lock.json"
     if not config_path.is_file() or not sidecar_path.is_file():
@@ -42,9 +43,21 @@ def verify() -> None:
     split_hash = digest(ROOT / "config" / "split.yaml")
     if lock.get("split_sha256") != split_hash:
         raise ValueError("Opened lock refers to another locked split")
+    changed: list[str] = []
+    not_shipped: list[str] = []
     for relative, expected in lock.get("input_hashes", {}).items():
-        if digest(ROOT / relative) != expected:
-            raise ValueError(f"Frozen test input changed after opening: {relative}")
+        path = ROOT / relative
+        if not path.is_file():
+            if shipped_only:
+                not_shipped.append(relative)
+                continue
+            raise ValueError(f"Frozen test input is missing: {relative}")
+        if digest(path) != expected:
+            changed.append(relative)
+    if changed:
+        raise ValueError("Frozen test input changed after opening (or line endings differ; see scripts/fix_sealed_eol.py): " + ", ".join(changed))
+    if not_shipped:
+        print(f"Note: {len(not_shipped)} sealed input(s) are not shipped in this checkout and were not verified: " + ", ".join(not_shipped))
 
     access_path = ROOT / "outputs" / "logs" / "test_eval_access.jsonl"
     events = [json.loads(line) for line in access_path.read_text(encoding="utf-8").splitlines() if line.strip()]
@@ -77,7 +90,7 @@ def verify() -> None:
 
 if __name__ == "__main__":
     try:
-        verify()
+        verify(shipped_only="--shipped-only" in sys.argv[1:])
     except (OSError, UnicodeError, json.JSONDecodeError, KeyError, TypeError, ValueError, yaml.YAMLError) as exc:
-        print(f"Day 3 lock verification failed ({type(exc).__name__}).")
+        print(f"Day 3 lock verification failed ({type(exc).__name__}): {exc}")
         raise SystemExit(1) from None

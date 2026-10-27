@@ -23,6 +23,7 @@ Dashboard Streamlit đọc các bảng từ `outputs/tables/` và `outputs/metri
 - `gift_line_audit.csv`
 - `gift_line_rates_monthly.csv`
 - `gift_line_rates_order_size.csv`
+- `dashboard_sales_province.csv` — không còn là đầu vào dashboard (91,92% doanh thu là `UNKNOWN`); được giữ vì `scripts/verify_day3_locks.py` và báo cáo PDF đọc bảng này. Có ô tỉnh chỉ 1–3 đơn; chỉ là aggregate, không có khách hay đơn riêng lẻ.
 
 **JSON**
 
@@ -34,6 +35,12 @@ Dashboard Streamlit đọc các bảng từ `outputs/tables/` và `outputs/metri
 - `day2_segmentation.json`
 
 Đây là bảng/metric tổng hợp, không phải dữ liệu từng đơn hoặc từng khách. Bảng tỉnh/thành không còn là đầu vào dashboard vì phần lớn doanh thu bị gắn nhãn `UNKNOWN`.
+
+## Chứng cứ toàn vẹn của lần mở test
+
+- `outputs/metrics/test_opened.lock.json`, `outputs/metrics/day3_pretest_freeze.json`, `outputs/logs/test_eval_access.jsonl` được commit để người chấm kiểm tra rằng test chỉ mở một lần. Các file này chỉ chứa hash, cờ và mốc thời gian, không chứa giá trị hay định danh.
+- Các hash được niêm phong trên byte gốc của working tree. Để checkout trên mọi hệ điều hành cho đúng byte, các file có hash được đánh dấu `-text` trong `.gitattributes` (khối do `scripts/fix_sealed_eol.py` sinh ra). Đừng chuẩn hóa xuống dòng các file này.
+- Clone không có `data/raw/`, model `.joblib` và một số bảng trung gian, nên không thể xác minh đủ mọi hash. Dùng `python scripts/verify_day3_locks.py --shipped-only` để xác minh phần có trong repo; các input không có sẽ được liệt kê, không bị bỏ qua âm thầm. Chạy `python scripts/fix_sealed_eol.py --check` để biết file nào lệch byte.
 
 ## Rà soát dữ liệu
 

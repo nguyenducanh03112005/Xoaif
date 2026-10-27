@@ -40,6 +40,8 @@ Cài phụ thuộc: `pip install -r requirements.txt` (bản khóa) hoặc `pip 
 
 Nếu clone thiếu `outputs/metrics/test_opened.lock.json` trong khi `test_eval.json` đã ghi nhận lần mở test duy nhất, `run_all.py` dừng với mã 2 thay vì chạy pipeline trước test. Ba file chứng cứ toàn vẹn cần được commit cùng repo: `outputs/metrics/test_opened.lock.json`, `outputs/metrics/day3_pretest_freeze.json`, `outputs/logs/test_eval_access.jsonl` (`.gitignore` đã cho phép).
 
+Trên bản clone (không có `data/raw/`), `run_all.py` tự chuyển sang chế độ clone: bỏ bước raw snapshot và chạy `verify_day3_locks.py --shipped-only`. Nếu hash lệch do xuống dòng, chạy `python scripts/fix_sealed_eol.py --check` (xem `docs/submission_artifacts.md`).
+
 Sau khi test đã mở, `run_all.py` chỉ xác minh split, API GET-only, hash khóa, chạy pytest và quét PII. Nó không chạy lại evaluator, notebook hay bước fit/chọn mô hình. Không chạy lại `scripts/evaluate_test_once.py`: script từ chối khi `outputs/metrics/test_opened.lock.json` tồn tại.
 
 ## Sản phẩm bàn giao

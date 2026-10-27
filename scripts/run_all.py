@@ -66,12 +66,23 @@ def main() -> int:
         )
         return 2
     if lock_path.exists():
-        safe_steps = [
-            ("verify locked split and snapshot metadata", [python, "scripts/verify_split_lock.py"]),
+        # A fresh clone ships neither data/raw nor the intermediate model/table inputs.
+        # In that case only the shipped part of the seal can be verified.
+        has_raw = (PROJECT_ROOT / "data" / "raw").is_dir()
+        safe_steps = []
+        if has_raw:
+            safe_steps.append(("verify locked split and snapshot metadata", [python, "scripts/verify_split_lock.py"]))
+        else:
+            print("Note: data/raw is not present (clone mode); skipping raw snapshot verification.", flush=True)
+        safe_steps += [
             ("verify GET-only API policy", [python, "scripts/verify_readonly.py"]),
-            ("verify Amendment 05 and single-open evidence", [python, "scripts/verify_day3_locks.py"]),
+            (
+                "verify Amendment 05 and single-open evidence",
+                [python, "scripts/verify_day3_locks.py"] + ([] if has_raw else ["--shipped-only"]),
+            ),
             ("run non-opening automated tests", [python, "-m", "pytest", "-q"]),
             ("scan current text deliverables for PII patterns", [python, "scripts/verify_pii.py"]),
+            ("check dashboard aggregate inputs", [python, "scripts/dashboard_smoke.py"]),
         ]
         for label, command in safe_steps:
             if run_step(label, command) != 0:
