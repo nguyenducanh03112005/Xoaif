@@ -278,10 +278,12 @@ def _h4_eval(frame: pd.DataFrame, dev_s6: dict, dev_rfm: dict, r4: dict) -> dict
         ho_rates = {str(k): float(g.label_returned.mean()) for k, g in groups.groupby("group") if len(g) >= 30}
         common = sorted(set(dev_rates) & set(ho_rates))
         rho = float(spearmanr([dev_rates[k] for k in common], [ho_rates[k] for k in common]).statistic) if len(common) >= 4 else None
-        out[name] = {"groups_n_ge_30": len(ho_rates), "common_groups_n": len(common),
+        testable = len(common) >= 4 and thresholds[name] is not None and thresholds[name] >= .50
+        out[name] = {"testable": testable, "groups_n_ge_30": len(ho_rates), "common_groups_n": len(common),
                      "rho_ho2_vs_dev": rho, "rho_dev_half_threshold": thresholds[name],
-                     "pass": bool(rho is not None and rho >= thresholds[name])}
-    out["overall_pass"] = all(out[k]["pass"] for k in ("S6", "RFM"))
+                     "pass": bool(testable and rho is not None and rho >= thresholds[name])}
+    out["overall_testable"] = all(out[k]["testable"] for k in ("S6", "RFM"))
+    out["overall_pass"] = bool(out["overall_testable"] and all(out[k]["pass"] for k in ("S6", "RFM")))
     return out
 
 

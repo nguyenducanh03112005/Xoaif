@@ -12,6 +12,7 @@ import yaml
 
 from features.day2_data import build_label_samples, make_customer_features
 from features.holdout2_access import require_open_lock
+from models.classify import NUMERIC_COLUMNS as D005_NUMERIC, CATEGORICAL_COLUMNS as D005_CATEGORICAL
 from features.holdout2_features import (attach_holdout2_labels, build_customer_features_at_t,
                                         feature_eligible, outcome_eligible)
 sys.path.insert(0, str(__import__("pathlib").Path(__file__).resolve().parents[1] / "scripts"))
@@ -52,6 +53,13 @@ def test_feature_builder_matches_existing_fixed_t_features_and_excludes_t_or_lat
     assert row.recency_days == expected["recency_days"]
     assert row.frequency == expected["frequency"]
     assert row.monetary == expected["monetary"]
+    for column in D005_NUMERIC + D005_CATEGORICAL:
+        actual = row[column]
+        wanted = expected[column]
+        if pd.isna(wanted):
+            assert pd.isna(actual)
+        else:
+            assert actual == wanted
     assert row.latest_feature_date == date(2025, 4, 19)
     assert (t + pd.Timedelta(days=180)) <= date(2025, 10, 22)
     labeled = attach_holdout2_labels(frame, orders, t, 180)
