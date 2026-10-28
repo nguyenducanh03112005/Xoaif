@@ -76,6 +76,8 @@ def main() -> int:
             print("Note: data/raw is not present (clone mode); skipping raw snapshot verification.", flush=True)
         safe_steps += [
             ("verify GET-only API policy", [python, "scripts/verify_readonly.py"]),
+            ("verify closed Gate B 06-HO2 revision 2 lock",
+             [python, "scripts/verify_gateb_lock.py"] + ([] if has_raw else ["--shipped-only"])),
             (
                 "verify Amendment 05 and single-open evidence",
                 [python, "scripts/verify_day3_locks.py"] + ([] if has_raw else ["--shipped-only"]),

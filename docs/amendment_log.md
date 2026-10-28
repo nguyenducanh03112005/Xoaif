@@ -10,6 +10,7 @@ Ngày cập nhật: 2026-10-28. Các mục dưới đây được chủ dự án
 | 09 — Refresh an toàn và trạng thái dashboard | 2026-10-28 | Thêm replay cục bộ có manifest/hash; mặc định chặn live refresh vì chưa xác minh hợp đồng `updated_at`; dashboard nêu snapshot khóa và tình trạng refresh. | Không chạy replay, không gọi API, không ghi vào `data/raw`; dashboard chỉ đọc aggregate local. Nút reload không tạo dữ liệu mới. |
 | 10 — Đồng bộ hồ sơ bàn giao | 2026-10-28 | Đồng bộ số chuẩn, QA, speaker notes, tài liệu ôn vấn đáp và PDF từ các nguồn aggregate đã có. | Chỉ tài liệu/đầu ra aggregate; không PPTX, không dữ liệu cá nhân, không mở lại test. Bản PDF được dựng lại ở bước bàn giao cuối. |
 | 06-HO2 — Cổng kiểm chứng cửa sổ thứ hai | 2026-10-28 | Chuẩn bị giao thức giữ lại cho khoảng nhãn `(2026-04-20, 2026-10-17]`; cho phép dùng lịch sử có ngày `<2026-04-20` làm đặc trưng, không dùng nhãn test cũ. | Chưa mở nhãn HO2. Chỉ đọc `inserted_at` trước khi bỏ các hàng từ T2 trở đi; không fit/chọn theo nhãn HO2. Cần phê duyệt mở riêng. Định danh có hậu tố để phân biệt mục lịch sử “06 — Probe metadata Pancake”. |
+| 06-HO2 revision 2 — Gate B sửa trước duyệt | 2026-10-28 | Đăng ký R2/R4/R5 trước kết quả; đưa H2 trở lại nhóm chính theo RR/công suất DEV; đóng băng final-fit DEV cho S3/S6/v3; triển khai evaluator một lần và audit aggregate. | Supersede lock cũ bằng SHA-256 được ghi trong YAML/lock revision 2. HO2 vẫn đóng, không có nhãn/outcome mới đọc; Phase C chưa bắt đầu. Chi tiết từng file/hash tại `docs/amendment_06_revision_log.md`. |
 
 ## Giới hạn phê duyệt
 

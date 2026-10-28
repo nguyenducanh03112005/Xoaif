@@ -1,90 +1,96 @@
 amendment_id: 06-HO2
+revision: 2
+supersedes_lock_sha256: a6c751a50625d8d98ffb2a8c10573d61cac9158e21dd3e16493715a3c413e94d
 status: prepared_gate_b_not_open
+test_opened: false
+phase_c_started: false
+locked_date: '2026-10-28'
 snapshot_id: 20261024T052943Z
 timezone: Asia/Ho_Chi_Minh
 T2: '2026-04-20'
-feature_local_date_exclusive: '2026-04-20'
+feature_history:
+  local_date_rule: local_date < T2
+  inserted_at_first: true
+  includes_prior_test_period_orders: true
+  old_test_labels_used_for_fit_or_selection: false
 label_window:
+  not_opened: true
   start_exclusive: '2026-04-20'
   end_inclusive: '2026-10-17'
   horizon_days: 180
   evaluator_equivalent_rule: local_date > T2 and local_date <= T2 + 180 days
-  definition: valid status-3 non-gift order on a local date strictly after customer's first valid purchase date
-  not_opened: true
-feature_history:
-  includes_prior_test_period_orders: true
-  use_old_test_labels_for_training_or_selection: false
-  access_rule: inspect inserted_at first; skip all other fields when local date >= T2
-strategy_freeze:
-  no_candidate_selected: true
-  no_refit_on_holdout2: true
-  eligible_fixed_strategy_definitions:
-    - D-005
-    - v2
-    - S1
-    - S3
-    - S6
-  excluded_before_gate_b:
-    - strategy: v3
-      reason: no single final-fit artifact or frozen fitting population; WP5 stores temporal-CV fits only
-    - strategy: recency-only
-      reason: no single final-fit artifact or frozen fitting population; WP5 stores temporal-CV fits only
-    - strategy: frequency-only
-      reason: no single final-fit artifact or frozen fitting population; WP5 stores temporal-CV fits only
-  frozen_rule_sources:
-    - docs/analysis_plan_wp5b.md
-    - docs/analysis_plan_wp5c.md
-    - scripts/evaluate_repurchase_wp5b_dev.py
-    - scripts/evaluate_repurchase_wp5c_dev.py
-  model_artifacts:
-    D-005: outputs/models/day2_dev_final_model.joblib
-    v2: outputs/models/repurchase_features_v2.joblib
-    RFM: outputs/models/segmenters_dev_frozen_v1.joblib
-  combo_source: outputs/tables/combos_v2.csv
-  combo_rule: lift>1 and Kulczynski>=0.5 and imbalance_ratio<=0.5
+  outcome: status-3 non-order-gift customer purchase
 hypotheses:
   primary:
+    ids: [H1, H2]
     familywise_alpha: 0.05
-    adjustment: Holm step-down, one-sided tests; one primary hypothesis remains after H2 power demotion, so H1 threshold is alpha 0.05
-    items:
-      - id: H1
-        comparison: D-005 ROC-AUC > 0.55
+    adjustment: Holm step-down one-sided; smallest p vs 0.025 then next vs 0.05
   secondary:
-    - id: H2
-      comparison: repeat-rate ratio frequency>=2 vs frequency=1 > 1.5
-      reason_demoted_before_lock: approximate power is 75.3% at the 4.6% prevalence reference if true RR=2, below the 80% planning target
-    - id: H3
-      comparison: S1/S3/S6 top-decile lift lower 95% CI >1 and precision@10% lower 95% CI > HO2 prevalence
-    - id: H4
-      comparison: S6 cells and RFM repeat-rate ranking direction agrees with frozen DEV ranking
-    - id: H5
-      comparison: fraction of 24 frozen combos passing lift>1, Kulczynski>=0.5, imbalance_ratio<=0.5 is >=1/24
-    - id: H6
-      comparison: AOV, orders/customer, new customers/month, and new-customer repeat rate lie in prelocked DEV trend-based bands
-      status: not_testable_in_06_HO2
-      reason: latest 180-day mature DEV cohort ends 2025-03; extrapolation to 2026-04 is over one year and no valid customer-level trend bands were preregistered for all four measures
-descriptive_only:
-  - holdout2_prevalence
-  - calibration_in_the_large
+    ids: [H3, H4]
+  descriptive_only:
+    ids: [H5, holdout2_prevalence, calibration_in_the_large, D005_vs_univariate_baselines]
+  not_testable:
+    ids: [H6]
+  definitions:
+    H1: D-005 ROC-AUC > 0.55
+    H2: 180-day repeat-rate risk ratio frequency>=2 / frequency=1 > 1.5
+    H3: S1/S3/S6 tie-aware precision@10% and lift; six comparisons, no multiplicity adjustment
+    H4: S6 and RFM DEV-vs-HO2 repeat-rate ranking Spearman
+    H5: only descriptive because k_DEV=1 (<4)
+    H6: not testable; no prelocked reliable DEV trend bands
+strategy_freeze:
+  eligible: [D-005, v2, S1, S3, S6, v3, recency-only, frequency-only]
+  selected_candidate: null
+  final_fit_population:
+    S3: all_DEV_multisnapshot
+    S6: all_DEV_multisnapshot
+    v3: all_DEV_multisnapshot
+  baseline_direction:
+    recency-only: standardized_by_DEV_mean_scale_times_negative_coefficient_sign
+    frequency-only: standardized_by_DEV_mean_scale_times_positive_coefficient_sign
+  model_artifact_hashes: outputs/metrics/gateb_r5_strategy_freeze.json
+  no_refit_on_holdout2: true
+H3:
+  top_fraction: 0.10
+  tie_rule: q=(K-n_above)/n_tie; precision=(pos_above+q*pos_tie)/K; lift=precision/prevalence
+  bootstrap_repetitions: 2000
+  seed: 20261028
+  lower_95_precision_gt_prevalence: true
+  lower_95_lift_gt_1: true
+  multiplicity_adjustment: none; secondary support only
+H4:
+  minimum_group_n: 30
+  minimum_common_groups: 4
+  s6_rho_dev_half_threshold: 0.9761904761904763
+  rfm_rho_dev_half_threshold: 1.0
+  rfm_high_value_cut_vnd: 830000
+  cell_selection_uses_ho2_outcome: false
+H5:
+  frozen_combo_count: 24
+  k_dev: 1
+  dev_filter: lift>1 AND Kulczynski>=0.5 AND IR<=0.5
+  ho2_basket_rule: status-3 non-order-gift order in (T2,T2+180 days], remove Amendment-05 gift lines, at least two distinct non-gift product IDs
+  minimum_pair_occurrences: 30
+  suppression_under_minimum: true
+  status: descriptive_only
+H6:
+  status: not_testable
 uncertainty:
-  method: percentile customer-cluster bootstrap
+  method: percentile bootstrap by customer; all rows for a customer sampled together
   repetitions: 2000
   seed: 20261028
-comparisons:
-  primary_tests: 1
-  secondary_hypothesis_families: 4
-  additional_subgroup_or_threshold_search: none
-  exploratory_test_read_before_lock: false
-label_free_power_check:
-  eligible_customers: 7282
-  frequency_ge_2: 988
-  frequency_eq_1: 6294
-  expected_positives_at_DEV_7_4_percent: 539
-  expected_positives_at_old_test_4_6_percent: 335
-  model_discrimination_power_scenarios_H1: 'Hanley-McNeil SE using expected positive/negative counts; AUC scenarios 0.60, 0.65, 0.70'
-  risk_ratio_power_scenarios_H2: 'Wald log-RR; prevalence references 7.4%, 4.6%; RR scenarios 1.5, 2, 2.5, 3; H2 demoted to secondary before lock'
-  outcome_fields_read: 0
+  primary_p_values: centered one-sided customer-cluster bootstrap at registered null thresholds
+  no_test_retry_after_open_lock: true
+dry_run:
+  accepted_only_inside_dev: true
+  require_full_horizon_within_dev: true
+  outputs: outputs/dryrun/
+  label: kiểm thử mã, không phải kết quả, không dùng để chọn hay tinh chỉnh
 gate:
   requires_explicit_owner_authorization_to_open: true
   required_phrase: DUYỆT MỞ HO2
+  open_once_lock: outputs/metrics/holdout2_opened.lock.json
+  open_once_log: outputs/logs/holdout2_access.jsonl
+  output_metrics: outputs/metrics/holdout2_eval.json
+  output_report: docs/holdout2_report.md
   stop_before_phase_c: true

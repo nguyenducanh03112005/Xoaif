@@ -79,7 +79,11 @@ def main() -> int:
             path.write_bytes(variants(data)[match])
         fixed.append(f"{rel} -> {match}")
 
-    tracked = sorted(set(ok) | {item.split(" -> ")[0] for item in fixed} | set(mismatched))
+    tracked_paths = set(ok) | {item.split(" -> ")[0] for item in fixed} | set(mismatched)
+    if (ROOT / "config/amendment_06_ho2.lock.json").is_file():
+        # The lock cannot hash itself, but Git must still preserve its exact bytes.
+        tracked_paths.add("config/amendment_06_ho2.lock.json")
+    tracked = sorted(tracked_paths)
     if not check_only:
         gitattributes = ROOT / ".gitattributes"
         existing = gitattributes.read_text(encoding="utf-8") if gitattributes.exists() else ""

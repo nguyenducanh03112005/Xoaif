@@ -1,51 +1,117 @@
 {
   "amendment_id": "06-HO2",
+  "revision": 2,
+  "supersedes": "a6c751a50625d8d98ffb2a8c10573d61cac9158e21dd3e16493715a3c413e94d",
   "status": "prepared_gate_b_not_open",
   "locked_date": "2026-10-28",
-  "protocol_sha256": "cd9197008d6b41f07df51f117886dfd883e7234b514bafefddbd3182b31584a8",
-  "config_sha256": "e850af1e85179ebb2c3598fb7f78adb5fd1051e53a80b4473bc0c8300ad97b4c",
+  "protocol_sha256": "f1e5d0104390bbdabe7038f03c509e8df4b8831ff337a918ff2e4b10f0a316a6",
+  "config_sha256": "3061105504b3a9b4ec1966a36060418494d2b4d05b7b8b65cdc933e5d6181a9e",
   "frozen_source_sha256": {
-    "config/amendment_06_ho2.yaml": "e850af1e85179ebb2c3598fb7f78adb5fd1051e53a80b4473bc0c8300ad97b4c",
-    "docs/analysis_plan_amendment06_ho2.md": "cd9197008d6b41f07df51f117886dfd883e7234b514bafefddbd3182b31584a8",
+    ".gitignore": "d09f804eae7a8600ee6b8a6b04d70be1f9f1fdabae6f50259d11a88955007e60",
+    "config/amendment_05_gift_lines.yaml": "27bda2f81cfc963921ecb7a0da235777031996b26563d6425fbfa8d525eed720",
+    "config/amendment_06_ho2.yaml": "3061105504b3a9b4ec1966a36060418494d2b4d05b7b8b65cdc933e5d6181a9e",
+    "config/split.lock.json": "cb6d983a9b32f43bfcbb671f7d71af1b012a70b8af999efbed3691ceb3e04440",
+    "config/split.yaml": "38d0e35ee8b34016d1246d111eed0315974390ab255daee8b48002373331553e",
+    "docs/amendment_log.md": "db00c98f162fc922ed7fdffd957a45d8f4c07a55114391f274d3ef7b4e3e4ff4",
+    "docs/analysis_plan_amendment06_ho2.md": "f1e5d0104390bbdabe7038f03c509e8df4b8831ff337a918ff2e4b10f0a316a6",
+    "docs/analysis_plan_gateb_r2.md": "ff8c823e1989e536f75b8ed09a3fc399e3c10af041d678c4672e254ec198be8e",
+    "docs/analysis_plan_gateb_r4.md": "b6dac1cd2efd64dcd11f92a93d5570a6e7c2330d7d1db0d9f34c0a23c252e85c",
+    "docs/analysis_plan_gateb_r5.md": "e9195f75d76a1326c816b7ebb67e4051771d0b77d9883b42404ced0c3861a6e9",
     "docs/analysis_plan_wp5.md": "ebf26802ce20814c93d836c0b67e6c17a8ce53d5e65d23b56622bd034cf5e94f",
     "docs/analysis_plan_wp5b.md": "ed9af7f35e03a41f2462462361f8476ba2b25dee89c6cd59340512419fcdd931",
     "docs/analysis_plan_wp5c.md": "8dd4774425659f170de08669d42b2d358cdd6c2ed4cd5a33ed68ebeb6767fbf8",
+    "docs/canonical_numbers.md": "48a07449e9d5096c905dcb7c1fa2416d35ad728e154641662cee377ab2b1ff83",
+    "docs/cohort_definitions.md": "2c967bab229509a5d812c8a6102387aca37ad72c23ee57c226941ef3df488ace",
+    "docs/decisions.md": "a26ad4da5b0e036fb3773544f56f4d1de484a1b701edecb565f40a38c5f3e3be",
+    "docs/gateb_r2_results.md": "f5cc8c5a0dffe52381be7ed9bbfcba75852de9d25ff29e2df49f4b881b4460e2",
+    "docs/gateb_r4_results.md": "d8ee4e2972a8b54e80099382f8ec72a912bbfa1d91cd647efa4cbcaa5f6831ce",
+    "docs/gateb_r5_results.md": "1f8a4949ef4157cfe6fc518630adfd41bede67fac635cec687f8ed0a00406803",
+    "docs/ho2_access_audit.md": "c97ea3640061fd1c9b551fa6bd5fcc1866e32bb3bead77afe74b444f18624d16",
+    "docs/test_provenance_note.md": "f00531f80169008ccf07902fe4a76ec337938742995a5c5d67e377e28a64646b",
     "outputs/logs/test_eval_access.jsonl": "2061ddbc30ca89ee48a7df2530bc29aa0b0fe335a76ff1b37fdd8c2903edebc9",
+    "outputs/metrics/day3_pretest_freeze.json": "be57e7a73fb0844ac46ebd3707e65db5008f0cc23f57c46c93afd40bf975727d",
+    "outputs/metrics/dev_final_model.json": "7b0002e4d7c6b61a0b8929dd4af80b47a4a43ed352a066de508167fe97958221",
+    "outputs/metrics/dev_final_models_v2.json": "27c2f011a52bf45816b82153270db56522b639c0aada82e777ace1d0611b5c83",
     "outputs/metrics/frozen_segmenters_dev.json": "307e6ced38704c5e29789cf503ceb1a8c3d19f14d8318db1707c5624fb3d3b0c",
-    "outputs/metrics/prevalence_drift_f2.json": "fffc3253c72260d2ea096598f3e9e090343332685958138e62a1aff456204656",
+    "outputs/metrics/gateb_r2_power.json": "8a8113db17c6bc59b53c806f4790f727905c0d663807059fbab141ba2d54031f",
+    "outputs/metrics/gateb_r2_rr_dev.json": "ac0572eb47fe43d9768a8ae0b7bd783839d573a852b7f05f3127b82fda474d37",
+    "outputs/metrics/gateb_r4_dev_calibration.json": "60617a9c181d0cd583687d69f84adeba5203c967095d152308d904cd00f127b5",
+    "outputs/metrics/gateb_r5_strategy_freeze.json": "bfac6b9d057189d9655693248532a673e0d2c4c85721a0214a0f7fc9a668cbee",
     "outputs/metrics/repurchase_v3_dev.json": "9cce1e1a55a333d92b1295723a805876b25055491abb91ce4f8c0c122d2a2d26",
     "outputs/metrics/repurchase_wp5b_dev.json": "c618812b21e90237f61ac63555ab533e673b6a44e0020c02b23d53c660b3b3ff",
     "outputs/metrics/repurchase_wp5c_dev.json": "03fc1a143897f3e69cc7356ba66f2722df231cc26fbf0d56a9a91128c8fc3c62",
+    "outputs/metrics/test_eval.json": "5b502637d05f4a21cfa803b3f1582c8d507335e2dcac64ee63d84826f123c625",
+    "outputs/metrics/test_opened.lock.json": "74af2c6ccd61f6c071529115b13ff144b25fa264600cb27e1832f764bde6d874",
     "outputs/models/day2_dev_final_model.joblib": "0ac767d24c641f50bdc19634e590dc45a92d9e4cd5513d02871fac50b109cd4a",
+    "outputs/models/gateb_r5/s3_final_dev.joblib": "63e47afbe0a1ef73c01d0be2974c354d753a7299f3d1952146b91bd8b2d1706b",
+    "outputs/models/gateb_r5/s6_final_dev.json": "17af23fa3a84a40c357856271489badd6a1061fd15cac62ace1573627b64d048",
+    "outputs/models/gateb_r5/v3_final_dev.joblib": "fc04ee70693da1a1e16350b99acf80b335705000dac35ba67bde63ef9c5d348b",
     "outputs/models/repurchase_features_v2.joblib": "5cbe48bb9b4944d91dfba7b85dd5d1608eb836b68574b16d3ac6a6319f8a2f80",
     "outputs/models/segmenters_dev_frozen_v1.joblib": "5babaa2352921f840385bdfe6681948f329b0ee276de2aef1cc8500c9146b93f",
+    "outputs/tables/combo_recommendation_screen_f3.csv": "75069387d808a96fd35b2a0e06b843f4ff04ff01d78a9846d3d6f7b482220b9c",
     "outputs/tables/combos_v2.csv": "ae7df8760857a9a7aa2cd667704829e71b076a70b5ca2f0a41fd6396ef0538d6",
     "outputs/tables/repurchase_wp5c_train_rates.csv": "be2845bbd7020c0241aecf36412a8eaa123d3a7fcdbb58070026ec184d3232a3",
+    "scripts/analyze_gateb_r2_dev.py": "a10e17b41abab68209a439d3f0e7a3589c114139563c7244e227234233cede5f",
+    "scripts/audit_committed_aggregate_dates.py": "3e758ce088e573bc9883fbbd8bf253798636accb97f8973828ef677e69dc82ed",
+    "scripts/build_amendment06_gateb_report.py": "eea162a3515006a31f7af59fc8f897cdc433798b5aeae0251d3a7f482d160355",
+    "scripts/build_amendment06_lock.py": "e4c8a47fc0bea4a1b768615928346309e30b0341e849b735c8f28b380e7056cd",
+    "scripts/build_amendment06_revision_log.py": "332c558b751590fcbc39e6828fc1f19febd067bd6a6613a420c7eeabf4c1dab3",
+    "scripts/calibrate_gateb_r4_dev.py": "9c65803bce23c294b689110b96e5fa6051aff1dd13a44dad98deb76073a01282",
     "scripts/count_ho2_eligibility_preregistered.py": "e6cf124588dc7791fdaf7131c91246a125642ca4d3f7c343362f48ed4be25a10",
+    "scripts/evaluate_holdout2_once.py": "35cdf0c9b97d7b44829817e357129cfc9cae6666829be1b2f76ce81ba3ba2d5d",
     "scripts/evaluate_repurchase_wp5b_dev.py": "99e68c6d1c57ab1595339a72787d385e7fae73d5243e4a561c0fed56969951a4",
     "scripts/evaluate_repurchase_wp5c_dev.py": "6a95efeb8465e30f28cbfc6120a7afb41762c04cfa41a77b247750acd128c676",
+    "scripts/fix_sealed_eol.py": "8c9ae853370e33f0d089843e6799a24b861db7665805f5214d5d063815c65e06",
+    "scripts/freeze_gateb_strategies_dev.py": "984740129ebc9abe5ad7ba727f40950d5413fd3658823caa94f66b118ee6719d",
+    "scripts/run_all.py": "10dfed97a84038a81ee616cb3262643ecc7feb96e5fb9373c96be5256ce1f192",
+    "scripts/summarize_gateb_r2_power.py": "15913f5a2b67a8d8bb61be405f9207a470905ca741c2f597356f6475299a64c0",
     "scripts/summarize_ho2_power.py": "597098df598d8ad7b7ede5c74be99fcfb6f245cf1f74e9fe2b2e913b4970bb01",
+    "scripts/verify_day3_locks.py": "0e43a87aecca3482a1c7b61fe7001f4437ed7c1deeab21cf40c47d4dab52eead",
+    "scripts/verify_gateb_lock.py": "90180f86d41d0656b83877fe1538b4b7cfc74fadc23bf36a89fef831539b2fe7",
+    "scripts/verify_pii.py": "5de909685ce13ab7d14166b00f35dc3534d76c785ce6ee7c1d59f96ef7ac1001",
+    "scripts/verify_readonly.py": "a9497845f36a54f892312d8e80bc3487e12062b2bc15840926b732277f837d87",
     "src/features/day2_data.py": "c8091e7faa4f59f644994ba471fcbc565a1a72878f793044f433f136dba3d52f",
+    "src/features/day2b_data.py": "2e8c79c79a0aef51ec522542e4c6e9879317c3d72027c79cf7825d75fa9147fe",
+    "src/features/gift_lines.py": "be43bb7caa54a240f60c890e9f56bbdd2c6b537ced8eb60cc9be5ce889385dd0",
+    "src/features/holdout2_access.py": "de3c75d875823c3c6027fba82896b61bb360027f1ad6e646239c6158288938ea",
+    "src/features/holdout2_features.py": "826c5085a2b3fe0315a4f8501b13155e5f6b4ed6eb6db3e07f5639f1a72f8eac",
+    "src/features/holdout2_metrics.py": "9920eebfa62075ecaccfa3713d54a3ac11fe3c7e4abf249b308ae350be276a8e",
     "src/features/money.py": "7a22b4da01bdb1c2ca31f5d1a3089177dbd0838ead2c417b9abd828d4b668a3f",
     "src/features/repurchase_v3.py": "332f62cd7b6d4737c9783add6e35476b32b75925a153583cad3104484a489398",
+    "src/ingest/identifiers.py": "66de4a07a4af32d9d3dda49357f181ec3f242e56be1100d115ba8356590e9dd4",
+    "src/ingest/settings.py": "1c8bc9900b97901c13fba834e5379e7d57f8cc418af344605ce16f660f6442a6",
     "src/models/classify.py": "35ed02908eeeec0a4ce89893ee1aa0c439bb30eb8e1c47d30609975c66de46fa",
     "src/models/classify_v2.py": "eab950787f56bd42016ceb6c05156946e1b969edc3b73e3b6b3f8a9712642301",
-    "src/models/repurchase_v3.py": "5bf2a685bce70eedff52fe595ceb1475bb4bf372aaab3b452ae59dfd7372f3b3"
+    "src/models/frozen_segmenters.py": "1c56234602933d495b0ef5bc665bd4b4f76d9f17a9e8a01320117fb88eae65cf",
+    "src/models/repurchase_v3.py": "5bf2a685bce70eedff52fe595ceb1475bb4bf372aaab3b452ae59dfd7372f3b3",
+    "tests/test_gateb_aggregate_date_audit.py": "f751fe5090024620e4db41e059fa66a5b3303939a34e6e56d6f40fc5982c8041",
+    "tests/test_gateb_lock_verification.py": "6a1941b4b06c26594549249ccdfbb95be2415c051da93d064cac46c06fc5d3ee",
+    "tests/test_gateb_r4_calibration.py": "dec6c98324f26920588db30aeedc158ab7b182349446892ebf665165a5e754c4",
+    "tests/test_gateb_r5_freeze.py": "79843a63f32bdc279d059effd4da9890bf71f2fbdefd26eda76f0a13de9d76e0",
+    "tests/test_gateb_report_hashes.py": "edfacfd5211afbdc5e9107add47309b8e31749e3ab94140745e1b645c63773ef",
+    "tests/test_holdout2_feature_boundary.py": "657c085056eead45aa427fd55fcb93f73ceb277c9c9a8933f3512a4a93d136bd",
+    "tests/test_holdout2_metrics.py": "ecf9c4c9492e7a5534c65a019924de537ac419fd43a3976d4ca153af737bac7b"
   },
+  "source_hash_count": 84,
   "candidate_strategies": {
     "eligible": [
       "D-005",
       "v2",
       "S1",
       "S3",
-      "S6"
+      "S6",
+      "v3",
+      "recency-only",
+      "frequency-only"
     ],
-    "excluded": {
-      "v3": "No final-fit artifact or frozen fitting population; only temporal-CV fits exist.",
-      "recency-only": "No final-fit artifact or frozen fitting population; only temporal-CV fits exist.",
-      "frequency-only": "No final-fit artifact or frozen fitting population; only temporal-CV fits exist."
-    },
-    "selected_candidate": null
+    "selected_candidate": null,
+    "fit_artifact_hashes": {
+      "S3": "63e47afbe0a1ef73c01d0be2974c354d753a7299f3d1952146b91bd8b2d1706b",
+      "S6": "17af23fa3a84a40c357856271489badd6a1061fd15cac62ace1573627b64d048",
+      "D-005": "0ac767d24c641f50bdc19634e590dc45a92d9e4cd5513d02871fac50b109cd4a",
+      "v2": "5cbe48bb9b4944d91dfba7b85dd5d1608eb836b68574b16d3ac6a6319f8a2f80",
+      "v3": "fc04ee70693da1a1e16350b99acf80b335705000dac35ba67bde63ef9c5d348b"
+    }
   },
   "pre_t2_counts": {
     "eligible_customers": 7282,
@@ -54,30 +120,47 @@
     "outcome_fields_read": 0,
     "old_test_labels_used_for_fit_or_selection": 0
   },
-  "label_free_expected_positive_counts": {
-    "dev_7_4_percent": 539,
-    "old_test_aggregate_4_6_percent": 335
+  "r2_decision": {
+    "rr_dev": 3.473245,
+    "ci_95": [
+      2.656091,
+      4.519658
+    ],
+    "h2_primary": true,
+    "h2_power_at_lower_dev_both_references": [
+      0.999997,
+      0.998705
+    ]
   },
-  "access_audit": {
-    "snapshot_rows_inserted_at_checked": 12011,
-    "other_fields_accessed_for_rows_at_or_after_t2": 0,
-    "ho2_labels_or_outcomes_read": 0,
-    "prior_repo_holdout2_evaluator_or_output_found": false,
-    "scope": "repository/project runtime audit; does not establish absence of external manual access"
+  "r4_thresholds": {
+    "s6_rho_dev_half": 0.9761904761904763,
+    "rfm_rho_dev_half": 1.0,
+    "k_dev": 1
   },
   "primary_hypothesis": [
-    "H1"
+    "H1",
+    "H2"
   ],
   "secondary_hypotheses": [
-    "H2",
     "H3",
-    "H4",
-    "H5"
+    "H4"
+  ],
+  "descriptive_only": [
+    "H5",
+    "holdout2_prevalence",
+    "calibration_in_the_large",
+    "D005_vs_univariate_baselines"
   ],
   "not_testable": [
     "H6"
   ],
   "test_opened": false,
   "phase_c_started": false,
-  "requires_explicit_owner_phrase": "DUYỆT MỞ HO2"
+  "requires_explicit_owner_phrase": "DUYỆT MỞ HO2",
+  "access_audit": {
+    "prior_test_eval_not_rerun": true,
+    "ho2_labels_or_outcomes_read": 0,
+    "loader_requires_valid_open_lock": true,
+    "scope": "repo code and committed metadata only"
+  }
 }

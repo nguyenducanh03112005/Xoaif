@@ -17,6 +17,7 @@ from features.holdout2_features import (attach_holdout2_labels, build_customer_f
                                         feature_eligible, outcome_eligible)
 sys.path.insert(0, str(__import__("pathlib").Path(__file__).resolve().parents[1] / "scripts"))
 from evaluate_holdout2_once import create_open_lock, validate_dry_run_t  # noqa: E402
+from verify_gateb_lock import REQUIRED_LOCKED_PATHS  # noqa: E402
 
 
 def _order(day: date, customer: str = "c1") -> dict:
@@ -32,7 +33,7 @@ def _order(day: date, customer: str = "c1") -> dict:
 def test_yaml_date_conditions_and_boundary_rows() -> None:
     cfg = yaml.safe_load(open("config/amendment_06_ho2.yaml", encoding="utf-8"))
     t2 = date.fromisoformat(cfg["T2"])
-    assert cfg["feature_history"]["access_rule"].startswith("inspect inserted_at first")
+    assert cfg["feature_history"]["inserted_at_first"] is True
     assert cfg["label_window"]["evaluator_equivalent_rule"] == "local_date > T2 and local_date <= T2 + 180 days"
     assert not feature_eligible(t2, t2)
     assert feature_eligible(t2 - pd.Timedelta(days=1), t2)
@@ -82,22 +83,47 @@ def test_dry_run_gate_accepts_only_full_dev_horizon_and_rejects_t2() -> None:
 
 
 def test_open_lock_is_created_once_after_exact_owner_phrase(tmp_path) -> None:
+    import hashlib
+    import json
+
     (tmp_path / "config").mkdir()
     (tmp_path / "docs").mkdir()
     (tmp_path / "scripts").mkdir()
     (tmp_path / "outputs/metrics").mkdir(parents=True)
-    (tmp_path / "config/amendment_06_ho2.yaml").write_text(
-        "status: prepared_gate_b_not_open\ntest_opened: false\nT2: '2026-04-20'\n", encoding="utf-8")
+    config = {
+        "amendment_id": "06-HO2", "revision": 2, "supersedes_lock_sha256": "oldhash",
+        "status": "prepared_gate_b_not_open", "test_opened": False, "phase_c_started": False,
+        "T2": "2026-04-20", "hypotheses": {
+            "primary": {"ids": ["H1", "H2"]}, "secondary": {"ids": ["H3", "H4"]},
+            "descriptive_only": {"ids": ["H5"]}, "not_testable": {"ids": ["H6"]},
+        },
+    }
+    config_path = tmp_path / "config/amendment_06_ho2.yaml"
+    config_path.write_text(yaml.safe_dump(config), encoding="utf-8", newline="\n")
     protocol = tmp_path / "docs/analysis_plan_amendment06_ho2.md"
-    protocol.write_text("frozen protocol", encoding="utf-8")
+    protocol.write_text("frozen protocol\n", encoding="utf-8", newline="\n")
     evaluator = tmp_path / "scripts/evaluate_holdout2_once.py"
-    evaluator.write_text("frozen evaluator", encoding="utf-8")
-    digest = lambda p: hashlib.sha256(p.read_bytes()).hexdigest()
-    frozen = {p.relative_to(tmp_path).as_posix(): digest(p) for p in (tmp_path / "config/amendment_06_ho2.yaml", protocol, evaluator)}
-    (tmp_path / "config/amendment_06_ho2.lock.json").write_text(json.dumps({
+    evaluator.write_text("frozen evaluator\n", encoding="utf-8", newline="\n")
+    freeze = tmp_path / "outputs/metrics/gateb_r5_strategy_freeze.json"
+    freeze.write_text(json.dumps({"strategy_population_and_fit": {}}), encoding="utf-8")
+    (tmp_path / ".gitattributes").write_text("config/amendment_06_ho2.lock.json -text\n", encoding="utf-8")
+    for rel in REQUIRED_LOCKED_PATHS:
+        path = tmp_path / rel
+        if not path.exists():
+            path.parent.mkdir(parents=True, exist_ok=True)
+            path.write_text(f"frozen:{rel}\n", encoding="utf-8", newline="\n")
+    paths = [config_path, protocol, evaluator, freeze, *(tmp_path / rel for rel in REQUIRED_LOCKED_PATHS)]
+    frozen = {p.relative_to(tmp_path).as_posix(): hashlib.sha256(p.read_bytes()).hexdigest() for p in paths}
+    lock = {
         "amendment_id": "06-HO2", "revision": 2, "status": "prepared_gate_b_not_open",
-        "test_opened": False, "frozen_source_sha256": frozen,
-    }), encoding="utf-8")
+        "supersedes": "oldhash", "test_opened": False, "phase_c_started": False,
+        "config_sha256": hashlib.sha256(config_path.read_bytes()).hexdigest(),
+        "protocol_sha256": hashlib.sha256(protocol.read_bytes()).hexdigest(),
+        "frozen_source_sha256": frozen, "source_hash_count": len(frozen),
+        "primary_hypothesis": ["H1", "H2"], "secondary_hypotheses": ["H3", "H4"],
+        "descriptive_only": ["H5"], "not_testable": ["H6"],
+    }
+    (tmp_path / "config/amendment_06_ho2.lock.json").write_text(json.dumps(lock, indent=2) + "\n", encoding="utf-8", newline="\n")
     with pytest.raises(PermissionError, match="did not match"):
         create_open_lock(tmp_path, "wrong")
     opened = create_open_lock(tmp_path, "DUYỆT MỞ HO2")

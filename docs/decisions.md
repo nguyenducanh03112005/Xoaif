@@ -225,3 +225,11 @@
 - **Tính chất:** HO2 là khoảng thời gian thứ hai trong cùng snapshot của cùng cửa hàng, không phải tiến cứu thật. Giao thức không cho phép mở nhãn hoặc bắt đầu Phase C.
 - **Căn cứ:** `docs/analysis_plan_amendment06_ho2.md`, `config/amendment_06_ho2.yaml`, lock `config/amendment_06_ho2.lock.json`, báo cáo `docs/amendment_06_gate_b.md`.
 
+## D-028 — Gate B 06-HO2 revision 2 và tập chấm cố định
+
+- **Ngày:** 2026-10-28.
+- **Quyết định:** Supersede Gate B revision 1 sau khi đã đăng ký trước R2/R4/R5. H2 trở lại giả thuyết chính do RR DEV 3,473 (CI 95% 2,656–4,520) và công suất tại cận dưới vượt 80% ở cả hai prevalence tham chiếu. H1/H2 là hai kiểm định chính với Holm .025/.05.
+- **Tập chiến lược:** Chọn phương án A cho S3, S6 và v3: final-fit trên toàn DEV multi-snapshot theo recipe đã đăng ký trước. Giữ D-005 là mô hình chính; v2 là artifact cố định; recency/frequency-only là baseline mô tả theo dấu hệ số DEV. `k_DEV=1`, vì vậy H5 chỉ mô tả; H6 không kiểm định.
+- **Cổng và giới hạn:** evaluator/trình dựng đặc trưng được viết và băm trước khi duyệt. HO2 vẫn đóng; không có outcome HO2 nào được đọc, không chạy lại test cũ. Không sửa test lock/config split/Amendment 01–05; không refit theo test/HO2, không commit raw/restricted/PII/Giáo trình.
+- **Căn cứ:** `docs/analysis_plan_gateb_r2.md`, `docs/analysis_plan_gateb_r4.md`, `docs/analysis_plan_gateb_r5.md`, `docs/analysis_plan_amendment06_ho2.md`, `docs/amendment_06_revision_log.md`.
+

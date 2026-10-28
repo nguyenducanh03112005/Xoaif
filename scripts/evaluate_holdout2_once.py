@@ -57,6 +57,8 @@ def validate_dry_run_t(value: str, config: dict, dev_end: date = date(2025, 10, 
 
 
 def _verify_gateb_lock(root: Path = ROOT) -> dict:
+    from verify_gateb_lock import verify_lock
+    verify_lock(root)
     lock_path = root / "config/amendment_06_ho2.lock.json"
     lock = json.loads(lock_path.read_text(encoding="utf-8"))
     config = _config(root)
@@ -76,13 +78,13 @@ def _verify_gateb_lock(root: Path = ROOT) -> dict:
 def create_open_lock(root: Path, authorization: str) -> dict:
     if authorization != REQUIRED_PHRASE:
         raise PermissionError("owner authorization phrase did not match")
-    _verify_gateb_lock(root)
     lock_path = root / "outputs/metrics/holdout2_opened.lock.json"
     lock_path.parent.mkdir(parents=True, exist_ok=True)
     protected_outputs = (lock_path, root / "outputs/metrics/holdout2_eval.json",
                          root / "docs/holdout2_report.md", root / "outputs/logs/holdout2_access.jsonl")
     if any(path.exists() for path in protected_outputs):
         raise FileExistsError("HO2 open lock already exists; retry is forbidden")
+    _verify_gateb_lock(root)
     config_path = root / "config/amendment_06_ho2.yaml"
     protocol_path = root / "docs/analysis_plan_amendment06_ho2.md"
     payload = {
@@ -330,8 +332,7 @@ def evaluate_frame(frame: pd.DataFrame, root: Path = ROOT, orders: list[dict] | 
         "prevalence_descriptive": float(y.mean()), "strategies": strategy_rows,
         "H1": {"threshold": 0.55, "p_raw": h1_p, "p_holm": p_adj["H1"],
                "one_sided_lower_95": strategy_rows["D-005"]["ci_95"]["roc_auc"]["lower_one_sided_95"],
-               "passes_holm_and_effect_threshold": bool(p_adj["H1"] < .05 and
-                                                        strategy_rows["D-005"]["ci_95"]["roc_auc"]["lower_one_sided_95"] > .55),
+               "passes_holm_and_effect_threshold": bool(auc is not None and auc > .55 and p_adj["H1"] < .05),
                "auc_minus_0_70_descriptive": (auc - .70) if auc is not None else None,
                "auc_minus_0_70_ci_95": {k: (v - .70 if v is not None else None)
                                           for k, v in strategy_rows["D-005"]["ci_95"]["roc_auc"].items()
