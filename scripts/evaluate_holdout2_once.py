@@ -24,7 +24,7 @@ from features.day2_data import LABEL_T_CANDIDATES, load_dev_orders  # noqa: E402
 from features.holdout2_access import load_authorized_holdout_orders  # noqa: E402
 from features.holdout2_features import (attach_holdout2_labels, build_customer_features_at_t,
                                         outcome_eligible)  # noqa: E402
-from features.holdout2_metrics import (holm_step_down,
+from features.holdout2_metrics import (h4_is_testable, h4_meets_threshold, holm_step_down,
                                        precision_at_k_tie_aware, risk_ratio, roc_auc)  # noqa: E402
 from features.repurchase_v3 import build_multisnapshot_samples  # noqa: E402
 from models.classify import NUMERIC_COLUMNS as D005_NUMERIC, CATEGORICAL_COLUMNS as D005_CATEGORICAL  # noqa: E402
@@ -62,15 +62,16 @@ def _verify_gateb_lock(root: Path = ROOT) -> dict:
     lock_path = root / "config/amendment_06_ho2.lock.json"
     lock = json.loads(lock_path.read_text(encoding="utf-8"))
     config = _config(root)
-    if lock.get("amendment_id") != "06-HO2" or lock.get("revision") != 2:
-        raise RuntimeError("Gate B revision 2 lock is required")
+    if lock.get("amendment_id") != "06-HO2" or lock.get("revision") != 3:
+        raise RuntimeError("Gate B revision 3 lock is required")
     if lock.get("status") != "prepared_gate_b_not_open" or lock.get("test_opened") is not False:
         raise RuntimeError("Gate B lock must remain closed before opening")
     for rel, expected in lock.get("frozen_source_sha256", {}).items():
         path = root / rel
         if not path.is_file() or _sha(path) != expected:
             raise RuntimeError(f"Gate B frozen hash mismatch: {rel}")
-    if config.get("status") != "prepared_gate_b_not_open" or config.get("test_opened") is not False:
+    if (config.get("revision") != 3 or config.get("status") != "prepared_gate_b_not_open"
+            or config.get("test_opened") is not False):
         raise RuntimeError("Amendment config is not in closed state")
     return lock
 
@@ -88,7 +89,7 @@ def create_open_lock(root: Path, authorization: str) -> dict:
     config_path = root / "config/amendment_06_ho2.yaml"
     protocol_path = root / "docs/analysis_plan_amendment06_ho2.md"
     payload = {
-        "amendment_id": "06-HO2", "revision": 2, "status": "opened_once", "test_open_count": 1,
+        "amendment_id": "06-HO2", "revision": 3, "status": "opened_once", "test_open_count": 1,
         "opened_at_utc": datetime.now(timezone.utc).isoformat(), "t2": str(_config(root)["T2"]),
         "config_sha256": _sha(config_path), "protocol_sha256": _sha(protocol_path),
         "evaluator_sha256": _sha(root / "scripts/evaluate_holdout2_once.py"),
@@ -280,10 +281,11 @@ def _h4_eval(frame: pd.DataFrame, dev_s6: dict, dev_rfm: dict, r4: dict) -> dict
         ho_rates = {str(k): float(g.label_returned.mean()) for k, g in groups.groupby("group") if len(g) >= 30}
         common = sorted(set(dev_rates) & set(ho_rates))
         rho = float(spearmanr([dev_rates[k] for k in common], [ho_rates[k] for k in common]).statistic) if len(common) >= 4 else None
-        testable = len(common) >= 4 and thresholds[name] is not None and thresholds[name] >= .50
+        testable = h4_is_testable(len(common), thresholds[name])
         out[name] = {"testable": testable, "groups_n_ge_30": len(ho_rates), "common_groups_n": len(common),
                      "rho_ho2_vs_dev": rho, "rho_dev_half_threshold": thresholds[name],
-                     "pass": bool(testable and rho is not None and rho >= thresholds[name])}
+                     "comparison_tolerance": 1e-9,
+                     "pass": bool(testable and h4_meets_threshold(rho, thresholds[name]))}
     out["overall_testable"] = all(out[k]["testable"] for k in ("S6", "RFM"))
     out["overall_pass"] = bool(out["overall_testable"] and all(out[k]["pass"] for k in ("S6", "RFM")))
     return out

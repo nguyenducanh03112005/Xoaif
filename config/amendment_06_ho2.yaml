@@ -1,6 +1,6 @@
 amendment_id: 06-HO2
-revision: 2
-supersedes_lock_sha256: a6c751a50625d8d98ffb2a8c10573d61cac9158e21dd3e16493715a3c413e94d
+revision: 3
+supersedes_lock_sha256: 193998064725a5d71b07b49edc5c4fb046e08b5292a86dd4649cf23f47c60880
 status: prepared_gate_b_not_open
 test_opened: false
 phase_c_started: false
@@ -63,6 +63,8 @@ H4:
   minimum_common_groups: 4
   s6_rho_dev_half_threshold: 0.9761904761904763
   rfm_rho_dev_half_threshold: 1.0
+  comparison_rule: rho >= threshold - absolute_tolerance
+  comparison_absolute_tolerance: 1.0e-9
   rfm_high_value_cut_vnd: 830000
   cell_selection_uses_ho2_outcome: false
 H5:

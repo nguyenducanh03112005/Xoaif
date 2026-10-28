@@ -21,13 +21,16 @@ def _fixture(root: Path) -> None:
     for directory in ("config", "docs", "scripts", "src/features", "tests", "outputs/metrics"):
         (root / directory).mkdir(parents=True, exist_ok=True)
     config = {
-        "amendment_id": "06-HO2", "revision": 2, "supersedes_lock_sha256": "oldhash",
+        "amendment_id": "06-HO2", "revision": 3, "supersedes_lock_sha256": "oldhash",
         "status": "prepared_gate_b_not_open", "test_opened": False, "phase_c_started": False,
         "hypotheses": {
-            "primary": {"ids": ["H1", "H2"]}, "secondary": {"ids": ["H3", "H4"]},
+        "primary": {"ids": ["H1", "H2"]}, "secondary": {"ids": ["H3", "H4"]},
             "descriptive_only": {"ids": ["H5"]}, "not_testable": {"ids": ["H6"]},
         },
     }
+    config["H4"] = {"comparison_absolute_tolerance": 1e-9, "minimum_common_groups": 4,
+                     "s6_rho_dev_half_threshold": 0.9761904761904763,
+                     "rfm_rho_dev_half_threshold": 1.0}
     config_path = root / "config/amendment_06_ho2.yaml"
     config_path.write_text(yaml.safe_dump(config), encoding="utf-8", newline="\n")
     protocol_path = root / "docs/analysis_plan_amendment06_ho2.md"
@@ -42,12 +45,15 @@ def _fixture(root: Path) -> None:
     files = [config_path, protocol_path, freeze_path, *(root / rel for rel in REQUIRED_LOCKED_PATHS)]
     hashes = {p.relative_to(root).as_posix(): _sha(p) for p in files}
     lock = {
-        "amendment_id": "06-HO2", "revision": 2, "supersedes": "oldhash",
+        "amendment_id": "06-HO2", "revision": 3, "supersedes": "oldhash",
         "status": "prepared_gate_b_not_open", "test_opened": False, "phase_c_started": False,
         "config_sha256": _sha(config_path), "protocol_sha256": _sha(protocol_path),
         "frozen_source_sha256": hashes, "source_hash_count": len(hashes),
         "primary_hypothesis": ["H1", "H2"], "secondary_hypotheses": ["H3", "H4"],
         "descriptive_only": ["H5"], "not_testable": ["H6"],
+        "r4_thresholds": {"comparison_absolute_tolerance": 1e-9, "minimum_common_groups": 4,
+                           "s6_rho_dev_half_threshold": 0.9761904761904763,
+                           "rfm_rho_dev_half_threshold": 1.0},
     }
     (root / "config/amendment_06_ho2.lock.json").write_text(json.dumps(lock, indent=2) + "\n", encoding="utf-8", newline="\n")
 
@@ -57,6 +63,7 @@ def test_closed_lock_verifies_all_required_hashes_and_outputs_absent(tmp_path: P
     result = verify_lock(tmp_path)
     assert result["verified"] == result["source_hash_count"]
     assert result["test_opened"] is False
+    assert result["revision"] == 3
 
 
 def test_lock_verifier_rejects_hash_mutation_and_open_outputs(tmp_path: Path) -> None:

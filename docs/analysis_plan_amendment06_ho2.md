@@ -1,6 +1,6 @@
 # Đăng ký 06-HO2 — Gate B revision 2 (nhãn vẫn đóng)
 
-- **Mã/revision:** 06-HO2, revision 2; supersedes lock revision 1 bằng SHA-256 được ghi trong YAML và lock mới.
+- **Mã/revision:** 06-HO2, revision 3; supersedes lock revision 2 bằng SHA-256 được ghi trong YAML và lock mới.
 - **Trạng thái:** chuẩn bị đánh giá; `test_opened: false`, Phase C chưa bắt đầu. Không có nhãn/đơn/hành vi HO2 nào được đọc khi lập protocol này.
 - **Cửa sổ:** T2=`2026-04-20`, múi giờ `Asia/Ho_Chi_Minh`; đặc trưng chỉ từ local date `<T2`; outcome là status 3, không phải đơn quà cấp đơn, tại local date `>T2` và `<=T2+180 ngày` (`2026-10-17` inclusive). Ngày đúng T2 bị loại khỏi cả hai.
 - **Hồ sơ:** snapshot `20261024T052943Z`; số dòng snapshot đã biết trước khóa là 12.011. Kết quả chỉ áp dụng cho cửa hàng này và giai đoạn này.
@@ -43,7 +43,7 @@ H3 gồm đúng S1/S3/S6 × precision@10%/lift; không hiệu chỉnh multiplici
 
 - S6 dùng 12 ô cố định frequency `{1,2,≥3}` × recency `{≤30,31–90,91–180,>180}`. RFM dùng hàm WP5 A1 và cutoff giá trị cao `830.000 VND`.
 - DEV tham chiếu chia 6 anchor đầu (2024-05…2024-10) và 6 anchor sau (2024-11…2025-04). Chỉ giữ nhóm có n≥30 trong mỗi nửa. `rho_dev_half` là Spearman giữa thứ hạng tỷ lệ mua lại của hai nửa.
-- Ngưỡng được hiệu chuẩn trước mở: S6 `rho_dev_half=0,9761904762` với 8 nhóm; RFM `rho_dev_half=1,0` với 6 nhóm. Hệ nhóm HO2 testable nếu có ≥4 nhóm cố định có n≥30, nhóm được giữ không chọn theo outcome. Hệ đạt nếu Spearman thứ hạng DEV-pooled và HO2 `rho_HO2≥rho_dev_half`; H4 tổng đạt khi cả S6 và RFM testable, đạt. Nếu thiếu nhóm thì ghi không testable, không nới ngưỡng.
+- Ngưỡng được hiệu chuẩn trước mở: S6 `rho_dev_half=0,9761904761904763` với 8 nhóm; RFM `rho_dev_half=1,0` với 6 nhóm. Hệ nhóm HO2 testable nếu có ≥4 nhóm cố định có n≥30, nhóm được giữ không chọn theo outcome. So sánh số thực dùng `rho_HO2 ≥ rho_dev_half − 1e-9`; dung sai tuyệt đối chỉ bỏ sai số biểu diễn dấu phẩy động, không đổi ngưỡng đã đăng ký. Ngưỡng giữ nguyên nếu số nhóm chung khác 8/6; đó là giới hạn đã biết. H4 tổng đạt khi cả S6 và RFM testable, đạt. Nếu thiếu nhóm thì ghi không testable, không nới ngưỡng.
 
 ## H5 và H6
 

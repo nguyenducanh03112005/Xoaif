@@ -311,3 +311,27 @@ Nguồn: `scripts/audit_committed_aggregate_dates.py` (date-field-only scan), `s
 | Mốc ngày lễ reference | `2026-10-31`, không phải event/order date; anchor metrics dừng `2025-04-01` | `scripts/audit_committed_aggregate_dates.py`; `outputs/metrics/holiday_time_supplement_dev.json` |
 
 **Giới hạn:** Date-field scan không phải forensic proof; các aggregate test đã commit thuộc cửa sổ cũ trước T2. Dashboard April là partial month. Số snapshot 12.011 là metadata đã biết, không được tái đếm raw trong Gate B.
+
+## A11 — Giả định prevalence trong công suất Gate B
+
+Nguồn: `outputs/metrics/gateb_r2_power.json`, `outputs/metrics/gateb_r2_rr_dev.json`, `docs/gateb_r2_results.md`.
+
+| Đại lượng | Định nghĩa và số | Cách dùng / giới hạn |
+|---|---|---|
+| Prevalence DEV tham chiếu | Cấp khách hàng: 260/3.508 = 7,41% (làm tròn 7,4%) | Kịch bản công suất H1/H2; không phải prevalence snapshot R2. |
+| Prevalence test aggregate tham chiếu | Cấp khách hàng: 237/5.169 = 4,59% (làm tròn 4,6%) | Chỉ là mốc tham chiếu từ aggregate đã commit; chưa kiểm tính chuyển được sang HO2. |
+| Kịch bản power | 539/7.282 và 335/7.282 là số dương kỳ vọng nếu áp hai prevalence tham chiếu lên cohort tiền T2 giả định 7.282 khách | Không phải số quan sát, nhãn HO2, hay dự báo. |
+| Estimand snapshot R2 | 1.086/21.638 = 5,02% snapshot dương | Tỷ lệ theo snapshot đa mốc DEV, khác tỷ lệ cấp khách; không thay prevalence tham chiếu của kịch bản power. |
+
+**Giới hạn:** Chưa kiểm tra prevalence cấp khách có chuyển được sang cohort HO2 hay không. Các mốc 7,4%/4,6% chỉ dùng đúng như giả định tham chiếu đã đăng ký cho power.
+
+## A12 — Ngưỡng so sánh số thực H4 (Gate B revision 3)
+
+Nguồn: `docs/analysis_plan_gateb_r6_fix.md` (đăng ký trước, commit `384d565`); triển khai tại `src/features/holdout2_metrics.py`.
+
+| Quy tắc | Giá trị | Phạm vi |
+|---|---:|---|
+| Dung sai tuyệt đối rho | `1e-9` | Chỉ xử lý sai số biểu diễn số thực; không đổi ngưỡng S6 `0.9761904761904763` hay RFM `1.0`. |
+| Số nhóm chung tối thiểu | 4 | Giữ nguyên; ít hơn 4 nhóm thì H4 không testable. |
+
+Ngưỡng tham chiếu tiếp tục giữ nguyên khi số nhóm chung khác 8/6; đây là giới hạn đã biết, không được diễn giải như hiệu chuẩn lại theo cỡ nhóm HO2.

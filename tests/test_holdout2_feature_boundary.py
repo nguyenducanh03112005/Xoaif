@@ -91,13 +91,16 @@ def test_open_lock_is_created_once_after_exact_owner_phrase(tmp_path) -> None:
     (tmp_path / "scripts").mkdir()
     (tmp_path / "outputs/metrics").mkdir(parents=True)
     config = {
-        "amendment_id": "06-HO2", "revision": 2, "supersedes_lock_sha256": "oldhash",
+        "amendment_id": "06-HO2", "revision": 3, "supersedes_lock_sha256": "oldhash",
         "status": "prepared_gate_b_not_open", "test_opened": False, "phase_c_started": False,
         "T2": "2026-04-20", "hypotheses": {
             "primary": {"ids": ["H1", "H2"]}, "secondary": {"ids": ["H3", "H4"]},
             "descriptive_only": {"ids": ["H5"]}, "not_testable": {"ids": ["H6"]},
         },
     }
+    config["H4"] = {"comparison_absolute_tolerance": 1e-9, "minimum_common_groups": 4,
+                     "s6_rho_dev_half_threshold": 0.9761904761904763,
+                     "rfm_rho_dev_half_threshold": 1.0}
     config_path = tmp_path / "config/amendment_06_ho2.yaml"
     config_path.write_text(yaml.safe_dump(config), encoding="utf-8", newline="\n")
     protocol = tmp_path / "docs/analysis_plan_amendment06_ho2.md"
@@ -115,13 +118,16 @@ def test_open_lock_is_created_once_after_exact_owner_phrase(tmp_path) -> None:
     paths = [config_path, protocol, evaluator, freeze, *(tmp_path / rel for rel in REQUIRED_LOCKED_PATHS)]
     frozen = {p.relative_to(tmp_path).as_posix(): hashlib.sha256(p.read_bytes()).hexdigest() for p in paths}
     lock = {
-        "amendment_id": "06-HO2", "revision": 2, "status": "prepared_gate_b_not_open",
+        "amendment_id": "06-HO2", "revision": 3, "status": "prepared_gate_b_not_open",
         "supersedes": "oldhash", "test_opened": False, "phase_c_started": False,
         "config_sha256": hashlib.sha256(config_path.read_bytes()).hexdigest(),
         "protocol_sha256": hashlib.sha256(protocol.read_bytes()).hexdigest(),
         "frozen_source_sha256": frozen, "source_hash_count": len(frozen),
         "primary_hypothesis": ["H1", "H2"], "secondary_hypotheses": ["H3", "H4"],
         "descriptive_only": ["H5"], "not_testable": ["H6"],
+        "r4_thresholds": {"comparison_absolute_tolerance": 1e-9, "minimum_common_groups": 4,
+                           "s6_rho_dev_half_threshold": 0.9761904761904763,
+                           "rfm_rho_dev_half_threshold": 1.0},
     }
     (tmp_path / "config/amendment_06_ho2.lock.json").write_text(json.dumps(lock, indent=2) + "\n", encoding="utf-8", newline="\n")
     with pytest.raises(PermissionError, match="did not match"):

@@ -8,6 +8,21 @@ from typing import Callable
 import numpy as np
 from sklearn.metrics import roc_auc_score
 
+H4_SPEARMAN_ABS_TOLERANCE = 1e-9
+H4_MIN_COMMON_GROUPS = 4
+
+
+def h4_is_testable(common_group_count: int, threshold: float | None) -> bool:
+    """Keep the preregistered four-group floor and reference-threshold guard."""
+    return common_group_count >= H4_MIN_COMMON_GROUPS and threshold is not None and threshold >= .50
+
+
+def h4_meets_threshold(rho: float | None, threshold: float | None) -> bool:
+    """Compare Spearman rho with the locked threshold, allowing only FP noise."""
+    if rho is None or threshold is None or not np.isfinite(rho) or not np.isfinite(threshold):
+        return False
+    return float(rho) >= float(threshold) - H4_SPEARMAN_ABS_TOLERANCE
+
 
 def precision_at_k_tie_aware(y_true, scores, fraction: float = 0.10) -> dict:
     y = np.asarray(y_true, dtype=int)

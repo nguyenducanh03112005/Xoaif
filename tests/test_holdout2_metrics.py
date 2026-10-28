@@ -5,7 +5,8 @@ import pandas as pd
 import sys
 from pathlib import Path
 
-from features.holdout2_metrics import (customer_cluster_bootstrap, holm_step_down,
+from features.holdout2_metrics import (customer_cluster_bootstrap, h4_is_testable,
+                                       h4_meets_threshold, holm_step_down,
                                        precision_at_k_tie_aware, risk_ratio, roc_auc)
 sys.path.insert(0, str(Path(__file__).resolve().parents[1] / "scripts"))
 from evaluate_holdout2_once import _centered_bootstrap_p  # noqa: E402
@@ -36,3 +37,23 @@ def test_centered_bootstrap_p_uses_registered_effect_threshold() -> None:
     assert _centered_bootstrap_p(values, .57, .55) == 2 / 6
     rr_values = np.array([2.2, 2.5, 2.7, 3.0])
     assert _centered_bootstrap_p(rr_values, 2.0, 1.5, log_scale=True) == 3 / 5
+
+
+def test_h4_spearman_tolerance_handles_preregistered_synthetic_boundaries() -> None:
+    from scipy.stats import spearmanr
+
+    s6 = 0.9761904761904763
+    one_swap_8 = [2, 1, 3, 4, 5, 6, 7, 8]
+    two_swaps_8 = [2, 1, 4, 3, 5, 6, 7, 8]
+    rho_one_8 = float(spearmanr(range(1, 9), one_swap_8).statistic)
+    rho_two_8 = float(spearmanr(range(1, 9), two_swaps_8).statistic)
+    assert h4_meets_threshold(rho_one_8, s6)
+    assert not h4_meets_threshold(rho_two_8, s6)
+
+    rho_identity_6 = float(spearmanr(range(1, 7), range(1, 7)).statistic)
+    assert rho_identity_6 == 1.0
+    assert h4_meets_threshold(rho_identity_6 - 1e-16, 1.0)
+    rho_one_6 = float(spearmanr(range(1, 7), [2, 1, 3, 4, 5, 6]).statistic)
+    assert not h4_meets_threshold(rho_one_6, 1.0)
+    assert not h4_is_testable(3, s6)
+    assert h4_is_testable(4, s6)

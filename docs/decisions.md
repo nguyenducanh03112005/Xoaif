@@ -233,3 +233,10 @@
 - **Cổng và giới hạn:** evaluator/trình dựng đặc trưng được viết và băm trước khi duyệt. HO2 vẫn đóng; không có outcome HO2 nào được đọc, không chạy lại test cũ. Không sửa test lock/config split/Amendment 01–05; không refit theo test/HO2, không commit raw/restricted/PII/Giáo trình.
 - **Căn cứ:** `docs/analysis_plan_gateb_r2.md`, `docs/analysis_plan_gateb_r4.md`, `docs/analysis_plan_gateb_r5.md`, `docs/analysis_plan_amendment06_ho2.md`, `docs/amendment_06_revision_log.md`.
 
+## D-029 — Gate B revision 3: dung sai so sánh H4
+
+- **Ngày:** 2026-10-29.
+- **Quyết định:** Giữ nguyên ngưỡng S6 `0.9761904761904763`, RFM `1.0` và tối thiểu 4 nhóm chung. So sánh rho dùng dung sai tuyệt đối `1e-9` theo `rho >= threshold - tolerance`; không thay đổi định nghĩa/estimand H4. Nếu số nhóm khác 8/6, vẫn dùng ngưỡng đã khóa và ghi đó là giới hạn.
+- **Căn cứ đăng ký:** `docs/analysis_plan_gateb_r6_fix.md`, commit preregistration `384d565` trước commit mã.
+- **Phạm vi:** Chỉ helper so sánh số thực, test tổng hợp, lock/report revision 3 và audit tài liệu. HO2 vẫn đóng; không chạy evaluator/dry-run, không đọc HO2 và không bắt đầu Phase C.
+

@@ -25,10 +25,12 @@ def require_open_lock(root: Path) -> dict:
         raise PermissionError("HO2 is closed: valid single-open lock is required")
     lock = json.loads(path.read_text(encoding="utf-8"))
     config = yaml.safe_load((root / "config/amendment_06_ho2.yaml").read_bytes())
+    if config.get("revision") != 3 or config.get("test_opened") is not False:
+        raise PermissionError("HO2 amendment config is not closed revision 3")
     protocol_path = root / "docs/analysis_plan_amendment06_ho2.md"
     evaluator_path = root / "scripts/evaluate_holdout2_once.py"
     expected = {
-        "revision": 2,
+        "revision": 3,
         "amendment_id": "06-HO2",
         "status": "opened_once",
         "config_sha256": hashlib.sha256((root / "config/amendment_06_ho2.yaml").read_bytes()).hexdigest(),

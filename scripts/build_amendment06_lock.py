@@ -1,4 +1,4 @@
-"""Build Amendment 06-HO2 revision-2 lock from preregistered files and local DEV artifacts."""
+"""Build Amendment 06-HO2 revision-3 lock from preregistered files and local DEV artifacts."""
 
 from __future__ import annotations
 
@@ -10,7 +10,7 @@ from pathlib import Path
 import yaml
 
 ROOT = Path(__file__).resolve().parents[1]
-OLD_LOCK_SHA256 = "a6c751a50625d8d98ffb2a8c10573d61cac9158e21dd3e16493715a3c413e94d"
+OLD_LOCK_SHA256 = "193998064725a5d71b07b49edc5c4fb046e08b5292a86dd4649cf23f47c60880"
 
 FROZEN_PATHS = (
     ".gitignore", "config/amendment_06_ho2.yaml", "config/split.yaml", "config/split.lock.json",
@@ -19,6 +19,7 @@ FROZEN_PATHS = (
     "docs/gateb_r4_results.md", "docs/analysis_plan_gateb_r5.md", "docs/gateb_r5_results.md",
     "docs/analysis_plan_wp5.md", "docs/analysis_plan_wp5b.md", "docs/analysis_plan_wp5c.md",
     "docs/canonical_numbers.md", "docs/decisions.md", "docs/amendment_log.md",
+    "docs/analysis_plan_gateb_r6_fix.md",
     "docs/ho2_access_audit.md", "docs/cohort_definitions.md", "docs/test_provenance_note.md",
     "outputs/metrics/test_opened.lock.json", "outputs/metrics/test_eval.json",
     "outputs/metrics/day3_pretest_freeze.json", "outputs/logs/test_eval_access.jsonl",
@@ -61,10 +62,10 @@ def build_lock() -> dict:
     config_path = ROOT / "config/amendment_06_ho2.yaml"
     protocol_path = ROOT / "docs/analysis_plan_amendment06_ho2.md"
     config = yaml.safe_load(config_path.read_bytes())
-    if config.get("revision") != 2 or config.get("test_opened") is not False:
-        raise ValueError("Amendment 06 YAML must be revision 2 and closed")
+    if config.get("revision") != 3 or config.get("test_opened") is not False:
+        raise ValueError("Amendment 06 YAML must be revision 3 and closed")
     if config.get("supersedes_lock_sha256") != OLD_LOCK_SHA256:
-        raise ValueError("supersedes hash does not match Gate B revision-1 lock")
+        raise ValueError("supersedes hash does not match Gate B revision-2 lock")
     missing = [p for p in FROZEN_PATHS if not (ROOT / p).is_file()]
     if missing:
         raise FileNotFoundError(f"required frozen file missing: {missing}")
@@ -74,8 +75,8 @@ def build_lock() -> dict:
     r4 = json.loads((ROOT / "outputs/metrics/gateb_r4_dev_calibration.json").read_text(encoding="utf-8"))
     r5 = json.loads((ROOT / "outputs/metrics/gateb_r5_strategy_freeze.json").read_text(encoding="utf-8"))
     lock = {
-        "amendment_id": "06-HO2", "revision": 2, "supersedes": OLD_LOCK_SHA256,
-        "status": "prepared_gate_b_not_open", "locked_date": str(date(2026, 10, 28)),
+        "amendment_id": "06-HO2", "revision": 3, "supersedes": OLD_LOCK_SHA256,
+        "status": "prepared_gate_b_not_open", "locked_date": str(date(2026, 10, 29)),
         "protocol_sha256": digest(protocol_path), "config_sha256": digest(config_path),
         "frozen_source_sha256": hashes,
         "source_hash_count": len(hashes),
@@ -89,9 +90,11 @@ def build_lock() -> dict:
         "r2_decision": {"rr_dev": rr["rr"], "ci_95": [rr["ci95_lower"], rr["ci95_upper"]],
                         "h2_primary": bool(r2["h2_primary"]), "h2_power_at_lower_dev_both_references":
                         r2["h2_power_at_rr_lower_dev_both_references"]},
-        "r4_thresholds": {"s6_rho_dev_half": r4["dev_half_reference"]["s6"]["rho"],
-                          "rfm_rho_dev_half": r4["dev_half_reference"]["rfm"]["rho"],
-                          "k_dev": r4["h5"]["k_dev"]},
+        "r4_thresholds": {"s6_rho_dev_half_threshold": r4["dev_half_reference"]["s6"]["rho"],
+                          "rfm_rho_dev_half_threshold": r4["dev_half_reference"]["rfm"]["rho"],
+                          "k_dev": r4["h5"]["k_dev"],
+                          "comparison_absolute_tolerance": config["H4"]["comparison_absolute_tolerance"],
+                          "minimum_common_groups": config["H4"]["minimum_common_groups"]},
         "primary_hypothesis": config["hypotheses"]["primary"]["ids"],
         "secondary_hypotheses": config["hypotheses"]["secondary"]["ids"],
         "descriptive_only": config["hypotheses"]["descriptive_only"]["ids"],
@@ -108,7 +111,7 @@ def main() -> int:
     lock = build_lock()
     path = ROOT / "config/amendment_06_ho2.lock.json"
     path.write_text(json.dumps(lock, ensure_ascii=False, indent=2) + "\n", encoding="utf-8", newline="\n")
-    print(f"Wrote closed 06-HO2 revision 2 lock; {lock['source_hash_count']} source hashes.")
+    print(f"Wrote closed 06-HO2 revision 3 lock; {lock['source_hash_count']} source hashes.")
     return 0
 
 
