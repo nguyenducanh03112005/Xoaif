@@ -121,9 +121,14 @@ Full ingestion chỉ trên máy được cấp quyền API, có xoaif.env cục 
 
 ## 8. Tài liệu chính
 
-- Cẩm nang bảo vệ: DEFENSE_GUIDE.md.
-- Hệ thống số liệu chuẩn: canonical_numbers.md.
-- Protocol thời gian và split: data_protocol.md.
-- Định nghĩa dữ liệu và governance: data_dictionary.md, data_governance.md.
-- Kết quả mua lại, cohort, retention và combo: cohort_mismatch_analysis.md, customer_value_dev.md, combo_recommendation_f3.md, test_report.md.
-- Danh mục artifact kỹ thuật: submission_artifacts.md và INDEX.md.
+Để nắm dự án và chuẩn bị vấn đáp, đọc theo thứ tự:
+
+1. `README.md` — mục tiêu, cài đặt và lệnh mở dashboard.
+2. `docs/PROJECT_GUIDE.md` — dữ liệu, kiến trúc, kết quả, cách chạy và đầu vào còn cần.
+3. `docs/DEFENSE_GUIDE.md` — kịch bản trình bày/demo, giải thích ML và câu trả lời phản biện.
+4. `slides/speaker_notes.md` — lời dẫn ngắn khớp với từng slide.
+5. `docs/data_dictionary.md` và `docs/data_governance.md` — định nghĩa trường, grain và cách xử lý dữ liệu.
+
+Chỉ cần tra cứu thêm khi được hỏi sâu: `docs/canonical_numbers.md` cho số liệu; `docs/data_protocol.md` cho mốc thời gian/đánh giá; `docs/customer_value_dev.md` cho retention/CLV; `docs/combo_recommendation_f3.md` cho luật kết hợp; `docs/test_report.md` cho chi tiết đánh giá mô hình.
+
+Tài liệu giao nộp chính: `report/xoaif_report.pdf`, `slides/Xoaif_Final.pptx`, `slides/xoaif_print.pdf` và `slides/speaker_notes.md`.

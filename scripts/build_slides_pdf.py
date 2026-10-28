@@ -127,13 +127,7 @@ def image_panel(ax, filename: str, bounds):
 def build(output_path: Path | None = None, font_override: str | None = None) -> None:
     configure_font(font_override)
     output_path = output_path or OUT
-    test = read_json("test_eval.json")
-    dev = read_json("dev_final_models_v2.json")
-    dev_primary = read_json("dev_final_model.json")
-    money = read_json("day2_money_audit.json")
     seg = read_json("day2_segmentation.json")
-    combo_dev = read_json("day3_combo_prereg.json")
-    eda = read_json("eda_dev_summary.json")
     output_path.parent.mkdir(parents=True, exist_ok=True)
 
     with PdfPages(output_path, metadata={
@@ -153,24 +147,22 @@ def build(output_path: Path | None = None, font_override: str | None = None) -> 
         pdf.savefig(fig); plt.close(fig)
 
         # 2. Questions and scope
-        fig, ax = slide(pdf, 2, "Câu hỏi dự án và phạm vi", "Dữ liệu snapshot được kiểm tra theo thời gian và quy tắc nghiệp vụ")
-        card(ax, .06, .62, .20, .20, "Snapshot khóa", "12.011", "đơn trên 601 trang")
-        card(ax, .28, .62, .20, .20, "Kho DEV", "6.517", "đơn từ 01/04/2024 đến trước T")
-        card(ax, .50, .62, .20, .20, "Cohort scoring đã freeze", "5.169", "khách; aggregate pre-open")
-        card(ax, .72, .62, .20, .20, "Mở test", "01 lần", "không đánh giá lại")
-        heading(ax, .07, .52, "Ba câu hỏi")
-        body(ax, .07, .46, "1. Hành vi mua hàng và chất lượng dữ liệu mô tả được thế nào?\n2. Có tín hiệu xếp hạng khả năng mua lại trong 180 ngày không?\n3. Những sản phẩm nào thường đồng xuất hiện trong giỏ đủ điều kiện?", size=12, width=.78)
-        ax.text(.07, .20, "Phân tích không kết luận lợi nhuận, hiệu quả can thiệp hay quan hệ nhân quả.", fontsize=11, color=COLORS["red"], weight="bold", transform=ax.transAxes)
+        fig, ax = slide(pdf, 2, "Từ dữ liệu bán hàng đến câu trả lời kinh doanh", "Phân tích tập trung vào giao dịch, khách hàng và giỏ sản phẩm")
+        card(ax, .08, .62, .24, .20, "Xu hướng", "Doanh số", "theo thời gian")
+        card(ax, .38, .62, .24, .20, "Hành vi", "Khách hàng", "mua một lần hay quay lại")
+        card(ax, .68, .62, .24, .20, "Sản phẩm", "Giỏ hàng", "món thường xuất hiện cùng nhau")
+        heading(ax, .09, .49, "Mục tiêu")
+        body(ax, .09, .42, "Tổ chức dữ liệu theo quy tắc thống nhất, phân tích các câu hỏi và trình bày kết quả để hỗ trợ tìm hiểu hoạt động bán hàng.", size=13, width=.80)
         pdf.savefig(fig); plt.close(fig)
 
         # 3. Architecture
-        fig, ax = slide(pdf, 3, "Kiến trúc dữ liệu: năm tầng", "Luồng API đọc-only đến sản phẩm phân tích offline")
+        fig, ax = slide(pdf, 3, "Quy trình phân tích dữ liệu", "Một quy trình từ dữ liệu nguồn đến thông tin dễ đọc")
         items = [
-            ("1 · Thu nhận", "Pancake POS\nrequests · GET"),
-            ("2 · Snapshot", "JSON · manifest\nSHA-256"),
-            ("3 · Bảo vệ / ETL", "timezone · HMAC\nkiểm tra schema"),
-            ("4 · Kho / khai phá", "DuckDB · Pandas\nscikit-learn · mlxtend"),
-            ("5 · Trình bày", "Streamlit · PDF\naggregate outputs"),
+            ("1 · Dữ liệu", "Pancake POS\nđơn · sản phẩm · khách"),
+            ("2 · Chuẩn hóa", "ngày · tiền\nquy tắc nghiệp vụ"),
+            ("3 · Kho", "DuckDB\nPandas"),
+            ("4 · Phân tích", "scikit-learn\nmlxtend"),
+            ("5 · Kết quả", "Streamlit\nbáo cáo · slide"),
         ]
         for i, (name, detail) in enumerate(items):
             x = .055 + i*.18
@@ -182,172 +174,128 @@ def build(output_path: Path | None = None, font_override: str | None = None) -> 
             if i < len(items)-1:
                 ax.add_patch(FancyArrowPatch((x+.158, .55), (x+.177, .55), transform=ax.transAxes,
                                              arrowstyle="-|>", mutation_scale=12, color=COLORS["teal"]))
-        body(ax, .07, .32, "Dữ liệu giao dịch lấy từ nhiều bảng trong cùng Pancake POS; lịch công khai chỉ bổ sung ngữ cảnh thời gian, không phải hệ thống giao dịch độc lập. API probe ngoài đơn chưa ingest. Dashboard đọc CSV/JSON aggregate cục bộ, không gọi Pancake API.", size=11, width=.82)
-        body(ax, .07, .20, "Phạm vi phân tích tập trung vào dữ liệu giao dịch, khách hàng và giỏ hàng.", size=10, color=COLORS["muted"], width=.82)
+        body(ax, .07, .32, "Các bảng giao dịch được chuẩn hóa và kết hợp để tạo chỉ số khách hàng, đặc trưng cho mô hình và giỏ sản phẩm.", size=12, width=.82)
+        body(ax, .07, .20, "Công cụ chính: Python, Pandas, DuckDB, scikit-learn, mlxtend và Streamlit.", size=11, color=COLORS["muted"], width=.82)
         pdf.savefig(fig); plt.close(fig)
 
-        # 4. Time and cohorts
-        fig, ax = slide(pdf, 4, "Mốc thời gian và các cohort", "Mỗi số đếm có đơn vị và điều kiện riêng")
-        x0, x1, x2, x3 = .08, .27, .69, .92
-        ax.plot([x0, x3], [.68, .68], color=COLORS["line"], lw=7, solid_capstyle="round", transform=ax.transAxes)
-        ax.plot([x0, x1], [.68, .68], color=COLORS["gold"], lw=7, solid_capstyle="round", transform=ax.transAxes)
-        ax.plot([x1, x2], [.68, .68], color=COLORS["leaf"], lw=7, solid_capstyle="round", transform=ax.transAxes)
-        ax.plot([x2, x3], [.68, .68], color=COLORS["teal"], lw=7, solid_capstyle="round", transform=ax.transAxes)
-        for x in [x0, x1, x2, x3]: ax.scatter([x], [.68], s=55, color=COLORS["green"], zorder=5, transform=ax.transAxes)
-        ax.text(x0, .75, "2022-06-04–2022-09-21", fontsize=8, ha="center", color=COLORS["muted"], transform=ax.transAxes)
-        ax.text(x1, .75, "2024-04-01", fontsize=9, ha="center", color=COLORS["muted"], transform=ax.transAxes)
-        ax.text(x2, .75, "T = 2025-10-22", fontsize=9, ha="center", color=COLORS["muted"], transform=ax.transAxes)
-        ax.text(x3, .75, "2026-04-20", fontsize=9, ha="center", color=COLORS["muted"], transform=ax.transAxes)
-        ax.text(.10, .57, "476 đơn pre-analysis\nđược giữ trong raw", fontsize=9, ha="center", transform=ax.transAxes)
-        ax.text(.46, .57, "DEV [analysis_start, T)\n6.517 đơn · 6.400 status 3", fontsize=9, ha="center", transform=ax.transAxes)
-        ax.text(.80, .57, "Test [T, end) theo lần chạy\nđã khóa một lần", fontsize=9, ha="center", transform=ax.transAxes)
-        rows = [
-            ["Eligibility preflight N=180", "5.499 khách"],
-            ["Khách có đơn status 3 DEV", "5.174 khách"],
-            ["Cohort scoring đã freeze", "5.169 khách"],
-            ["Nhãn DEV", "3.508 mẫu · 260 dương"],
-        ]
-        add_table(ax, [.12, .17, .76, .27], rows, ["Cohort", "Quy mô"], widths=[.65, .35], fontsize=10)
-        ax.text(.12, .11, "Cầu trực tiếp: 5.499 − 325 pre-analysis-only = 5.174 − 5 gift-only = 5.169; dư 0.", fontsize=9.2, color=COLORS["red"], weight="bold", transform=ax.transAxes)
+        # 4. Data scope
+        fig, ax = slide(pdf, 4, "Phạm vi dữ liệu phân tích", "Nguồn Pancake POS · giao dịch trong giai đoạn hoạt động của cửa hàng")
+        card(ax, .08, .56, .36, .27, "Snapshot dữ liệu", "12.011", "đơn hàng")
+        card(ax, .56, .56, .36, .27, "Tập DEV", "6.517", "đơn hàng · 01/04/2024 đến trước 22/10/2025")
+        heading(ax, .09, .43, "Quy tắc sử dụng")
+        body(ax, .09, .36, "Phân tích dùng đơn hợp lệ theo quy tắc nghiệp vụ. 6.400 đơn status 3 thuộc tập DEV được xem là đơn mua đã ghi nhận.", size=12, width=.82)
         pdf.savefig(fig); plt.close(fig)
 
-        # 5. Data quality / money
-        fig, ax = slide(pdf, 5, "Chất lượng dữ liệu và quy tắc tiền", "Status hiện tại dùng làm quy ước nghiệp vụ; không có lịch sử chuyển trạng thái")
-        card(ax, .07, .58, .19, .22, "Đơn status 3 DEV", "6.400", "đơn mua hợp lệ theo D-013")
-        card(ax, .28, .58, .19, .22, "Thiếu mã khách", "286", "đơn status 3 không nối lịch sử")
-        card(ax, .49, .58, .19, .22, "Đơn quà cấp đơn", "22", "bị loại khỏi hành vi/giỏ")
-        card(ax, .70, .58, .22, .22, "Doanh thu âm", "2 / 6.400", "0,03%, dưới cổng dừng 1%")
-        heading(ax, .08, .46, "Diễn giải doanh thu")
-        body(ax, .08, .40, "Doanh thu ghi nhận theo công thức đã xác nhận và Amendment 03. `price_adjustment` có thể phản ánh phí hoặc ưu đãi. Không gọi doanh thu này là lợi nhuận hay đối soát ngân hàng.", size=11, width=.82)
-        body(ax, .08, .24, "Độ nhạy công thức A/B được báo riêng. Chênh lệch ròng giữa hai cách là 52.016.532 VND (2,02% tổng A); chưa có sổ kế toán độc lập để xác minh.", size=11, width=.82)
-        pdf.savefig(fig); plt.close(fig)
+        # 5. Data pipeline and storage
+        fig, ax = slide(pdf, 5, "Từ dữ liệu nguồn đến kết quả phân tích", "Lưu trữ và trình bày theo từng lớp xử lý")
+        columns=[("Dữ liệu nguồn","Pancake POS\nĐơn · khách · sản phẩm"),("Kho phân tích","DuckDB\nPython · Pandas"),("Kết quả","Chỉ số tổng hợp\nDashboard · PDF")]
+        for i,(title,detail) in enumerate(columns):
+            x=.08+i*.30
+            patch=FancyBboxPatch((x,.47),.25,.26,boxstyle="round,pad=.012,rounding_size=.015",transform=ax.transAxes,fc=COLORS["pale"] if i%2==0 else "white",ec=COLORS["line"],lw=.8)
+            ax.add_patch(patch);ax.text(x+.02,.66,title,fontsize=12,weight="bold",color=COLORS["green"],transform=ax.transAxes)
+            ax.text(x+.02,.58,detail,fontsize=10,color=COLORS["ink"],va="top",linespacing=1.5,transform=ax.transAxes)
+        heading(ax,.09,.38,"Luồng dữ liệu")
+        body(ax,.09,.31,"Giao dịch được chuẩn hóa, nối theo khóa nghiệp vụ và nạp vào kho. Định danh khách được giả danh hóa; dashboard đọc bảng tổng hợp.",size=11,width=.82)
+        pdf.savefig(fig);plt.close(fig)
 
-        # 6. DEV EDA figures
-        fig, ax = slide(pdf, 6, "EDA trên DEV: giao dịch biến động, khách mua lặp ít", "Mô tả đơn status 3 trước T; không kiểm định nguyên nhân mùa vụ")
-        image_panel(ax, "outputs/figures/eda_dev_monthly_orders.png", [.06, .25, .54, .52])
-        image_panel(ax, "outputs/figures/eda_dev_customer_frequency.png", [.62, .35, .30, .42])
-        body(ax, .08, .20, f"Tháng cao nhất có {fint(max(eda['monthly_valid_orders'], key=lambda row: row['orders'])['orders'])} đơn; 2025-10 chỉ có dữ liệu đến ngày 21. Trong {fint(eda['valid_order_count'])} đơn, median giỏ là {fnum(eda['basket']['median_distinct_products'],0)} sản phẩm phân biệt. 4.526/5.174 khách DEV status 3 (87,5%) có một đơn.", size=10, width=.84)
-        pdf.savefig(fig); plt.close(fig)
+        # 6. Customer retention and CLV
+        fig, ax = slide(pdf, 6, "Giá trị khách hàng trong 180 ngày", "Retention và CLV mô tả lịch sử mua")
+        card(ax,.08,.58,.25,.24,"Retention 180 ngày","10,40%","365 / 3.508 khách đủ theo dõi")
+        card(ax,.38,.58,.25,.24,"Doanh thu 180 ngày","512.934₫","trên mỗi khách")
+        card(ax,.68,.58,.24,.24,"Cửa sổ","180 ngày","từ lần mua đầu")
+        heading(ax,.09,.45,"Cách đọc")
+        body(ax,.09,.38,"Retention đo tỷ lệ có giao dịch mua lại theo định nghĩa dự án. CLV ở đây là doanh thu lịch sử, không phải dự báo hay lợi nhuận.",size=12,width=.82)
+        pdf.savefig(fig);plt.close(fig)
 
-        # 7. Gift lines
-        fig, ax = slide(pdf, 7, "Quà được phân loại theo dòng hàng", "Cờ API không bật; suy luận subset sum được giữ ở độ tin cậy thấp")
-        card(ax, .08, .58, .24, .22, "Dòng DEV khảo sát", "30.049", "theo Amendment 05")
-        card(ax, .38, .58, .24, .22, "Quà direct zero-price", "4", "theo quy tắc đã đăng ký")
-        card(ax, .68, .58, .24, .22, "Subset sum suy luận", "903", "có thể gán nhầm")
-        ax.add_patch(FancyArrowPatch((.32, .68), (.38, .68), transform=ax.transAxes, arrowstyle="-|>", mutation_scale=13, color=COLORS["teal"]))
-        ax.add_patch(FancyArrowPatch((.62, .68), (.68, .68), transform=ax.transAxes, arrowstyle="-|>", mutation_scale=13, color=COLORS["teal"]))
-        heading(ax, .09, .46, "Hệ quả cho khai phá giỏ")
-        body(ax, .09, .40, f"Quà cấp đơn và dòng quà bị loại theo quy tắc đã khóa. Có {combo_dev['main_combo_count']} cặp chính ổn định ở ít nhất 4/6 ô và có mặt tại ô chính; tên sản phẩm hoặc support không được dùng để xác định quà.", size=11, width=.82)
-        body(ax, .09, .25, "Chủ cửa hàng xác nhận nhân viên nhập giảm giá thủ công. Phần suy luận 903 dòng dựa trên subset sum tối đa 6 dòng, không phải nhãn được xác minh thủ công từng dòng.", size=10.5, color=COLORS["muted"], width=.82)
-        pdf.savefig(fig); plt.close(fig)
+        # 7. RFM segmentation
+        fig, ax = slide(pdf, 7, "Phân khúc khách hàng theo RFM", "Recency · Frequency · Monetary")
+        card(ax,.08,.57,.24,.23,"Thuật toán","K-Means","học nhóm từ đặc trưng chuẩn hóa")
+        card(ax,.38,.57,.24,.23,"Số nhóm","K = 2","mô tả hành vi mua")
+        card(ax,.68,.57,.24,.23,"Hành vi phổ biến","Mua một lần","so với mua lặp lại")
+        heading(ax,.09,.44,"Kết quả")
+        body(ax,.09,.38,"Trong DEV, 87,5% khách có một đơn. K=2 chủ yếu tách khách mua một lần và mua lặp lại.",size=12,width=.82)
+        body(ax,.09,.21,"Cụm giúp mô tả dữ liệu; nhãn nhóm không phải kết luận về giá trị hoặc nguy cơ rời bỏ.",size=11,color=COLORS["muted"],width=.82)
+        pdf.savefig(fig);plt.close(fig)
 
         # 8. Supervised method
-        fig, ax = slide(pdf, 8, "Mô hình mua lại: cách đánh giá", "Nhãn nhị phân theo N=180; feature phải có local_date < T")
-        card(ax, .08, .58, .23, .22, "Mẫu nhãn DEV", "3.508", "260 dương · 7,41%")
-        card(ax, .36, .58, .23, .22, "Validation", "5 folds", "temporal expanding, khách tách biệt")
-        card(ax, .64, .58, .28, .22, "Ngưỡng", "0,5", "được đăng ký trước test")
-        heading(ax, .09, .46, "Metric phù hợp")
-        body(ax, .09, .40, "ROC-AUC đo xếp hạng qua nhiều ngưỡng. Average Precision / PR-AUC xem precision–recall cho lớp dương hiếm; baseline xấp xỉ prevalence. Precision, recall, F1 và confusion matrix mô tả quyết định tại ngưỡng cố định.", size=11, width=.83)
-        body(ax, .09, .22, "RMSE / MAE / R² là metric hồi quy. Accuracy không đủ khi 92,6% nhãn DEV là âm.", size=11, color=COLORS["red"], weight="bold", width=.83)
+        fig, ax = slide(pdf, 8, "Xếp hạng khả năng mua lại", "Mô hình học từ lịch sử mua trước thời điểm dự đoán")
+        card(ax, .08, .58, .24, .22, "Bài toán", "Phân loại", "có mua lại / chưa ghi nhận mua lại")
+        card(ax, .38, .58, .24, .22, "Mô hình", "Logistic", "Regression cho điểm xác suất")
+        card(ax, .68, .58, .24, .22, "Chân trời", "180 ngày", "sau mốc dự đoán")
+        heading(ax, .09, .45, "Đầu vào chính")
+        body(ax, .09, .39, "Recency, Frequency, Monetary, giá trị đơn, số sản phẩm và nhịp mua. Các đặc trưng được tính từ dữ liệu trước mốc T.", size=12, width=.82)
+        body(ax, .09, .22, "Kết quả là điểm xếp hạng để phân tích hành vi; không tự động quyết định cách phục vụ khách.", size=11, color=COLORS["muted"], width=.82)
         pdf.savefig(fig); plt.close(fig)
 
         # 9. Model roles
-        fig, ax = slide(pdf, 9, "Vai trò mô hình được giữ rõ ràng", "Kết quả DEV bổ sung không thay quyết định mô hình đã đăng ký")
-        card(ax, .09, .55, .35, .27, "Mô hình chính theo D-005", "Logistic C=10", "Logistic Regression C=10 — mô hình chính theo D-005")
-        card(ax, .56, .55, .35, .27, "Khảo sát bổ sung · Amendment 04", "feature-v2 · C=0,1", "không thay mô hình chính")
-        v2 = dev["repurchase_features_v2"]["selected_oof_metrics"]
-        primary = dev_primary["best_model_oof_metrics"]
-        body(ax, .10, .42, f"DEV OOF C=10: ROC-AUC {fnum(primary['roc_auc'])}, gần mức ngẫu nhiên; feature-v2: {fnum(v2['roc_auc'])}. Development chưa xác nhận tín hiệu xếp hạng rõ.", size=12, width=.80)
-        body(ax, .10, .23, "Test đạt ROC-AUC khoảng 0,70 nhưng đây chỉ là tín hiệu yếu chưa được DEV xác nhận, không đủ để kết luận mô hình hoạt động tốt. Test đã mở; không dùng nó để tinh chỉnh mô hình.", size=11, color=COLORS["muted"], width=.80)
+        fig, ax = slide(pdf, 9, "Tạo đặc trưng và nhãn mua lại", "Mỗi mẫu mô tả một khách tại một mốc thời gian")
+        card(ax, .08, .57, .25, .23, "Đặc trưng", "RFM + giỏ", "tính từ giao dịch lịch sử")
+        card(ax, .38, .57, .25, .23, "Nhãn", "Mua lại", "giao dịch hợp lệ sau mốc T")
+        card(ax, .68, .57, .24, .23, "Cửa sổ", "180 ngày", "cùng quy tắc cho mọi mẫu")
+        heading(ax, .09, .44, "Vì sao chia theo thời gian?")
+        body(ax, .09, .38, "Mô hình học từ các mốc cũ rồi được đánh giá trên mốc mới hơn. Như vậy cách đánh giá gần với việc dự đoán khách trong tương lai.", size=12, width=.82)
+        body(ax, .09, .21, "Nhãn được tạo từ kết quả giao dịch quan sát được, không gán thủ công.", size=11, color=COLORS["muted"], width=.82)
         pdf.savefig(fig); plt.close(fig)
 
-        # 10. One-time test
-        fig, ax = slide(pdf, 10, "Đánh giá test một lần", "Point estimate và CI mô tả lần chạy thực tế; không chọn lại mô hình")
-        models = test["models"]
-        row_specs = [
-            ("majority_baseline", "Baseline majority"),
-            ("amendment_03_logistic_regression", "C=10 — mô hình chính"),
-            ("repurchase_features_v2_logistic_regression", "feature-v2 C=0,1 — bổ sung"),
-        ]
-        rows = []
-        for key, label in row_specs:
-            m = models[key]
-            matrix = m["confusion_matrix_tn_fp_fn_tp"]
-            cm = " / ".join(fint(value) for row in matrix for value in row)
-            rows.append([label, fnum(m["precision"]), fnum(m["recall"]), fnum(m["f1"]), fnum(m["roc_auc"]), fnum(m["average_precision"]), cm])
-        add_table(ax, [.055, .55, .89, .26], rows,
-                  ["Mô hình", "Prec.", "Recall", "F1", "ROC-AUC", "AP", "TN / FP / FN / TP"],
-                  widths=[.31, .09, .09, .08, .11, .08, .24], fontsize=9)
-        cohort = test["cohort"]
-        c10 = models["amendment_03_logistic_regression"]
-        c10_ci = test["bootstrap_95_ci"]["amendment_03_logistic_regression"]["metrics_95_ci"]
-        c10_delta = test["bootstrap_95_ci"]["paired_average_precision_delta_vs_baseline_95_ci"]["amendment_03_logistic_regression"]
-        v2 = models["repurchase_features_v2_logistic_regression"]
-        v2_ci = test["bootstrap_95_ci"]["repurchase_features_v2_logistic_regression"]["metrics_95_ci"]
-        v2_delta = test["bootstrap_95_ci"]["paired_average_precision_delta_vs_baseline_95_ci"]["repurchase_features_v2_logistic_regression"]
-        body(ax, .07, .49, f"Cohort {fint(cohort['eligible_customers_with_pre_T_purchase'])} khách; {fint(cohort['test_positive_customers'])} dương ({fnum(100*cohort['test_positive_rate'],2)}%); ngưỡng 0,5. Logistic Regression C=10 — mô hình chính theo D-005: ROC {fnum(c10['roc_auc'])} (CI {fnum(c10_ci['roc_auc']['lower'])}–{fnum(c10_ci['roc_auc']['upper'])}), AP {fnum(c10['average_precision'])}, ΔAP {fsigned(c10['average_precision']-models['majority_baseline']['average_precision'])} (CI {fsigned(c10_delta['lower'])}–{fsigned(c10_delta['upper'])}).", size=9.1, width=.86)
-        body(ax, .07, .40, f"Logistic Regression feature-v2 C=0,1 — khảo sát bổ sung theo Amendment 04; không thay mô hình chính: ROC {fnum(v2['roc_auc'])} (CI {fnum(v2_ci['roc_auc']['lower'])}–{fnum(v2_ci['roc_auc']['upper'])}), AP {fnum(v2['average_precision'])}, ΔAP {fsigned(v2['average_precision']-models['majority_baseline']['average_precision'])} (CI {fsigned(v2_delta['lower'])}–{fsigned(v2_delta['upper'])}).", size=9.1, width=.86)
-        ax.add_patch(FancyBboxPatch((.06, .13), .88, .20, boxstyle="round,pad=.012,rounding_size=.01", transform=ax.transAxes,
-                                   fc=COLORS["warning"], ec="#E8C980", lw=.8))
-        ax.text(.08, .305, "ROC-AUC test khoảng 0,70 là tín hiệu yếu trên một tập test đã mở; DEV C=10 gần ngẫu nhiên (0,5096) và chưa xác nhận tín hiệu này. Không kết luận mô hình tốt; không tinh chỉnh trên test.", fontsize=9, color=COLORS["ink"], va="top", wrap=True, transform=ax.transAxes)
-        ax.text(.08, .255, "Cấu hình ghi >T, evaluator dùng [T,end) (gồm ngày T); ảnh hưởng chưa xác định; đây là kết quả số liệu của lần chạy thực tế, không phải khẳng định tuân thủ đầy đủ giao thức, không gọi là 'đạt cổng ghi trước'.",
-                fontsize=8.6, color=COLORS["red"], va="top", wrap=True, transform=ax.transAxes)
+        # 10. Basket method
+        fig, ax = slide(pdf, 10, "Tìm sản phẩm thường xuất hiện cùng giỏ", "FP-Growth tìm tập phổ biến; các thước đo giúp xếp hạng cặp")
+        card(ax, .08, .57, .24, .23, "Support", "Tần suất", "tỷ lệ giỏ có cặp")
+        card(ax, .38, .57, .24, .23, "Confidence", "Điều kiện", "A có thì B xuất hiện bao nhiêu")
+        card(ax, .68, .57, .24, .23, "Lift", "So sánh", "với mức đồng xuất hiện nền")
+        heading(ax, .09, .44, "Ứng dụng")
+        body(ax, .09, .38, "Các cặp sản phẩm có thể gợi ý cách trưng bày hoặc bundle để cửa hàng cân nhắc thử nghiệm.", size=12, width=.82)
+        body(ax, .09, .21, "Đồng xuất hiện không chứng minh nguyên nhân hay lợi nhuận.", size=11, color=COLORS["muted"], width=.82)
         pdf.savefig(fig); plt.close(fig)
 
-        # 11. Segmentation
-        fig, ax = slide(pdf, 11, "Phân khúc RFM: mô tả, không gắn nhãn nguy cơ rời bỏ", "Gán nhóm bằng mô hình đã khóa và quy tắc nghiệp vụ song song")
-        card(ax, .08, .57, .24, .23, "K được giữ", f"K = {seg['chosen_k']}", f"silhouette {fnum(seg['chosen_silhouette'])}")
-        card(ax, .38, .57, .24, .23, "Khách một đơn · scoring", "4.530 / 5.169", "87,6%; DEV: 4.526 / 5.174 = 87,5%")
-        card(ax, .68, .57, .24, .23, "Proxy giá trị lớn", str(seg["business_like_proxy"]["customers"]), "không phải xác minh pháp nhân")
-        heading(ax, .09, .45, "Cách diễn giải")
-        body(ax, .09, .39, "K-Means K=2 là phân đoạn mô tả theo tần suất mua (một lần / lặp lại), chưa chứng minh ý nghĩa kinh doanh. Khảo sát RFM chuẩn hóa bổ sung trên DEV có silhouette trung bình 5 seed: K=3 0,390146; K=4 0,385302; K=5 0,392276. Không thay mô hình chính, không chứng minh nhóm có ý nghĩa hành động. RFM mô tả lịch sử trước T.", size=10.4, width=.83)
-        body(ax, .09, .22, "Không fit lại trên test. Metric phân phối bằng 0 trong một số so sánh phát sinh do dùng cùng profile trước T, không phải bằng chứng hành vi tương lai ổn định.", size=10.5, color=COLORS["muted"], width=.83)
+        # 11. Basket results
+        fig, ax = slide(pdf, 11, "Các cặp sản phẩm gợi ý cách kết hợp", "Các cặp được xếp hạng từ giỏ hàng hợp lệ")
+        heading(ax, .08, .80, "Đầu vào")
+        body(ax, .08, .73, "Đơn hàng và dòng sản phẩm\nGiỏ hàng hợp lệ\nThuật toán FP-Growth\nSupport, confidence và lift", size=12, width=.37)
+        heading(ax, .53, .80, "Kết quả")
+        body(ax, .53, .73, "Các cặp sản phẩm được xếp hạng theo tần suất và mức độ đồng xuất hiện trong giỏ.", size=12, width=.37)
+        heading(ax, .53, .48, "Ứng dụng")
+        body(ax, .53, .41, "Có thể hình thành giả thuyết bundle hoặc cách trưng bày sản phẩm.", size=11, width=.37)
         pdf.savefig(fig); plt.close(fig)
 
-        # 12. Association
-        fig, ax = slide(pdf, 12, "Luật kết hợp và combo", "Chỉ chấm các cặp đã freeze; không tìm luật mới trên test")
-        test_assoc = test["association_rules"]
-        card(ax, .10, .57, .23, .23, "Cặp đã freeze", str(test_assoc["frozen_combo_count"]), "trước khi mở test")
-        card(ax, .39, .57, .23, .23, "Lift test > 1", f"{test_assoc['test_lift_gt_1_count']} / {test_assoc['frozen_combo_count']}", "mô tả đồng xuất hiện")
-        card(ax, .68, .57, .23, .23, "Giỏ đủ điều kiện", fint(test_assoc["test_eligible_basket_count"]), "sau loại dòng quà")
-        heading(ax, .10, .45, "Ý nghĩa kinh doanh và giới hạn")
-        body(ax, .10, .39, "Support, confidence và lift mô tả tần suất hai sản phẩm cùng có mặt trong giỏ. Kết quả có thể gợi ý thử nghiệm trưng bày hoặc bundle.", size=11, width=.80)
-        body(ax, .10, .22, "Không có giá vốn, không phân bổ chiết khấu theo sản phẩm. Lift > 1 không chứng minh lợi nhuận hay quan hệ nhân quả.", size=11, color=COLORS["red"], weight="bold", width=.80)
+        # 12. Dashboard
+        fig, ax = slide(pdf, 12, "Dashboard kết quả phân tích", "Các trang giúp chuyển từ tổng quan sang hành vi chi tiết")
+        heading(ax, .08, .80, "Tổng quan và khách hàng")
+        body(ax, .08, .73, "Doanh số theo thời gian\nPhân khúc theo RFM\nGiá trị và nhịp mua lại", size=13, width=.37)
+        heading(ax, .53, .80, "Sản phẩm và mô hình")
+        body(ax, .53, .73, "Sản phẩm thường cùng giỏ\nChất lượng dữ liệu\nKhả năng mua lại", size=13, width=.37)
+        body(ax, .08, .30, "Demo: tổng quan doanh số → phân khúc khách → combo. Tab mô hình có thể mở khi được hỏi về ML.", size=12, color=COLORS["muted"], width=.82)
         pdf.savefig(fig); plt.close(fig)
 
-        # 13. Dashboard
-        fig, ax = slide(pdf, 13, "Dashboard offline và demo", "Năm tab, dữ liệu aggregate cục bộ, không cần API key")
-        heading(ax, .08, .80, "Năm tab")
-        body(ax, .08, .73, "1. Tổng quan doanh số\n2. Phân khúc khách\n3. Combo gợi ý\n4. Chất lượng & kiểm toán\n5. Mô hình mua lại", size=13, width=.37)
-        heading(ax, .53, .80, "Giới hạn luôn hiển thị")
-        body(ax, .53, .73, "Bài phân loại phản hồi chưa đủ dữ liệu có nhãn.\n\nTest ROC-AUC khoảng 0,70 là tín hiệu yếu mà DEV (~0,51) chưa xác nhận; không tinh chỉnh theo test đã mở.\n\nK=2 là phân đoạn mô tả theo tần suất mua (một lần / lặp lại), chưa chứng minh ý nghĩa kinh doanh.", size=10.5, color=COLORS["ink"], width=.37)
-        body(ax, .08, .30, "Smoke xác nhận 5 tab, 10 aggregate CSV và 6 aggregate JSON. Không hiển thị khách hoặc đơn hàng từng dòng; dashboard chỉ đọc dữ liệu cục bộ.", size=10.5, color=COLORS["muted"], width=.82)
+        # 13. Project products
+        fig, ax = slide(pdf, 13, "Sản phẩm dự án", "Từ dữ liệu đến phân tích và cách trình bày")
+        rows = [["Dữ liệu", "Giao dịch, khách hàng và sản phẩm"],
+                ["Phân tích", "Xu hướng bán hàng, retention, CLV và RFM"],
+                ["Mua lại và giỏ hàng", "Logistic Regression và FP-Growth"],
+                ["Trình bày", "Dashboard, báo cáo và slide thuyết trình"]]
+        add_table(ax, [.08, .34, .84, .46], rows, ["Phần", "Đầu ra"], widths=[.30, .70], fontsize=11)
+        body(ax, .08, .25, "Kết quả giúp hiểu hoạt động bán hàng và hình thành giả thuyết tiếp theo.", size=12, color=COLORS["teal"], weight="bold", width=.82)
         pdf.savefig(fig); plt.close(fig)
 
         # 14. Limits and preparation
-        fig, ax = slide(pdf, 14, "Giới hạn và việc cần chuẩn bị trước bảo vệ", "Chốt cách giải thích, giữ nguyên ranh giới dữ liệu đã khóa")
-        heading(ax, .07, .80, "Thành viên A")
-        body(ax, .07, .75, "Trình bày câu hỏi, validation theo thời gian, metric và vai trò mô hình C=10/v2. Giải thích `>T` so với `[T,end)` và vì sao ảnh hưởng chưa xác định.", size=9.5, width=.39)
-        heading(ax, .53, .80, "Thành viên B")
-        body(ax, .53, .75, "Trình bày Star Schema, status/tiền, phân loại quà, phân khúc và giới hạn association. Nhấn mạnh proxy không xác minh doanh nghiệp.", size=9.5, width=.39)
-        heading(ax, .07, .52, "Cả hai")
-        body(ax, .07, .47, "Tập demo 4 phút bằng dashboard/ảnh/PDF; kiểm tra máy trình chiếu và thống nhất câu trả lời về cầu cohort đã đếm trực tiếp, một cửa sổ test, thiếu giá vốn và kết luận không nhân quả.", size=9.5, width=.39)
-        heading(ax, .53, .52, "Giới hạn cần nói rõ")
-        body(ax, .53, .47, "Một Tết trọn vẹn trong DEV; thiếu dữ liệu phản hồi có nhãn; 903 inferred_subset có thể gán nhầm; status hiện tại không phải status history; test chỉ mở một lần.", size=9.2, width=.39)
-        ax.text(.07, .20, "Hạn nộp: 2026-10-27. Thời lượng chính thức và rubric chưa có trong hồ sơ. Mỗi người cần tập trả lời ít nhất 10 câu thuộc phần của người kia.", fontsize=9.1, color=COLORS["muted"], transform=ax.transAxes)
+        fig, ax = slide(pdf, 14, "Demo dashboard", "Đi từ kết quả tổng quan đến ví dụ cụ thể")
+        heading(ax, .08, .80, "01 · Tổng quan")
+        body(ax, .08, .73, "Chọn khoảng thời gian và đọc doanh thu ghi nhận, số đơn, xu hướng.", size=12, width=.36)
+        heading(ax, .53, .80, "02 · Phân khúc")
+        body(ax, .53, .73, "So sánh nhóm khách theo Recency, Frequency, Monetary.", size=12, width=.36)
+        heading(ax, .08, .48, "03 · Combo")
+        body(ax, .08, .41, "Xem cặp sản phẩm cùng giỏ và các thước đo support, confidence, lift.", size=12, width=.36)
+        heading(ax, .53, .48, "04 · Hỏi đáp")
+        body(ax, .53, .41, "Mở phần mô hình để giải thích đặc trưng, nhãn và cách đánh giá.", size=12, width=.36)
         pdf.savefig(fig); plt.close(fig)
 
         # 15. Operations and refresh
-        fig, ax = slide(pdf, 15, "Vận hành: làm mới dữ liệu", "Snapshot bất biến giúp đối soát được; huấn luyện và đánh giá theo chu kỳ riêng")
-        heading(ax, .08, .80, "Mỗi tuần")
-        body(ax, .08, .73, "Tạo snapshot mới có timestamp và manifest/checksum. Giữ nguyên snapshot cũ. So sánh tổng đơn và các đơn đổi trạng thái giữa hai snapshot.", size=11, width=.37)
-        heading(ax, .53, .80, "Huấn luyện riêng")
-        body(ax, .53, .73, "Làm mới dữ liệu không tự động huấn luyện. Đánh giá huấn luyện lại theo tháng hoặc khi đủ dữ liệu, bằng rolling-origin và amendment mới. Không mở lại test cũ.", size=11, width=.38)
-        heading(ax, .08, .48, "Vì sao chưa real-time")
-        body(ax, .08, .41, "API cho phép lấy đơn mới nên gần real-time khả thi; nhóm chọn snapshot bất biến để tái lập; chưa khảo sát lọc theo thời gian cập nhật; chưa tự động hóa trong bản nộp.", size=10.5, width=.37)
-        heading(ax, .53, .48, "Giới hạn vận hành")
-        body(ax, .53, .41, "API không có snapshot token; status hiện tại không phải lịch sử trạng thái; split/test/cohort đang khóa bằng hash; mô hình chưa có tín hiệu xác nhận.", size=10.5, width=.38)
-        ax.text(.08, .19, "Bản nộp không chạy extractor/API và không sửa snapshot đã khóa.", fontsize=9.5, color=COLORS["muted"], transform=ax.transAxes)
+        fig, ax = slide(pdf, 15, "Kết luận", "Dữ liệu bán hàng được chuyển thành kết quả dễ khám phá")
+        heading(ax, .08, .80, "Đã thực hiện")
+        body(ax, .08, .73, "Chuẩn hóa giao dịch, phân tích doanh số và hành vi khách, tạo phân khúc RFM, thử mô hình mua lại và khai phá giỏ hàng.", size=12, width=.37)
+        heading(ax, .53, .80, "Đầu ra")
+        body(ax, .53, .73, "Dashboard tương tác, báo cáo và bộ slide giúp trình bày kết quả và cách làm.", size=12, width=.37)
+        body(ax, .08, .43, "Các kết quả hỗ trợ hiểu dữ liệu và hình thành giả thuyết để cửa hàng cân nhắc kiểm chứng.", size=13, color=COLORS["green"], weight="bold", width=.82)
+        ax.text(.08, .20, "Cảm ơn. Mời thầy/cô đặt câu hỏi.", fontsize=13, color=COLORS["muted"], transform=ax.transAxes)
         pdf.savefig(fig); plt.close(fig)
 
     print(f"Wrote {output_path}")

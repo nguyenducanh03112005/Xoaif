@@ -1,93 +1,63 @@
-# Speaker notes — Xoaif Garden
+# Ghi chú thuyết trình — Xoaif Garden
 
-Kịch bản theo deck cuối, có thể rút theo thời lượng giảng viên. Nguồn số liệu nằm ở từng slide; không mở dữ liệu từng khách/đơn khi trình bày.
+Kịch bản theo mạch: bài toán → dữ liệu → phương pháp → kết quả → demo → hỏi đáp. Trình bày kết quả đã có; không đưa lịch sử chỉnh sửa hoặc công việc ngoài phạm vi vào bài nói.
 
-## Slide 01 — Kho dữ liệu và khai phá dữ liệu bán hàng
+## 01 — Kho dữ liệu và khai phá dữ liệu bán hàng
 
-Mở đầu bằng mục tiêu: biến dữ liệu bán hàng thành quy trình phân tích có thể kiểm tra và trình bày trung thực cả kết quả lẫn giới hạn.
+Mở đầu: cửa hàng có dữ liệu giao dịch nhưng cần một cách đọc thống nhất để hiểu xu hướng, hành vi khách và sản phẩm thường mua cùng nhau. Dự án biến giao dịch thành các chỉ số và công cụ xem kết quả.
 
-Nguồn: docs/PROJECT_GUIDE.md; README.md
+## 02 — Từ dữ liệu bán hàng đến câu trả lời kinh doanh
 
-## Slide 02 — Ba câu hỏi, một quy trình dữ liệu
+Đặt ba câu hỏi: doanh số thay đổi ra sao; khách hàng mua một lần hay quay lại; sản phẩm nào thường cùng xuất hiện trong giỏ. Mục tiêu là mô tả và hỗ trợ hình thành giả thuyết.
 
-Nói rõ phạm vi ba bài toán. Bài toán C chưa đủ nhãn. Hai bài còn lại có kết quả nhưng cần nêu độ tin cậy và điều kiện diễn giải.
+## 03 — Từ giao dịch đến phân tích và kết quả
 
-Nguồn: docs/PROJECT_PLAN.md; docs/PROJECT_GUIDE.md
+Giải thích luồng: giao dịch → chuẩn hóa → đặc trưng → phân tích → dashboard/báo cáo. Công cụ chính: Python, Pandas, DuckDB, scikit-learn, mlxtend và Streamlit.
 
-## Slide 03 — Từ API đến dashboard qua năm tầng
+## 04 — Phạm vi dữ liệu phân tích
 
-Đi theo luồng từ trái sang phải. Client chỉ GET. Snapshot có manifest. HMAC thay định danh trước kho. Dashboard chỉ đọc bảng tổng hợp đã phát hành.
+Nêu nguồn Pancake POS và khoảng giao dịch hợp lệ được dùng. Số đơn và số khách là hai đơn vị khác nhau; chỉ dùng giao dịch đáp ứng quy tắc nghiệp vụ.
 
-Nguồn: docs/architecture_matrix.md; docs/data_governance.md; docs/PROJECT_GUIDE.md
+## 05 — Từ dữ liệu nguồn đến kết quả phân tích
 
-## Slide 04 — Snapshot lớn hơn phạm vi phân tích
+Giải thích dữ liệu giao dịch, khách và sản phẩm được chuẩn hóa, nối trong kho DuckDB, rồi tạo bảng tổng hợp cho dashboard. Không cần đi sâu cấu trúc thư mục.
 
-Snapshot chứa nhiều khoảng thời gian; từng phân tích dùng cohort riêng. 12.011 là số đơn snapshot, 6.517 là số đơn DEV, 6.400 là status 3 DEV, 5.169 là khách đủ điều kiện scoring.
+## 06 — Giá trị khách hàng trong 180 ngày
 
-Nguồn: docs/canonical_numbers.md; docs/cohort_reconciliation.md
+Retention cho biết tỷ lệ khách quay lại theo định nghĩa cửa sổ 180 ngày. CLV trong dự án là doanh thu ghi nhận lịch sử 180 ngày đầu, không phải dự báo hay lợi nhuận.
 
-## Slide 05 — Dữ liệu được tách theo mức nhạy cảm
+## 07 — Phân khúc khách hàng theo RFM
 
-HMAC là pseudonymization, không phải ẩn danh tuyệt đối. Raw/restricted cần quyền truy cập và retention policy. Shared chỉ chứa aggregate.
+RFM gồm Recency (lần mua gần nhất), Frequency (số lần mua) và Monetary (doanh thu ghi nhận). K-Means gom khách có đặc trưng gần nhau; kết quả chủ yếu tách mua một lần và mua lặp lại, dùng để mô tả hành vi.
 
-Nguồn: docs/data_governance.md; docs/PROJECT_GUIDE.md
+## 08 — Xếp hạng khả năng mua lại
 
-## Slide 06 — Retention tăng theo kỳ hạn, nhưng vẫn thấp
+Tại mốc T, mô hình nhận đặc trưng tính từ lịch sử trước T và dự đoán khách có phát sinh giao dịch hợp lệ trong 180 ngày tiếp theo hay không. Logistic Regression tạo điểm xếp hạng; kết quả dùng để nghiên cứu, không phải quyết định tự động cho khách.
 
-Nêu điều kiện trưởng thành cohort. Retention 180 ngày dùng định nghĩa ngày mua sau. CLV là doanh thu ghi nhận 180 ngày đầu, không phải CLV dự báo hay lợi nhuận.
+## 09 — Tạo đặc trưng và nhãn mua lại
 
-Nguồn: docs/customer_value_dev.md; outputs/tables/customer_retention_dev.csv
+Feature gồm độ gần lần mua, tần suất, doanh thu/giá trị đơn, số sản phẩm và nhịp mua. Nhãn được tạo từ giao dịch sau T theo cửa sổ 180 ngày và khoảng chờ trưởng thành. Đánh giá theo các mốc thời gian để giữ đúng thứ tự quá khứ–tương lai.
 
-## Slide 07 — K=2 mô tả tần suất, chưa xác nhận hành động
+## 10 — Tìm sản phẩm thường xuất hiện cùng giỏ
 
-K=2 gần với luật mua một lần/lặp lại. Silhouette là độ tách hình học. Sáu nhóm RFM rule-based tạo giả thuyết mô tả; chưa chứng minh hiệu quả tiếp cận.
+FP-Growth tìm các tập sản phẩm phổ biến. Support là tỷ lệ giỏ có cặp; confidence là tỷ lệ giỏ có B trong các giỏ có A; lift so sánh đồng xuất hiện với mức nền. Đây là liên hệ thống kê, không chứng minh món này gây ra món kia.
 
-Nguồn: docs/customer_value_dev.md; docs/day2_summary.md; docs/PROJECT_GUIDE.md
+## 11 — Các cặp sản phẩm gợi ý cách kết hợp
 
-## Slide 08 — DEV chưa xác nhận tín hiệu mua lại
+Trình bày các cặp được giữ qua các lần phân tích ổn định. Kết quả có thể gợi ý bundle hoặc cách trưng bày để thử nghiệm; chưa diễn giải thành lợi nhuận.
 
-Đọc biểu đồ cùng thiết kế đánh giá. Điểm test cao hơn nhưng DEV OOF không tái hiện. Không kết luận mô hình tốt hoặc sẵn sàng triển khai.
+## 12 — Dashboard kết quả phân tích
 
-Nguồn: docs/test_report.md; docs/cohort_mismatch_analysis.md
+Dashboard có các trang tổng quan, phân khúc, combo, chất lượng dữ liệu và mô hình. Nêu rõ từng tab trả lời câu hỏi nào.
 
-## Slide 09 — Đánh giá theo thời gian, khóa test một lần
+## 13 — Sản phẩm dự án
 
-Trình bày định nghĩa feature-as-of T, temporal folds, baseline và bootstrap. Nhắc test đã mở một lần. Nêu chính xác khác biệt ngày biên và không gọi kết quả là đạt trọn protocol.
+Tóm tắt đầu ra: kho phân tích, kết quả doanh số/khách/giỏ hàng, mô hình thử nghiệm, dashboard, báo cáo và slide. Tập trung vào kết quả người dùng có thể đọc được.
 
-Nguồn: docs/data_protocol.md; docs/test_provenance_note.md; outputs/metrics/test_opened.lock.json
+## 14 — Demo dashboard
 
-## Slide 10 — Bộ lọc DEV giữ lại một giả thuyết combo
+Trình tự: tổng quan doanh số → phân khúc khách → combo. Với mỗi tab, chỉ ra bộ lọc, chỉ số và cách diễn giải. Có thể mở tab mô hình nếu giảng viên hỏi về ML.
 
-24 cặp đã khóa; 21/24 lift trên 1 ở test là tiêu chí yếu. Bộ lọc DEV F3 dùng lift>1, Kulczynski>=0,5 và imbalance ratio<=0,5; 1 cặp qua. Chỉ nên xem là giả thuyết A/B.
+## 15 — Kết luận
 
-Nguồn: docs/combo_recommendation_f3.md; docs/test_report.md
-
-## Slide 11 — Bài toán phản hồi đang chờ dữ liệu có nhãn
-
-Không diễn giải thiếu nhãn thành không có phàn nàn. Không gửi văn bản ra dịch vụ ngoài nếu chưa duyệt nhà cung cấp và cách lưu dữ liệu.
-
-Nguồn: docs/data_gap_report.md; docs/data_governance.md; docs/PROJECT_GUIDE.md
-
-## Slide 12 — Dashboard chạy offline từ aggregate
-
-Chỉ demo các tab thật sự có trong app. Bộ lọc đổi aggregate local; không hiển thị ID khách/đơn. Khoảng tổng quan có tháng cuối chưa trọn.
-
-Nguồn: src/app/streamlit_app.py; docs/DEFENSE_GUIDE.md
-
-## Slide 13 — Bốn quyết định mở khóa bước tiếp theo
-
-Dùng bảng này để chuyển từ kết quả sang các quyết định cần chủ dự án/giảng viên chốt. Phần xử lý cụ thể nằm trong PROJECT_GUIDE mục 7.
-
-Nguồn: docs/PROJECT_GUIDE.md
-
-## Slide 14 — Ba cách sử dụng repo sau khi clone
-
-Nêu điều kiện: dashboard cần outputs aggregate; sample là giả lập; runner hậu kiểm có thể chạy pytest nhưng không mở test hay fit. Ingestion chỉ chạy trên máy được cấp quyền API.
-
-Nguồn: docs/PROJECT_GUIDE.md; scripts/run_all.py
-
-## Slide 15 — Kết luận và câu hỏi
-
-Kết luận bằng những gì đã làm được, phần chưa có căn cứ và dữ liệu cần bổ sung. Mời giảng viên đặt câu hỏi.
-
-Nguồn: docs/PROJECT_GUIDE.md; docs/DEFENSE_GUIDE.md
+Dự án đã chuyển dữ liệu giao dịch thành các phân tích mô tả và công cụ trình bày. Mô hình mua lại và các cặp sản phẩm là đầu vào tham khảo; quyết định kinh doanh cần được xác nhận bằng dữ liệu và thử nghiệm phù hợp. Mời giảng viên hỏi đáp.
