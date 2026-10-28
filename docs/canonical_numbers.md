@@ -64,6 +64,19 @@ Nguồn `scripts/analyze_revenue_scenarios_f5.py`; protocol SHA-256 `ad318e2814a
 | Kịch bản nhỏ nhất | Repeat +1 điểm %: +15,6 triệu ₫ (95% CI 14,4–17,0 triệu ₫). | Cùng bảng |
 | Kênh | Bao phủ 62,64%; Facebook AOV 475.919₫, retention 11,67%; Instagram+nguồn hiếm n=130, AOV 344.875₫, retention 6,92%; thiếu kênh n=1.257, AOV 361.998₫, retention 8,51%. Association quan sát. | `outputs/tables/revenue_channel_f5.csv` |
 
+## WP5c — S6 bảng rate frequency–recency (khám phá, DEV-only)
+
+Nguồn `scripts/evaluate_repurchase_wp5c_dev.py`; plan SHA-256 `8dd4774425659f170de08669d42b2d358cdd6c2ed4cd5a33ed68ebeb6767fbf8`; 14.394 snapshot OOF/3.508 khách, 600 dương; 5 fold; bootstrap khách 2.000 lượt, seed 20261028.
+
+| Đại lượng | Số chuẩn, cohort và đơn vị | Nguồn aggregate |
+|---|---|---|
+| AP pooled / mean-fold | AP 0,0727 (95% CI 0,0588–0,0900); AP trung bình 5 folds 0,0668. | `outputs/metrics/repurchase_wp5c_dev.json`; `outputs/tables/repurchase_wp5c_fold_metrics.csv` |
+| ROC-AUC / Brier | ROC-AUC 0,640 (0,610–0,673); Brier 0,0416 (0,0369–0,0466). | JSON metric |
+| Top-k | Precision@5% 12,64% (9,43–16,05%); @10% 10,21% (7,90–12,74%); @20% 7,57% (6,28–9,20%). | `outputs/tables/repurchase_wp5c_top_k.csv`; JSON CI |
+| Lift top-decile | 2,45 (95% CI 2,01–2,90) so với nền 4,17%; observed validation, không uplift. | JSON CI; `outputs/tables/repurchase_wp5c_deciles.csv` |
+| Calibration pooled | Mean predicted rate 7,74% vs observed 4,17%; train-rate cells không tự hiệu chỉnh với validation drift. | JSON calibration; `repurchase_wp5c_calibration_cells.csv` |
+| Gộp ô | 15 rate cells qua 5 folds; 7 nhóm gộp frequency; không fallback toàn train; validation cells n<30 bị ẩn: 0. | `outputs/tables/repurchase_wp5c_train_rates.csv` |
+
 ## Cohort và thời gian
 
 | Đại lượng | Số chuẩn và đơn vị/cohort | Nguồn sự thật |

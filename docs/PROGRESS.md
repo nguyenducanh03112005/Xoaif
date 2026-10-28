@@ -119,6 +119,10 @@ Updated: 2026-10-28
 
 - 3.508 khách cohort 180 ngày: CLV mô tả 512.934₫/khách; đơn giao dịch đầu chiếm 84,42% (CI 78,42–88,50%). Kịch bản nhạy theo giả định: khách mới +10% là mức doanh thu cơ học lớn nhất; repeat +1 điểm % nhỏ nhất. Không phải dự báo hay lợi nhuận.
 
+## Bổ sung WP5c — S6
+
+- S6 frequency–recency đạt AP pooled 0,0727 (95% CI 0,0588–0,0900), ROC-AUC 0,640 (0,610–0,673), lift top-decile 2,45 (2,01–2,90); train predicted rate 7,74% so với validation prevalence 4,17%. DEV-only, không thay D-005; calibration shift còn rõ.
+
 - Cohort (trạng thái trước đếm raw pre-T ngày 2026-10-27): script reconcile chỉ so sánh aggregate warehouse; chưa có cầu nối theo điều kiện. Đã được supersede bởi đếm trực tiếp tại `docs/cohort_reconciliation.md` và `outputs/tables/cohort_bridge_verified.json`.
 - Sai khác ngày T: không tìm thấy artifact prediction đã lưu trong `outputs/`; theo phạm vi Amendment 06, không tái tạo prediction và dừng tiểu mục. Không có metric sensitivity mới.
 - UNKNOWN (ghi chú trước chẩn đoán raw pre-T ngày 2026-10-27): warehouse khi đó không chứa các trường source/address; đã được supersede bởi đếm DEV-only trong `docs/unknown_region_diagnostic.md`.

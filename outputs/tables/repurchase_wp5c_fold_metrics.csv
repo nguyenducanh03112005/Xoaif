@@ -1,0 +1,6 @@
+strategy,fold,validation_T,train_n,validation_n,train_customers,validation_customers,positive_n,prevalence,roc_auc,average_precision,brier
+S6_frequency_recency_rate,1,2024-12-01,227,2342,227,2342,116,0.049530,0.500000,0.049530,0.048565
+S6_frequency_recency_rate,2,2025-01-01,779,2611,552,2611,119,0.045576,0.571877,0.059297,0.044443
+S6_frequency_recency_rate,3,2025-02-01,1586,2867,807,2867,115,0.040112,0.633552,0.077090,0.042004
+S6_frequency_recency_rate,4,2025-03-01,2607,3066,1021,3066,123,0.040117,0.639804,0.076514,0.040205
+S6_frequency_recency_rate,5,2025-04-01,3839,3508,1232,3508,127,0.036203,0.675082,0.071680,0.035718

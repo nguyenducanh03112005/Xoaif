@@ -86,9 +86,11 @@ outputs/tables/*
 !outputs/metrics/dashboard_cuboids_f4.json
 !outputs/metrics/dashboard_cuboids_f4b.json
 !outputs/metrics/revenue_scenarios_f5.json
+!outputs/metrics/repurchase_wp5c_dev.json
 !outputs/tables/*_f4.csv
 !outputs/tables/quarter_*_f4b.csv
 !outputs/tables/revenue_*_f5.csv
+!outputs/tables/repurchase_wp5c_*.csv
 !outputs/tables/gift_line_*.csv
 !report/xoaif_report.pdf
 !slides/xoaif_print.pdf

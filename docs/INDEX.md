@@ -43,6 +43,8 @@ Theo toàn bộ lịch 0–120 phút trong [handover](handover.md): phạm vi v�
 - [dashboard_cuboids_f4b.md](dashboard_cuboids_f4b.md) — Hai cuboid quý 2 chiều, mỗi bảng suppression 0%.
 - [analysis_plan_f5.md](analysis_plan_f5.md) — Đăng ký trước cây động lực và các kịch bản số học.
 - [revenue_scenarios_f5.md](revenue_scenarios_f5.md) — Động lực doanh thu DEV, CI và độ nhạy theo giả định.
+- [analysis_plan_wp5c.md](analysis_plan_wp5c.md) — Đăng ký trước S6 frequency–recency table.
+- [repurchase_wp5c_dev.md](repurchase_wp5c_dev.md) — Metric S6 theo fold/pooled và calibration DEV-only.
 - [analysis_plan_wp3.md](analysis_plan_wp3.md) — Giao thức đăng ký trước A2 về giỏ đầu, chuỗi mua kế tiếp và 24 combo đã khóa.
 - [product_journey_dev.md](product_journey_dev.md) — Kết quả A2 về sản phẩm giỏ đầu, chuỗi mua kế tiếp, vai trò sản phẩm và thước đo combo; chỉ DEV.
 - [analysis_plan_wp4.md](analysis_plan_wp4.md) — Giao thức đăng ký trước A3 về mùa vụ, event window, kênh và điều chỉnh giá.
