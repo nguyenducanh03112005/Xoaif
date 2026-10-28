@@ -34,6 +34,7 @@ outputs/metrics/*
 !outputs/metrics/repurchase_v3_dev.json
 !outputs/metrics/customer_value_dev.json
 !outputs/metrics/product_journey_dev.json
+!outputs/metrics/seasonality_business_dev.json
 # Integrity evidence needed by scripts/verify_day3_locks.py and run_all.py
 # (committable once present locally; they hold hashes/flags, no raw values)
 !outputs/metrics/test_opened.lock.json
@@ -64,6 +65,12 @@ outputs/tables/*
 !outputs/tables/next_product_pairs_dev.csv
 !outputs/tables/product_roles_dev.csv
 !outputs/tables/frozen_combo_supplement_dev.csv
+!outputs/tables/seasonality_monthly_dev.csv
+!outputs/tables/seasonality_weekly_dev.csv
+!outputs/tables/holiday_event_comparisons_dev.csv
+!outputs/tables/channel_behavior_dev.csv
+!outputs/tables/discount_behavior_dev.csv
+!outputs/tables/price_adjustment_behavior_dev.csv
 !outputs/tables/gift_line_*.csv
 !report/xoaif_report.pdf
 !slides/xoaif_print.pdf

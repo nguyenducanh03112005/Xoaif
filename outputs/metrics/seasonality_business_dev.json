@@ -1,0 +1,19 @@
+{
+  "analysis_plan_sha256": "588ec1e6161e1ee0edccdb19888a12f2f41fa1074798e924f82182fddb8222a0",
+  "status": "exploratory_dev_only_not_confirmed_out_of_sample",
+  "test_raw_or_labels_read": false,
+  "source": "load_dev_orders() with local date gate",
+  "seed": 20261028,
+  "bootstrap_draws": 2000,
+  "dev_status3_non_gift_orders": 6378,
+  "daily_series_days": 569,
+  "monthly_periods": 19,
+  "weekly_periods": 82,
+  "calendar_event_rows_in_dev": 12,
+  "merged_event_blocks": 9,
+  "event_metric_comparisons": 18,
+  "channel_field_order_coverage": 0.6263719034179994,
+  "mature_first_order_customers": 3641,
+  "positive_discount_rate_median": 0.09090909090909091,
+  "holiday_seasonality_note": "Chỉ một Tết trọn vẹn trong DEV; event/sale results are observational."
+}

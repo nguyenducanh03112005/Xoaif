@@ -1,0 +1,5 @@
+group,customers,orders,aov_vnd,aov_ci_lower_95_vnd,aov_ci_upper_95_vnd,retention_180d,retention_ci_lower_95,retention_ci_upper_95,suppression_note
+Không có giảm giá ghi nhận,2177,2177,310533.757464,300269.964401,320665.231052,0.102435,0.089573,0.115296,
+Không đủ trường giá,1,1,,,,,,,n<30; chỉ mô tả
+Tỷ lệ giảm dương cao,713,713,712362.796634,588513.820266,859266.060940,0.115007,0.092567,0.138850,
+Tỷ lệ giảm dương thấp,750,750,517919.972000,477033.433400,564721.864967,0.098667,0.077333,0.120000,

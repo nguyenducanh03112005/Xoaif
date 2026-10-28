@@ -1,0 +1,4 @@
+group,customers,orders,aov_vnd,aov_ci_lower_95_vnd,aov_ci_upper_95_vnd,retention_180d,retention_ci_lower_95,retention_ci_upper_95,suppression_note
+Bằng 0,3174,3174,362159.041273,348229.259664,377789.153568,0.104915,0.093888,0.115942,
+Dương,462,462,911402.264069,725721.642857,1136516.251623,0.099567,0.073593,0.127706,
+Âm,5,5,,,,,,,n<30; chỉ mô tả

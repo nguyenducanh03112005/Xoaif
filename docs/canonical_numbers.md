@@ -132,3 +132,14 @@ Nguồn tính: `scripts/analyze_product_journey_dev.py`; protocol hash: `ec35ed4
 | 24 combo khóa | DEV 17/24 lift>1; test aggregate đã commit 21/24; 16/24 cùng lift>1. Mỗi cặp xuất hiện trong 16–19/19 tháng DEV; CV support tháng 0,232–1,068, median 0,516. | `outputs/tables/frozen_combo_supplement_dev.csv`; test không được tính lại. |
 | Xếp hạng bundle để thảo luận | Hạng 1 PORTCARD + CHẬU MOCHI: support DEV 8,49% (510/6.006), lift 0,982; test aggregate support 3,17% (69/2.174), lift 1,376; tổng giá niêm yết gộp 61.000₫. Điểm là thứ hạng mô tả, không phải hiệu quả. | Cùng bảng trên; xếp hạng theo công thức đã đăng ký trước. |
 | Vai trò sản phẩm | PORTCARD: 2.472 khách có ở giỏ đầu (68,01%), 241 khách có ở giỏ kế tiếp, median hóa đơn có sản phẩm 255.000₫/4.134 đơn. Không phân bổ hóa đơn xuống mặt hàng. | `outputs/tables/product_roles_dev.csv`. |
+
+## A3 — Mùa vụ, kênh và điều chỉnh giá (khám phá, DEV-only)
+
+Nguồn tính: `scripts/analyze_seasonality_dev.py`; protocol hash `588ec1e6161e1ee0edccdb19888a12f2f41fa1074798e924f82182fddb8222a0`; seed 20261028, 2.000 bootstrap. Calendar: `data/reference/vietnam_holiday_sale_calendar_2024-04_to_2026-10.csv`, chỉ dòng trong DEV.
+
+| Đại lượng | Số chuẩn, cohort và đơn vị | Nguồn aggregate |
+|---|---|---|
+| Chuỗi thời gian | 6.378 đơn status 3 không quà; 569 ngày, 19 bucket tháng, 82 bucket tuần. Phân rã moving average 3 tháng/13 tuần; chỉ mô tả. | `outputs/tables/seasonality_monthly_dev.csv`, `outputs/tables/seasonality_weekly_dev.csv`. |
+| Event blocks | 12 dòng calendar trong DEV → 9 blocks → 18 so sánh đơn/doanh thu mỗi ngày; tất cả event/control sample <30 ngày, chỉ mô tả. | `outputs/tables/holiday_event_comparisons_dev.csv`; block bootstrap 7 ngày. |
+| Bao phủ kênh | 3.996/6.378 đơn có nguồn kênh (62,64%); mature first-order cohort n=3.641. Facebook 2.254 khách, thiếu 1.257, Instagram + nguồn hiếm 130. | `outputs/metrics/seasonality_business_dev.json`, `outputs/tables/channel_behavior_dev.csv`. |
+| Điều chỉnh giá đầu tiên | Median tỷ lệ dương `total_discount/total_price` = 9,09%; nhóm discount thấp/cao/không có lần lượt 750/713/2.177 khách; nhóm adjustment âm n=5 bị ẩn. | `outputs/tables/discount_behavior_dev.csv`, `outputs/tables/price_adjustment_behavior_dev.csv`. |
