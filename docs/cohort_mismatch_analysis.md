@@ -16,6 +16,12 @@ Khoảng 95% bootstrap theo khách cho trung bình recency là 15,51–16,04 ng�
 
 **Mức bằng chứng:** B cho nhận định rằng mẫu cũ và các snapshot scoring có lịch sử/recency khác nhau về cấu trúc và thống kê mô tả. C cho nhận định rằng khác biệt cohort giải thích chênh lệch AUC DEV–test: chưa có đối chiếu cùng một thiết kế ngoài mẫu, test aggregate không có phân phối đầy đủ, và định nghĩa cửa sổ test có sai khác `>T`/`[T,end)` đã được ghi ở D-010. Không kết luận nguyên nhân chênh 0,51 so với 0,70.
 
+### Bổ sung về prevalence và metric
+
+Prevalence OOF của DEV snapshot đa mốc là **4,17%** (600/14.394); aggregate test ghi **4,59%** (237/5.169); mẫu DEV cũ là **7,41%** (260/3.508). Khoảng cách prevalence 0,42 điểm phần trăm giữa OOF đa mốc và test nhỏ hơn khoảng cách 3,24 điểm giữa OOF đa mốc và mẫu DEV cũ. Đây là **bằng chứng gián tiếp mức B** rằng prevalence của DEV đa mốc gần cohort test hơn. Mẫu số và giao thức khác nhau; điều này không chứng minh hai quần thể tương đương, cũng không xác định nguyên nhân chênh AUC.
+
+Ở cùng snapshot/fold WP5, ROC-AUC v3 (0,555) thấp hơn recency-only (0,595) và frequency-only (0,591). AP v3 (0,064) cao hơn recency-only (0,062) một chút nhưng thấp hơn frequency-only (0,099); các CI bootstrap chồng lấp. Decile điểm thấp nhất của v3 có tỷ lệ mua lại 5,69%, cao hơn decile 4–9 (2,15%–4,03%). Xếp hạng v3 không đơn điệu. Diễn giải phù hợp là **mô hình phức tạp chưa đem lại giá trị nhất quán** trên bộ kiểm tra này.
+
 ## Giải thích ROC-AUC baseline 0,536
 
 Chạy lại đúng baseline fold-local trên mẫu DEV cũ cho pooled ROC-AUC **0,53617** (1.558 dự đoán OOF), khớp số đã báo cáo. Trong từng fold, baseline gán cùng một xác suất cho mọi khách nên ROC-AUC của cả 5 fold đều **0,5**. Xác suất nền train thay đổi giữa fold từ 0,0851 đến 0,0891; khi gộp OOF, các giá trị khác nhau tạo thứ hạng giữa fold và ROC pooled vượt 0,5, dù baseline không xếp hạng khách bên trong fold. Vì vậy 0,536 không phải tín hiệu phân biệt khách của baseline; đó là hệ quả của cách gộp score fold-local. Baseline chung của WP5 giữ một xác suất từ train fold đầu tiên cho mọi OOF snapshot và có pooled ROC-AUC 0,5.
@@ -39,6 +45,7 @@ Các giá trị theo từng fold nằm ở `outputs/tables/repurchase_v3_dev_fol
 - Precision@5%: 11,25% (95% CI 7,87%–15,04%); @10%: 8,26% (6,22%–10,45%); @20%: 6,63% (5,34%–7,97%). Đây là tỷ lệ quan sát trong OOF DEV, không phải uplift và không phải kết quả dự kiến khi gửi ưu đãi.
 - Decile 1/2/3 tích lũy bắt lần lượt 19,8% / 31,8% / 41,3% số dương OOF. Bảng đầy đủ và CI cho tỷ lệ từng decile nằm ở `outputs/tables/repurchase_v3_dev_deciles.csv`.
 - Calibration kém: nhóm điểm cao nhất có xác suất dự đoán trung bình 63,7% nhưng tỷ lệ mua lại quan sát 8,26%; Brier 0,117 so với 0,042 của baseline chung. Không dùng điểm xác suất v3 như xác suất mua lại đã hiệu chỉnh.
+- Một giả thuyết cần kiểm tra ở WP5b là `class_weight="balanced"` làm lệch xác suất dự đoán khỏi prevalence thực và góp phần vào calibration kém. Đây chưa phải kết luận. Brier của các score chưa hiệu chỉnh được ghi riêng; chênh lệch Brier không được diễn giải riêng như chênh lệch khả năng xếp hạng.
 
 ## Phạm vi, truy vết và các lượt chạy
 
