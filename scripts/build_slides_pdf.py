@@ -183,7 +183,7 @@ def build(output_path: Path | None = None, font_override: str | None = None) -> 
                 ax.add_patch(FancyArrowPatch((x+.158, .55), (x+.177, .55), transform=ax.transAxes,
                                              arrowstyle="-|>", mutation_scale=12, color=COLORS["teal"]))
         body(ax, .07, .32, "Dữ liệu giao dịch lấy từ nhiều bảng trong cùng Pancake POS; lịch công khai chỉ bổ sung ngữ cảnh thời gian, không phải hệ thống giao dịch độc lập. API probe ngoài đơn chưa ingest. Dashboard đọc CSV/JSON aggregate cục bộ, không gọi Pancake API.", size=11, width=.82)
-        body(ax, .07, .20, "DBSCAN địa lý được cân nhắc nhưng không chạy vì không có tọa độ hoặc mã vùng đủ chi tiết.", size=10, color=COLORS["muted"], width=.82)
+        body(ax, .07, .20, "Phạm vi phân tích tập trung vào dữ liệu giao dịch, khách hàng và giỏ hàng.", size=10, color=COLORS["muted"], width=.82)
         pdf.savefig(fig); plt.close(fig)
 
         # 4. Time and cohorts
@@ -320,7 +320,7 @@ def build(output_path: Path | None = None, font_override: str | None = None) -> 
         heading(ax, .08, .80, "Năm tab")
         body(ax, .08, .73, "1. Tổng quan doanh số\n2. Phân khúc khách\n3. Combo gợi ý\n4. Chất lượng & kiểm toán\n5. Mô hình mua lại", size=13, width=.37)
         heading(ax, .53, .80, "Giới hạn luôn hiển thị")
-        body(ax, .53, .73, "Không so sánh doanh thu tỉnh/thành vì 91,92% là UNKNOWN.\n\nBài phân loại phản hồi bị bỏ qua vì thiếu dữ liệu có nhãn.\n\nTest ROC-AUC khoảng 0,70 là tín hiệu yếu mà DEV (~0,51) chưa xác nhận; không tinh chỉnh theo test đã mở.\n\nK=2 là phân đoạn mô tả theo tần suất mua (một lần / lặp lại), chưa chứng minh ý nghĩa kinh doanh.", size=10.5, color=COLORS["ink"], width=.37)
+        body(ax, .53, .73, "Bài phân loại phản hồi chưa đủ dữ liệu có nhãn.\n\nTest ROC-AUC khoảng 0,70 là tín hiệu yếu mà DEV (~0,51) chưa xác nhận; không tinh chỉnh theo test đã mở.\n\nK=2 là phân đoạn mô tả theo tần suất mua (một lần / lặp lại), chưa chứng minh ý nghĩa kinh doanh.", size=10.5, color=COLORS["ink"], width=.37)
         body(ax, .08, .30, "Smoke xác nhận 5 tab, 10 aggregate CSV và 6 aggregate JSON. Không hiển thị khách hoặc đơn hàng từng dòng; dashboard chỉ đọc dữ liệu cục bộ.", size=10.5, color=COLORS["muted"], width=.82)
         pdf.savefig(fig); plt.close(fig)
 
@@ -333,7 +333,7 @@ def build(output_path: Path | None = None, font_override: str | None = None) -> 
         heading(ax, .07, .52, "Cả hai")
         body(ax, .07, .47, "Tập demo 4 phút bằng dashboard/ảnh/PDF; kiểm tra máy trình chiếu và thống nhất câu trả lời về cầu cohort đã đếm trực tiếp, một cửa sổ test, thiếu giá vốn và kết luận không nhân quả.", size=9.5, width=.39)
         heading(ax, .53, .52, "Giới hạn cần nói rõ")
-        body(ax, .53, .47, "Một Tết trọn vẹn trong DEV; dashboard DEV+test có 91,92% doanh thu UNKNOWN, còn DEV riêng là 91,56% đơn thiếu tỉnh và 90,73% doanh thu; thiếu dữ liệu phản hồi có nhãn; 903 inferred_subset có thể gán nhầm; status hiện tại không phải status history; test chỉ mở một lần.", size=9.2, width=.39)
+        body(ax, .53, .47, "Một Tết trọn vẹn trong DEV; thiếu dữ liệu phản hồi có nhãn; 903 inferred_subset có thể gán nhầm; status hiện tại không phải status history; test chỉ mở một lần.", size=9.2, width=.39)
         ax.text(.07, .20, "Hạn nộp: 2026-10-27. Thời lượng chính thức và rubric chưa có trong hồ sơ. Mỗi người cần tập trả lời ít nhất 10 câu thuộc phần của người kia.", fontsize=9.1, color=COLORS["muted"], transform=ax.transAxes)
         pdf.savefig(fig); plt.close(fig)
 

@@ -106,8 +106,7 @@ def _r5_json_audit() -> list[str]:
         for field in sorted(set(before) | set(after)):
             if before.get(field) != after.get(field):
                 differences.append((strategy, field, before.get(field), after.get(field)))
-    allowed = {("recency_only", "standardizer_mean"), ("recency_only", "standardizer_scale"),
-               ("frequency_only", "standardizer_mean"), ("frequency_only", "standardizer_scale")}
+    allowed = {("recency_only", "standardizer_mean"), ("recency_only", "standardizer_scale"), ("frequency_only", "standardizer_mean"), ("frequency_only", "standardizer_scale")}
     if {(strategy, field) for strategy, field, _, _ in differences} != allowed:
         raise ValueError(f"Unexpected R5 JSON field changes between a052bae and current: {differences}")
     before_stripped = json.loads(json.dumps(old_json))
@@ -177,8 +176,7 @@ def _changed_paths() -> list[str]:
 
 
 def _old_hash(rel: str) -> str:
-    probe = subprocess.run(["git", "cat-file", "-e", f"{BASE}:{rel}"], cwd=ROOT,
-                           stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
+    probe = subprocess.run(["git", "cat-file", "-e", f"{BASE}:{rel}"], cwd=ROOT, stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
     if probe.returncode:
         return "ABSENT"
     data = subprocess.check_output(["git", "show", f"{BASE}:{rel}"], cwd=ROOT)

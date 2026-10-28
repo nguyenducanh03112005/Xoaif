@@ -20,6 +20,7 @@ Giáo trình/
 outputs/*
 report/*
 slides/*
+!slides/Xoaif_Final.pptx
 
 # Reviewed, aggregate-only deliverables (see docs/submission_artifacts.md)
 !outputs/metrics/

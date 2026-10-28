@@ -43,7 +43,7 @@ Phạm vi scan: tên/vai trò mô hình; caveat ở mọi vị trí nêu tín hi
 - Runtime thiếu công cụ trích xuất chữ PDF; đã kiểm source và render trực quan.
 - Một literal lịch sử trong YAML Amendment 04 đã khóa và trường metadata/code tương ứng không được sửa theo ranh giới bảo vệ; không dùng trong narrative bàn giao.
 
-Trước hạn 2026-10-27, hai thành viên tự chạy kiểm tra an toàn và mở đủ 5 tab trên máy riêng; tập demo 4 phút có mạng và không mạng; kiểm bản in đen trắng; mỗi người luyện ít nhất 10 câu hỏi chéo. Xem `docs/final_consistency_report.md`, `docs/handover.md` và `docs/qa_roles.md`.
+Trước hạn 2026-10-27, hai thành viên tự chạy kiểm tra an toàn và mở đủ 5 tab trên máy riêng; tập demo 4 phút có mạng và không mạng; kiểm bản in đen trắng; mỗi người luyện ít nhất 10 câu hỏi chéo. Hướng dẫn hiện hành: `docs/PROJECT_GUIDE.md` và `docs/DEFENSE_GUIDE.md`.
 
 ## Cập nhật hồ sơ nộp — 2026-10-26
 

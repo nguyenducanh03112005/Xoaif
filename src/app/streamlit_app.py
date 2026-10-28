@@ -180,7 +180,7 @@ def main() -> None:
         )
         st.plotly_chart(monthly_chart, width="stretch")
         st.caption(f"Khoảng đang hiển thị {start_month} đến {end_month} ({len(month_view)} tháng). Dữ liệu mặc định 2024-04 đến 2026-04 gồm DEV và cửa sổ test, không phải chỉ DEV; 2026-04 chưa trọn tháng. Tổng bảng đủ 25 tháng: 9.104 đơn, 4.200.024.995 đ. Chỉ gồm status 3 và loại đơn quà cấp đơn; dữ liệu trước 04/2024 là giai đoạn bán thử.")
-        st.info("Không so sánh doanh thu theo tỉnh/thành: 91,92% UNKNOWN trên phạm vi dashboard DEV+test. Riêng DEV, 91,56% đơn mua hợp lệ thiếu tỉnh và nhóm này chiếm 90,73% doanh thu; chưa xác định nguyên nhân nghiệp vụ. Bài phân loại phản hồi bị bỏ qua vì thiếu dữ liệu có nhãn.")
+        st.info("Bài phân loại phản hồi chưa thực hiện vì chưa có dữ liệu phản hồi được gán nhãn đủ tin cậy.")
 
         st.markdown("**Sản phẩm theo số đơn**")
         prod_view = products.copy()

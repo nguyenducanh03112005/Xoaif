@@ -158,9 +158,7 @@ def main(output_path: Path | None = None, font_override: str | None = None) -> N
     seg = load_json("day2_segmentation.json")
     money = load_json("day2_money_audit.json")
     combo = load_json("day3_combo_prereg.json")
-    cohort_bridge = json.loads((ROOT / "outputs/tables/cohort_bridge_verified.json").read_text(encoding="utf-8"))
     monthly = pd.read_csv(ROOT / "outputs" / "tables" / "dashboard_sales_monthly.csv")
-    provinces = pd.read_csv(ROOT / "outputs" / "tables" / "dashboard_sales_province.csv")
     products = pd.read_csv(ROOT / "outputs" / "tables" / "dashboard_product_orders.csv")
     test_segments = pd.read_csv(ROOT / "outputs" / "tables" / "test_segment_profiles.csv")
     combos = pd.read_csv(ROOT / "outputs" / "tables" / "test_combos_frozen.csv")
@@ -301,14 +299,11 @@ def main(output_path: Path | None = None, font_override: str | None = None) -> N
         chart.grid(axis="y", color="#DDE7E2", lw=.6)
         chart.spines[["top","right"]].set_visible(False)
         ax.text(.13,.50,"Đường gạch là mốc bắt đầu test; tháng cuối chưa trọn tháng.",fontsize=8,color="#61736D",transform=ax.transAxes)
-        unknown = provinces.loc[provinces["province"] == "UNKNOWN"].iloc[0]
-        province_total = float(provinces["recognized_revenue_vnd"].sum())
-        t2 = cohort_bridge["t2"]
         text_block(ax,.10,.44,
-            f"Không so sánh doanh thu theo tỉnh/thành: UNKNOWN chiếm {fpct(unknown['recognized_revenue_vnd']/province_total,2)} trên dashboard DEV+test ({fint(unknown['orders'])} đơn). Riêng DEV, tỉnh rỗng ở {fpct(t2['province_missing_rate_percent']/100,2)} đơn và chiếm {fpct(t2['missing_province_revenue_share_percent']/100,2)} doanh thu; chưa suy ra nguyên nhân nghiệp vụ. CSV nguồn gộp 20 tỉnh dưới 10 đơn thành một dòng: 38 đơn, 16.674.000 VND; không dùng dòng này để xếp hạng địa phương.",width=102,fontsize=8.6)
+            "EDA tập trung vào chất lượng, xu hướng thời gian, giá trị khách, cấu trúc giỏ và tỷ lệ thiếu của các biến được dùng trong phân tích. Kết quả mô tả không tự chứng minh nguyên nhân hoặc hiệu quả hành động.",width=102,fontsize=9.1)
         text_block(ax,.10,.27,
             "Snapshot có 247 tên mặt hàng quan sát ở bảng sản phẩm; `product_profile.csv` mô tả support, quà theo dòng, ngày đầu/cuối và tháng bán. Tên sản phẩm không được dùng để xác định quà. 476 đơn bán thử 2022 được giữ riêng. Do chiết khấu và điều chỉnh ở cấp đơn, báo cáo chỉ nêu số đơn/dòng theo sản phẩm, không gán doanh thu ghi nhận cho sản phẩm.",width=102,fontsize=9.2)
-        ax.text(.10,.09,"Nguồn số liệu: outputs/tables/dashboard_sales_monthly.csv, dashboard_sales_province.csv, dashboard_product_orders.csv.",fontsize=7.8,color="#61736D",transform=ax.transAxes)
+        ax.text(.10,.09,"Nguồn số liệu: aggregate DEV về tháng, khách hàng và sản phẩm; xem từ điển dữ liệu trong docs/.",fontsize=7.8,color="#61736D",transform=ax.transAxes)
         pdf.savefig(fig); plt.close(fig)
 
         # 8. Preprocessing and gift rules
@@ -414,7 +409,7 @@ def main(output_path: Path | None = None, font_override: str | None = None) -> N
             f"Quy trình tạo kho Star Schema và kiểm toán nghiệp vụ có split thời gian, hash và nhật ký amendment. Dữ liệu giao dịch lấy từ nhiều bảng cùng Pancake POS; lịch ngày lễ công khai là nguồn ngữ cảnh, không phải hệ thống giao dịch độc lập. K=2 là phân đoạn mô tả theo tần suất mua, chưa chứng minh ý nghĩa kinh doanh; khảo sát RFM K=3..5 trên DEV cũng không xác nhận nhóm có ý nghĩa hành động. 24 combo chính được khóa theo quy tắc ít nhất 4/6 ô. ROC-AUC DEV OOF C=10 là {fnum(primary_oof['roc_auc'],4)}, gần ngẫu nhiên; ROC-AUC test {fnum(c10['roc_auc'],4)} là tín hiệu yếu chưa được DEV xác nhận, không đủ để kết luận mô hình hoạt động tốt. Test đã mở; không tinh chỉnh theo kết quả test. Cấu hình ghi >T, evaluator dùng [T,end) (gồm ngày T); ảnh hưởng chưa xác định. Xem docs/test_provenance_note.md.",width=102,fontsize=9.0)
         section_label(ax,.09,y-.025,"Hạn chế")
         text_block(ax,.09,y-.06,
-            f"• Khoảng hiệu dụng khoảng 18 tháng và chỉ có một Tết trọn vẹn trong DEV.\n• 91,92% doanh thu theo tỉnh/thành mang nhãn UNKNOWN; không so sánh địa lý.\n• Thiếu dữ liệu phản hồi có nhãn; không thực hiện bài phân loại phản hồi.\n• 903 dòng inferred_subset là suy luận có thể gán nhầm; cờ API không bật.\n• Không có giá vốn nên không thể kết luận lợi nhuận combo.\n• Status hiện tại không phải lịch sử trạng thái; doanh thu ghi nhận theo xác nhận nghiệp vụ.\n• Một cửa sổ test không chứng minh khả năng tổng quát qua nhiều mùa.",width=100,fontsize=9.4)
+            f"• Khoảng hiệu dụng khoảng 18 tháng và chỉ có một Tết trọn vẹn trong DEV.\n• Thiếu dữ liệu phản hồi có nhãn; không thực hiện bài phân loại phản hồi.\n• 903 dòng inferred_subset là suy luận có thể gán nhầm; cờ API không bật.\n• Không có giá vốn nên không thể kết luận lợi nhuận combo.\n• Status hiện tại không phải lịch sử trạng thái; doanh thu ghi nhận theo xác nhận nghiệp vụ.\n• Một cửa sổ test không chứng minh khả năng tổng quát qua nhiều mùa.",width=100,fontsize=9.4)
         pdf.savefig(fig); plt.close(fig)
 
         # 14. Reproducibility / glossary
@@ -425,7 +420,7 @@ def main(output_path: Path | None = None, font_override: str | None = None) -> N
             "Sau khi có test_opened.lock.json, runner chỉ xác minh hash/split, pytest và PII; không fit hoặc chạy evaluator test. Không chạy scripts/evaluate_test_once.py lần nữa. Dashboard: .venv\\Scripts\\python -m streamlit run src/app/streamlit_app.py; chạy offline từ outputs/.",width=104,fontsize=9.1)
         section_label(ax,.09,.655,"File bàn giao")
         text_block(ax,.09,.62,
-            "README.md · config/split.yaml và split.lock.json · config/amendment_05_test_open.yaml · outputs/metrics/test_eval.json · docs/test_report.md · outputs/tables/product_profile.csv · docs/product_profile_top20.md · src/app/streamlit_app.py · docs/qa.md · docs/handover.md · docs/demo_script.md.",width=101,fontsize=8.9)
+            "README.md · docs/PROJECT_PLAN.md · docs/PROJECT_GUIDE.md · docs/DEFENSE_GUIDE.md · config/split.yaml · outputs/metrics/test_eval.json · docs/test_report.md · src/app/streamlit_app.py.",width=101,fontsize=8.9)
         section_label(ax,.09,.485,"Thuật ngữ")
         text_block(ax,.09,.45,
             "Snapshot: bản dữ liệu có checksum. ETL: trích xuất, biến đổi, nạp. Star Schema: fact giao dịch nối dimension. Grain: mức chi tiết của một dòng dữ liệu. HMAC: băm có khóa để giả danh ID. RFM: Recency, Frequency, Monetary. Support: tỷ lệ giỏ chứa cặp. Confidence: tỷ lệ giỏ có B trong các giỏ có A. Lift: mức đồng xuất hiện so với độc lập thống kê; lift lớn hơn 1 không chứng minh nhân quả. ROC-AUC: xếp hạng dương/âm theo ngưỡng. PR-AUC: precision-recall, nhạy với lớp hiếm. Không dừng: phân phối/quan hệ thay đổi theo thời gian.",width=103,fontsize=8.9)

@@ -6,6 +6,7 @@ Các file dưới đây được đưa vào Git để người chấm xem trực
 
 - Báo cáo: [`report/xoaif_report.pdf`](../report/xoaif_report.pdf)
 - Slide in 15 trang: [`slides/xoaif_print.pdf`](../slides/xoaif_print.pdf)
+- Bản thuyết trình PowerPoint 15 trang: [`slides/Xoaif_Final.pptx`](../slides/Xoaif_Final.pptx)
 
 ## Đầu vào tổng hợp của dashboard
 
@@ -23,7 +24,7 @@ Dashboard Streamlit đọc các bảng từ `outputs/tables/` và `outputs/metri
 - `gift_line_audit.csv`
 - `gift_line_rates_monthly.csv`
 - `gift_line_rates_order_size.csv`
-- `dashboard_sales_province.csv` — không còn là đầu vào dashboard (91,92% doanh thu là `UNKNOWN`); được giữ vì `scripts/verify_day3_locks.py` và báo cáo PDF đọc bảng này. 20 tỉnh dưới 10 đơn được gộp thành một dòng (38 đơn; 16.674.000 VND); UNKNOWN giữ riêng để tính tỷ trọng thiếu dữ liệu. Báo cáo nêu tỷ lệ UNKNOWN và giải thích dòng gộp, không xếp hạng địa phương.
+- `dashboard_sales_province.csv` — artifact aggregate đã khóa của lần đánh giá cũ, không được dashboard hoặc sản phẩm trình bày hiện hành sử dụng; giữ nguyên để xác minh provenance test.
 
 **JSON**
 
@@ -34,7 +35,7 @@ Dashboard Streamlit đọc các bảng từ `outputs/tables/` và `outputs/metri
 - `day3_combo_prereg.json`
 - `day2_segmentation.json`
 
-Đây là bảng/metric tổng hợp, không phải dữ liệu từng đơn hoặc từng khách. Bảng tỉnh/thành không còn là đầu vào dashboard vì phần lớn doanh thu bị gắn nhãn `UNKNOWN`.
+Đây là bảng/metric tổng hợp, không phải dữ liệu từng đơn hoặc từng khách. Chỉ 10 CSV và 6 JSON ứng dụng đọc mới là đầu vào dashboard.
 
 T1/T2 evidence aggregate: `outputs/tables/cohort_bridge_verified.json`; chứa số đếm và nhóm nguồn ẩn danh, không có ID hay giá trị nguồn.
 
@@ -46,7 +47,7 @@ T1/T2 evidence aggregate: `outputs/tables/cohort_bridge_verified.json`; chứa s
 
 ## Rà soát dữ liệu
 
-- `scripts/dashboard_smoke.py` kiểm tra 10 CSV và 6 JSON được dashboard dùng, schema cột và các tên trường định danh bị cấm. `scripts/sanitize_dashboard_aggregates.py` gộp sản phẩm và tỉnh có ít lượt đơn; ẩn ô status/gift đã rà soát. Số dòng trong bảng gift-line không phải số khách hay số đơn nên giữ theo chính sách đã duyệt.
+- `scripts/dashboard_smoke.py` kiểm tra 10 CSV và 6 JSON được dashboard dùng, schema cột và các tên trường định danh bị cấm. `scripts/sanitize_dashboard_aggregates.py` gộp sản phẩm ít lượt đơn và ẩn ô status/gift theo hợp đồng dữ liệu.
 - `scripts/verify_pii.py` quét docs, notebooks, outputs, slides, report, src và README; kết quả lượt bàn giao ghi trong bundle.
 - Báo cáo và slide được dựng từ các bảng/metric aggregate trên, không đọc `data/raw/` hoặc `data/restricted/`.
 - Không đưa snapshot raw, DuckDB restricted, bảng khách/đơn từng dòng, model artifact hoặc file môi trường vào danh sách nộp.
