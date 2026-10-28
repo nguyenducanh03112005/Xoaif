@@ -9,6 +9,7 @@ Ngày cập nhật: 2026-10-28. Các mục dưới đây được chủ dự án
 | 08 — Khảo sát phân cụm và lịch thời gian DEV | 2026-10-28 | Bổ sung RFM K=3..5 và lịch lễ/Tết/sale thủ công; đánh giá đặc trưng thời gian bằng rolling-origin DEV. | Không thay mô hình chính hoặc kết luận test. Lịch sale 2024–2025 là proxy giả định; silhouette không xác nhận ý nghĩa kinh doanh. |
 | 09 — Refresh an toàn và trạng thái dashboard | 2026-10-28 | Thêm replay cục bộ có manifest/hash; mặc định chặn live refresh vì chưa xác minh hợp đồng `updated_at`; dashboard nêu snapshot khóa và tình trạng refresh. | Không chạy replay, không gọi API, không ghi vào `data/raw`; dashboard chỉ đọc aggregate local. Nút reload không tạo dữ liệu mới. |
 | 10 — Đồng bộ hồ sơ bàn giao | 2026-10-28 | Đồng bộ số chuẩn, QA, speaker notes, tài liệu ôn vấn đáp và PDF từ các nguồn aggregate đã có. | Chỉ tài liệu/đầu ra aggregate; không PPTX, không dữ liệu cá nhân, không mở lại test. Bản PDF được dựng lại ở bước bàn giao cuối. |
+| 06-HO2 — Cổng kiểm chứng cửa sổ thứ hai | 2026-10-28 | Chuẩn bị giao thức giữ lại cho khoảng nhãn `(2026-04-20, 2026-10-17]`; cho phép dùng lịch sử có ngày `<2026-04-20` làm đặc trưng, không dùng nhãn test cũ. | Chưa mở nhãn HO2. Chỉ đọc `inserted_at` trước khi bỏ các hàng từ T2 trở đi; không fit/chọn theo nhãn HO2. Cần phê duyệt mở riêng. Định danh có hậu tố để phân biệt mục lịch sử “06 — Probe metadata Pancake”. |
 
 ## Giới hạn phê duyệt
 

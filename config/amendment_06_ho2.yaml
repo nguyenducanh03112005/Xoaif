@@ -1,0 +1,90 @@
+amendment_id: 06-HO2
+status: prepared_gate_b_not_open
+snapshot_id: 20261024T052943Z
+timezone: Asia/Ho_Chi_Minh
+T2: '2026-04-20'
+feature_local_date_exclusive: '2026-04-20'
+label_window:
+  start_exclusive: '2026-04-20'
+  end_inclusive: '2026-10-17'
+  horizon_days: 180
+  evaluator_equivalent_rule: local_date > T2 and local_date <= T2 + 180 days
+  definition: valid status-3 non-gift order on a local date strictly after customer's first valid purchase date
+  not_opened: true
+feature_history:
+  includes_prior_test_period_orders: true
+  use_old_test_labels_for_training_or_selection: false
+  access_rule: inspect inserted_at first; skip all other fields when local date >= T2
+strategy_freeze:
+  no_candidate_selected: true
+  no_refit_on_holdout2: true
+  eligible_fixed_strategy_definitions:
+    - D-005
+    - v2
+    - S1
+    - S3
+    - S6
+  excluded_before_gate_b:
+    - strategy: v3
+      reason: no single final-fit artifact or frozen fitting population; WP5 stores temporal-CV fits only
+    - strategy: recency-only
+      reason: no single final-fit artifact or frozen fitting population; WP5 stores temporal-CV fits only
+    - strategy: frequency-only
+      reason: no single final-fit artifact or frozen fitting population; WP5 stores temporal-CV fits only
+  frozen_rule_sources:
+    - docs/analysis_plan_wp5b.md
+    - docs/analysis_plan_wp5c.md
+    - scripts/evaluate_repurchase_wp5b_dev.py
+    - scripts/evaluate_repurchase_wp5c_dev.py
+  model_artifacts:
+    D-005: outputs/models/day2_dev_final_model.joblib
+    v2: outputs/models/repurchase_features_v2.joblib
+    RFM: outputs/models/segmenters_dev_frozen_v1.joblib
+  combo_source: outputs/tables/combos_v2.csv
+  combo_rule: lift>1 and Kulczynski>=0.5 and imbalance_ratio<=0.5
+hypotheses:
+  primary:
+    familywise_alpha: 0.05
+    adjustment: Holm step-down, one-sided tests; one primary hypothesis remains after H2 power demotion, so H1 threshold is alpha 0.05
+    items:
+      - id: H1
+        comparison: D-005 ROC-AUC > 0.55
+  secondary:
+    - id: H2
+      comparison: repeat-rate ratio frequency>=2 vs frequency=1 > 1.5
+      reason_demoted_before_lock: approximate power is 75.3% at the 4.6% prevalence reference if true RR=2, below the 80% planning target
+    - id: H3
+      comparison: S1/S3/S6 top-decile lift lower 95% CI >1 and precision@10% lower 95% CI > HO2 prevalence
+    - id: H4
+      comparison: S6 cells and RFM repeat-rate ranking direction agrees with frozen DEV ranking
+    - id: H5
+      comparison: fraction of 24 frozen combos passing lift>1, Kulczynski>=0.5, imbalance_ratio<=0.5 is >=1/24
+    - id: H6
+      comparison: AOV, orders/customer, new customers/month, and new-customer repeat rate lie in prelocked DEV trend-based bands
+      status: not_testable_in_06_HO2
+      reason: latest 180-day mature DEV cohort ends 2025-03; extrapolation to 2026-04 is over one year and no valid customer-level trend bands were preregistered for all four measures
+descriptive_only:
+  - holdout2_prevalence
+  - calibration_in_the_large
+uncertainty:
+  method: percentile customer-cluster bootstrap
+  repetitions: 2000
+  seed: 20261028
+comparisons:
+  primary_tests: 1
+  secondary_hypothesis_families: 4
+  additional_subgroup_or_threshold_search: none
+  exploratory_test_read_before_lock: false
+label_free_power_check:
+  eligible_customers: 7282
+  frequency_ge_2: 988
+  frequency_eq_1: 6294
+  expected_positives_at_DEV_7_4_percent: 539
+  expected_positives_at_old_test_4_6_percent: 335
+  model_discrimination_power_scenarios_H1: 'Hanley-McNeil SE using expected positive/negative counts; AUC scenarios 0.60, 0.65, 0.70'
+  risk_ratio_power_scenarios_H2: 'Wald log-RR; prevalence references 7.4%, 4.6%; RR scenarios 1.5, 2, 2.5, 3; H2 demoted to secondary before lock'
+  outcome_fields_read: 0
+gate:
+  requires_explicit_owner_authorization_to_open: true
+  required_phrase: DUYỆT MỞ HO2
+  stop_before_phase_c: true

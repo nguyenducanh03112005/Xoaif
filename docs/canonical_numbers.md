@@ -243,3 +243,17 @@ Nguồn: `scripts/evaluate_repurchase_wp5b_dev.py`; giao thức SHA-256 `ed9af7f
 | S5 Logistic v3 tham chiếu | AP pooled 0,0641 (0,0507–0,0836); ROC-AUC 0,555 (0,515–0,595); precision@10% 8,26% (6,22–10,45%); decile không đơn điệu. | JSON; `repurchase_wp5b_deciles.csv`, `repurchase_wp5b_top_k.csv` |
 | Inner CV và chọn ứng viên | S2 và S4 không có inner temporal fold hợp lệ trong 5/5 outer fold; cả ba chiến lược hoàn chỉnh không đạt monotonicity; không chọn ứng viên. | `outputs/metrics/repurchase_wp5b_dev.json` |
 | Calibration pooled | S3: intercept −2,887 (95% CI −3,137 đến −2,336), slope 0,087 (0,014–0,308), Brier 0,0445. S5: intercept −3,143 (−3,324 đến −2,965), slope −0,005 (−0,053–0,065), Brier 0,1172. S1 score nhị phân nên slope/intercept không diễn giải. | JSON; `outputs/tables/repurchase_wp5b_calibration.csv` |
+
+## A6 — Chuẩn bị 06-HO2, Gate B (chưa mở nhãn; số lượng/độ chính xác kỳ vọng)
+
+Nguồn: `scripts/count_ho2_eligibility_preregistered.py` và `scripts/summarize_ho2_power.py`; protocol `docs/analysis_plan_amendment06_ho2.md`; cấu hình `config/amendment_06_ho2.yaml`. Đây là phép đếm lịch sử trước T2 và tính công suất theo kịch bản; không đọc kết quả HO2.
+
+| Đại lượng | Số chuẩn, cohort và đơn vị | Nguồn |
+|---|---|---|
+| Khách đủ điều kiện tại T2 | 7.282 khách có ít nhất một đơn status 3 không quà, có mã khách, trong `[2024-04-01, 2026-04-20)`; frequency≥2: 988 khách; frequency=1: 6.294 khách. | `scripts/count_ho2_eligibility_preregistered.py`; snapshot `20261024T052943Z` |
+| Số dương kỳ vọng | 539/7.282 tại prevalence tham chiếu DEV 7,4%; 335/7.282 tại tham chiếu aggregate test cũ 4,6%. Đây không phải nhãn hay dự báo HO2. | `scripts/summarize_ho2_power.py` |
+| Độ rộng CI tỷ lệ nền kỳ vọng | Xấp xỉ chuẩn 95%: 1,20 điểm % tại 7,4%; 0,96 điểm % tại 4,6%. | `scripts/summarize_ho2_power.py` |
+| Công suất H1 theo kịch bản | Hanley–McNeil, AUC thật 0,60: khoảng 98,3% ở nền 7,4%; 91,2% ở nền 4,6%, kiểm định một phía α=0,05. Chỉ là xấp xỉ thiết kế theo số dương/âm, không phải dự báo AUC. | `scripts/summarize_ho2_power.py` |
+| Công suất H2 theo kịch bản | Wald log-RR với group size tiền T2; nếu RR thật=2: khoảng 91,6% ở nền 7,4%, 75,3% ở nền 4,6%. Vì mốc 4,6% dưới 80%, H2 được hạ xuống giả thuyết phụ trước khóa. | `scripts/summarize_ho2_power.py` |
+
+**Giới hạn:** phép tính công suất giả định prevalence tham chiếu và tỷ lệ nhóm theo kịch bản; không đảm bảo độ chính xác thực tế, đặc biệt nếu nhóm khách thay đổi hoặc tỷ lệ HO2 khác. Giao thức dùng snapshot thu sẵn, không phải nghiên cứu tiến cứu.

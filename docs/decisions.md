@@ -215,3 +215,13 @@
 - **Quyết định:** Cho phép đánh giá năm chiến lược WP5b theo `docs/analysis_plan_wp5b.md`, trên đúng snapshot đa mốc và temporal folds WP5. Việc chọn ngưỡng S2 và tạo calibration S4 chỉ dùng dữ liệu train/inner temporal folds; outer validation chỉ chấm điểm.
 - **Giới hạn:** DEV-only, khám phá, chưa xác nhận ngoài mẫu. Không sửa hàm hay kết quả WP5 đã đóng băng, không dùng test và không đổi mô hình chính D-005. Quy tắc chọn ứng viên chỉ là đề xuất cho một bước được duyệt riêng sau này.
 
+## D-027 — Gate B 06-HO2: giao thức chuẩn bị, nhãn đóng
+
+- **Ngày:** 2026-10-28.
+- **Quyết định:** Khóa protocol/config 06-HO2, giữ nhãn cửa sổ `(2026-04-20, 2026-10-17]` đóng đến phê duyệt riêng. T2=`2026-04-20`; features chỉ từ đơn có ngày địa phương `<T2`; lịch sử trong test cũ được phép làm feature, nhưng nhãn test cũ không được dùng fit/chọn/hiệu chỉnh.
+- **Cohort/đếm tiền nhãn:** 7.282 khách đủ điều kiện trước T2; 988 frequency≥2 và 6.294 frequency=1. Script chỉ kiểm tra `inserted_at` trước; hàng có ngày địa phương từ T2 trở đi bị bỏ trước khi đọc trường khác.
+- **Giả thuyết:** H1 D-005 ROC-AUC>0,55 là giả thuyết chính duy nhất, α một phía 0,05. H2 RR mua lại frequency≥2 so với frequency=1 >1,5 hạ xuống giả thuyết phụ vì công suất kịch bản RR=2 tại prevalence 4,6% chỉ khoảng 75,3%. H3–H5 phụ; H6 không kiểm định trong giao thức này vì không có dải xu hướng khách hàng đủ tin cậy cho bốn biến và ngoại suy từ cohort DEV trưởng thành cuối 2025-03 đến 2026 quá xa. Calibration-in-the-large và prevalence chỉ mô tả.
+- **Tập chiến lược:** giữ D-005/v2 artifacts; S1/S3/S6 là quy tắc cố định theo các kế hoạch WP5b/WP5c. Loại v3, recency-only, frequency-only khỏi chấm HO2 vì hiện chỉ có temporal-CV fits, không có một artifact final-fit và quần thể fit đóng băng. Không có ứng viên được chọn. Khóa RFM/phân khúc và 24 combo theo artifact/table hiện hành.
+- **Tính chất:** HO2 là khoảng thời gian thứ hai trong cùng snapshot của cùng cửa hàng, không phải tiến cứu thật. Giao thức không cho phép mở nhãn hoặc bắt đầu Phase C.
+- **Căn cứ:** `docs/analysis_plan_amendment06_ho2.md`, `config/amendment_06_ho2.yaml`, lock `config/amendment_06_ho2.lock.json`, báo cáo `docs/amendment_06_gate_b.md`.
+

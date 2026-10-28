@@ -45,6 +45,12 @@ def sealed_hashes() -> dict[str, str]:
     opened = ROOT / "outputs" / "metrics" / "test_opened.lock.json"
     if opened.is_file():
         sealed.update(json.loads(opened.read_text(encoding="utf-8")).get("input_hashes", {}))
+    amendment_06 = ROOT / "config" / "amendment_06_ho2.lock.json"
+    if amendment_06.is_file():
+        amendment = json.loads(amendment_06.read_text(encoding="utf-8"))
+        sealed["config/amendment_06_ho2.yaml"] = amendment["config_sha256"]
+        sealed["docs/analysis_plan_amendment06_ho2.md"] = amendment["protocol_sha256"]
+        sealed.update(amendment.get("frozen_source_sha256", {}))
     return sealed
 
 

@@ -1,0 +1,83 @@
+{
+  "amendment_id": "06-HO2",
+  "status": "prepared_gate_b_not_open",
+  "locked_date": "2026-10-28",
+  "protocol_sha256": "cd9197008d6b41f07df51f117886dfd883e7234b514bafefddbd3182b31584a8",
+  "config_sha256": "e850af1e85179ebb2c3598fb7f78adb5fd1051e53a80b4473bc0c8300ad97b4c",
+  "frozen_source_sha256": {
+    "config/amendment_06_ho2.yaml": "e850af1e85179ebb2c3598fb7f78adb5fd1051e53a80b4473bc0c8300ad97b4c",
+    "docs/analysis_plan_amendment06_ho2.md": "cd9197008d6b41f07df51f117886dfd883e7234b514bafefddbd3182b31584a8",
+    "docs/analysis_plan_wp5.md": "ebf26802ce20814c93d836c0b67e6c17a8ce53d5e65d23b56622bd034cf5e94f",
+    "docs/analysis_plan_wp5b.md": "ed9af7f35e03a41f2462462361f8476ba2b25dee89c6cd59340512419fcdd931",
+    "docs/analysis_plan_wp5c.md": "8dd4774425659f170de08669d42b2d358cdd6c2ed4cd5a33ed68ebeb6767fbf8",
+    "outputs/logs/test_eval_access.jsonl": "2061ddbc30ca89ee48a7df2530bc29aa0b0fe335a76ff1b37fdd8c2903edebc9",
+    "outputs/metrics/frozen_segmenters_dev.json": "307e6ced38704c5e29789cf503ceb1a8c3d19f14d8318db1707c5624fb3d3b0c",
+    "outputs/metrics/prevalence_drift_f2.json": "fffc3253c72260d2ea096598f3e9e090343332685958138e62a1aff456204656",
+    "outputs/metrics/repurchase_v3_dev.json": "9cce1e1a55a333d92b1295723a805876b25055491abb91ce4f8c0c122d2a2d26",
+    "outputs/metrics/repurchase_wp5b_dev.json": "c618812b21e90237f61ac63555ab533e673b6a44e0020c02b23d53c660b3b3ff",
+    "outputs/metrics/repurchase_wp5c_dev.json": "03fc1a143897f3e69cc7356ba66f2722df231cc26fbf0d56a9a91128c8fc3c62",
+    "outputs/models/day2_dev_final_model.joblib": "0ac767d24c641f50bdc19634e590dc45a92d9e4cd5513d02871fac50b109cd4a",
+    "outputs/models/repurchase_features_v2.joblib": "5cbe48bb9b4944d91dfba7b85dd5d1608eb836b68574b16d3ac6a6319f8a2f80",
+    "outputs/models/segmenters_dev_frozen_v1.joblib": "5babaa2352921f840385bdfe6681948f329b0ee276de2aef1cc8500c9146b93f",
+    "outputs/tables/combos_v2.csv": "ae7df8760857a9a7aa2cd667704829e71b076a70b5ca2f0a41fd6396ef0538d6",
+    "outputs/tables/repurchase_wp5c_train_rates.csv": "be2845bbd7020c0241aecf36412a8eaa123d3a7fcdbb58070026ec184d3232a3",
+    "scripts/count_ho2_eligibility_preregistered.py": "e6cf124588dc7791fdaf7131c91246a125642ca4d3f7c343362f48ed4be25a10",
+    "scripts/evaluate_repurchase_wp5b_dev.py": "99e68c6d1c57ab1595339a72787d385e7fae73d5243e4a561c0fed56969951a4",
+    "scripts/evaluate_repurchase_wp5c_dev.py": "6a95efeb8465e30f28cbfc6120a7afb41762c04cfa41a77b247750acd128c676",
+    "scripts/summarize_ho2_power.py": "597098df598d8ad7b7ede5c74be99fcfb6f245cf1f74e9fe2b2e913b4970bb01",
+    "src/features/day2_data.py": "c8091e7faa4f59f644994ba471fcbc565a1a72878f793044f433f136dba3d52f",
+    "src/features/money.py": "7a22b4da01bdb1c2ca31f5d1a3089177dbd0838ead2c417b9abd828d4b668a3f",
+    "src/features/repurchase_v3.py": "332f62cd7b6d4737c9783add6e35476b32b75925a153583cad3104484a489398",
+    "src/models/classify.py": "35ed02908eeeec0a4ce89893ee1aa0c439bb30eb8e1c47d30609975c66de46fa",
+    "src/models/classify_v2.py": "eab950787f56bd42016ceb6c05156946e1b969edc3b73e3b6b3f8a9712642301",
+    "src/models/repurchase_v3.py": "5bf2a685bce70eedff52fe595ceb1475bb4bf372aaab3b452ae59dfd7372f3b3"
+  },
+  "candidate_strategies": {
+    "eligible": [
+      "D-005",
+      "v2",
+      "S1",
+      "S3",
+      "S6"
+    ],
+    "excluded": {
+      "v3": "No final-fit artifact or frozen fitting population; only temporal-CV fits exist.",
+      "recency-only": "No final-fit artifact or frozen fitting population; only temporal-CV fits exist.",
+      "frequency-only": "No final-fit artifact or frozen fitting population; only temporal-CV fits exist."
+    },
+    "selected_candidate": null
+  },
+  "pre_t2_counts": {
+    "eligible_customers": 7282,
+    "frequency_ge_2": 988,
+    "frequency_eq_1": 6294,
+    "outcome_fields_read": 0,
+    "old_test_labels_used_for_fit_or_selection": 0
+  },
+  "label_free_expected_positive_counts": {
+    "dev_7_4_percent": 539,
+    "old_test_aggregate_4_6_percent": 335
+  },
+  "access_audit": {
+    "snapshot_rows_inserted_at_checked": 12011,
+    "other_fields_accessed_for_rows_at_or_after_t2": 0,
+    "ho2_labels_or_outcomes_read": 0,
+    "prior_repo_holdout2_evaluator_or_output_found": false,
+    "scope": "repository/project runtime audit; does not establish absence of external manual access"
+  },
+  "primary_hypothesis": [
+    "H1"
+  ],
+  "secondary_hypotheses": [
+    "H2",
+    "H3",
+    "H4",
+    "H5"
+  ],
+  "not_testable": [
+    "H6"
+  ],
+  "test_opened": false,
+  "phase_c_started": false,
+  "requires_explicit_owner_phrase": "DUYỆT MỞ HO2"
+}
