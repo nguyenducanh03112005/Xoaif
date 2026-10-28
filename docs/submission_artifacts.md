@@ -23,7 +23,7 @@ Dashboard Streamlit đọc các bảng từ `outputs/tables/` và `outputs/metri
 - `gift_line_audit.csv`
 - `gift_line_rates_monthly.csv`
 - `gift_line_rates_order_size.csv`
-- `dashboard_sales_province.csv` — không còn là đầu vào dashboard (91,92% doanh thu là `UNKNOWN`); được giữ vì `scripts/verify_day3_locks.py` và báo cáo PDF đọc bảng này. Các tỉnh dưới 10 đơn được gộp thành một dòng tổng hợp; UNKNOWN giữ riêng để tính tỷ trọng thiếu dữ liệu.
+- `dashboard_sales_province.csv` — không còn là đầu vào dashboard (91,92% doanh thu là `UNKNOWN`); được giữ vì `scripts/verify_day3_locks.py` và báo cáo PDF đọc bảng này. 20 tỉnh dưới 10 đơn được gộp thành một dòng (38 đơn; 16.674.000 VND); UNKNOWN giữ riêng để tính tỷ trọng thiếu dữ liệu. Báo cáo nêu tỷ lệ UNKNOWN và giải thích dòng gộp, không xếp hạng địa phương.
 
 **JSON**
 

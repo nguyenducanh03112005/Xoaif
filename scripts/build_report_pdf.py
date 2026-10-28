@@ -305,8 +305,8 @@ def main(output_path: Path | None = None, font_override: str | None = None) -> N
         province_total = float(provinces["recognized_revenue_vnd"].sum())
         t2 = cohort_bridge["t2"]
         text_block(ax,.10,.44,
-            f"Không so sánh doanh thu theo tỉnh/thành: UNKNOWN chiếm {fpct(unknown['recognized_revenue_vnd']/province_total,2)} trên dashboard DEV+test ({fint(unknown['orders'])} đơn). Riêng DEV, tỉnh rỗng ở {fpct(t2['province_missing_rate_percent']/100,2)} đơn và chiếm {fpct(t2['missing_province_revenue_share_percent']/100,2)} doanh thu; chưa suy ra nguyên nhân nghiệp vụ.",width=102,fontsize=8.6)
-        text_block(ax,.10,.32,
+            f"Không so sánh doanh thu theo tỉnh/thành: UNKNOWN chiếm {fpct(unknown['recognized_revenue_vnd']/province_total,2)} trên dashboard DEV+test ({fint(unknown['orders'])} đơn). Riêng DEV, tỉnh rỗng ở {fpct(t2['province_missing_rate_percent']/100,2)} đơn và chiếm {fpct(t2['missing_province_revenue_share_percent']/100,2)} doanh thu; chưa suy ra nguyên nhân nghiệp vụ. CSV nguồn gộp 20 tỉnh dưới 10 đơn thành một dòng: 38 đơn, 16.674.000 VND; không dùng dòng này để xếp hạng địa phương.",width=102,fontsize=8.6)
+        text_block(ax,.10,.27,
             "Snapshot có 247 tên mặt hàng quan sát ở bảng sản phẩm; `product_profile.csv` mô tả support, quà theo dòng, ngày đầu/cuối và tháng bán. Tên sản phẩm không được dùng để xác định quà. 476 đơn bán thử 2022 được giữ riêng. Do chiết khấu và điều chỉnh ở cấp đơn, báo cáo chỉ nêu số đơn/dòng theo sản phẩm, không gán doanh thu ghi nhận cho sản phẩm.",width=102,fontsize=9.2)
         ax.text(.10,.09,"Nguồn số liệu: outputs/tables/dashboard_sales_monthly.csv, dashboard_sales_province.csv, dashboard_product_orders.csv.",fontsize=7.8,color="#61736D",transform=ax.transAxes)
         pdf.savefig(fig); plt.close(fig)

@@ -11,6 +11,7 @@ Updated: 2026-10-28
 - Hậu kiểm trước cập nhật artifact: `run_all.py` pass (74 pytest, split/GET-only/locks/PII); dashboard smoke pass (5 tab, 11 CSV, 6 JSON); 17 hash bảo vệ khớp baseline; test-open lock giữ count=1; access log giữ đúng một `label_load` và một `behavior_load`. Sau cập nhật dashboard, smoke được chạy lại với 10 CSV.
 - Đóng gói bàn giao theo D-023: thêm dữ liệu mẫu tổng hợp tại `data/sample/`, mục lục `docs/INDEX.md` và nhật ký `docs/cleanup_log.md`; không đổi kết luận và không di chuyển tài liệu trong `docs/`.
 - Hoàn tất rà soát phát hành aggregate: dòng của 20 địa phương có dưới 10 đơn mỗi nơi được gộp (38 đơn; 16.674.000 VND), bảo toàn tổng orders/doanh thu; giữ UNKNOWN và giữ count dòng gift-line. Báo cáo A4 và slide PDF được dựng lại, mỗi file 15 trang; kiểm tra hiển thị và test tập trung (16 passed).
+- Kiểm tra clone sạch tại `ef82631`: `run_all.py` clone mode pass, 107 passed và 1 skipped do thiếu DuckDB DEV restricted; PII scan và dashboard smoke pass. Test đơn vị trên checkout gốc có dữ liệu: 108 passed.
 
 ## Locked scope and active decisions
 
