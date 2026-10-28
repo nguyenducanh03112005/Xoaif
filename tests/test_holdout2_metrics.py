@@ -2,9 +2,13 @@ from __future__ import annotations
 
 import numpy as np
 import pandas as pd
+import sys
+from pathlib import Path
 
 from features.holdout2_metrics import (customer_cluster_bootstrap, holm_step_down,
                                        precision_at_k_tie_aware, risk_ratio, roc_auc)
+sys.path.insert(0, str(Path(__file__).resolve().parents[1] / "scripts"))
+from evaluate_holdout2_once import _centered_bootstrap_p  # noqa: E402
 
 
 def test_metrics_match_hand_calculation() -> None:
@@ -25,3 +29,10 @@ def test_holm_step_down_and_customer_cluster_bootstrap_are_deterministic() -> No
     second = customer_cluster_bootstrap(frame, lambda sample: sample.x.mean(), draws=100, seed=5)
     assert first == second
     assert first["valid_draws"] == 100
+
+
+def test_centered_bootstrap_p_uses_registered_effect_threshold() -> None:
+    values = np.array([.52, .55, .56, .57, .60])
+    assert _centered_bootstrap_p(values, .57, .55) == 2 / 6
+    rr_values = np.array([2.2, 2.5, 2.7, 3.0])
+    assert _centered_bootstrap_p(rr_values, 2.0, 1.5, log_scale=True) == 3 / 5

@@ -12,7 +12,7 @@ import sys
 
 import numpy as np
 import pandas as pd
-from scipy.stats import norm, spearmanr
+from scipy.stats import spearmanr
 from sklearn.metrics import brier_score_loss
 from collections import Counter
 import yaml
@@ -24,7 +24,7 @@ from features.day2_data import LABEL_T_CANDIDATES, load_dev_orders  # noqa: E402
 from features.holdout2_access import load_authorized_holdout_orders  # noqa: E402
 from features.holdout2_features import (attach_holdout2_labels, build_customer_features_at_t,
                                         outcome_eligible)  # noqa: E402
-from features.holdout2_metrics import (customer_cluster_bootstrap, holm_step_down,
+from features.holdout2_metrics import (holm_step_down,
                                        precision_at_k_tie_aware, risk_ratio, roc_auc)  # noqa: E402
 from features.repurchase_v3 import build_multisnapshot_samples  # noqa: E402
 from models.classify import NUMERIC_COLUMNS as D005_NUMERIC, CATEGORICAL_COLUMNS as D005_CATEGORICAL  # noqa: E402
@@ -118,17 +118,6 @@ def _metric_record(y: np.ndarray, score: np.ndarray) -> dict:
             "brier_descriptive": float(brier_score_loss(y, score))}
 
 
-def _bootstrap_metric(frame: pd.DataFrame, score_col: str, metric: str) -> dict:
-    def statistic(sample: pd.DataFrame):
-        y = sample.label_returned.to_numpy(dtype=int)
-        s = sample[score_col].to_numpy(dtype=float)
-        if metric == "roc_auc":
-            return roc_auc(y, s)
-        values = precision_at_k_tie_aware(y, s, .10)
-        return values["precision"] if metric == "precision_at_10_tie_aware" else values["lift"]
-    return customer_cluster_bootstrap(frame, statistic, draws=BOOTSTRAP_DRAWS, seed=SEED)
-
-
 def _bootstrap_values(frame: pd.DataFrame, score_col: str, metric: str) -> np.ndarray:
     ids = frame.customer_key.drop_duplicates().to_numpy()
     groups = [frame.index[frame.customer_key == key].to_numpy() for key in ids]
@@ -153,6 +142,13 @@ def _ci(values: np.ndarray) -> dict:
             "upper_95": float(np.quantile(values, .975)) if len(values) else None,
             "lower_one_sided_95": float(np.quantile(values, .05)) if len(values) else None,
             "valid_draws": int(len(values)), "requested_draws": BOOTSTRAP_DRAWS, "seed": SEED}
+
+
+def _centered_bootstrap_p(values: np.ndarray, observed: float, threshold: float, *, log_scale: bool = False) -> float | None:
+    if not len(values) or not np.isfinite(observed):
+        return None
+    cutoff = observed * observed / threshold if log_scale else 2 * observed - threshold
+    return float((np.sum(values >= cutoff) + 1) / (len(values) + 1))
 
 
 def _h5_eval(orders: list[dict], t2: date, root: Path) -> dict:
@@ -212,6 +208,20 @@ def _paired_auc_difference(frame: pd.DataFrame, predictions: pd.DataFrame, other
         other_score = predictions.loc[idx, other].to_numpy(dtype=float)
         diffs.append(roc_auc(y, d005_score) - roc_auc(y, other_score))
     return _ci(np.asarray(diffs))
+
+
+def _bootstrap_rr_values(frame: pd.DataFrame) -> np.ndarray:
+    ids = frame.customer_key.drop_duplicates().to_numpy()
+    groups = [frame.index[frame.customer_key == key].to_numpy() for key in ids]
+    rng = np.random.default_rng(SEED)
+    out = []
+    for _ in range(BOOTSTRAP_DRAWS):
+        picked = rng.integers(0, len(ids), size=len(ids))
+        sample = frame.loc[np.concatenate([groups[i] for i in picked])]
+        value = risk_ratio(sample.label_returned, sample.repeat)["rr"]
+        if value is not None and np.isfinite(value):
+            out.append(float(value))
+    return np.asarray(out)
 
 
 def _score_strategies(frame: pd.DataFrame, root: Path) -> tuple[pd.DataFrame, dict]:
@@ -292,21 +302,14 @@ def evaluate_frame(frame: pd.DataFrame, root: Path = ROOT, orders: list[dict] | 
     h2_frame = pd.DataFrame({"customer_key": frame.customer_key.astype(str),
                              "label_returned": y,
                              "repeat": (frame.frequency.to_numpy() >= 2).astype(int)})
-    def _rr_stat(sample: pd.DataFrame):
-        return risk_ratio(sample.label_returned, sample.repeat)["rr"]
-    h2_ci = customer_cluster_bootstrap(h2_frame, _rr_stat, draws=BOOTSTRAP_DRAWS, seed=SEED)
-    if h2["rr"] is None:
-        h2_p = 1.0
-    else:
-        a, b = h2["positive_group"], h2["positive_reference"]
-        n1, n0 = h2["n_group"], h2["n_reference"]
-        se = math.sqrt(max(0, 1 / a - 1 / n1 + 1 / b - 1 / n0))
-        h2_p = float(norm.sf((math.log(h2["rr"]) - math.log(1.5)) / se)) if se else 0.0
+    h2_values = _bootstrap_rr_values(h2_frame)
+    h2_ci = _ci(h2_values)
+    h2_p = _centered_bootstrap_p(h2_values, h2["rr"], 1.5, log_scale=True) if h2["rr"] is not None else 1.0
     h1_values = _bootstrap_values(predictions.assign(_score=predictions["D-005"]), "_score", "roc_auc")
     auc = strategy_rows["D-005"]["roc_auc"]
     h1_p = None
     if auc is not None and len(h1_values):
-        h1_p = float((np.sum(h1_values >= (2 * auc - .55)) + 1) / (len(h1_values) + 1))
+        h1_p = _centered_bootstrap_p(h1_values, auc, .55)
     p_adj = holm_step_down({"H1": h1_p if h1_p is not None else 1.0, "H2": h2_p})
     h3 = {name: {"precision_ci_lower_95": row["ci_95"]["precision_at_10_tie_aware"]["lower_95"],
                  "lift_ci_lower_95": row["ci_95"]["lift_top_decile_tie_aware"]["lower_95"],
