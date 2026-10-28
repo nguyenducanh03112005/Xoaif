@@ -1,12 +1,15 @@
 # Ánh xạ dự án với giáo trình môn học
 
-Các ánh xạ dưới đây ghi theo chủ đề/chương của giáo trình *Kho dữ liệu và kỹ thuật khai phá dữ liệu* (2018), không trích nguyên văn. Phạm vi hiện tại chỉ gồm WP5 và nền tảng chung; các WP khác sẽ bổ sung sau khi được duyệt.
+Ánh xạ ghi tên chương/mục, không trích nguyên văn. Trục chính là *Kho dữ liệu và kỹ thuật khai phá dữ liệu* (2018); sách Han, Aggarwal, Bramer và Reis–Housley được dùng làm tài liệu bổ sung theo phạm vi đã duyệt. Phân loại “đúng giáo trình” nghĩa là kỹ thuật/chủ đề được nêu trong tài liệu tương ứng; “mở rộng” nghĩa là cách áp dụng/đo bổ sung ngoài nội dung đã đối chiếu.
 
-| Khái niệm môn học | Nơi áp dụng trong dự án | File |
-|---|---|---|
-| Chương 1: quy trình KDD, phân loại có giám sát | Đánh giá mua lại và phân biệt thiết kế mẫu với khả năng dự đoán | `src/features/day2_data.py`, `src/models/classify.py`, `src/models/repurchase_v3.py` |
-| Chương 1: kiểu dữ liệu và mẫu dữ liệu | Snapshot khách–mốc T, đặc trưng chỉ từ dữ liệu trước T, nhãn tương lai trong DEV | `docs/analysis_plan_wp5.md`, `src/features/repurchase_v3.py` |
-| Chương 3: kho dữ liệu đa chiều và hỗ trợ quyết định | Cohort theo thời gian, kiểm tra phân phối recency/frequency và trình bày metric theo fold | `docs/cohort_definitions.md`, `docs/cohort_mismatch_analysis.md` |
-| Chương 4: tiền xử lý dữ liệu | Fit imputation/scale/encoding trong từng train fold để tránh rò rỉ | `src/models/classify.py`, `src/models/repurchase_v3.py` |
-| Chương 4: đánh giá mô hình phân loại | Temporal CV, ROC-AUC, AP, precision@k, lift/gain và calibration trên DEV | `docs/analysis_plan_wp5.md`, `outputs/metrics/repurchase_v3_dev.json` |
-| Mở rộng thống kê ngoài phần mục lục đã đối chiếu: bootstrap theo cụm khách | Khoảng bất định tôn trọng việc một khách có nhiều snapshot | `docs/analysis_plan_wp5.md`, `scripts/analyze_repurchase_v3_dev.py` |
+| Khái niệm | Chương/mục sách | Nơi dùng trong dự án | File | Mức |
+|---|---|---|---|---|
+| Quy trình KDD, phân loại có giám sát | Giáo trình 2018 Ch.1; Ch.4 | Nhãn mua lại và temporal CV DEV | `src/features/day2_data.py`, `src/models/classify.py`, `src/features/repurchase_v3.py` | đúng giáo trình |
+| Tiền xử lý, đánh giá phân loại | Giáo trình 2018 Ch.4; Han Ch.3, Ch.8 | Pipeline fit trong train fold; ROC-AUC/AP/calibration | `src/models/repurchase_v3.py`, `docs/analysis_plan_wp5.md` | đúng giáo trình; calibration là mở rộng |
+| Kho đa chiều, OLAP/DSS, star schema | Giáo trình 2018 Ch.3, gồm mục 3.6; Han Ch.4–5 | Cohort theo thời gian và lát cắt chỉ tiêu khách | `docs/cohort_definitions.md`, `docs/cohort_mismatch_analysis.md` | đúng giáo trình; retention là ứng dụng mở rộng |
+| Cohort retention, thời gian đến lần hai | Giáo trình 2018 Ch.3; Han Ch.2 | Cohort tháng mua đầu, retention có cửa sổ theo dõi đủ | `docs/analysis_plan_wp2.md`, `scripts/analyze_customer_value_dev.py` | mở rộng nghiệp vụ |
+| Kiểm duyệt phải, Kaplan–Meier, bootstrap theo khách | Không có mục tương ứng trong mục lục đã đối chiếu; bootstrap theo khách theo thiết kế bằng chứng dự án | Thời gian đến đơn thứ hai, CI cho tỷ lệ/giá trị | `docs/analysis_plan_wp2.md`, `scripts/analyze_customer_value_dev.py` | mở rộng; Kaplan–Meier mô tả xác suất chưa mua theo thời gian; bootstrap lấy lại khách để thể hiện bất định |
+| RFM và phân cụm | Giáo trình 2018 Ch.4 mục 4.4; Han Ch.10 | K-Means và nhóm hành động RFM | `src/models/frozen_segmenters.py`, `scripts/analyze_customer_value_dev.py` | đúng giáo trình; nhóm hành động theo rule là mở rộng |
+| Độ ổn định phân cụm, ARI, so sánh Ward | Han Ch.10; Giáo trình 2018 Ch.4 mục 4.4 | Bootstrap K-Means và so sánh hierarchical Ward | `docs/analysis_plan_wp2.md`, `scripts/analyze_customer_value_dev.py` | mở rộng kiểm chứng |
+| Phát hiện ngoại lai | Han Ch.12 | So proxy p99 với Tukey fence trên DEV | `docs/analysis_plan_wp2.md`, `scripts/analyze_customer_value_dev.py` | đúng giáo trình bổ sung; fence IQR là mở rộng đơn giản |
+| Khoảng bất định theo khách | Không có mục tương ứng trong mục lục đã đối chiếu | Bootstrap cho retention, Pareto, CLV | `docs/analysis_plan_wp2.md`, `scripts/analyze_customer_value_dev.py` | mở rộng; resample khách giữ các quan sát của một khách cùng nhau |
