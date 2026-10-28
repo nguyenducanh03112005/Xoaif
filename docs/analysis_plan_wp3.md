@@ -1,9 +1,10 @@
 # Đăng ký trước A2 — sản phẩm, giỏ hàng và combo DEV
 
 - **Trạng thái:** đăng ký trước ngày 2026-10-28, trước khi chạy phân tích A2 mới. Không sửa giao thức sau khi xem kết quả A2.
+- **Lịch sử giao thức:** lần chạy thử đầu tiên bị dừng do vòng lặp bootstrap chậm trước khi tạo bất kỳ đầu ra nào; không có metric một phần. Trước lần chạy có đầu ra, bootstrap được triển khai vector hóa/phân tầng theo tháng như quy tắc dưới đây; seed, 2.000 lượt, cohort, biến đích và họ so sánh không đổi.
 - **Nhãn:** khám phá, chưa xác nhận ngoài mẫu. Không dùng test raw, test order/label hoặc fit mô hình theo test. Chỉ được đối chiếu 24 combo với `outputs/tables/test_combos_frozen.csv` đã commit.
 - **Cohort:** DEV `[2024-04-01, 2025-10-22)`, đơn status 3, loại quà theo phân loại đã khóa; giỏ cần có dòng hàng hợp lệ. Đơn khách thiếu ID có thể tham gia mô tả combo, nhưng bị loại khỏi phân tích khách/chuỗi.
-- **Seed/CI:** 20261028, 2.000 bootstrap theo khách. Các lần mua của cùng khách luôn nằm cùng một lần lấy mẫu. Khoảng tin cậy 95% percentile; nếu nhóm dưới 30 chỉ mô tả và suppression hiện hành áp dụng.
+- **Seed/CI:** 20261028, 2.000 bootstrap theo khách, phân tầng theo tháng mua đầu cho so sánh giỏ đầu. Trong từng tháng và nhóm có/không có sản phẩm, khách được lấy lại có hoàn lại; tỷ lệ tháng được chuẩn hóa theo phân bố tháng của toàn cohort trưởng thành. Khoảng tin cậy 95% percentile; nếu nhóm dưới 30 chỉ mô tả và suppression hiện hành áp dụng.
 - **Đầu vào khóa:** `outputs/metrics/day3_combo_prereg.json`, `outputs/tables/combos_v2.csv` (24 cặp đã khóa), `outputs/tables/seasonal_pair_metrics.csv`, `outputs/tables/test_combos_frozen.csv` (aggregate đã commit), và DEV qua loader có date gate. Giữ nguyên combo, quy tắc quà và split.
 
 ## Câu hỏi, phương pháp và đầu ra đã định trước
