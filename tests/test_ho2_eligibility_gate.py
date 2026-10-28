@@ -12,6 +12,9 @@ sys.path.insert(0, str(ROOT / "scripts"))
 from count_ho2_eligibility_preregistered import pre_t2_day  # noqa: E402
 from summarize_ho2_power import build_report  # noqa: E402
 import yaml  # noqa: E402
+from analyze_gateb_r2_dev import bootstrap_rr  # noqa: E402
+from summarize_gateb_r2_power import build as build_r2_power  # noqa: E402
+import pandas as pd  # noqa: E402
 
 
 class InsertedAtOnly(dict):
@@ -53,3 +56,26 @@ def test_amendment_lock_matches_protocol_and_keeps_window_closed():
     assert config["label_window"]["not_opened"] is True
     assert config["gate"]["requires_explicit_owner_authorization_to_open"] is True
     assert lock["test_opened"] is False
+
+
+def test_gateb_r2_cluster_bootstrap_rr_matches_hand_calculation_and_is_reproducible():
+    frame = pd.DataFrame({
+        "customer_key": ["a", "a", "b", "b", "c", "c", "d", "d"],
+        "frequency": [1, 1, 1, 1, 2, 2, 3, 3],
+        "label_returned": [0, 0, 1, 1, 1, 1, 1, 1],
+    })
+    first = bootstrap_rr(frame, draws=200, seed=17)
+    second = bootstrap_rr(frame, draws=200, seed=17)
+    assert first == second
+    assert first["rr"] == 2.0
+    assert first["bootstrap_draws_valid"] + first["bootstrap_draws_invalid"] == 200
+
+
+def test_gateb_r2_power_table_has_full_registered_grid():
+    result = build_r2_power(1.8)
+    assert result["h2_primary"] is False
+    assert set(result["baselines"]) == {"DEV_7_4_percent", "old_test_aggregate_4_6_percent"}
+    for row in result["baselines"].values():
+        assert set(row["H1"]) == {"0.55", "0.6", "0.65", "0.7"}
+        assert set(row["H2"]) == {"1.5", "2.0", "2.5", "3.0", "1.8"}
+    assert build_r2_power(2.656090953359298)["h2_primary"] is True

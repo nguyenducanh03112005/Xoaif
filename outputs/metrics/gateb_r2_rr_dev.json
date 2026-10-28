@@ -1,0 +1,34 @@
+{
+  "status": "exploratory_dev_only_not_confirmed_out_of_sample",
+  "preregistration": "docs/analysis_plan_gateb_r2.md",
+  "snapshot_id": "20261024T052943Z",
+  "cohort": "DEV multi-snapshot; T+180+7 strictly before DEV end 2025-10-22",
+  "label_definition": "valid status-3 non-gift purchase in (T,T+180d], consistent with F1 later-local-date repeat definition",
+  "weighting": "snapshot-weighted group rates; customer-cluster bootstrap",
+  "n_snapshots": 21638,
+  "n_unique_customers": 3508,
+  "frequency_eq_1": {
+    "snapshots": 19442,
+    "customers": 3329,
+    "positive_snapshots": 780,
+    "repeat_rate": 0.040119
+  },
+  "frequency_ge_2": {
+    "snapshots": 2196,
+    "customers": 382,
+    "positive_snapshots": 306,
+    "repeat_rate": 0.139344
+  },
+  "rr_frequency_ge_2_vs_eq_1": {
+    "rr": 3.473245,
+    "ci95_lower": 2.656091,
+    "ci95_upper": 4.519658,
+    "bootstrap_draws_requested": 2000,
+    "bootstrap_draws_valid": 2000,
+    "bootstrap_draws_invalid": 0,
+    "bootstrap_seed": 20261028,
+    "bootstrap_unit": "customer cluster; all snapshots of a sampled customer move together"
+  },
+  "test_rows_loaded": false,
+  "test_labels_or_behavior_used": false
+}

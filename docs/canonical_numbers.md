@@ -257,3 +257,16 @@ Nguồn: `scripts/count_ho2_eligibility_preregistered.py` và `scripts/summarize
 | Công suất H2 theo kịch bản | Wald log-RR với group size tiền T2; nếu RR thật=2: khoảng 91,6% ở nền 7,4%, 75,3% ở nền 4,6%. Vì mốc 4,6% dưới 80%, H2 được hạ xuống giả thuyết phụ trước khóa. | `scripts/summarize_ho2_power.py` |
 
 **Giới hạn:** phép tính công suất giả định prevalence tham chiếu và tỷ lệ nhóm theo kịch bản; không đảm bảo độ chính xác thực tế, đặc biệt nếu nhóm khách thay đổi hoặc tỷ lệ HO2 khác. Giao thức dùng snapshot thu sẵn, không phải nghiên cứu tiến cứu.
+
+## A7 — R2: risk ratio DEV để khóa giả thuyết H2
+
+Nguồn: `scripts/analyze_gateb_r2_dev.py`, `scripts/summarize_gateb_r2_power.py`; kế hoạch `docs/analysis_plan_gateb_r2.md` commit `04351e5`; cohort DEV multi-snapshot 21.638 snapshot/3.508 khách, 12 mốc T, N=180, L=7; bootstrap cụm khách 2.000, seed 20261028. Khám phá DEV-only, chưa xác nhận ngoài mẫu; không đọc test/HO2.
+
+| Đại lượng | Số chuẩn, cohort và đơn vị | Nguồn |
+|---|---|---|
+| frequency=1 | 19.442 snapshot/3.329 khách; 780 dương; tỷ lệ 4,012% | `outputs/metrics/gateb_r2_rr_dev.json` |
+| frequency≥2 | 2.196 snapshot/382 khách; 306 dương; tỷ lệ 13,934% | `outputs/metrics/gateb_r2_rr_dev.json` |
+| RR frequency≥2 / frequency=1 | 3,473 (95% CI bootstrap khách 2,656–4,520); 2.000/2.000 draw hợp lệ | `outputs/metrics/gateb_r2_rr_dev.json` |
+| Quyết định H2 | Trở lại giả thuyết chính: tại RR=CI lower DEV 2,656, công suất H2 100,00% ở nền DEV 7,4% và 99,87% ở mốc 4,6%, vượt 80% ở cả hai. | `outputs/metrics/gateb_r2_power.json`; `docs/gateb_r2_results.md` |
+
+**Giới hạn:** RR là liên hệ snapshot-weighted; không diễn giải nhân quả. Bảng công suất là kịch bản theo xấp xỉ Wald/Hanley–McNeil, không phải kết quả HO2.
