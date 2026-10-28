@@ -147,7 +147,7 @@ def build(output_path: Path | None = None, font_override: str | None = None) -> 
         ax.add_patch(Rectangle((0, .12), 1, .15, transform=ax.transAxes, color="#245B4C"))
         ax.text(.08, .82, "XOAIF GARDEN", fontsize=15, weight="bold", color="#CDE2D8", transform=ax.transAxes)
         ax.text(.08, .70, "Kho dữ liệu và\nkhai phá dữ liệu bán hàng", fontsize=32, weight="bold", color="white", va="top", transform=ax.transAxes)
-        ax.text(.08, .44, "Pancake POS  ·  DuckDB  ·  Phân tích theo thời gian", fontsize=14, color="#E4F0EB", transform=ax.transAxes)
+        ax.text(.08, .44, "Nhiều bảng Pancake POS  ·  Lịch ngày lễ công khai", fontsize=14, color="#E4F0EB", transform=ax.transAxes)
         ax.text(.08, .20, "Báo cáo dự án / bảo vệ cuối kỳ  ·  26/10/2026", fontsize=11, color="white", transform=ax.transAxes)
         ax.text(.08, .055, "Kết quả được trình bày cùng giới hạn provenance, cohort và dữ liệu.", fontsize=9, color="#CDE2D8", transform=ax.transAxes)
         pdf.savefig(fig); plt.close(fig)
@@ -182,7 +182,7 @@ def build(output_path: Path | None = None, font_override: str | None = None) -> 
             if i < len(items)-1:
                 ax.add_patch(FancyArrowPatch((x+.158, .55), (x+.177, .55), transform=ax.transAxes,
                                              arrowstyle="-|>", mutation_scale=12, color=COLORS["teal"]))
-        body(ax, .07, .32, "Dashboard đọc CSV/JSON aggregate cục bộ, không gọi Pancake API. Kho DEV có fact đơn, fact dòng hàng và các dimension khách/ngày/trạng thái/sản phẩm.", size=11, width=.82)
+        body(ax, .07, .32, "Dữ liệu giao dịch lấy từ nhiều bảng trong cùng Pancake POS; lịch công khai chỉ bổ sung ngữ cảnh thời gian, không phải hệ thống giao dịch độc lập. API probe ngoài đơn chưa ingest. Dashboard đọc CSV/JSON aggregate cục bộ, không gọi Pancake API.", size=11, width=.82)
         body(ax, .07, .20, "DBSCAN địa lý được cân nhắc nhưng không chạy vì không có tọa độ hoặc mã vùng đủ chi tiết.", size=10, color=COLORS["muted"], width=.82)
         pdf.savefig(fig); plt.close(fig)
 
@@ -300,7 +300,7 @@ def build(output_path: Path | None = None, font_override: str | None = None) -> 
         card(ax, .38, .57, .24, .23, "Khách một đơn · scoring", "4.530 / 5.169", "87,6%; DEV: 4.526 / 5.174 = 87,5%")
         card(ax, .68, .57, .24, .23, "Proxy giá trị lớn", str(seg["business_like_proxy"]["customers"]), "không phải xác minh pháp nhân")
         heading(ax, .09, .45, "Cách diễn giải")
-        body(ax, .09, .39, "K-Means K=2 là phân đoạn mô tả theo tần suất mua (một lần / lặp lại). Điều này chưa chứng minh các nhóm có ý nghĩa kinh doanh hay hỗ trợ quyết định tốt hơn; K=3/4 chỉ là độ nhạy. RFM mô tả lịch sử trước T, không chứng minh nguy cơ rời bỏ.", size=11, width=.83)
+        body(ax, .09, .39, "K-Means K=2 là phân đoạn mô tả theo tần suất mua (một lần / lặp lại), chưa chứng minh ý nghĩa kinh doanh. Khảo sát RFM chuẩn hóa bổ sung trên DEV có silhouette trung bình 5 seed: K=3 0,390146; K=4 0,385302; K=5 0,392276. Không thay mô hình chính, không chứng minh nhóm có ý nghĩa hành động. RFM mô tả lịch sử trước T.", size=10.4, width=.83)
         body(ax, .09, .22, "Không fit lại trên test. Metric phân phối bằng 0 trong một số so sánh phát sinh do dùng cùng profile trước T, không phải bằng chứng hành vi tương lai ổn định.", size=10.5, color=COLORS["muted"], width=.83)
         pdf.savefig(fig); plt.close(fig)
 

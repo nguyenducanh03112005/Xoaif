@@ -3,6 +3,7 @@
 from __future__ import annotations
 
 import json
+from datetime import datetime
 from pathlib import Path
 from typing import Any
 
@@ -107,7 +108,6 @@ def main() -> None:
     if st.sidebar.button("Làm mới dữ liệu cục bộ", disabled=not refresh_enabled):
         st.cache_data.clear()
         st.rerun()
-    st.sidebar.caption("Dashboard không gọi API. Làm mới chỉ đọc lại CSV/JSON trong outputs/.")
 
     try:
         sales = read_csv("dashboard_sales_monthly.csv")
@@ -129,9 +129,22 @@ def main() -> None:
         split = yaml.safe_load((ROOT / "config" / "split.yaml").read_bytes())
         split_lock = json.loads((ROOT / "config" / "split.lock.json").read_text(encoding="utf-8"))
         snapshot_hash = split_lock.get("snapshot_manifest_sha256", "")
+        snapshot_id = split.get("snapshot_id")
+        if not isinstance(snapshot_id, str):
+            raise ValueError("Locked snapshot ID is missing.")
+        snapshot_time = datetime.strptime(snapshot_id, "%Y%m%dT%H%M%SZ")
     except (OSError, ValueError, KeyError, json.JSONDecodeError) as exc:
         st.error(f"Không đọc được bảng dashboard: {type(exc).__name__}.")
         st.stop()
+
+    st.sidebar.markdown("**Nguồn dữ liệu đang hiển thị: snapshot khóa**")
+    st.sidebar.caption(
+        f"Cập nhật snapshot khóa (UTC): {snapshot_time:%Y-%m-%d %H:%M:%S} · ID {snapshot_id}"
+    )
+    st.sidebar.caption(
+        "Dữ liệu làm mới: chưa có trong dashboard; refresh API chưa được xác minh. "
+        "Nút chỉ nạp lại CSV/JSON aggregate local, không gọi API."
+    )
 
     sales["month"] = sales["month"].astype(str)
     months = sorted(sales["month"].unique())
@@ -176,7 +189,10 @@ def main() -> None:
         else:
             prod_view = prod_view.head(20)
         st.dataframe(localized_frame(prod_view), width="stretch", hide_index=True)
-        st.caption("Không phân bổ doanh thu ghi nhận xuống sản phẩm vì giảm giá và điều chỉnh nằm ở cấp đơn.")
+        st.caption(
+            "Sản phẩm có dưới 10 lượt đơn được gộp thành “Khác”; không cộng order_count "
+            "vì một đơn có thể chứa nhiều sản phẩm. Không phân bổ doanh thu ghi nhận xuống sản phẩm."
+        )
 
     with tabs[1]:
         st.subheader("Phân khúc theo quy tắc nghiệp vụ và K-Means")

@@ -1,6 +1,6 @@
 # Sổ số chuẩn Xoaif Garden
 
-Cập nhật: 2026-10-27. Mỗi số dưới đây gắn với đơn vị, cohort và nguồn aggregate. Dấu chấm phân tách hàng nghìn, dấu phẩy phân tách thập phân. Với số đã làm tròn, nguồn giữ giá trị đầy đủ.
+Cập nhật: 2026-10-28. Mỗi số dưới đây gắn với đơn vị, cohort và nguồn aggregate. Dấu chấm phân tách hàng nghìn, dấu phẩy phân tách thập phân. Với số đã làm tròn, nguồn giữ giá trị đầy đủ.
 
 ## Cohort và thời gian
 
@@ -16,6 +16,7 @@ Cập nhật: 2026-10-27. Mỗi số dưới đây gắn với đơn vị, cohor
 | Preflight N=180 | 5.499 khách ở mốc 2025-10-22; số tiền kiểm, chưa phải số nhãn/test | `outputs/tables/eligibility_preflight.csv`: dòng `candidate=N180`, cột `eligible_customers`. |
 | Cohort scoring/test | 5.169 khách đủ điều kiện trước T | `outputs/metrics/test_eval.json`: `cohort.eligible_customers_with_pre_T_purchase`; đối chiếu pre-open với `outputs/metrics/day2_segmentation.json`: `customer_count`. |
 | Cầu nối cohort 5.499 → 5.174 → 5.169 | 5.499 khách trước T − 325 khách chỉ có status 3 trước `analysis_start` = 5.174; − 5 khách B chỉ có đơn quà = 5.169. **phần dư chưa giải thích: 0** | Đếm trực tiếp bằng HMAC chuẩn trên snapshot pre-T và `assess_order_money` Amendment 03; đối chiếu DuckDB, preflight và metric scoring. `docs/cohort_reconciliation.md`; JSON tổng hợp: `outputs/tables/cohort_bridge_verified.json`. |
+| Độ nhạy ranh giới T — DEV only | 3 mẫu khách–T có đơn status 3 đúng T lịch sử; tối đa 2 nhãn âm có thể chuyển dương; số dương DEV bị chặn trong 260–262/3.508 (7,41%–7,47%) | `docs/test_provenance_note.md`; đếm trên CSV nhãn DEV và warehouse DEV chỉ đọc. Cận do warehouse không lưu cờ quà theo đơn; không phải tác động đo chính xác và không dùng test. |
 | Thiếu customer ID | 286 đơn status 3 DEV | `outputs/tables/dev_quality_summary.json`: `valid_status_3_orders_missing_customer_id`; đối chiếu `outputs/metrics/day2_preprocessing.json`: `missing_customer_id_orders`. |
 | Cửa sổ test thực thi | `[2025-10-22, 2026-04-20)`; gồm ngày T và 179 ngày lịch sau T | `outputs/metrics/test_eval.json`: `test_interval`, `effective_post_T_calendar_dates`; sai khác quy tắc `>T` ghi ở D-010. |
 | DATA_CUTOFF | 2026-10-24, loại trừ | `config/split.yaml` (khóa, chỉ đọc); `docs/PROGRESS.md`. |
@@ -34,9 +35,15 @@ Cập nhật: 2026-10-27. Mỗi số dưới đây gắn với đơn vị, cohor
 | Combo DEV đã khóa | 24 cặp chính; mỗi cặp đáp ứng quy tắc xuất hiện ít nhất 4/6 ô nhạy cảm và có mặt ở ô chính `all_gift_sources`, support 0,05 | `outputs/metrics/day3_combo_prereg.json`: `stable_combo_rule`, `stable_pair_count`, `main_combo_count`. Không khẳng định mọi cặp có mặt 6/6 ô. |
 | Combo test | 24 cặp được chấm; 21/24 có lift > 1 trên 2.174 giỏ test đủ điều kiện | `outputs/metrics/test_eval.json`: `association_rules.frozen_combo_count`, `test_lift_gt_1_count`, `test_eligible_basket_count`. |
 | K-Means | K=2; silhouette 0,5075 (báo cáo 0,508), cohort khách scoring DEV | `outputs/metrics/day2_segmentation.json`: `chosen_k`, `chosen_silhouette`, `customer_count`. |
+| K-Means RFM — khảo sát bổ sung, không thay kết quả chính | DEV 5.169 khách; silhouette trung bình 5 seed: K=3 0,390146; K=4 0,385302; K=5 0,392276. Chưa xác nhận ý nghĩa kinh doanh | `docs/dev_segmentation_objective_i.md`, `scripts/evaluate_dev_segmentation_objective_i.py`; Recency, log1p(Frequency), log1p(Monetary) được z-standardize. |
+| Lịch lễ/Tết/sale — khảo sát bổ sung DEV | 3.508 mẫu đầu vào; 5 rolling-origin folds, 1.558 dự đoán OOF. Feature gốc ROC-AUC/AP 0,5279/0,0800; thêm thời gian 0,5181/0,0767. Không cải thiện metric pooled; không thay mô hình chính. | `outputs/metrics/holiday_time_supplement_dev.json`; chạy `scripts/evaluate_holiday_time_dev.py`, chỉ nạp bảng nhãn DEV. |
 | Một đơn, DEV status-3 | 4.526/5.174 khách = 87,5% | `outputs/tables/day1_development_cohort_summary.json`: `repeat_frequency_distribution["1"]`, `development_customer_count_status3_nonmissing`. |
 | Một đơn, cohort scoring | 4.530/5.169 khách = 87,6% | `outputs/metrics/day2_label_audit.json`: `frequency_distribution_at_test_start["1"]`, `unique_customer_count`. |
 | Proxy giá trị lớn | 62/5.169 khách scoring (1,20%); ngưỡng p99 theo DEV, không xác minh pháp nhân | `outputs/metrics/day2_label_audit.json`: `large_value_customer_proxy.customers`, `share`; mẫu số `unique_customer_count`. |
+| Tỉnh/thành DEV status 3 | 5.860/6.400 đơn UNKNOWN (91,56%); doanh thu ghi nhận nhóm UNKNOWN 2.384.693.718/2.628.354.091 VND (90,73%) | `docs/data_quality.md`, `docs/unknown_region_diagnostic.md`; không dùng nhãn test. |
+| Độ phủ mã tỉnh trong raw DEV | `shipping_address.province_id`: 540/6.400; `new_province_id`: 81/6.400, chỉ 23 trường hợp thêm khi thiếu tên; customer profile province ID không được dùng thay địa chỉ giao | Quét snapshot trong RAM, chỉ xuất số đếm; mapping `new_province_id` chưa được xác minh. `docs/data_quality.md`. |
+| `order_sources_name` — DEV status 3 | Facebook 3.722; thiếu 2.404; Instagram gộp với nguồn hiếm 274; không thấy nhãn Shopee/sàn tường minh | Đếm aggregate DuckDB; ô nhỏ và phần bổ sung được ẩn. Tỷ lệ theo tháng: `docs/channel_monthly_coverage.md`. Không suy ra không có giao dịch trên sàn. |
+| Probe endpoint Pancake | Products: 832 entries, mẫu 482, 394 match product key (81,74%); customers: 13.232, mẫu 482, 194 match `customer_id` (40,25%); evaluate/ad endpoints: 0 | GET metadata probe 2026-10-28; match rate chỉ trên mẫu, không phải toàn bộ population. JSON: `docs/pancake_endpoint_probe_20261028.json`; chưa ingest. |
 
 ## Mô hình DEV và test
 

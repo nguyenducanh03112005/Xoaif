@@ -28,6 +28,11 @@ Theo toàn bộ lịch 0–120 phút trong [handover](handover.md): phạm vi v�
 - [test_audit.md](test_audit.md) — Rà soát ranh giới DEV/test; đọc khi cần giải thích kiểm soát test.
 - [metric_rationale.md](metric_rationale.md) — Giải thích các metric phân loại; đọc khi trình bày đánh giá mô hình.
 - [data_gap_report.md](data_gap_report.md) — Ghi lại khoảng trống dữ liệu và phạm vi; đọc khi nêu hạn chế.
+- [data_quality.md](data_quality.md) — Kiểm toán tỉnh/thành UNKNOWN và giới hạn ánh xạ địa chỉ; đọc trước khi diễn giải dữ liệu địa lý.
+- [channel_monthly_coverage.md](channel_monthly_coverage.md) — Tổng hợp kênh đơn DEV theo tháng với ô nhỏ được ẩn; đọc khi cần căn cứ mức bao phủ nguồn/kênh.
+- [holiday_time_supplement.md](holiday_time_supplement.md) — Lịch thủ công và so sánh rolling-origin DEV; khảo sát bổ sung, không thay mô hình chính.
+- [cohort_reconciliation.md](cohort_reconciliation.md) — Cầu nối trực tiếp 5.499 → 5.174 → 5.169; đọc khi giải thích số cohort.
+- [unknown_region_diagnostic.md](unknown_region_diagnostic.md) — Chẩn đoán aggregate UNKNOWN theo tỉnh/thành, không công bố địa chỉ.
 - [leakage_review_cancel.md](leakage_review_cancel.md) — Ghi nhận rà soát bài toán hủy/hoàn; đọc khi được hỏi về nhánh này.
 - [product_profile_top20.md](product_profile_top20.md) — Mô tả bảng sản phẩm theo support; đọc khi xem hồ sơ sản phẩm.
 
@@ -43,11 +48,13 @@ Theo toàn bộ lịch 0–120 phút trong [handover](handover.md): phạm vi v�
 - [point_in_time.md](point_in_time.md) — Ghi chú về tính khả thi point-in-time; đọc khi trao đổi về thời gian feature.
 - [glossary.md](glossary.md) — Giải nghĩa thuật ngữ và mốc; đọc khi gặp ký hiệu trong tài liệu.
 - [api_notes.md](api_notes.md) — Ghi chú API và giới hạn thu nhận; đọc khi cần biết phạm vi tích hợp nguồn.
+- [pancake_endpoint_probe_20261028.json](pancake_endpoint_probe_20261028.json) — JSON aggregate của probe GET metadata; không chứa giá trị bản ghi.
 
 ## 4. Quyết định và nhật ký
 
 - [INDEX.md](INDEX.md) — Mục lục các tài liệu bàn giao; mở khi cần tìm đúng file.
 - [decisions.md](decisions.md) — Nhật ký quyết định theo thứ tự; đọc khi cần căn cứ cho lựa chọn dự án.
+- [amendment_log.md](amendment_log.md) — Phạm vi Amendments 06–10 hậu mở và ranh giới an toàn.
 - [PROGRESS.md](PROGRESS.md) — Trạng thái hiện hành và các mốc đã hoàn thành; đọc để cập nhật nhanh tình trạng.
 - [consistency_log.md](consistency_log.md) — Nhật ký các vòng rà soát nhất quán; đọc khi cần truy vết hiệu chỉnh tài liệu.
 - [final_consistency_report.md](final_consistency_report.md) — Báo cáo rà soát cuối; đọc trước khi nộp gói.
@@ -73,4 +80,3 @@ Theo toàn bộ lịch 0–120 phút trong [handover](handover.md): phạm vi v�
 - [day1_walkthrough.md](day1_walkthrough.md) — Hướng dẫn Ngày 1 có nhãn lịch sử; không chạy lại các lệnh trong đó.
 - [day2_walkthrough.md](day2_walkthrough.md) — Hướng dẫn cũ trước khi mở test; đọc chỉ để tra lịch sử quy trình.
 - [day3_inputs.md](day3_inputs.md) — Danh sách đầu vào dự kiến trước khi hoàn tất dashboard; đọc chỉ để tra lịch sử.
-

@@ -39,6 +39,26 @@ def _reject_sensitive_keys(value: object, path: str = "root") -> None:
             _reject_sensitive_keys(child, f"{path}[{index}]")
 
 
+def _check_small_count_suppression(name: str, frame: pd.DataFrame) -> None:
+    count_columns = {
+        "dashboard_product_orders.csv": ("order_count",),
+        "dashboard_status_counts.csv": ("order_count",),
+        "gift_line_audit.csv": ("line_count", "distinct_order_count", "gift_line_count"),
+    }.get(name, ())
+    for column in count_columns:
+        counts = pd.to_numeric(frame[column], errors="coerce").dropna()
+        if (counts < 10).any():
+            raise ValueError(f"Unsuppressed count below 10 in dashboard aggregate {name}")
+
+    if name == "dashboard_product_orders.csv":
+        other = frame.loc[frame["product_name"] == "Khác — từng sản phẩm dưới 10 lượt đơn"]
+        if len(other) > 1 or (
+            not other.empty and pd.notna(other.iloc[0]["order_count"])
+            and other.iloc[0]["order_count"] != ""
+        ):
+            raise ValueError("Low-volume product aggregation is not in the expected shape")
+
+
 def main() -> int:
     source = APP.read_text(encoding="utf-8")
     tree = ast.parse(source, filename=str(APP))
@@ -81,6 +101,7 @@ def main() -> int:
         bad = FORBIDDEN_KEYS.intersection(str(column).casefold() for column in frame.columns)
         if bad:
             raise ValueError(f"Sensitive identifier field in dashboard table {name}")
+        _check_small_count_suppression(name, frame)
         rows_checked += len(frame)
 
     for name in sorted(json_names):

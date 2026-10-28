@@ -33,3 +33,9 @@ def test_phone_tripwire_does_not_treat_decimal_features_as_phone_numbers() -> No
     safe_decimals = "first_order_month_sin,0.8660254037844387\npositive_rate,0.10206961429915334"
 
     assert PATTERNS["phone"].search(safe_decimals) is None
+
+
+def test_address_tripwire_does_not_join_csv_rows() -> None:
+    csv_fragment = "8403,UNKNOWN\n663,HA NOI\n38,Other provinces"
+
+    assert PATTERNS["address_like"].search(csv_fragment) is None

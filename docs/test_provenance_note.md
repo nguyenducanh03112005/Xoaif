@@ -29,3 +29,9 @@ DEV OOF của Logistic Regression C=10 có ROC-AUC 0,5096 và AP 0,0699 trên 1.
 ROC-AUC test khoảng 0,70 vì vậy chỉ được trình bày là tín hiệu yếu trên tập test mà development chưa xác nhận; không đủ cơ sở kết luận mô hình hoạt động tốt hoặc sẵn sàng triển khai. Test đã mở nên không dùng các kết quả test để tiếp tục tinh chỉnh, chọn mô hình hoặc thay đổi ngưỡng.
 
 Test chỉ mở một lần. Tách metric riêng cho ngày T cần nạp lại dữ liệu test, trái khóa và quyết định bảo vệ; do đó ảnh hưởng của ngày T chưa xác định. Các metric là mô tả của lần chạy thực tế, không chứng minh khả năng tổng quát qua cửa sổ khác.
+
+### Độ nhạy ngày T chỉ trên DEV
+
+Để định lượng mức độ có thể ảnh hưởng mà không mở lại test, đã đối chiếu 3.508 mẫu nhãn DEV (`outputs/tables/day2_label_samples_primary.csv`) với các đơn status 3 trong kho DEV chỉ đọc (`data/restricted/xoaif_dev.duckdb`). Nhãn hiện hành có 260/3.508 mẫu dương (7,41%) và loại ngày T theo `(T,T+180 ngày]`. Có 3 mẫu khách–T có ít nhất một đơn status 3 đúng ngày T: một tại 2024-09-01 và hai tại 2024-11-01. Trong số đó, tối đa 2 mẫu âm hiện tại có thể chuyển dương nếu đơn ngày T là đơn không quà; một mẫu còn lại đã dương theo cửa sổ hiện hành. Kho DEV không lưu cờ quà theo đơn trong `fact_orders`, nên số chuyển thực tế không thể xác định từ nguồn DEV được phép dùng.
+
+Vì vậy, kịch bản DEV nếu đưa ngày T vào có giới hạn **260–262 mẫu dương trên 3.508** (7,41%–7,47%; tăng tối đa 0,057 điểm phần trăm), không phải một phép đo điểm chính xác. Đây chỉ là cận độ nhạy DEV, không phải ước lượng tác động trên test. Không đọc nhãn/hành vi test, không nạp lại dữ liệu test; ảnh hưởng test vẫn chưa xác định.

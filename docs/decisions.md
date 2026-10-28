@@ -192,4 +192,12 @@
 - **Ngày:** 2026-10-26.
 - **Quyết định:** Đóng gói bàn giao: dọn file tạm, thêm dữ liệu mẫu tổng hợp (data/sample, không từ dữ liệu thật), thêm docs/INDEX.md; không đổi kết luận, không di chuyển docs.
 
+## D-024 — Phê duyệt kiểm tra hậu mở có giới hạn
+
+- **Ngày:** 2026-10-28.
+- **Người quyết định:** Chủ dự án.
+- **Quyết định:** Phê duyệt riêng Amendments 06–10 trong `docs/amendment_log.md`: probe metadata Pancake GET-only không ingest; đối soát cohort và khảo sát chất lượng/kênh/ngày T chỉ trên DEV; RFM và lịch thời gian rolling-origin chỉ trên DEV; refresh/replay an toàn nhưng không chạy trên snapshot; đồng bộ hồ sơ nộp.
+- **Lý do:** Hoàn thiện bằng chứng bàn giao theo yêu cầu hậu mở mà không mở lại tập test hoặc thay đổi kết luận/mô hình chính.
+- **Ranh giới:** Không đọc lại test records/labels; không sửa split, lock hay Amendment 01–05; không gọi API trong lượt kiểm tra hiện tại; không ingest, không ghi API key/PII, không ghi vào `data/raw` hoặc `data/restricted`; không tạo PPTX.
+- **Quan hệ với D-022:** D-022 vẫn là quyết định lịch sử về việc không chạy chẩn đoán anchor chưa được phê duyệt khi đó. D-024 chỉ cho phép khảo sát mới có phạm vi hẹp; kết quả DEV bổ sung không xác nhận mô hình trên test.
 

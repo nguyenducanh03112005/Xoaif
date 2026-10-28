@@ -1,5 +1,5 @@
 ﻿gift_source,line_count,distinct_order_count,gift_line_count,low_confidence
-flag,0,0,0,False
-zero_price,4,4,4,False
+flag,,,,False
+zero_price,,,,False
 inferred_subset,903,716,903,True
-not_gift,29142,6391,0,False
+not_gift,29142,6391,,False

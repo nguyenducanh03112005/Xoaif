@@ -237,7 +237,7 @@ def main(output_path: Path | None = None, font_override: str | None = None) -> N
         # 4. Architecture
         fig, ax = fresh_page(pdf, 4, "2. Kiến trúc tổng quan", "Hình 1. Luồng 5 tầng từ nguồn tới sản phẩm phân tích")
         layers = [
-            ("1 · Nguồn", "Pancake POS API · GET allowlist"),
+            ("1 · Nguồn", "Nhiều bảng Pancake POS + lịch ngày lễ công khai"),
             ("2 · Snapshot", "Raw JSON · checksum · mốc dữ liệu"),
             ("3 · ETL / chất lượng", "Chuẩn hóa thời gian · HMAC · kiểm tra tiền"),
             ("4 · Kho", "DuckDB · fact và dimension"),
@@ -251,7 +251,7 @@ def main(output_path: Path | None = None, font_override: str | None = None) -> N
                                              arrowstyle="-|>", mutation_scale=10, color="#6F9183", lw=1))
         ax.text(.14, .125, "Luồng truy vấn nguồn chỉ GET. Dashboard đọc snapshot tổng hợp cục bộ và không có thao tác ghi API.",
                 fontsize=9, color="#465C55", transform=ax.transAxes)
-        ax.text(.14, .085, "Vai trò: API lấy dữ liệu · checksum chứng minh bản chụp · ETL chuẩn hóa · DuckDB truy vấn · Python/Streamlit trình bày.",
+        ax.text(.14, .085, "Nguồn giao dịch là nhiều bảng trong cùng Pancake POS; lịch công khai chỉ bổ sung ngữ cảnh thời gian, không phải hệ thống giao dịch độc lập. API probe ngoài đơn chưa ingest.",
                 fontsize=8.5, color="#465C55", wrap=True, transform=ax.transAxes)
         pdf.savefig(fig); plt.close(fig)
 
@@ -389,7 +389,7 @@ def main(output_path: Path | None = None, font_override: str | None = None) -> N
         text_block(ax,.09,.51,
             f"Bảng dùng cohort scoring: 4.530/5.169 khách (87,6%) có một đơn; DEV status 3 là 4.526/5.174 (87,5%). K={k} được chọn, silhouette={fnum(seg['chosen_silhouette'])}. Quy tắc nghiệp vụ có {fint(sum(seg['rule_segment_counts'].values()))} khách; proxy giá trị lớn có {fint(seg['business_like_proxy']['customers'])} khách theo ngưỡng p99, không xác minh pháp nhân.",width=100,fontsize=9.1)
         text_block(ax,.09,.38,
-            "K=2 là phân đoạn mô tả theo tần suất mua (một lần / lặp lại); chưa chứng minh hai nhóm có ý nghĩa kinh doanh hay giúp ra quyết định tốt hơn. Không fit lại trên test: frozen segmenter được áp lên cùng hồ sơ trước T. Khoảng cách phân phối bằng 0 vì vậy không chứng minh hành vi tương lai ổn định. Doanh thu test chỉ báo riêng, không cập nhật tâm cụm.",width=100,fontsize=9.1)
+            "K=2 là phân đoạn mô tả theo tần suất mua (một lần / lặp lại); chưa chứng minh ý nghĩa kinh doanh. Khảo sát bổ sung RFM chuẩn hóa trên DEV: silhouette trung bình 5 seed của K=3/4/5 lần lượt 0,390146/0,385302/0,392276; không thay mô hình chính và không xác nhận nhóm có ý nghĩa hành động. Không fit lại trên test: frozen segmenter được áp lên hồ sơ trước T; khoảng cách phân phối bằng 0 không chứng minh hành vi tương lai ổn định.",width=100,fontsize=9.1)
         pdf.savefig(fig); plt.close(fig)
 
         # 12. Association
@@ -411,7 +411,7 @@ def main(output_path: Path | None = None, font_override: str | None = None) -> N
         fig, ax = fresh_page(pdf, 13, "11. Kết luận và giới hạn", "Kết quả học thuật cần được đọc cùng điều kiện dữ liệu")
         section_label(ax,.09,.86,"Kết luận")
         y=text_block(ax,.09,.825,
-            f"Quy trình tạo kho Star Schema và kiểm toán nghiệp vụ có split thời gian, hash và nhật ký amendment. K=2 là phân đoạn mô tả theo tần suất mua (một lần / lặp lại), chưa chứng minh ý nghĩa kinh doanh. 24 combo chính được khóa theo quy tắc ít nhất 4/6 ô. ROC-AUC DEV OOF C=10 là {fnum(primary_oof['roc_auc'],4)}, gần ngẫu nhiên; ROC-AUC test {fnum(c10['roc_auc'],4)} là tín hiệu yếu chưa được DEV xác nhận, không đủ để kết luận mô hình hoạt động tốt. Test đã mở; không tinh chỉnh theo kết quả test. Cấu hình ghi >T, evaluator dùng [T,end) (gồm ngày T); ảnh hưởng chưa xác định. Xem docs/test_provenance_note.md.",width=102,fontsize=9.0)
+            f"Quy trình tạo kho Star Schema và kiểm toán nghiệp vụ có split thời gian, hash và nhật ký amendment. Dữ liệu giao dịch lấy từ nhiều bảng cùng Pancake POS; lịch ngày lễ công khai là nguồn ngữ cảnh, không phải hệ thống giao dịch độc lập. K=2 là phân đoạn mô tả theo tần suất mua, chưa chứng minh ý nghĩa kinh doanh; khảo sát RFM K=3..5 trên DEV cũng không xác nhận nhóm có ý nghĩa hành động. 24 combo chính được khóa theo quy tắc ít nhất 4/6 ô. ROC-AUC DEV OOF C=10 là {fnum(primary_oof['roc_auc'],4)}, gần ngẫu nhiên; ROC-AUC test {fnum(c10['roc_auc'],4)} là tín hiệu yếu chưa được DEV xác nhận, không đủ để kết luận mô hình hoạt động tốt. Test đã mở; không tinh chỉnh theo kết quả test. Cấu hình ghi >T, evaluator dùng [T,end) (gồm ngày T); ảnh hưởng chưa xác định. Xem docs/test_provenance_note.md.",width=102,fontsize=9.0)
         section_label(ax,.09,y-.025,"Hạn chế")
         text_block(ax,.09,y-.06,
             f"• Khoảng hiệu dụng khoảng 18 tháng và chỉ có một Tết trọn vẹn trong DEV.\n• 91,92% doanh thu theo tỉnh/thành mang nhãn UNKNOWN; không so sánh địa lý.\n• Thiếu dữ liệu phản hồi có nhãn; không thực hiện bài phân loại phản hồi.\n• 903 dòng inferred_subset là suy luận có thể gán nhầm; cờ API không bật.\n• Không có giá vốn nên không thể kết luận lợi nhuận combo.\n• Status hiện tại không phải lịch sử trạng thái; doanh thu ghi nhận theo xác nhận nghiệp vụ.\n• Một cửa sổ test không chứng minh khả năng tổng quát qua nhiều mùa.",width=100,fontsize=9.4)

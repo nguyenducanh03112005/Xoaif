@@ -23,7 +23,7 @@ Dashboard Streamlit đọc các bảng từ `outputs/tables/` và `outputs/metri
 - `gift_line_audit.csv`
 - `gift_line_rates_monthly.csv`
 - `gift_line_rates_order_size.csv`
-- `dashboard_sales_province.csv` — không còn là đầu vào dashboard (91,92% doanh thu là `UNKNOWN`); được giữ vì `scripts/verify_day3_locks.py` và báo cáo PDF đọc bảng này. Có ô tỉnh chỉ 1–3 đơn; chỉ là aggregate, không có khách hay đơn riêng lẻ.
+- `dashboard_sales_province.csv` — không còn là đầu vào dashboard (91,92% doanh thu là `UNKNOWN`); được giữ vì `scripts/verify_day3_locks.py` và báo cáo PDF đọc bảng này. Các tỉnh dưới 10 đơn được gộp thành một dòng tổng hợp; UNKNOWN giữ riêng để tính tỷ trọng thiếu dữ liệu.
 
 **JSON**
 
@@ -46,7 +46,7 @@ T1/T2 evidence aggregate: `outputs/tables/cohort_bridge_verified.json`; chứa s
 
 ## Rà soát dữ liệu
 
-- `scripts/dashboard_smoke.py` kiểm tra 10 CSV và 6 JSON được dashboard dùng, schema cột và các tên trường định danh bị cấm.
+- `scripts/dashboard_smoke.py` kiểm tra 10 CSV và 6 JSON được dashboard dùng, schema cột và các tên trường định danh bị cấm. `scripts/sanitize_dashboard_aggregates.py` gộp sản phẩm và tỉnh có ít lượt đơn; ẩn ô status/gift đã rà soát. Số dòng trong bảng gift-line không phải số khách hay số đơn nên giữ theo chính sách đã duyệt.
 - `scripts/verify_pii.py` quét docs, notebooks, outputs, slides, report, src và README; kết quả lượt bàn giao ghi trong bundle.
 - Báo cáo và slide được dựng từ các bảng/metric aggregate trên, không đọc `data/raw/` hoặc `data/restricted/`.
 - Không đưa snapshot raw, DuckDB restricted, bảng khách/đơn từng dòng, model artifact hoặc file môi trường vào danh sách nộp.

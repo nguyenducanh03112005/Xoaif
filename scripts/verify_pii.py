@@ -13,8 +13,8 @@ EMAIL = re.compile(r"\b[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}\b", re.IGNORECASE)
 VIETNAMESE_PHONE = re.compile(r"(?<!\d)(?:\+?84|0(?![.,]\d))(?:[ \t().-]?\d){8,10}(?!\d)")
 HASH_DIGEST = re.compile(r"(?<![0-9A-Fa-f])[0-9A-Fa-f]{64}(?![0-9A-Fa-f])")
 ADDRESS_LIKE = re.compile(
-    r"\b(?:số\s*)?\d{1,5}(?:/\d{1,5})?\s+"
-    r"[\wÀ-ỹĐđ]+(?:\s+[\wÀ-ỹĐđ]+){0,4},?\s+"
+    r"\b(?:số[ \t]*)?\d{1,5}(?:/\d{1,5})?[ \t]+"
+    r"[\wÀ-ỹĐđ]+(?:[ \t]+[\wÀ-ỹĐđ]+){0,4},?[ \t]+"
     r"(?:phường|xã|quận|huyện|thành phố|tỉnh)\b",
     re.IGNORECASE,
 )

@@ -24,11 +24,22 @@ _SENSITIVE_QUERY_KEYS = {
     "x-api-key",
 }
 _TRANSIENT_STATUSES = {429, 500, 502, 503, 504}
-_ALLOWED_SHOPS_PATH = re.compile(r"/shops/(?P<shop_id>\d+)/orders\Z")
+_ALLOWED_SHOPS_PATHS = (
+    re.compile(r"/shops/(?P<shop_id>\d+)/orders\Z"),
+    re.compile(r"/shops/(?P<shop_id>\d+)/products/variations\Z"),
+    re.compile(r"/shops/(?P<shop_id>\d+)/customers\Z"),
+    re.compile(r"/shops/(?P<shop_id>\d+)/shopee/evaluate\Z"),
+    re.compile(r"/shops/(?P<shop_id>\d+)/ads_manager/ad_accounts\Z"),
+    re.compile(r"/shops/(?P<shop_id>\d+)/ads_manager/campaigns_v2\Z"),
+)
 
 
 class PancakeAPIError(RuntimeError):
     """Sanitized API error that never includes request or response contents."""
+
+    def __init__(self, message: str, *, status_code: int | None = None) -> None:
+        super().__init__(message)
+        self.status_code = status_code
 
 
 class ReadOnlyViolationError(PermissionError):
@@ -59,7 +70,7 @@ def redact_url(url: str) -> str:
 
 
 class PancakeClient:
-    """Small read-only client; pagination and unverified parameters are omitted."""
+    """Small read-only client restricted to explicitly allowlisted endpoints."""
 
     def __init__(
         self,
@@ -119,11 +130,27 @@ class PancakeClient:
         *,
         params: Mapping[str, Any] | None = None,
     ) -> Any:
+        """Perform an allowlisted GET and return its JSON payload."""
+        payload, _ = self.request_with_status(method, path, params=params)
+        return payload
+
+    def request_with_status(
+        self,
+        method: str,
+        path: str,
+        *,
+        params: Mapping[str, Any] | None = None,
+    ) -> tuple[Any, int]:
         """Perform an allowlisted GET; reject all other methods before sending."""
         if not isinstance(method, str) or method.upper() != "GET":
             raise ReadOnlyViolationError("Only GET requests are allowed.")
         if path != "/shops":
-            match = _ALLOWED_SHOPS_PATH.fullmatch(path) if isinstance(path, str) else None
+            match = None
+            if isinstance(path, str):
+                for candidate in _ALLOWED_SHOPS_PATHS:
+                    match = candidate.fullmatch(path)
+                    if match is not None:
+                        break
             if match is None or match.group("shop_id") != self._settings.shop_id:
                 raise ValueError("Endpoint is not in the Pancake read allowlist.")
 
@@ -148,7 +175,7 @@ class PancakeClient:
                 if retryable and attempt + 1 < self._max_attempts:
                     time.sleep(self._backoff_seconds * (2**attempt))
                     continue
-                LOGGER.error("Pancake GET failed: %s (%s)", safe_path, type(exc).__name__)
+                LOGGER.error("Pancake GET failed (%s).", type(exc).__name__)
                 raise PancakeAPIError(
                     f"GET {safe_path} failed ({type(exc).__name__})."
                 ) from None
@@ -158,18 +185,25 @@ class PancakeClient:
                 time.sleep(self._backoff_seconds * (2**attempt))
                 continue
             if status < 200 or status >= 300:
-                LOGGER.error("Pancake GET returned HTTP %s: %s", status, safe_path)
-                raise PancakeAPIError(f"GET {safe_path} returned HTTP {status}.")
+                LOGGER.error("Pancake GET returned HTTP %s.", status)
+                raise PancakeAPIError(
+                    f"GET {safe_path} returned HTTP {status}.",
+                    status_code=status,
+                )
 
             try:
                 payload = response.json()
             except (ValueError, requests.exceptions.JSONDecodeError):
                 raise PancakeAPIError(
-                    f"GET {safe_path} returned invalid JSON."
+                    f"GET {safe_path} returned invalid JSON.",
+                    status_code=status,
                 ) from None
 
             if isinstance(payload, dict) and payload.get("success") is False:
-                raise PancakeAPIError(f"GET {safe_path} returned success=false.")
-            return payload
+                raise PancakeAPIError(
+                    f"GET {safe_path} returned success=false.",
+                    status_code=status,
+                )
+            return payload, status
 
         raise PancakeAPIError(f"GET {safe_path} exhausted retry attempts.")

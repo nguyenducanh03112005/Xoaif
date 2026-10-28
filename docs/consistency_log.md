@@ -60,3 +60,25 @@ Trước hạn 2026-10-27, hai thành viên tự chạy kiểm tra an toàn và 
 - K=2 được chuẩn hóa thành “phân đoạn mô tả theo tần suất mua (một lần / lặp lại)” trong narrative, dashboard và PDF/slide builders. Tạo hướng dẫn refresh theo lô; extractor không chạy.
 - Hygiene: `git ls-files` không tìm thấy env secret, raw/restricted data, DuckDB hay artifact dòng khách/nhãn/prediction; kết quả `xoaif.env.example` là mẫu cấu hình. `.codex/` không được track và đã nằm trong `.gitignore`.
 - Hậu kiểm sau cập nhật: Day 3 locks và hash bảo vệ đạt; `run_all.py` hậu mở đạt, 75 pytest, PII scan, dashboard smoke (5 tab/10 CSV/6 JSON/405 dòng) đều đạt. Không evaluator, notebook hoặc fit/refit.
+
+## Cập nhật hậu mở theo D-024 — 2026-10-28
+
+Phạm vi: aggregate đã có, bảng nhãn DEV và lịch công khai thủ công. Không đọc order pages, không truy cập kho restricted, không đọc lại test records/labels hoặc gọi API. `verify_split_lock.py` chỉ đọc manifest metadata để xác minh hash theo kiểm tra bắt buộc. Lịch sử các vòng rà soát trước vẫn giữ nguyên; kết quả dưới đây là bổ sung theo Amendments 06–10.
+
+1. **Cohort:** cầu nối đã đối soát `5.499 − 325 = 5.174 − 5 = 5.169`, dư chưa giải thích bằng 0. Định nghĩa từng bước ở `docs/cohort_definitions.md` và `docs/cohort_reconciliation.md`.
+2. **Tỉnh/thành:** DEV có tên/mã tỉnh chính ở 540/6.400 đơn status 3; 5.860/6.400 (91,56%) UNKNOWN. Doanh thu UNKNOWN là 2.384.693.718/2.628.354.091 VND (90,73%). `new_province_id` bổ sung 23 mã chưa có mapping xác minh; không khôi phục tab tỉnh.
+3. **Ngày T:** độ nhạy DEV có 3 mẫu khách–T có đơn đúng T; do thiếu cờ quà cấp đơn, chỉ báo cận 260–262/3.508 (7,41%–7,47%), không gọi là ước lượng chính xác và không suy ra tác động test.
+4. **Kênh:** DEV có Facebook 3.722/6.400 (58,16%), thiếu nguồn 2.404/6.400 (37,56%), Instagram gộp với nguồn hiếm 274/6.400 (4,28%). Không thấy nhãn Shopee/sàn tường minh không chứng minh shop không bán trên sàn. Ô nhỏ được ẩn theo `docs/channel_monthly_coverage.md`.
+5. **Probe Pancake:** probe chỉ GET trên 5 endpoint allowlist, mẫu tối đa 500; products 832 entries/482 mẫu/394 match (81,74%), customers 13.232 entries/482 mẫu/194 match `customer_id` (40,25%), ba endpoint còn lại có 0 entries. Match là trên mẫu, không đại diện population; chưa ingest endpoint nào.
+6. **Phân cụm:** K=2 còn là phân đoạn mô tả một lần/lặp lại, chưa chứng minh ý nghĩa kinh doanh. RFM silhouette trung bình qua 5 seed: K=3 0,390146; K=4 0,385302; K=5 0,392276 — gần nhau, không đủ cơ sở chọn phân cụm kinh doanh.
+7. **Lịch thời gian:** chạy DEV-only rolling-origin, 3.508 mẫu, 5 folds/1.558 dự đoán OOF; pooled ROC-AUC/AP 0,5279/0,0800 cho feature gốc và 0,5181/0,0767 khi thêm thời gian. Không cải thiện và không thay mô hình chính.
+8. **Refresh/dashboard:** live refresh bị chặn vì hợp đồng `updated_at` chưa xác minh; chế độ replay không chạy vì cần đọc/ghi `data/raw`. Dashboard chỉ dùng aggregate khóa, nêu snapshot `20261024T052943Z` và ghi rõ chưa có dữ liệu refresh được xác minh.
+9. **Kiểm chứng:** pytest 105 passed; dashboard smoke 5 tab/10 CSV/6 JSON/405 hàng pass; PII text scan pass; `git diff --check` pass. `verify_split_lock.py` và `verify_day3_locks.py --shipped-only` pass; lock hiện có 39 sealed input hashes và tất cả input đã kiểm tra khớp. Không chạy evaluator test, notebook hay API.
+
+Các thay đổi hồ sơ được gắn Amendments 06–10 trong `docs/amendment_log.md`; không đổi `config/split.yaml`, split/test locks, Amendment 01–05, test artifact hay field allowlist.
+
+## Cập nhật phát hành aggregate — 2026-10-28
+
+- Bổ sung bảng `dashboard_sales_province.csv` vào bước xử lý ô nhỏ: 20 tỉnh dưới 10 đơn được gộp thành `Các tỉnh khác — từng tỉnh dưới 10 đơn` (38 đơn; 16.674.000 VND). Tổng orders và recognized revenue được bảo toàn; `UNKNOWN` giữ nguyên để tính tỷ lệ thiếu tỉnh. Không thay đổi test lock, split hay metric.
+- Chính sách đã chọn: giữ số 5 khách chỉ có đơn quà trong cầu cohort để giải thích `5.499 − 325 = 5.174 − 5 = 5.169`; giữ count gift-line vì đó là số dòng hàng, không phải số khách/đơn.
+- Chạy lại sanitizer và dựng báo cáo/slide PDF. Test tập trung suppression + holiday + endpoint probe + batch refresh: 16 passed; full suite: 108 passed. PII scanner được giới hạn whitespace địa chỉ trong một dòng để không nối các dòng CSV liền kề; test hồi quy xác nhận hành vi này. PII scan, dashboard smoke, split lock, shipped Day 3 lock và `git diff --check` đều pass. Kiểm tra hiển thị PDF và metadata: báo cáo A4 15 trang, slide 15 trang.

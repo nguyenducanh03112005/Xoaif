@@ -84,7 +84,7 @@ A — khoảng 1 phút; B bổ sung schema.
 Luồng năm tầng đưa dữ liệu từ nguồn đọc-only qua snapshot, ETL và kho đến dashboard/PDF aggregate.
 
 ### Lời thoại
-Kiến trúc gồm năm tầng: thu nhận, snapshot, bảo vệ và ETL, kho và khai phá, rồi trình bày. Dashboard đọc CSV/JSON aggregate tại chỗ và không gọi Pancake API. Kho DEV tổ chức fact đơn, fact dòng hàng cùng các dimension cần cho truy vấn. Giới hạn là sản phẩm trình bày chỉ phản ánh các aggregate đã tạo, không cho phép suy ra dữ liệu chi tiết từng khách.
+Kiến trúc gồm năm tầng: thu nhận, snapshot, bảo vệ và ETL, kho và khai phá, rồi trình bày. Dữ liệu giao dịch lấy từ nhiều bảng trong cùng Pancake POS; khảo sát bổ sung dùng lịch ngày lễ/Tết công khai làm ngữ cảnh thời gian, không phải một hệ thống giao dịch độc lập. Các endpoint metadata ngoài đơn chưa được ingest. Dashboard đọc CSV/JSON aggregate tại chỗ và không gọi Pancake API. Kho DEV tổ chức fact đơn, fact dòng hàng cùng các dimension cần cho truy vấn. Giới hạn là sản phẩm trình bày chỉ phản ánh các aggregate đã tạo, không cho phép suy ra dữ liệu chi tiết từng khách.
 
 ### Số cần nhớ
 - Năm tầng; các bảng fact/dimension — slides/xoaif_print.pdf, docs/architecture_matrix.md, docs/data_dictionary.md.
@@ -286,7 +286,7 @@ B — khoảng 1 phút; A nhấn mạnh giới hạn nhãn.
 K=2 là phân đoạn mô tả theo tần suất mua (một lần / lặp lại) trong hồ sơ trước T, không phải nhãn về hành vi tương lai.
 
 ### Lời thoại
-K-Means K=2 là phân đoạn mô tả theo tần suất mua (một lần / lặp lại) với silhouette 0,508. Trong cohort scoring, 4.530 trên 5.169 khách có một đơn, tương đương 87,6%; nhóm proxy giá trị lớn có 62 khách. RFM mô tả lịch sử trước T chứ không dự báo tình trạng tương lai. Proxy giá trị lớn không xác minh pháp nhân và chưa chứng minh ý nghĩa kinh doanh của các nhóm.
+K-Means K=2 là phân đoạn mô tả theo tần suất mua (một lần / lặp lại) với silhouette 0,508. Khảo sát bổ sung RFM chuẩn hóa trên DEV có silhouette trung bình theo 5 seed là 0,390146, 0,385302 và 0,392276 lần lượt cho K=3, 4 và 5; không thay mô hình chính và không chứng minh ý nghĩa kinh doanh. Trong cohort scoring, 4.530 trên 5.169 khách có một đơn, tương đương 87,6%; nhóm proxy giá trị lớn có 62 khách. RFM mô tả lịch sử trước T chứ không dự báo tình trạng tương lai. Proxy giá trị lớn không xác minh pháp nhân và chưa chứng minh ý nghĩa kinh doanh của các nhóm.
 
 ### Số cần nhớ
 - K=2, silhouette 0,508 — docs/canonical_numbers.md, outputs/metrics/day2_segmentation.json.

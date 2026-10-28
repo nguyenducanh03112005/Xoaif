@@ -29,6 +29,7 @@ outputs/metrics/*
 !outputs/metrics/day2_money_audit.json
 !outputs/metrics/day2_segmentation.json
 !outputs/metrics/day3_combo_prereg.json
+!outputs/metrics/holiday_time_supplement_dev.json
 # Integrity evidence needed by scripts/verify_day3_locks.py and run_all.py
 # (committable once present locally; they hold hashes/flags, no raw values)
 !outputs/metrics/test_opened.lock.json
@@ -88,3 +89,6 @@ data/*
 data/sample/*
 !data/sample/README.md
 !data/sample/*.csv
+!data/reference/
+data/reference/*
+!data/reference/vietnam_holiday_sale_calendar_2024-04_to_2026-10.csv

@@ -1,0 +1,21 @@
+date,event_type,event_name,source_url,source_evidence,assumption
+2024-04-18,public_holiday,Hung Kings Temple Festival,https://www.officeholidays.com/countries/vietnam/2024,2024 holiday calendar lists 18 April,Date used as calendar marker
+2024-04-30,public_holiday,Reunification Day,https://vanban.chinhphu.vn/?pageid=27160&docid=198540,Labour Code 45/2019/QH14 Article 112(1)(d),Statutory fixed date
+2024-05-01,public_holiday,International Labour Day,https://vanban.chinhphu.vn/?pageid=27160&docid=198540,Labour Code 45/2019/QH14 Article 112(1)(d),Statutory fixed date
+2024-09-02,public_holiday,National Day,https://vanban.chinhphu.vn/?pageid=27160&docid=198540,Labour Code 45/2019/QH14 Article 112(1)(e),Only the fixed statutory date is included; adjacent days off are omitted
+2024-11-11,sale_proxy,11.11 shopping-date proxy,https://www.onlinefriday.vn/,The 2026 Online Friday campaign page identifies 11/11 as its start date,2024 occurrence is an annual fixed-date proxy and is not verified as a shop-specific campaign
+2024-12-12,sale_proxy,12.12 e-commerce-date proxy,https://www.onlinefriday.vn/,The page identifies 12/12 as Vietnam E-commerce Day and a campaign peak,2024 occurrence is an annual fixed-date proxy and is not verified as a shop-specific campaign
+2025-01-01,public_holiday,New Year's Day,https://vanban.chinhphu.vn/?pageid=27160&docid=198540,Labour Code 45/2019/QH14 Article 112(1)(a),Statutory fixed date
+2025-01-29,tet,Tet Nguyen Dan (At Ty),https://xaydungchinhsach.chinhphu.vn/danh-sach-cac-diem-ban-phao-hoa-dip-tet-duong-lich-2025-va-tet-nguyen-dan-at-ty-tai-ha-noi-119241230172030261.htm,Government news page states fireworks at midnight starting 29 January 2025,Use the first day of Tet as the event marker
+2025-04-07,public_holiday,Hung Kings Temple Festival,https://www.officeholidays.com/countries/vietnam/2025,2025 holiday calendar lists 7 April,Date used as calendar marker
+2025-04-30,public_holiday,Reunification Day,https://vanban.chinhphu.vn/?pageid=27160&docid=198540,Labour Code 45/2019/QH14 Article 112(1)(d),Statutory fixed date
+2025-05-01,public_holiday,International Labour Day,https://vanban.chinhphu.vn/?pageid=27160&docid=198540,Labour Code 45/2019/QH14 Article 112(1)(d),Statutory fixed date
+2025-09-02,public_holiday,National Day,https://vanban.chinhphu.vn/?pageid=27160&docid=198540,Labour Code 45/2019/QH14 Article 112(1)(e),Only the fixed statutory date is included; adjacent days off are omitted
+2025-11-11,sale_proxy,11.11 shopping-date proxy,https://www.onlinefriday.vn/,The 2026 Online Friday campaign page identifies 11/11 as its start date,2025 occurrence is an annual fixed-date proxy and is not verified as a shop-specific campaign
+2025-12-12,sale_proxy,12.12 e-commerce-date proxy,https://www.onlinefriday.vn/,The page identifies 12/12 as Vietnam E-commerce Day and a campaign peak,2025 occurrence is an annual fixed-date proxy and is not verified as a shop-specific campaign
+2026-01-01,public_holiday,New Year's Day,https://vanban.chinhphu.vn/?pageid=27160&docid=198540,Labour Code 45/2019/QH14 Article 112(1)(a),Statutory fixed date
+2026-02-17,tet,Tet Nguyen Dan (Binh Ngo),https://www.officeholidays.com/countries/vietnam/2026,2026 holiday calendar lists 17 February as Tet Nguyen Dan,Use the first day of Tet as the event marker
+2026-04-27,public_holiday,Hung Kings Temple Festival observed,https://www.officeholidays.com/countries/vietnam/2026,2026 holiday calendar lists 27 April as the national holiday,Use the listed observed public-holiday date
+2026-04-30,public_holiday,Reunification Day,https://vanban.chinhphu.vn/?pageid=27160&docid=198540,Labour Code 45/2019/QH14 Article 112(1)(d),Statutory fixed date
+2026-05-01,public_holiday,International Labour Day,https://vanban.chinhphu.vn/?pageid=27160&docid=198540,Labour Code 45/2019/QH14 Article 112(1)(d),Statutory fixed date
+2026-09-02,public_holiday,National Day,https://vanban.chinhphu.vn/?pageid=27160&docid=198540,Labour Code 45/2019/QH14 Article 112(1)(e),Only the fixed statutory date is included; adjacent days off are omitted
