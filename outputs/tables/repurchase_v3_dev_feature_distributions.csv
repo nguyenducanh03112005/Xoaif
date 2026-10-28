@@ -1,0 +1,4 @@
+universe,n,customers,recency_mean,recency_p25,recency_median,recency_p75,frequency_mean,frequency_p25,frequency_median,frequency_p75,quantiles_available
+Mẫu DEV hiện tại (một snapshot/khách),3508,3508,15.770809578107183,9.0,15.0,23.0,1.0561573546180159,1.0,1.0,1.0,True
+DEV snapshot đa mốc,21638,3508,118.62889361308808,45.0,103.0,173.75,1.1353174969960256,1.0,1.0,1.0,True
+"Cohort scoring test, aggregate đã commit",5169,5169,269.3072160959567,,,,1.1787579802669763,,,,False

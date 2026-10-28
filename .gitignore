@@ -8,6 +8,7 @@ Xoaif.env
 
 # Restricted and source data
 data/
+Giáo trình/
 *.duckdb
 *.duckdb.wal
 *.parquet
@@ -30,6 +31,7 @@ outputs/metrics/*
 !outputs/metrics/day2_segmentation.json
 !outputs/metrics/day3_combo_prereg.json
 !outputs/metrics/holiday_time_supplement_dev.json
+!outputs/metrics/repurchase_v3_dev.json
 # Integrity evidence needed by scripts/verify_day3_locks.py and run_all.py
 # (committable once present locally; they hold hashes/flags, no raw values)
 !outputs/metrics/test_opened.lock.json
@@ -45,6 +47,7 @@ outputs/tables/*
 !outputs/tables/combos_v2.csv
 !outputs/tables/seasonal_pair_metrics.csv
 !outputs/tables/cohort_bridge_verified.json
+!outputs/tables/repurchase_v3_dev_*.csv
 !outputs/tables/gift_line_*.csv
 !report/xoaif_report.pdf
 !slides/xoaif_print.pdf

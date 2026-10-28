@@ -81,3 +81,25 @@ Cấu hình ghi >T, evaluator dùng [T,end) (gồm ngày T); ảnh hưởng chư
 | Slide in | 15 trang ngang | `pdfinfo slides/xoaif_print.pdf`: `Pages`. Không tạo PPTX vì môi trường thiếu `python-pptx`. |
 | Kiểm thử | 78 passed, 1 skipped ở lần hậu kiểm clone-mode | Log `scripts/run_all.py`: test cần DuckDB restricted được skip vì clone không chứa DB; không chạy evaluator, notebook hay fit/refit model. |
 | Hạn nộp | 2026-10-27; thời lượng và rubric chính thức chưa có | Chủ dự án cung cấp trong yêu cầu ngày 2026-10-26; được ghi ở `docs/schedule.md`. |
+
+## WP5 — Khảo sát cohort và Logistic Regression v3 (DEV-only)
+
+Toàn bộ số dưới đây có nhãn **khám phá, chưa xác nhận ngoài mẫu**. Mọi bootstrap 95% theo khách, 2.000 lần, seed 20261028. Nguồn script: `scripts/analyze_repurchase_v3_dev.py`; giao thức trước phân tích: `docs/analysis_plan_wp5.md`.
+
+| Đại lượng | Số chuẩn, cohort và đơn vị | Nguồn |
+|---|---|---|
+| Snapshot đa mốc | 21.638 snapshot khách–T qua 12 mốc tháng; 3.508 khách duy nhất; 1.086 nhãn dương (5,02%) | `outputs/metrics/repurchase_v3_dev.json`: `n_candidate_T`, `snapshot_rows`, `unique_customers`, `positive_snapshots`, `positive_rate`. DEV, T+N+L trước test start. |
+| Temporal OOF | 5 fold; 14.394 snapshot validation / 3.508 khách / 600 dương (4,17%) | `outputs/tables/repurchase_v3_dev_fold_metrics.csv`; tổng hợp `outputs/metrics/repurchase_v3_dev.json`. Các fold sớm không có train label trưởng thành đủ N+L. |
+| Recency mẫu DEV hiện tại | 3.508 snapshot một lần/khách; mean 15,77 ngày; P25/median/P75 = 9/15/23 | `outputs/tables/repurchase_v3_dev_feature_distributions.csv`; script WP5. |
+| Frequency mẫu DEV hiện tại | 3.508 khách; mean 1,056 đơn; P25/median/P75 = 1/1/1 | Cùng nguồn trên; DEV. |
+| Recency DEV đa mốc | 21.638 snapshot/3.508 khách; mean 118,63 ngày (CI 116,94–120,38); P25/median/P75 = 45/103/173,75 | Cùng nguồn; CI theo khách, các snapshot cùng khách được giữ cùng nhau. |
+| Frequency DEV đa mốc | 21.638 snapshot/3.508 khách; mean 1,135 (CI 1,119–1,152); P25/median/P75 = 1/1/1 | Cùng nguồn; đơn hợp lệ trước mỗi T. |
+| Test scoring cohort — aggregate đã commit | 5.169 khách; mean recency 269,31 ngày; mean frequency 1,179. Quantile/phân phối đầy đủ không có trong aggregate. | `outputs/tables/test_segment_profiles.csv`, chỉ cohort `test_pre_T`, scheme K=2; `scripts/analyze_repurchase_v3_dev.py` chỉ đọc số khách và mean pre-T. Không đọc test raw. |
+| Baseline cũ pooled | ROC-AUC 0,53617; AP 0,06706; 1.558 OOF. ROC-AUC từng fold = 0,5; prevalence score giữa folds 0,08514–0,08913. | Tái tạo bằng `scripts/analyze_repurchase_v3_dev.py` trên mẫu DEV hiện tại; chi tiết trong `outputs/metrics/repurchase_v3_dev.json`. AUC pooled đến từ thay đổi hằng số giữa fold, không xếp hạng trong fold. |
+| Baseline chung WP5 | Pooled OOF ROC-AUC 0,500; AP 0,04168; Brier 0,04210; 14.394 OOF snapshot / 600 dương. | `outputs/metrics/repurchase_v3_dev.json`: `pooled_metrics_and_customer_bootstrap_95.metrics`, strategy `constant_common`; 95% CI ROC 0,500–0,500, AP 0,0361–0,0479. |
+| Chỉ recency — Logistic Regression | ROC-AUC 0,5953 (CI 0,5591–0,6334); AP 0,06237 (0,05223–0,07646); Brier 0,12551. | Cùng nguồn WP5; OOF DEV, chỉ `recency_days`. |
+| Chỉ frequency — Logistic Regression | ROC-AUC 0,5914 (CI 0,5514–0,6307); AP 0,09885 (0,06812–0,14389); Brier 0,24447. | Cùng nguồn WP5; OOF DEV, chỉ `frequency`. Không chọn làm mô hình chính. |
+| Logistic Regression v3 | ROC-AUC 0,5551 (CI 0,5154–0,5954); AP 0,06406 (0,05070–0,08355); Brier 0,11723. | Cùng nguồn WP5; OOF DEV. Không thay D-005 và chưa xác nhận ngoài mẫu. |
+| V3 precision@top-k | 5%: 11,25% (CI 7,87–15,04); 10%: 8,26% (6,22–10,45); 20%: 6,63% (5,34–7,97). | `outputs/tables/repurchase_v3_dev_top_k.csv`; validation OOF DEV, tỷ lệ dương quan sát, không phải uplift hay dự báo. |
+| V3 decile đầu | Tỷ lệ dương quan sát 8,27% (CI 6,22–10,45), lift 1,98 lần prevalence OOF; bắt 19,83% tổng số dương OOF | `outputs/tables/repurchase_v3_dev_deciles.csv`; pooled OOF DEV. |
+| V3 calibration | Decile điểm cao nhất mean predicted 63,68%, observed 8,26%; Brier 0,11723 | `outputs/tables/repurchase_v3_dev_calibration.csv`, `outputs/metrics/repurchase_v3_dev.json`; không diễn giải score là xác suất đã hiệu chỉnh. |

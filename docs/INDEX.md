@@ -27,6 +27,9 @@ Theo toàn bộ lịch 0–120 phút trong [handover](handover.md): phạm vi v�
 - [day2_summary.md](day2_summary.md) — Tóm tắt các nhóm khai phá và kết quả; đọc để nắm phần phân tích.
 - [test_audit.md](test_audit.md) — Rà soát ranh giới DEV/test; đọc khi cần giải thích kiểm soát test.
 - [metric_rationale.md](metric_rationale.md) — Giải thích các metric phân loại; đọc khi trình bày đánh giá mô hình.
+- [analysis_plan_wp5.md](analysis_plan_wp5.md) — Giao thức WP5 đăng ký trước; đọc trước khi diễn giải khảo sát mô hình v3.
+- [cohort_mismatch_analysis.md](cohort_mismatch_analysis.md) — So sánh mẫu DEV hiện tại, DEV snapshot đa mốc và test aggregate; đọc khi trình bày chênh lệch ROC.
+- [course_alignment.md](course_alignment.md) — Ánh xạ khái niệm giáo trình với nơi áp dụng trong dự án.
 - [data_gap_report.md](data_gap_report.md) — Ghi lại khoảng trống dữ liệu và phạm vi; đọc khi nêu hạn chế.
 - [data_quality.md](data_quality.md) — Kiểm toán tỉnh/thành UNKNOWN và giới hạn ánh xạ địa chỉ; đọc trước khi diễn giải dữ liệu địa lý.
 - [channel_monthly_coverage.md](channel_monthly_coverage.md) — Tổng hợp kênh đơn DEV theo tháng với ô nhỏ được ẩn; đọc khi cần căn cứ mức bao phủ nguồn/kênh.

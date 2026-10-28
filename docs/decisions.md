@@ -201,3 +201,11 @@
 - **Ranh giới:** Không đọc lại test records/labels; không sửa split, lock hay Amendment 01–05; không gọi API trong lượt kiểm tra hiện tại; không ingest, không ghi API key/PII, không ghi vào `data/raw` hoặc `data/restricted`; không tạo PPTX.
 - **Quan hệ với D-022:** D-022 vẫn là quyết định lịch sử về việc không chạy chẩn đoán anchor chưa được phê duyệt khi đó. D-024 chỉ cho phép khảo sát mới có phạm vi hẹp; kết quả DEV bổ sung không xác nhận mô hình trên test.
 
+## D-025 — Snapshot đa mốc và fold v3 cho WP5
+
+- **Ngày:** 2026-10-28.
+- **Người quyết định:** Chủ dự án.
+- **Quyết định:** Cho phép khảo sát WP5 chỉ trên DEV với snapshot tháng đa mốc, đăng ký trước tại `docs/analysis_plan_wp5.md`. Trong fold temporal v3, cùng khách có thể xuất hiện ở nhiều mốc T và ở các fold khác nhau. Bảo vệ nhãn bằng điều kiện `train_T + N + L < validation_T`; giữ N=180, L=7 theo split đã khóa.
+- **Triển khai:** Viết hàm tạo snapshot/fold riêng cho v3; không sửa `build_label_samples` hoặc `build_folds` hiện hành và không thay kết quả đã freeze. Tính CI bằng bootstrap theo khách để giữ các snapshot cùng khách trong cùng đơn vị lấy mẫu.
+- **Phạm vi/bảo vệ:** DEV-only, khám phá, chưa xác nhận ngoài mẫu. Không đọc lại nhãn/hành vi/đơn test; chỉ dùng bảng aggregate test đã commit nếu tương thích. Không tuning/chọn mô hình dựa trên test; không thay D-005. Cập nhật này không sửa file cấu hình/lock đã khóa.
+

@@ -1,0 +1,671 @@
+{
+  "status": "exploratory_dev_only_not_confirmed_out_of_sample",
+  "protocol_sha256": "ebf26802ce20814c93d836c0b67e6c17a8ce53d5e65d23b56622bd034cf5e94f",
+  "snapshot_id": "20261024T052943Z",
+  "analysis_window": "DEV only; T + N + L strictly before test_start",
+  "test_start": "2025-10-22",
+  "test_scope_access": {
+    "date_field_read_for_dev_gate": "inserted_at",
+    "other_test_order_fields_accessed": false,
+    "test_labels_or_behavior_constructed": false,
+    "test_aggregate_source": "outputs/tables/test_segment_profiles.csv; K=2, test_pre_T rows; only customer count and pre-T recency/frequency means read"
+  },
+  "dev_status3_order_count": 6400,
+  "n_candidate_T": 12,
+  "snapshot_rows": 21638,
+  "unique_customers": 3508,
+  "positive_snapshots": 1086,
+  "positive_rate": 0.05018948146778815,
+  "fold_count": 5,
+  "common_baseline": {
+    "common_baseline_probability": 0.0881057268722467
+  },
+  "pooled_metrics_and_customer_bootstrap_95": {
+    "metrics": [
+      {
+        "strategy": "constant_common",
+        "n": 14394,
+        "customers": 3508,
+        "positive_n": 600,
+        "prevalence": 0.041684035014589414,
+        "roc_auc": 0.5,
+        "average_precision": 0.041684035014589414,
+        "brier": 0.04210144971441919
+      },
+      {
+        "strategy": "frequency_only",
+        "n": 14394,
+        "customers": 3508,
+        "positive_n": 600,
+        "prevalence": 0.041684035014589414,
+        "roc_auc": 0.5914173432893528,
+        "average_precision": 0.09885054411617658,
+        "brier": 0.24446740450891447
+      },
+      {
+        "strategy": "logistic_v3",
+        "n": 14394,
+        "customers": 3508,
+        "positive_n": 600,
+        "prevalence": 0.041684035014589414,
+        "roc_auc": 0.5551019162921077,
+        "average_precision": 0.06405995906590659,
+        "brier": 0.11723287756241173
+      },
+      {
+        "strategy": "recency_only",
+        "n": 14394,
+        "customers": 3508,
+        "positive_n": 600,
+        "prevalence": 0.041684035014589414,
+        "roc_auc": 0.5953027282393311,
+        "average_precision": 0.06237085632613526,
+        "brier": 0.1255080515753192
+      }
+    ],
+    "calibration": [
+      {
+        "strategy": "constant_common",
+        "bin": 1,
+        "n": 14394,
+        "mean_predicted": 0.0881057268722467,
+        "observed_rate": 0.041684035014589414
+      },
+      {
+        "strategy": "frequency_only",
+        "bin": 1,
+        "n": 4649,
+        "mean_predicted": 0.43611741817013205,
+        "observed_rate": 0.03420090342009034
+      },
+      {
+        "strategy": "frequency_only",
+        "bin": 2,
+        "n": 2335,
+        "mean_predicted": 0.44060853748902323,
+        "observed_rate": 0.03640256959314775
+      },
+      {
+        "strategy": "frequency_only",
+        "bin": 3,
+        "n": 2730,
+        "mean_predicted": 0.4462445933121623,
+        "observed_rate": 0.030036630036630037
+      },
+      {
+        "strategy": "frequency_only",
+        "bin": 4,
+        "n": 3126,
+        "mean_predicted": 0.4490550864448179,
+        "observed_rate": 0.02815099168266155
+      },
+      {
+        "strategy": "frequency_only",
+        "bin": 5,
+        "n": 297,
+        "mean_predicted": 0.7308416709379635,
+        "observed_rate": 0.07407407407407407
+      },
+      {
+        "strategy": "frequency_only",
+        "bin": 6,
+        "n": 1257,
+        "mean_predicted": 0.8614362171065385,
+        "observed_rate": 0.13046937151949084
+      },
+      {
+        "strategy": "logistic_v3",
+        "bin": 1,
+        "n": 1440,
+        "mean_predicted": 0.004529670759747405,
+        "observed_rate": 0.05694444444444444
+      },
+      {
+        "strategy": "logistic_v3",
+        "bin": 2,
+        "n": 1439,
+        "mean_predicted": 0.05615897442726811,
+        "observed_rate": 0.03335649756775538
+      },
+      {
+        "strategy": "logistic_v3",
+        "bin": 3,
+        "n": 1439,
+        "mean_predicted": 0.10291148207223756,
+        "observed_rate": 0.021542738012508687
+      },
+      {
+        "strategy": "logistic_v3",
+        "bin": 4,
+        "n": 1440,
+        "mean_predicted": 0.14591138129214543,
+        "observed_rate": 0.03194444444444444
+      },
+      {
+        "strategy": "logistic_v3",
+        "bin": 5,
+        "n": 1439,
+        "mean_predicted": 0.1995543821415388,
+        "observed_rate": 0.029881862404447533
+      },
+      {
+        "strategy": "logistic_v3",
+        "bin": 6,
+        "n": 1439,
+        "mean_predicted": 0.2564508182638016,
+        "observed_rate": 0.04030576789437109
+      },
+      {
+        "strategy": "logistic_v3",
+        "bin": 7,
+        "n": 1440,
+        "mean_predicted": 0.31329061139345604,
+        "observed_rate": 0.030555555555555555
+      },
+      {
+        "strategy": "logistic_v3",
+        "bin": 8,
+        "n": 1439,
+        "mean_predicted": 0.37404901493964104,
+        "observed_rate": 0.03961084086170952
+      },
+      {
+        "strategy": "logistic_v3",
+        "bin": 9,
+        "n": 1439,
+        "mean_predicted": 0.45502599270538424,
+        "observed_rate": 0.05003474635163308
+      },
+      {
+        "strategy": "logistic_v3",
+        "bin": 10,
+        "n": 1440,
+        "mean_predicted": 0.6368479454870198,
+        "observed_rate": 0.08263888888888889
+      },
+      {
+        "strategy": "recency_only",
+        "bin": 1,
+        "n": 1441,
+        "mean_predicted": 0.05486491553545824,
+        "observed_rate": 0.02914642609299098
+      },
+      {
+        "strategy": "recency_only",
+        "bin": 2,
+        "n": 1440,
+        "mean_predicted": 0.12214756674797764,
+        "observed_rate": 0.019444444444444445
+      },
+      {
+        "strategy": "recency_only",
+        "bin": 3,
+        "n": 1438,
+        "mean_predicted": 0.16171176581669344,
+        "observed_rate": 0.02920723226703755
+      },
+      {
+        "strategy": "recency_only",
+        "bin": 4,
+        "n": 1439,
+        "mean_predicted": 0.21711327526968835,
+        "observed_rate": 0.03613620569840167
+      },
+      {
+        "strategy": "recency_only",
+        "bin": 5,
+        "n": 1453,
+        "mean_predicted": 0.2808024847446922,
+        "observed_rate": 0.04679972470750172
+      },
+      {
+        "strategy": "recency_only",
+        "bin": 6,
+        "n": 1431,
+        "mean_predicted": 0.3318821529868072,
+        "observed_rate": 0.041928721174004195
+      },
+      {
+        "strategy": "recency_only",
+        "bin": 7,
+        "n": 1472,
+        "mean_predicted": 0.3733633812958392,
+        "observed_rate": 0.03940217391304348
+      },
+      {
+        "strategy": "recency_only",
+        "bin": 8,
+        "n": 1411,
+        "mean_predicted": 0.42190606437731054,
+        "observed_rate": 0.04323175053153792
+      },
+      {
+        "strategy": "recency_only",
+        "bin": 9,
+        "n": 1432,
+        "mean_predicted": 0.48102707357467106,
+        "observed_rate": 0.05935754189944134
+      },
+      {
+        "strategy": "recency_only",
+        "bin": 10,
+        "n": 1437,
+        "mean_predicted": 0.5459936283694158,
+        "observed_rate": 0.07237299930410578
+      }
+    ],
+    "bootstrap_95": {
+      "constant_common": {
+        "roc_auc": {
+          "lower_95": 0.5,
+          "upper_95": 0.5,
+          "valid_draws": 2000
+        },
+        "average_precision": {
+          "lower_95": 0.03606563859300482,
+          "upper_95": 0.047903009178871914,
+          "valid_draws": 2000
+        },
+        "brier": {
+          "lower_95": 0.037473079093994874,
+          "upper_95": 0.04722456940041402,
+          "valid_draws": 2000
+        }
+      },
+      "frequency_only": {
+        "roc_auc": {
+          "lower_95": 0.551410384409756,
+          "upper_95": 0.6307206194419489,
+          "valid_draws": 2000
+        },
+        "average_precision": {
+          "lower_95": 0.0681240383315481,
+          "upper_95": 0.14389349743262508,
+          "valid_draws": 2000
+        },
+        "brier": {
+          "lower_95": 0.23913608417143528,
+          "upper_95": 0.24967979841982105,
+          "valid_draws": 2000
+        },
+        "precision_at_5pct": {
+          "lower_95": 0.11274212165507598,
+          "upper_95": 0.20734921747424315,
+          "valid_draws": 2000
+        },
+        "precision_at_10pct": {
+          "lower_95": 0.09283754842746107,
+          "upper_95": 0.15309290099218412,
+          "valid_draws": 2000
+        },
+        "precision_at_20pct": {
+          "lower_95": 0.05804918282331666,
+          "upper_95": 0.0916856597491119,
+          "valid_draws": 2000
+        },
+        "top_decile_rate_1": {
+          "lower_95": 0.09283754842746107,
+          "upper_95": 0.15309290099218412,
+          "valid_draws": 2000
+        },
+        "top_decile_rate_2": {
+          "lower_95": 0.017268655747862714,
+          "upper_95": 0.0381469011945632,
+          "valid_draws": 2000
+        },
+        "top_decile_rate_3": {
+          "lower_95": 0.024987593071587638,
+          "upper_95": 0.0436383284894884,
+          "valid_draws": 2000
+        },
+        "top_decile_rate_4": {
+          "lower_95": 0.021536340274836828,
+          "upper_95": 0.04063731790537482,
+          "valid_draws": 2000
+        },
+        "top_decile_rate_5": {
+          "lower_95": 0.02148268671746752,
+          "upper_95": 0.03906093465241905,
+          "valid_draws": 2000
+        },
+        "top_decile_rate_6": {
+          "lower_95": 0.02766361826021348,
+          "upper_95": 0.04798014041668587,
+          "valid_draws": 2000
+        },
+        "top_decile_rate_7": {
+          "lower_95": 0.02451594233732614,
+          "upper_95": 0.04239946201837704,
+          "valid_draws": 2000
+        },
+        "top_decile_rate_8": {
+          "lower_95": 0.021700364415592144,
+          "upper_95": 0.03982370107136049,
+          "valid_draws": 2000
+        },
+        "top_decile_rate_9": {
+          "lower_95": 0.026970534945364666,
+          "upper_95": 0.0461966766674157,
+          "valid_draws": 2000
+        },
+        "top_decile_rate_10": {
+          "lower_95": 0.025746789856231318,
+          "upper_95": 0.04500473419918171,
+          "valid_draws": 2000
+        }
+      },
+      "logistic_v3": {
+        "roc_auc": {
+          "lower_95": 0.5153933980565918,
+          "upper_95": 0.5954375478553482,
+          "valid_draws": 2000
+        },
+        "average_precision": {
+          "lower_95": 0.050701333511717815,
+          "upper_95": 0.08355011389092651,
+          "valid_draws": 2000
+        },
+        "brier": {
+          "lower_95": 0.11228074086511766,
+          "upper_95": 0.12247748881777354,
+          "valid_draws": 2000
+        },
+        "precision_at_5pct": {
+          "lower_95": 0.07867533737648758,
+          "upper_95": 0.15041821887959514,
+          "valid_draws": 2000
+        },
+        "precision_at_10pct": {
+          "lower_95": 0.0622200052000898,
+          "upper_95": 0.10451013696202183,
+          "valid_draws": 2000
+        },
+        "precision_at_20pct": {
+          "lower_95": 0.05343154152867667,
+          "upper_95": 0.07973436401048412,
+          "valid_draws": 2000
+        },
+        "top_decile_rate_1": {
+          "lower_95": 0.0622200052000898,
+          "upper_95": 0.10451013696202183,
+          "valid_draws": 2000
+        },
+        "top_decile_rate_2": {
+          "lower_95": 0.03710398255225063,
+          "upper_95": 0.06238729632792938,
+          "valid_draws": 2000
+        },
+        "top_decile_rate_3": {
+          "lower_95": 0.028115307991166908,
+          "upper_95": 0.05189988176522147,
+          "valid_draws": 2000
+        },
+        "top_decile_rate_4": {
+          "lower_95": 0.02199046616674498,
+          "upper_95": 0.04307597730282376,
+          "valid_draws": 2000
+        },
+        "top_decile_rate_5": {
+          "lower_95": 0.028416620678950757,
+          "upper_95": 0.04992208599838264,
+          "valid_draws": 2000
+        },
+        "top_decile_rate_6": {
+          "lower_95": 0.021429336851848408,
+          "upper_95": 0.04187853708165848,
+          "valid_draws": 2000
+        },
+        "top_decile_rate_7": {
+          "lower_95": 0.020021920609086474,
+          "upper_95": 0.04148521313440012,
+          "valid_draws": 2000
+        },
+        "top_decile_rate_8": {
+          "lower_95": 0.013123926469181571,
+          "upper_95": 0.031446356801603105,
+          "valid_draws": 2000
+        },
+        "top_decile_rate_9": {
+          "lower_95": 0.024959182752193766,
+          "upper_95": 0.046368306398489594,
+          "valid_draws": 2000
+        },
+        "top_decile_rate_10": {
+          "lower_95": 0.04027428221940288,
+          "upper_95": 0.07225370616484,
+          "valid_draws": 2000
+        }
+      },
+      "recency_only": {
+        "roc_auc": {
+          "lower_95": 0.5590760724475135,
+          "upper_95": 0.6334339873014871,
+          "valid_draws": 2000
+        },
+        "average_precision": {
+          "lower_95": 0.05222894239713939,
+          "upper_95": 0.07646265213375861,
+          "valid_draws": 2000
+        },
+        "brier": {
+          "lower_95": 0.12182531762255355,
+          "upper_95": 0.12941277724583672,
+          "valid_draws": 2000
+        },
+        "precision_at_5pct": {
+          "lower_95": 0.05006927994211989,
+          "upper_95": 0.08871085130525577,
+          "valid_draws": 2000
+        },
+        "precision_at_10pct": {
+          "lower_95": 0.05799471526038516,
+          "upper_95": 0.08826403557803922,
+          "valid_draws": 2000
+        },
+        "precision_at_20pct": {
+          "lower_95": 0.05372499229990899,
+          "upper_95": 0.0791168932971569,
+          "valid_draws": 2000
+        },
+        "top_decile_rate_1": {
+          "lower_95": 0.05799471526038516,
+          "upper_95": 0.08826403557803922,
+          "valid_draws": 2000
+        },
+        "top_decile_rate_2": {
+          "lower_95": 0.044444058775888,
+          "upper_95": 0.07565689694870764,
+          "valid_draws": 2000
+        },
+        "top_decile_rate_3": {
+          "lower_95": 0.03030721044237059,
+          "upper_95": 0.056399240449311334,
+          "valid_draws": 2000
+        },
+        "top_decile_rate_4": {
+          "lower_95": 0.027664721177204074,
+          "upper_95": 0.05036052072476132,
+          "valid_draws": 2000
+        },
+        "top_decile_rate_5": {
+          "lower_95": 0.030481736967471654,
+          "upper_95": 0.05614920461649128,
+          "valid_draws": 2000
+        },
+        "top_decile_rate_6": {
+          "lower_95": 0.03385310572551876,
+          "upper_95": 0.0630996870338679,
+          "valid_draws": 2000
+        },
+        "top_decile_rate_7": {
+          "lower_95": 0.02371792422480911,
+          "upper_95": 0.05043183425482163,
+          "valid_draws": 2000
+        },
+        "top_decile_rate_8": {
+          "lower_95": 0.016503494526711095,
+          "upper_95": 0.040035485105283077,
+          "valid_draws": 2000
+        },
+        "top_decile_rate_9": {
+          "lower_95": 0.010519930858528658,
+          "upper_95": 0.029220543712100026,
+          "valid_draws": 2000
+        },
+        "top_decile_rate_10": {
+          "lower_95": 0.0201086229395992,
+          "upper_95": 0.039918769474081746,
+          "valid_draws": 2000
+        }
+      }
+    }
+  },
+  "feature_distributions": [
+    {
+      "universe": "Mẫu DEV hiện tại (một snapshot/khách)",
+      "snapshot_rows": 3508,
+      "unique_customers": 3508,
+      "recency_days": {
+        "mean": 15.770809578107183,
+        "p25": 9.0,
+        "median": 15.0,
+        "p75": 23.0,
+        "min": 1.0,
+        "max": 31.0
+      },
+      "frequency": {
+        "mean": 1.0561573546180159,
+        "p25": 1.0,
+        "median": 1.0,
+        "p75": 1.0,
+        "min": 1.0,
+        "max": 7.0
+      },
+      "cluster_bootstrap_mean_95": {
+        "recency_days": {
+          "lower_95": 15.514217502850627,
+          "upper_95": 16.035369156214365,
+          "draws": 2000
+        },
+        "frequency": {
+          "lower_95": 1.0473204104903078,
+          "upper_95": 1.0649942987457242,
+          "draws": 2000
+        }
+      }
+    },
+    {
+      "universe": "DEV snapshot đa mốc",
+      "snapshot_rows": 21638,
+      "unique_customers": 3508,
+      "recency_days": {
+        "mean": 118.62889361308808,
+        "p25": 45.0,
+        "median": 103.0,
+        "p75": 173.75,
+        "min": 1.0,
+        "max": 365.0
+      },
+      "frequency": {
+        "mean": 1.1353174969960256,
+        "p25": 1.0,
+        "median": 1.0,
+        "p75": 1.0,
+        "min": 1.0,
+        "max": 8.0
+      },
+      "cluster_bootstrap_mean_95": {
+        "recency_days": {
+          "lower_95": 116.94473176269958,
+          "upper_95": 120.38227634356512,
+          "draws": 2000
+        },
+        "frequency": {
+          "lower_95": 1.1191279303392654,
+          "upper_95": 1.1519121493826974,
+          "draws": 2000
+        }
+      }
+    },
+    {
+      "universe": "Cohort scoring test, aggregate đã commit",
+      "n_customers": 5169,
+      "mean_recency_days": 269.3072160959567,
+      "mean_frequency": 1.1787579802669763,
+      "distribution_quantiles_available": false,
+      "source": "outputs/tables/test_segment_profiles.csv; K=2, test_pre_T rows only"
+    }
+  ],
+  "legacy_fold_prevalence_baseline_diagnostic": {
+    "folds": [
+      {
+        "validation_T": "2024-12-01",
+        "train_n": 227,
+        "validation_n": 392,
+        "validation_positive_n": 26,
+        "train_prevalence_score": 0.0881057268722467,
+        "roc_auc": 0.5,
+        "average_precision": 0.0663265306122449,
+        "brier": 0.062401655338919525
+      },
+      {
+        "validation_T": "2025-01-01",
+        "train_n": 552,
+        "validation_n": 269,
+        "validation_positive_n": 18,
+        "train_prevalence_score": 0.08514492753623189,
+        "roc_auc": 0.5,
+        "average_precision": 0.06691449814126393,
+        "brier": 0.06276929663569164
+      },
+      {
+        "validation_T": "2025-02-01",
+        "train_n": 807,
+        "validation_n": 256,
+        "validation_positive_n": 7,
+        "train_prevalence_score": 0.08674101610904585,
+        "roc_auc": 0.5,
+        "average_precision": 0.02734375,
+        "brier": 0.03012410455716631
+      },
+      {
+        "validation_T": "2025-03-01",
+        "train_n": 1021,
+        "validation_n": 199,
+        "validation_positive_n": 15,
+        "train_prevalence_score": 0.089128305582762,
+        "roc_auc": 0.5,
+        "average_precision": 0.07537688442211055,
+        "brier": 0.06988431130086394
+      },
+      {
+        "validation_T": "2025-04-01",
+        "train_n": 1232,
+        "validation_n": 442,
+        "validation_positive_n": 28,
+        "train_prevalence_score": 0.08766233766233766,
+        "roc_auc": 0.5,
+        "average_precision": 0.06334841628959276,
+        "brier": 0.059926561215713235
+      }
+    ],
+    "pooled": {
+      "roc_auc": 0.5361694861062667,
+      "average_precision": 0.06705731116577028,
+      "brier": 0.05741506961534612
+    },
+    "pooled_oof_n": 1558,
+    "interpretation": "Each fold score is constant within that fold; pooled ROC-AUC can exceed 0.5 only from score differences across folds."
+  },
+  "number_of_preregistered_strategies": 4,
+  "number_of_model_vs_common_baseline_comparisons": 3,
+  "seed": 20261028,
+  "bootstrap_draws": 2000,
+  "run_attempt_log": [
+    "Attempt 1 interrupted before output after the initial DataFrame-per-customer bootstrap implementation proved too slow; no metric was produced.",
+    "Attempt 2 interrupted before output while profiling the first vectorized implementation; no metric was produced.",
+    "Attempt 3 interrupted before output because sklearn recomputed ranking sorts for every bootstrap draw; no metric was produced.",
+    "Attempt 4 completed the calculations but failed JSON serialization because a pandas DataFrame was nested in the result; no artifact was written.",
+    "Final attempt uses vectorized cluster-bootstrap multiplicities and grouped-score weighted metrics, reusing the registered 2,000 draws, seed, folds, features, and four strategies."
+  ]
+}
