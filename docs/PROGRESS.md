@@ -93,6 +93,11 @@ Updated: 2026-10-28
 - Đã dựng lại báo cáo 15 trang và slide in 14 trang; rà trực quan các trang báo cáo 7–15 và slide 6–14, gồm caveat, metric, combo và checklist trình bày. Ảnh tổng quan/mô hình trong `docs/demo_screens/` đã được cập nhật và kiểm tra. Consistency scan ban đầu tìm 5 thiếu sót về caveat/tên chuẩn ở `qa_roles.md` và nhật ký; đã sửa, đồng thời smoke test phát hiện và sửa kỳ vọng JSON 5→6 để khớp sáu file dashboard thực đọc. Hai lượt consistency scan cuối không còn findings. Không chạy evaluator, notebook hoặc fit/refit.
 # Cập nhật bàn giao — 2026-10-27
 
+## Giai đoạn 2 — Pha A, A5
+
+- WP5b đã đăng ký trước (commit riêng `a2a46d5`) và chạy trên cùng DEV snapshots/folds WP5. S1/S3/S5 hoàn tất; S2/S4 thất bại do không có inner temporal folds hợp lệ ở cả 5 outer fold. Không chọn ứng viên; không thay D-005. Báo cáo: `docs/repurchase_wp5b_dev.md`.
+- Chưa mở Pha B/HO2. Không chạy evaluator test hay đọc test raw.
+
 - Cohort (trạng thái trước đếm raw pre-T ngày 2026-10-27): script reconcile chỉ so sánh aggregate warehouse; chưa có cầu nối theo điều kiện. Đã được supersede bởi đếm trực tiếp tại `docs/cohort_reconciliation.md` và `outputs/tables/cohort_bridge_verified.json`.
 - Sai khác ngày T: không tìm thấy artifact prediction đã lưu trong `outputs/`; theo phạm vi Amendment 06, không tái tạo prediction và dừng tiểu mục. Không có metric sensitivity mới.
 - UNKNOWN (ghi chú trước chẩn đoán raw pre-T ngày 2026-10-27): warehouse khi đó không chứa các trường source/address; đã được supersede bởi đếm DEV-only trong `docs/unknown_region_diagnostic.md`.

@@ -155,3 +155,16 @@ Nguồn: read-only DuckDB `data/restricted/xoaif_dev.duckdb` + enrichment RAM t�
 | Bao phủ kênh | 3.996/6.378 đơn (62,64%). | `outputs/metrics/dss_cuboids_dev.json`. |
 | Suppression | 143/195 ô tháng×kênh×RFM; 156/198 ô tháng×cỡ giỏ×RFM; 22/41 ô tháng×status bị ẩn theo ngưỡng 30. | `outputs/metrics/dss_cuboids_dev.json`; các bảng cube tương ứng. |
 | OLAP thao tác | Roll-up 2 năm/7 quý/19 tháng đối soát order count; slice tháng 2024-04: 9 nhóm; dice Facebook cùng tháng: 4 nhóm; pivot có 3 cột. | `outputs/metrics/dss_cuboids_dev.json`; hàm `olap_operation()` trong script A4. |
+
+## A5 — WP5b chiến lược mua lại (khám phá, chưa xác nhận ngoài mẫu)
+
+Nguồn: `scripts/evaluate_repurchase_wp5b_dev.py`; giao thức SHA-256 `ed9af7f35e03a41f2462462361f8476ba2b25dee89c6cd59340512419fcdd931`; cohort DEV snapshot đa mốc 20261024T052943Z, N=180 ngày, L=7, 5 outer fold; bootstrap cụm khách 2.000 lượt, seed 20261028. Không sử dụng test raw/nhãn/hành vi.
+
+| Đại lượng | Số chuẩn, cohort và đơn vị | Nguồn aggregate |
+|---|---|---|
+| Mẫu OOF | 21.638 snapshot/3.508 khách tạo mẫu; 14.394 snapshot OOF/3.508 khách; 600 dương (4,17%). | `outputs/metrics/repurchase_wp5b_dev.json` |
+| S1 luật frequency≥2 | AP pooled 0,0659 (95% CI 0,0520–0,0837); ROC-AUC 0,605 (0,573–0,640); precision@10% 12,15% (9,13–15,44%). | JSON; `outputs/tables/repurchase_wp5b_top_k.csv` |
+| S3 cây nông | AP pooled 0,0745 (0,0586–0,0924); ROC-AUC 0,623 (0,587–0,658); precision@10% 10,28% (7,75–12,66%); decile không đơn điệu. | JSON; `repurchase_wp5b_deciles.csv`, `repurchase_wp5b_top_k.csv` |
+| S5 Logistic v3 tham chiếu | AP pooled 0,0641 (0,0507–0,0836); ROC-AUC 0,555 (0,515–0,595); precision@10% 8,26% (6,22–10,45%); decile không đơn điệu. | JSON; `repurchase_wp5b_deciles.csv`, `repurchase_wp5b_top_k.csv` |
+| Inner CV và chọn ứng viên | S2 và S4 không có inner temporal fold hợp lệ trong 5/5 outer fold; cả ba chiến lược hoàn chỉnh không đạt monotonicity; không chọn ứng viên. | `outputs/metrics/repurchase_wp5b_dev.json` |
+| Calibration pooled | S3: intercept −2,887 (95% CI −3,137 đến −2,336), slope 0,087 (0,014–0,308), Brier 0,0445. S5: intercept −3,143 (−3,324 đến −2,965), slope −0,005 (−0,053–0,065), Brier 0,1172. S1 score nhị phân nên slope/intercept không diễn giải. | JSON; `outputs/tables/repurchase_wp5b_calibration.csv` |

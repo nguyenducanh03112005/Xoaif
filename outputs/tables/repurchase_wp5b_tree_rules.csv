@@ -1,0 +1,80 @@
+fold,validation_T,if_then
+1,2024-12-01,"|--- monetary <= 192500.00
+|   |--- class: 0
+|--- monetary >  192500.00
+|   |--- first_purchase_age_days <= 12.50
+|   |   |--- class: 0
+|   |--- first_purchase_age_days >  12.50
+|   |   |--- class: 0
+"
+2,2025-01-01,"|--- monetary <= 582500.00
+|   |--- monetary <= 107500.00
+|   |   |--- class: 0
+|   |--- monetary >  107500.00
+|   |   |--- first_purchase_age_days <= 7.50
+|   |   |   |--- class: 0
+|   |   |--- first_purchase_age_days >  7.50
+|   |   |   |--- class: 0
+|--- monetary >  582500.00
+|   |--- class: 0
+"
+3,2025-02-01,"|--- frequency <= 1.50
+|   |--- recency_days <= 23.50
+|   |   |--- recency_days <= 21.50
+|   |   |   |--- class: 0
+|   |   |--- recency_days >  21.50
+|   |   |   |--- class: 0
+|   |--- recency_days >  23.50
+|   |   |--- monetary <= 675000.00
+|   |   |   |--- class: 0
+|   |   |--- monetary >  675000.00
+|   |   |   |--- class: 0
+|--- frequency >  1.50
+|   |--- monetary <= 554900.00
+|   |   |--- class: 0
+|   |--- monetary >  554900.00
+|   |   |--- class: 0
+"
+4,2025-03-01,"|--- frequency <= 1.50
+|   |--- recency_days <= 7.50
+|   |   |--- monetary <= 232500.00
+|   |   |   |--- class: 0
+|   |   |--- monetary >  232500.00
+|   |   |   |--- class: 0
+|   |--- recency_days >  7.50
+|   |   |--- monetary <= 692500.00
+|   |   |   |--- class: 0
+|   |   |--- monetary >  692500.00
+|   |   |   |--- class: 0
+|--- frequency >  1.50
+|   |--- monetary <= 554900.00
+|   |   |--- class: 0
+|   |--- monetary >  554900.00
+|   |   |--- mean_days_between_orders <= 7.50
+|   |   |   |--- class: 0
+|   |   |--- mean_days_between_orders >  7.50
+|   |   |   |--- class: 0
+"
+5,2025-04-01,"|--- frequency <= 1.50
+|   |--- recency_days <= 7.50
+|   |   |--- t_month_cos <= -0.68
+|   |   |   |--- class: 0
+|   |   |--- t_month_cos >  -0.68
+|   |   |   |--- class: 0
+|   |--- recency_days >  7.50
+|   |   |--- first_purchase_age_days <= 57.50
+|   |   |   |--- class: 0
+|   |   |--- first_purchase_age_days >  57.50
+|   |   |   |--- class: 0
+|--- frequency >  1.50
+|   |--- monetary <= 554900.00
+|   |   |--- mean_days_between_orders <= 7.50
+|   |   |   |--- class: 0
+|   |   |--- mean_days_between_orders >  7.50
+|   |   |   |--- class: 0
+|   |--- monetary >  554900.00
+|   |   |--- t_month_sin <= -0.68
+|   |   |   |--- class: 0
+|   |   |--- t_month_sin >  -0.68
+|   |   |   |--- class: 0
+"

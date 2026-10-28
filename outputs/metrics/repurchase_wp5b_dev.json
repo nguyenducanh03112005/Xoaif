@@ -1,0 +1,526 @@
+{
+  "status": "completed",
+  "scope": "DEV-only, khám phá, chưa xác nhận ngoài mẫu",
+  "snapshot": "20261024T052943Z",
+  "outer_fold_count": 5,
+  "protocol_sha256": "ed9af7f35e03a41f2462462361f8476ba2b25dee89c6cd59340512419fcdd931",
+  "seed": 20261028,
+  "bootstrap_draws": 2000,
+  "selection_rule": "highest mean outer-fold AP among complete strategies with monotonic pooled decile rates; ties within 0.001 choose simpler registered order",
+  "mean_fold_ap": {
+    "S1_frequency_rule": 0.06683090084594485,
+    "S3_shallow_tree": 0.0664876234980917,
+    "S5_logistic_v3": 0.069431413173249
+  },
+  "monotonicity": {
+    "S1_frequency_rule": {
+      "adjacent_violations": 2,
+      "monotonic_descending": false,
+      "score_ties_may_split_across_deciles": true
+    },
+    "S3_shallow_tree": {
+      "adjacent_violations": 4,
+      "monotonic_descending": false,
+      "score_ties_may_split_across_deciles": true
+    },
+    "S5_logistic_v3": {
+      "adjacent_violations": 4,
+      "monotonic_descending": false,
+      "score_ties_may_split_across_deciles": true
+    }
+  },
+  "candidate_for_later_review": null,
+  "failures": [
+    {
+      "strategy": "S2_frequency_recency_rule",
+      "fold": 1,
+      "reason": "no eligible inner temporal validation fold"
+    },
+    {
+      "strategy": "S4_unweighted_sigmoid",
+      "fold": 1,
+      "reason": "no usable inner temporal OOF scores with both classes"
+    },
+    {
+      "strategy": "S2_frequency_recency_rule",
+      "fold": 2,
+      "reason": "no eligible inner temporal validation fold"
+    },
+    {
+      "strategy": "S4_unweighted_sigmoid",
+      "fold": 2,
+      "reason": "no usable inner temporal OOF scores with both classes"
+    },
+    {
+      "strategy": "S2_frequency_recency_rule",
+      "fold": 3,
+      "reason": "no eligible inner temporal validation fold"
+    },
+    {
+      "strategy": "S4_unweighted_sigmoid",
+      "fold": 3,
+      "reason": "no usable inner temporal OOF scores with both classes"
+    },
+    {
+      "strategy": "S2_frequency_recency_rule",
+      "fold": 4,
+      "reason": "no eligible inner temporal validation fold"
+    },
+    {
+      "strategy": "S4_unweighted_sigmoid",
+      "fold": 4,
+      "reason": "no usable inner temporal OOF scores with both classes"
+    },
+    {
+      "strategy": "S2_frequency_recency_rule",
+      "fold": 5,
+      "reason": "no eligible inner temporal validation fold"
+    },
+    {
+      "strategy": "S4_unweighted_sigmoid",
+      "fold": 5,
+      "reason": "no usable inner temporal OOF scores with both classes"
+    }
+  ],
+  "threshold_choices": [],
+  "bootstrap_95": {
+    "S1_frequency_rule": {
+      "roc_auc": {
+        "lower_95": 0.5727501237682857,
+        "upper_95": 0.6404552520494229,
+        "valid_draws": 2000
+      },
+      "average_precision": {
+        "lower_95": 0.05202107215582302,
+        "upper_95": 0.08370365781342311,
+        "valid_draws": 2000
+      },
+      "brier": {
+        "lower_95": 0.11323443374703479,
+        "upper_95": 0.13549577960898618,
+        "valid_draws": 2000
+      },
+      "precision_at_5pct": {
+        "lower_95": 0.0909808772685521,
+        "upper_95": 0.16144063334596764,
+        "valid_draws": 2000
+      },
+      "precision_at_10pct": {
+        "lower_95": 0.09130672091665196,
+        "upper_95": 0.15438091070032464,
+        "valid_draws": 2000
+      },
+      "precision_at_20pct": {
+        "lower_95": 0.06838332383501647,
+        "upper_95": 0.10401956816681016,
+        "valid_draws": 2000
+      },
+      "top_decile_rate_1": {
+        "lower_95": 0.09130672091665196,
+        "upper_95": 0.15438091070032464,
+        "valid_draws": 2000
+      },
+      "top_decile_rate_2": {
+        "lower_95": 0.03662690165165995,
+        "upper_95": 0.0653415311774966,
+        "valid_draws": 2000
+      },
+      "top_decile_rate_3": {
+        "lower_95": 0.03133241086043833,
+        "upper_95": 0.051636402972430835,
+        "valid_draws": 2000
+      },
+      "top_decile_rate_4": {
+        "lower_95": 0.024246328984943513,
+        "upper_95": 0.04406355704118182,
+        "valid_draws": 2000
+      },
+      "top_decile_rate_5": {
+        "lower_95": 0.022385058240630133,
+        "upper_95": 0.04092390927377402,
+        "valid_draws": 2000
+      },
+      "top_decile_rate_6": {
+        "lower_95": 0.016183322318225744,
+        "upper_95": 0.03269491580096498,
+        "valid_draws": 2000
+      },
+      "top_decile_rate_7": {
+        "lower_95": 0.023737340172554078,
+        "upper_95": 0.04329064815302069,
+        "valid_draws": 2000
+      },
+      "top_decile_rate_8": {
+        "lower_95": 0.01809413154547288,
+        "upper_95": 0.034662826712382466,
+        "valid_draws": 2000
+      },
+      "top_decile_rate_9": {
+        "lower_95": 0.01746279558889406,
+        "upper_95": 0.034152054341424695,
+        "valid_draws": 2000
+      },
+      "top_decile_rate_10": {
+        "lower_95": 0.02349936771317899,
+        "upper_95": 0.041095079406079905,
+        "valid_draws": 2000
+      }
+    },
+    "S3_shallow_tree": {
+      "roc_auc": {
+        "lower_95": 0.58688828074888,
+        "upper_95": 0.6575864747107698,
+        "valid_draws": 2000
+      },
+      "average_precision": {
+        "lower_95": 0.058638799730081514,
+        "upper_95": 0.09244598515518662,
+        "valid_draws": 2000
+      },
+      "brier": {
+        "lower_95": 0.0395679330735913,
+        "upper_95": 0.04941372706275738,
+        "valid_draws": 2000
+      },
+      "precision_at_5pct": {
+        "lower_95": 0.08836771584423278,
+        "upper_95": 0.1622880764904649,
+        "valid_draws": 2000
+      },
+      "precision_at_10pct": {
+        "lower_95": 0.0775131548725332,
+        "upper_95": 0.12657435210837858,
+        "valid_draws": 2000
+      },
+      "precision_at_20pct": {
+        "lower_95": 0.06814683108963601,
+        "upper_95": 0.10095919918640614,
+        "valid_draws": 2000
+      },
+      "top_decile_rate_1": {
+        "lower_95": 0.0775131548725332,
+        "upper_95": 0.12657435210837858,
+        "valid_draws": 2000
+      },
+      "top_decile_rate_2": {
+        "lower_95": 0.05260041161532424,
+        "upper_95": 0.08086483555939823,
+        "valid_draws": 2000
+      },
+      "top_decile_rate_3": {
+        "lower_95": 0.027394959804091817,
+        "upper_95": 0.047923822162472235,
+        "valid_draws": 2000
+      },
+      "top_decile_rate_4": {
+        "lower_95": 0.024998220615706803,
+        "upper_95": 0.045923426708224725,
+        "valid_draws": 2000
+      },
+      "top_decile_rate_5": {
+        "lower_95": 0.028347244424246878,
+        "upper_95": 0.049932038449791064,
+        "valid_draws": 2000
+      },
+      "top_decile_rate_6": {
+        "lower_95": 0.01958682335933698,
+        "upper_95": 0.036967545355402996,
+        "valid_draws": 2000
+      },
+      "top_decile_rate_7": {
+        "lower_95": 0.020138784020690133,
+        "upper_95": 0.03727595918537457,
+        "valid_draws": 2000
+      },
+      "top_decile_rate_8": {
+        "lower_95": 0.011105500677387414,
+        "upper_95": 0.025790038414520697,
+        "valid_draws": 2000
+      },
+      "top_decile_rate_9": {
+        "lower_95": 0.015355300981961431,
+        "upper_95": 0.031144347258929863,
+        "valid_draws": 2000
+      },
+      "top_decile_rate_10": {
+        "lower_95": 0.026994850414845437,
+        "upper_95": 0.051868826189990516,
+        "valid_draws": 2000
+      }
+    },
+    "S5_logistic_v3": {
+      "roc_auc": {
+        "lower_95": 0.5153933980565918,
+        "upper_95": 0.5954375478553482,
+        "valid_draws": 2000
+      },
+      "average_precision": {
+        "lower_95": 0.050701333511717815,
+        "upper_95": 0.08355011389092651,
+        "valid_draws": 2000
+      },
+      "brier": {
+        "lower_95": 0.11228074086511766,
+        "upper_95": 0.12247748881777354,
+        "valid_draws": 2000
+      },
+      "precision_at_5pct": {
+        "lower_95": 0.07867533737648758,
+        "upper_95": 0.15041821887959514,
+        "valid_draws": 2000
+      },
+      "precision_at_10pct": {
+        "lower_95": 0.0622200052000898,
+        "upper_95": 0.10451013696202183,
+        "valid_draws": 2000
+      },
+      "precision_at_20pct": {
+        "lower_95": 0.05343154152867667,
+        "upper_95": 0.07973436401048412,
+        "valid_draws": 2000
+      },
+      "top_decile_rate_1": {
+        "lower_95": 0.0622200052000898,
+        "upper_95": 0.10451013696202183,
+        "valid_draws": 2000
+      },
+      "top_decile_rate_2": {
+        "lower_95": 0.03710398255225063,
+        "upper_95": 0.06238729632792938,
+        "valid_draws": 2000
+      },
+      "top_decile_rate_3": {
+        "lower_95": 0.028115307991166908,
+        "upper_95": 0.05189988176522147,
+        "valid_draws": 2000
+      },
+      "top_decile_rate_4": {
+        "lower_95": 0.02199046616674498,
+        "upper_95": 0.04307597730282376,
+        "valid_draws": 2000
+      },
+      "top_decile_rate_5": {
+        "lower_95": 0.028416620678950757,
+        "upper_95": 0.04992208599838264,
+        "valid_draws": 2000
+      },
+      "top_decile_rate_6": {
+        "lower_95": 0.021429336851848408,
+        "upper_95": 0.04187853708165848,
+        "valid_draws": 2000
+      },
+      "top_decile_rate_7": {
+        "lower_95": 0.020021920609086474,
+        "upper_95": 0.04148521313440012,
+        "valid_draws": 2000
+      },
+      "top_decile_rate_8": {
+        "lower_95": 0.013123926469181571,
+        "upper_95": 0.031446356801603105,
+        "valid_draws": 2000
+      },
+      "top_decile_rate_9": {
+        "lower_95": 0.024959182752193766,
+        "upper_95": 0.046368306398489594,
+        "valid_draws": 2000
+      },
+      "top_decile_rate_10": {
+        "lower_95": 0.04027428221940288,
+        "upper_95": 0.07225370616484,
+        "valid_draws": 2000
+      }
+    }
+  },
+  "calibration": [
+    {
+      "strategy": "S1_frequency_rule",
+      "scope": "pooled_oof",
+      "calibration_intercept": null,
+      "calibration_slope": null,
+      "brier": 0.12380158399333055
+    },
+    {
+      "strategy": "S1_frequency_rule",
+      "scope": "fold_1",
+      "calibration_intercept": null,
+      "calibration_slope": null,
+      "brier": 0.12852263023057217
+    },
+    {
+      "strategy": "S1_frequency_rule",
+      "scope": "fold_2",
+      "calibration_intercept": null,
+      "calibration_slope": null,
+      "brier": 0.12523937188816545
+    },
+    {
+      "strategy": "S1_frequency_rule",
+      "scope": "fold_3",
+      "calibration_intercept": null,
+      "calibration_slope": null,
+      "brier": 0.1206836414370422
+    },
+    {
+      "strategy": "S1_frequency_rule",
+      "scope": "fold_4",
+      "calibration_intercept": null,
+      "calibration_slope": null,
+      "brier": 0.12296151337247227
+    },
+    {
+      "strategy": "S1_frequency_rule",
+      "scope": "fold_5",
+      "calibration_intercept": null,
+      "calibration_slope": null,
+      "brier": 0.12286202964652224
+    },
+    {
+      "strategy": "S3_shallow_tree",
+      "scope": "pooled_oof",
+      "calibration_intercept": -2.8870641686711824,
+      "calibration_slope": 0.08731870721439203,
+      "brier": 0.04448658000675114
+    },
+    {
+      "strategy": "S3_shallow_tree",
+      "scope": "fold_1",
+      "calibration_intercept": -2.4186444289659175,
+      "calibration_slope": 0.20344509326574634,
+      "brier": 0.04862281156459367
+    },
+    {
+      "strategy": "S3_shallow_tree",
+      "scope": "fold_2",
+      "calibration_intercept": -3.0560149153478444,
+      "calibration_slope": -0.003998740425853909,
+      "brier": 0.04614330553833197
+    },
+    {
+      "strategy": "S3_shallow_tree",
+      "scope": "fold_3",
+      "calibration_intercept": -2.8865063535242235,
+      "calibration_slope": 0.091788613161197,
+      "brier": 0.044163245897943654
+    },
+    {
+      "strategy": "S3_shallow_tree",
+      "scope": "fold_4",
+      "calibration_intercept": -1.553947990442542,
+      "calibration_slope": 0.6466570232569497,
+      "brier": 0.04216749282198226
+    },
+    {
+      "strategy": "S3_shallow_tree",
+      "scope": "fold_5",
+      "calibration_intercept": -1.9014918738948545,
+      "calibration_slope": 0.5418644028609487,
+      "brier": 0.042783203589142185
+    },
+    {
+      "strategy": "S5_logistic_v3",
+      "scope": "pooled_oof",
+      "calibration_intercept": -3.1432574770660415,
+      "calibration_slope": -0.004820316688298711,
+      "brier": 0.11723287756241173
+    },
+    {
+      "strategy": "S5_logistic_v3",
+      "scope": "fold_1",
+      "calibration_intercept": -2.813711172335759,
+      "calibration_slope": 0.03243214419441468,
+      "brier": 0.09354413344420169
+    },
+    {
+      "strategy": "S5_logistic_v3",
+      "scope": "fold_2",
+      "calibration_intercept": -3.1135481764360247,
+      "calibration_slope": -0.034859058177807344,
+      "brier": 0.07776964119201624
+    },
+    {
+      "strategy": "S5_logistic_v3",
+      "scope": "fold_3",
+      "calibration_intercept": -3.3404142199934816,
+      "calibration_slope": -0.15208021654651357,
+      "brier": 0.1481688255606327
+    },
+    {
+      "strategy": "S5_logistic_v3",
+      "scope": "fold_4",
+      "calibration_intercept": -2.9439591439090087,
+      "calibration_slope": 0.3015245389609484,
+      "brier": 0.1403083867585287
+    },
+    {
+      "strategy": "S5_logistic_v3",
+      "scope": "fold_5",
+      "calibration_intercept": -3.0965118802527503,
+      "calibration_slope": 0.18098655617360623,
+      "brier": 0.11696910184455434
+    }
+  ],
+  "calibration_bootstrap_95": {
+    "S1_frequency_rule": {
+      "intercept_lower_95": null,
+      "intercept_upper_95": null,
+      "slope_lower_95": null,
+      "slope_upper_95": null,
+      "valid_draws": 0
+    },
+    "S3_shallow_tree": {
+      "intercept_lower_95": -3.136900189878849,
+      "intercept_upper_95": -2.3360931146562414,
+      "slope_lower_95": 0.01387754626531752,
+      "slope_upper_95": 0.30784513129911417,
+      "valid_draws": 2000
+    },
+    "S5_logistic_v3": {
+      "intercept_lower_95": -3.3235541833851094,
+      "intercept_upper_95": -2.965229120626026,
+      "slope_lower_95": -0.05310697051550662,
+      "slope_upper_95": 0.065395217556176,
+      "valid_draws": 2000
+    }
+  },
+  "pooled": [
+    {
+      "strategy": "S1_frequency_rule",
+      "n": 14394,
+      "customers": 3508,
+      "positive_n": 600,
+      "prevalence": 0.041684035014589414,
+      "roc_auc": 0.6054132231404958,
+      "average_precision": 0.06586623126431379,
+      "brier": 0.12380158399333055
+    },
+    {
+      "strategy": "S3_shallow_tree",
+      "n": 14394,
+      "customers": 3508,
+      "positive_n": 600,
+      "prevalence": 0.041684035014589414,
+      "roc_auc": 0.6230390628775796,
+      "average_precision": 0.07453980054354438,
+      "brier": 0.04448658000675114
+    },
+    {
+      "strategy": "S5_logistic_v3",
+      "n": 14394,
+      "customers": 3508,
+      "positive_n": 600,
+      "prevalence": 0.041684035014589414,
+      "roc_auc": 0.5551019162921077,
+      "average_precision": 0.06405995906590659,
+      "brier": 0.11723287756241173
+    }
+  ],
+  "comparison_count": 5,
+  "threshold_search_count": 4,
+  "notes": [
+    "No test records or labels accessed.",
+    "Brier for raw binary rules/tree outputs is descriptive and not directly comparable as calibrated probability quality.",
+    "Bootstrap resamples customers and carries all of each sampled customer's snapshots."
+  ],
+  "sample_snapshots": 21638,
+  "sample_customers": 3508
+}

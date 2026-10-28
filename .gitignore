@@ -36,6 +36,7 @@ outputs/metrics/*
 !outputs/metrics/product_journey_dev.json
 !outputs/metrics/seasonality_business_dev.json
 !outputs/metrics/dss_cuboids_dev.json
+!outputs/metrics/repurchase_wp5b_dev.json
 # Integrity evidence needed by scripts/verify_day3_locks.py and run_all.py
 # (committable once present locally; they hold hashes/flags, no raw values)
 !outputs/metrics/test_opened.lock.json
@@ -76,6 +77,7 @@ outputs/tables/*
 !outputs/tables/cube_month_basket_segment_dev.csv
 !outputs/tables/cube_province_dev.csv
 !outputs/tables/cube_month_status_dev.csv
+!outputs/tables/repurchase_wp5b_*.csv
 !outputs/tables/gift_line_*.csv
 !report/xoaif_report.pdf
 !slides/xoaif_print.pdf
