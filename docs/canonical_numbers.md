@@ -23,6 +23,16 @@ Nguồn `scripts/analyze_prevalence_drift_f2.py`; kế hoạch SHA-256 `4a4ff5de
 | Prevalence train | 5 WP5/WP5b folds, trung bình không trọng số 8,11%; fold 1 8,81%, fold 5 7,42%. | `outputs/tables/prevalence_fold_f2.csv` |
 | Prevalence validation | 5 folds, trung bình không trọng số 4,23%; pooled OOF 4,17%; fold 1 4,95%, fold 5 3,62%. | Cùng bảng; `outputs/metrics/repurchase_v3_dev.json` |
 
+## F3 — sàng lọc combo (khám phá, DEV-only)
+
+Nguồn: `scripts/build_combo_recommendation_f3.py`; protocol SHA-256 `c2ecdd207ecc50c692484c2fe778c6496e44d9045dadbfb3c9c4ce57375b1bc2`; aggregate combo A2 đã commit.
+
+| Đại lượng | Số chuẩn, cohort và đơn vị | Nguồn aggregate |
+|---|---|---|
+| Bộ lọc combo | 1/24 combo qua DEV lift>1, Kulczynski≥0,5, imbalance ratio≤0,5; rank 1 PORTCARD + CHẬU MOCHI lift 0,982, không qua. | `outputs/tables/combo_recommendation_screen_f3.csv` |
+| PORTCARD giỏ đầu | 2.472/3.635 khách trưởng thành, 68,01%. | `outputs/tables/product_roles_dev.csv` |
+| Bội so sánh sản phẩm | 77 phép so sánh mô tả; kỳ vọng gần đúng 3,85 dương giả ở mức 5% nếu có 77 kiểm định độc lập dưới null; không hiệu chỉnh vì không đăng ký p-values/kiểm định. | `docs/combo_recommendation_f3.md` |
+
 ## Cohort và thời gian
 
 | Đại lượng | Số chuẩn và đơn vị/cohort | Nguồn sự thật |

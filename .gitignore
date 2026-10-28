@@ -82,6 +82,7 @@ outputs/tables/*
 !outputs/tables/repurchase_wp5b_*.csv
 !outputs/tables/repeat_definition_*_f1.csv
 !outputs/tables/prevalence_*_f2.csv
+!outputs/tables/combo_recommendation_screen_f3.csv
 !outputs/tables/gift_line_*.csv
 !report/xoaif_report.pdf
 !slides/xoaif_print.pdf

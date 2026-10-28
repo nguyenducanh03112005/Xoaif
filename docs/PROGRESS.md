@@ -106,6 +106,10 @@ Updated: 2026-10-28
 
 - DEV-only: train prevalence trung bình 8,11% so với validation 4,23% (pooled OOF 4,17%). Tỷ lệ cohort-month đủ 180 ngày giảm khoảng 0,465 điểm phần trăm/tháng (95% bootstrap −0,772 đến −0,160). Mức B cho dịch chuyển mô tả; cạnh tranh với giả thuyết class_weight về calibration, chưa kết luận nguyên nhân.
 
+## Bổ sung F3 — combo
+
+- 24 combo và thứ hạng A2 được giữ. Sàng lọc mô tả (lift>1, Kulczynski≥0,5, IR≤0,5) có 1 combo qua; combo hạng 1 lift 0,982 không qua. Trong 77 sản phẩm, khoảng 3,85 dương giả kỳ vọng nếu dùng 5% tests độc lập; không hiệu chỉnh và không tuyên bố ý nghĩa thống kê.
+
 - Cohort (trạng thái trước đếm raw pre-T ngày 2026-10-27): script reconcile chỉ so sánh aggregate warehouse; chưa có cầu nối theo điều kiện. Đã được supersede bởi đếm trực tiếp tại `docs/cohort_reconciliation.md` và `outputs/tables/cohort_bridge_verified.json`.
 - Sai khác ngày T: không tìm thấy artifact prediction đã lưu trong `outputs/`; theo phạm vi Amendment 06, không tái tạo prediction và dừng tiểu mục. Không có metric sensitivity mới.
 - UNKNOWN (ghi chú trước chẩn đoán raw pre-T ngày 2026-10-27): warehouse khi đó không chứa các trường source/address; đã được supersede bởi đếm DEV-only trong `docs/unknown_region_diagnostic.md`.
