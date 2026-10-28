@@ -64,6 +64,8 @@ def test_report_includes_g1_diagnostics_g2_prevalence_and_g3_proposal() -> None:
     report = build_report(test_count=170)
     assert "S6, một swap liền kề, SciPy spearmanr" in report
     assert "S6, một ULP dưới ngưỡng" in report
+    assert "plan G1 (commit `384d565`) dự kiến hai swap" in report
+    assert report.index("384d565 2026-10-29") < report.index("9ddbc70 2026-10-29")
     assert "chưa kiểm tính chuyển prevalence sang ho2" in report.lower()
     assert "G3 — đề xuất, chưa thực hiện" in report
     assert "2026-10-27" in report

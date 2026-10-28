@@ -79,7 +79,7 @@ def build_report(test_count: int, root: Path = ROOT) -> str:
     dry = json.loads(dry_path.read_text(encoding="utf-8")) if dry_path.is_file() else {"code_run": False}
     code_commit = subprocess.check_output(["git", "rev-parse", "HEAD"], cwd=root).decode().strip()
     commit_rows = subprocess.check_output(
-        ["git", "log", "--format=%h %cI %s", "19293fa..HEAD"], cwd=root
+        ["git", "log", "--reverse", "--format=%h %cI %s", "19293fa..HEAD"], cwd=root
     ).decode().splitlines()
 
     h1_power_rows, h2_power_rows = [], []
@@ -141,6 +141,7 @@ def build_report(test_count: int, root: Path = ROOT) -> str:
         *_h4_synthetic_rows(),
         "",
         "Với đúng SciPy hiện cài, ca S6 một swap trả `0.9761904761904763` và phép so cũ vẫn PASS; vì vậy không tái hiện lỗi trong hoán vị đó ở runtime này. Giá trị đóng `1−12/504` có thể thành `0.9761904761904762`; hàng ULP cho thấy phép so trực tiếp trượt, còn dung sai chỉ hấp thụ sai số rất nhỏ. Hai swap và một swap RFM vẫn trượt. Ngưỡng giữ nguyên; tối thiểu 4 nhóm giữ nguyên.",
+        "Sai khác đã ghi nhận: plan G1 (commit `384d565`) dự kiến hai swap liền kề cho rho `0.9047619`; test đã định nghĩa hai phép đổi cặp liền kề độc lập và SciPy cho `0.9523810`. Bốn phép đổi cặp cho `0.9047619`. Đây là sai số ở con số dự kiến trong plan, không làm đổi tiêu chí; file preregistration được giữ nguyên và sai khác được công khai tại đây.",
         "",
         "Thứ tự commit từ Gate B rev2:",
         *[f"- `{row}`" for row in commit_rows],
