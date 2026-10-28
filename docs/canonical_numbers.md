@@ -297,3 +297,16 @@ Nguồn: `scripts/freeze_gateb_strategies_dev.py`; đăng ký trước tại `do
 | v3 final-fit | 21.638 snapshot/3.508 khách; SHA-256 artifact `fc04ee70693da1a1e16350b99acf80b335705000dac35ba67bde63ef9c5d348b` | `outputs/metrics/gateb_r5_strategy_freeze.json` |
 
 **Giới hạn:** S3/S6/v3 được fit trên toàn DEV để tạo artifact, không báo metric in-sample. D-005/v2 giữ artifact cũ. Không có metric HO2.
+
+## A10 — R6: kiểm kê aggregate và kho trước Gate B
+
+Nguồn: `scripts/audit_committed_aggregate_dates.py` (date-field-only scan), `scripts/profile_development_cohorts.py` (metadata min/max trên DuckDB read-only), `docs/ho2_access_audit.md`. Phạm vi là file đã commit; không đọc raw HO2.
+
+| Đại lượng | Số chuẩn, phạm vi và đơn vị | Nguồn |
+|---|---|---|
+| Aggregate đã quét | 89 file (CSV/JSON), gồm 22 có trường thời gian và 67 không có trường thời gian | `scripts/audit_committed_aggregate_dates.py` |
+| Tối đa event-date trong dữ liệu đơn aggregate đã commit | Tối đa `2026-04` (dashboard monthly, tháng partial của test cũ); test endpoint cũ `2026-04-20` exclusive | `scripts/audit_committed_aggregate_dates.py`; `outputs/metrics/test_eval.json` |
+| Tối đa ngày trong kho DuckDB hiện tại | `2025-10-21`, khoảng kho `2024-04-01`–`2025-10-21` | metadata query của `scripts/profile_development_cohorts.py`; `docs/ho2_access_audit.md` |
+| Mốc ngày lễ reference | `2026-10-31`, không phải event/order date; anchor metrics dừng `2025-04-01` | `scripts/audit_committed_aggregate_dates.py`; `outputs/metrics/holiday_time_supplement_dev.json` |
+
+**Giới hạn:** Date-field scan không phải forensic proof; các aggregate test đã commit thuộc cửa sổ cũ trước T2. Dashboard April là partial month. Số snapshot 12.011 là metadata đã biết, không được tái đếm raw trong Gate B.
