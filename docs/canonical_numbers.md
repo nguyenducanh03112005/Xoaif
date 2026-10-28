@@ -103,3 +103,18 @@ Toàn bộ số dưới đây có nhãn **khám phá, chưa xác nhận ngoài m
 | V3 precision@top-k | 5%: 11,25% (CI 7,87–15,04); 10%: 8,26% (6,22–10,45); 20%: 6,63% (5,34–7,97). | `outputs/tables/repurchase_v3_dev_top_k.csv`; validation OOF DEV, tỷ lệ dương quan sát, không phải uplift hay dự báo. |
 | V3 decile đầu | Tỷ lệ dương quan sát 8,27% (CI 6,22–10,45), lift 1,98 lần prevalence OOF; bắt 19,83% tổng số dương OOF | `outputs/tables/repurchase_v3_dev_deciles.csv`; pooled OOF DEV. |
 | V3 calibration | Decile điểm cao nhất mean predicted 63,68%, observed 8,26%; Brier 0,11723 | `outputs/tables/repurchase_v3_dev_calibration.csv`, `outputs/metrics/repurchase_v3_dev.json`; không diễn giải score là xác suất đã hiệu chỉnh. |
+
+## A1 — Giữ chân và giá trị khách hàng (khám phá, DEV-only)
+
+Nguồn tính: `scripts/analyze_customer_value_dev.py`; protocol: `docs/analysis_plan_wp2.md`; dữ liệu: 6.093 đơn status 3 không quà có customer ID, 5.169 khách DEV. Seed bootstrap theo khách 20261028, 2.000 lượt. Các bảng aggregate và CI đầy đủ được dẫn tại `docs/customer_value_dev.md`.
+
+| Đại lượng | Số chuẩn, cohort và đơn vị | Nguồn aggregate |
+|---|---|---|
+| Retention 30/60/90/180 ngày | Cohort tháng mua đầu đủ trưởng thành: n=4.524/4.351/4.154/3.508 khách; tỷ lệ=5,64% (CI 4,97–6,34%)/7,19% (6,44–8,00%)/8,43% (7,61–9,29%)/10,40% (9,35–11,40%). Cohort chưa đủ thời gian bị loại do kiểm duyệt phải. | `outputs/tables/customer_retention_dev.csv`; CI bootstrap theo khách. |
+| Mua lần hai — Kaplan–Meier | Cohort 3.508 khách có đủ 180 ngày; xác suất tích lũy đến lần hai tại ngày 30/60/90/180: 6,64%/8,24%/9,44%/11,32%. Median toàn cohort chưa đạt. | `outputs/tables/time_to_second_purchase_dev.csv`; script A1. |
+| Thời gian trong nhóm có lần hai | 397 khách có lần hai trong 180 ngày, gồm 34 đơn thứ hai cùng ngày; P25/P50/P75=4/20/66 ngày. Có điều kiện trên khách mua lần hai. | `outputs/tables/time_to_second_purchase_quantiles_dev.csv`. |
+| Tập trung doanh thu | DEV 5.169 khách, tổng doanh thu ghi nhận 2.547.369.341₫; top 10%/20% chiếm 43,40% (CI 39,999–47,123%)/56,89% (54,27–59,77%). | `outputs/tables/customer_revenue_pareto_dev.csv`; CI bootstrap theo khách. |
+| CLV mô tả 180 ngày | Cohort đủ 180 ngày, n=3.508; 512.934₫/khách (CI 472.395–560.411₫), bằng AOV 444.619₫ × 1,154 đơn/khách. Không phải dự báo hay lợi nhuận. | `outputs/tables/clv_180d_dev.csv`. |
+| RFM hành động | Snapshot 2025-10-22; sáu nhóm, 5.169 khách; ngưỡng giá trị cao p90=830.000₫. Nhóm có n<30 bị ẩn số chỉ tiêu. | `outputs/tables/rfm_action_segments_dev.csv`; quy tắc trong `docs/analysis_plan_wp2.md`. |
+| Độ ổn định phân cụm | K-Means bootstrap ARI median K=2/3/4/5: 0,995/0,985/0,953/0,957; Ward agreement ARI: 0,988/0,766/0,798/0,792. Không xác nhận ý nghĩa kinh doanh. | `outputs/tables/kmeans_stability_ward_dev.csv`. |
+| Proxy ngoại lai | Proxy p99 hiện hành: 62/5.169 khách (1,20%); Tukey log upper fence: 169/5.169 (3,27%), giao 62, Jaccard 0,367. Chỉ là cờ mô tả. | `outputs/tables/customer_outlier_comparison_dev.csv`. |

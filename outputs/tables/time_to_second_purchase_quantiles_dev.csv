@@ -1,0 +1,4 @@
+quantile,days,ci_lower_95,ci_upper_95,n_repeaters,interpretation
+0.250000,4.000000,3.000000,6.000000,397,thời gian có điều kiện trong nhóm có lần hai trong 180 ngày
+0.500000,20.000000,14.000000,27.000000,397,thời gian có điều kiện trong nhóm có lần hai trong 180 ngày
+0.750000,66.000000,52.000000,77.000000,397,thời gian có điều kiện trong nhóm có lần hai trong 180 ngày

@@ -1,0 +1,5 @@
+rule,flagged_customers,share,share_ci_lower_95,share_ci_upper_95,p99_monetary_threshold_vnd,p99_max_order_threshold_vnd,overlap_with_p99_customers,interpretation
+Proxy p99 hiện hành: Monetary hoặc max order,62,0.011995,0.009093,0.015090,3439576.000000,3082176.000000,62,Cờ ngoại lai chỉ để mô tả; không phải loại khách hay nhãn rủi ro.
+Tukey upper fence log1p(Monetary),140,0.027085,0.022635,0.031728,,,62,Cờ ngoại lai chỉ để mô tả; không phải loại khách hay nhãn rủi ro.
+Tukey upper fence log1p(max order),140,0.027085,0.022441,0.031341,,,61,Cờ ngoại lai chỉ để mô tả; không phải loại khách hay nhãn rủi ro.
+Hợp hai Tukey upper fence,169,0.032695,0.028047,0.037725,,,62,Cờ ngoại lai chỉ để mô tả; không phải loại khách hay nhãn rủi ro.

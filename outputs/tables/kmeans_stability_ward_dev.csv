@@ -1,0 +1,5 @@
+k,saved_kmeans_silhouette_mean,saved_kmeans_silhouette_min,saved_kmeans_silhouette_max,bootstrap_draws,bootstrap_ari_median,bootstrap_ari_p25,bootstrap_ari_p75,bootstrap_ari_min,bootstrap_ari_max,ward_comparison_n,ward_silhouette_sample,kmeans_vs_ward_ari_sample,ward_sample_seed,interpretation
+2,0.507541,0.507541,0.507541,100,0.995475,0.990956,0.997736,0.953408,1.000000,2000,0.518511,0.987986,20261028,Độ ổn định hình học; chưa xác nhận ý nghĩa kinh doanh.
+3,0.390146,0.382700,0.398600,100,0.985248,0.975444,0.991326,0.948839,0.999295,2000,0.363964,0.766357,20261028,Độ ổn định hình học; chưa xác nhận ý nghĩa kinh doanh.
+4,0.385334,0.372200,0.395400,100,0.953082,0.919725,0.977334,0.879803,0.993953,2000,0.359387,0.798494,20261028,Độ ổn định hình học; chưa xác nhận ý nghĩa kinh doanh.
+5,0.392398,0.382900,0.400500,100,0.957196,0.924947,0.976381,0.882456,0.994951,2000,0.369456,0.792025,20261028,Độ ổn định hình học; chưa xác nhận ý nghĩa kinh doanh.

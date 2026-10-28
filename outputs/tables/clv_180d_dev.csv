@@ -1,0 +1,8 @@
+rfm_group,mature_customers,clv_180d_mean_vnd,ci_lower_95_vnd,ci_upper_95_vnd,aov_180d_vnd,orders_per_customer_180d,formula_check_aov_x_frequency,definition,suppression_note
+Toàn bộ cohort trưởng thành,3508,512934.061288,472394.461445,560410.782369,444618.899679,1.153649,512934.061288,Doanh thu ghi nhận từ đơn đầu đến hết ngày 180 chia cho khách đủ theo dõi; chỉ là mô tả lịch sử.,
+"Giá trị cao, mua lặp lại gần đây",42,1304927.857143,915383.720238,1806358.571429,553605.757576,2.357143,1304927.857143,Doanh thu ghi nhận từ đơn đầu đến hết ngày 180 chia cho khách đủ theo dõi; chỉ là mô tả lịch sử.,
+Mua lặp lại gần đây,50,307278.000000,266126.900000,348797.450000,232786.363636,1.320000,307278.000000,Doanh thu ghi nhận từ đơn đầu đến hết ngày 180 chia cho khách đủ theo dõi; chỉ là mô tả lịch sử.,
+Mua lặp lại đã lâu,404,1218388.475248,938283.864913,1573173.537748,565780.395402,2.153465,1218388.475248,Doanh thu ghi nhận từ đơn đầu đến hết ngày 180 chia cho khách đủ theo dõi; chỉ là mô tả lịch sử.,
+"Giá trị cao, một đơn",216,1807125.027778,1603673.032407,2062612.055324,1807125.027778,1.000000,1807125.027778,Doanh thu ghi nhận từ đơn đầu đến hết ngày 180 chia cho khách đủ theo dõi; chỉ là mô tả lịch sử.,
+Một đơn gần đây,<30,,,,,,,Doanh thu ghi nhận từ đơn đầu đến hết ngày 180 chia cho khách đủ theo dõi; chỉ là mô tả lịch sử.,n<30; metrics hidden
+Một đơn đã lâu,2796,302801.812232,296571.280606,308975.350197,302801.812232,1.000000,302801.812232,Doanh thu ghi nhận từ đơn đầu đến hết ngày 180 chia cho khách đủ theo dõi; chỉ là mô tả lịch sử.,

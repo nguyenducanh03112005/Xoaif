@@ -1,0 +1,5 @@
+horizon_days,n_mature_customers,repeat_probability_km,ci_lower_95,ci_upper_95,events_by_horizon,same_day_second_order_n,median_time_to_second_days,median_note
+30,3508,0.066420,0.058153,0.074971,233,34,,chưa đạt nếu xác suất mua lại chưa tới 50%
+60,3508,0.082383,0.073546,0.091505,289,34,,chưa đạt nếu xác suất mua lại chưa tới 50%
+90,3508,0.094356,0.084949,0.103770,331,34,,chưa đạt nếu xác suất mua lại chưa tới 50%
+180,3508,0.113170,0.103478,0.123154,397,34,,chưa đạt nếu xác suất mua lại chưa tới 50%

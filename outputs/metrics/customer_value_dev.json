@@ -1,0 +1,62 @@
+{
+  "status": "exploratory_dev_only_not_confirmed_out_of_sample",
+  "snapshot_id": "20261024T052943Z",
+  "analysis_plan_sha256": "8efb5d5ec3ea4370c6246ac676e971ff9666a1bb81fc034a9e77aeb0b758a5de",
+  "test_labels_or_behavior_used": false,
+  "date_gate": "local date < 2025-10-22; valid status 3, non-gift DEV orders only",
+  "meta": {
+    "dev_orders": 6093,
+    "customers": 5169,
+    "cohort_months": 19,
+    "mature_180d_customers": 3508,
+    "repeaters_180d": 397,
+    "same_day_second_orders": 34,
+    "conditional_repeat_gap_n": 397,
+    "high_value_p90_vnd": 830000.0,
+    "p99_proxy_customers": 62,
+    "tukey_union_customers": 169,
+    "p99_tukey_jaccard": 0.3668639053254438,
+    "seed": 20261028,
+    "bootstrap_draws": 2000
+  },
+  "retention_exclusions": [
+    {
+      "horizon_days": 30,
+      "included_cohort_months": "2024-04,2024-05,2024-06,2024-07,2024-08,2024-09,2024-10,2024-11,2024-12,2025-01,2025-02,2025-03,2025-04,2025-05,2025-06,2025-07,2025-08",
+      "excluded_cohort_months": "2025-09,2025-10",
+      "included_month_count": 17,
+      "excluded_month_count": 2,
+      "exclusion_reason": "cohort month end + horizon is on/after exclusive DEV end; right-censored"
+    },
+    {
+      "horizon_days": 60,
+      "included_cohort_months": "2024-04,2024-05,2024-06,2024-07,2024-08,2024-09,2024-10,2024-11,2024-12,2025-01,2025-02,2025-03,2025-04,2025-05,2025-06,2025-07",
+      "excluded_cohort_months": "2025-08,2025-09,2025-10",
+      "included_month_count": 16,
+      "excluded_month_count": 3,
+      "exclusion_reason": "cohort month end + horizon is on/after exclusive DEV end; right-censored"
+    },
+    {
+      "horizon_days": 90,
+      "included_cohort_months": "2024-04,2024-05,2024-06,2024-07,2024-08,2024-09,2024-10,2024-11,2024-12,2025-01,2025-02,2025-03,2025-04,2025-05,2025-06",
+      "excluded_cohort_months": "2025-07,2025-08,2025-09,2025-10",
+      "included_month_count": 15,
+      "excluded_month_count": 4,
+      "exclusion_reason": "cohort month end + horizon is on/after exclusive DEV end; right-censored"
+    },
+    {
+      "horizon_days": 180,
+      "included_cohort_months": "2024-04,2024-05,2024-06,2024-07,2024-08,2024-09,2024-10,2024-11,2024-12,2025-01,2025-02,2025-03",
+      "excluded_cohort_months": "2025-04,2025-05,2025-06,2025-07,2025-08,2025-09,2025-10",
+      "included_month_count": 12,
+      "excluded_month_count": 7,
+      "exclusion_reason": "cohort month end + horizon is on/after exclusive DEV end; right-censored"
+    }
+  ],
+  "kmeans_sample_note": "KMeans vs Ward ARI and Ward silhouette use the same deterministic sample of at most 2,000 DEV customers.",
+  "saved_silhouette_sources": [
+    "outputs/metrics/day2_segmentation.json",
+    "docs/dev_segmentation_objective_i.md"
+  ],
+  "suppression_rule": "Customer group n<30 is descriptive only; monetary/count estimates are suppressed in aggregate tables."
+}
