@@ -1,0 +1,7 @@
+scenario,assumed_incremental_revenue_vnd,ci_lower_95_vnd,ci_upper_95_vnd,label
+Khách mới +10%,179937268.700000,165730779.795000,196363411.797500,"giả định minh họa, không phải dự báo, không phải lợi nhuận"
+AOV +5%,89968634.350000,82865389.897500,98181705.898750,"giả định minh họa, không phải dự báo, không phải lợi nhuận"
+Mua lại +1 điểm %,15597231.000731,14411279.803556,17007348.049231,"giả định minh họa, không phải dự báo, không phải lợi nhuận"
+Mua lại +3 điểm %,46791693.002194,43233839.410669,51022044.147693,"giả định minh họa, không phải dự báo, không phải lợi nhuận"
+Mua lại +5 điểm %,77986155.003657,72056399.017782,85036740.246155,"giả định minh họa, không phải dự báo, không phải lợi nhuận"
+Giữ thêm 5 điểm % khách high-value,41450725.150000,33977617.512500,49699278.730000,"giả định minh họa, không phải dự báo, không phải lợi nhuận"

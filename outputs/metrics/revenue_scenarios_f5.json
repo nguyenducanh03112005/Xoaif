@@ -1,0 +1,47 @@
+{
+  "status": "exploratory_dev_only_not_confirmed_out_of_sample",
+  "plan_sha256": "ad318e2814a126aa897d67ee1bd334f3a851d06371420fdb75e517cd6106c4c5",
+  "test_raw_or_labels_read": 0,
+  "base": {
+    "customers": 3508,
+    "revenue_180d": 1799372687.0,
+    "clv180_vnd": 512934.061288,
+    "orders_per_customer": 1.153649,
+    "aov_vnd": 444618.899679,
+    "first_order_share": 0.844202,
+    "repeat_rate_180d": 0.104048
+  },
+  "base_bootstrap_95": {
+    "revenue_180d": {
+      "lower_95": 1657307797.95,
+      "upper_95": 1963634117.975
+    },
+    "clv180_vnd": {
+      "lower_95": 472436.658481,
+      "upper_95": 559758.870574
+    },
+    "orders_per_customer": {
+      "lower_95": 1.134835,
+      "upper_95": 1.174173
+    },
+    "aov_vnd": {
+      "lower_95": 410811.853009,
+      "upper_95": 484816.07894
+    },
+    "first_order_share": {
+      "lower_95": 0.784177,
+      "upper_95": 0.885044
+    },
+    "repeat_rate_180d": {
+      "lower_95": 0.094356,
+      "upper_95": 0.114595
+    }
+  },
+  "high_value_customers": 421,
+  "high_value_clv180_vnd": 1969155.589074,
+  "high_value_sample_n": 421,
+  "seed": 20261028,
+  "bootstrap_draws": 2000,
+  "channel_source_order_coverage": 0.6264,
+  "first_basket_note": "First order value share computed at transaction row level; same-day split orders remain in 180-day revenue, not repeat-event count."
+}

@@ -115,6 +115,10 @@ Updated: 2026-10-28
 - Hai thiết kế quý×kênh×RFM và quý×cỡ giỏ×RFM đều không đạt mục tiêu suppression <30% (57,14% và 66,67%). Giữ ngưỡng 30; hai cuboid không đưa vào dashboard. Kết quả ghi lại trước khi đăng ký thiết kế thô hơn riêng.
 - F4b đã đăng ký riêng: quý×RFM hai nhóm và quý×kênh hai nhóm có 0/14 ô bị ẩn mỗi cube; các aggregate sẵn sàng đọc offline, chưa tích hợp giao diện.
 
+## Bổ sung F5 — cây động lực/kịch bản
+
+- 3.508 khách cohort 180 ngày: CLV mô tả 512.934₫/khách; đơn giao dịch đầu chiếm 84,42% (CI 78,42–88,50%). Kịch bản nhạy theo giả định: khách mới +10% là mức doanh thu cơ học lớn nhất; repeat +1 điểm % nhỏ nhất. Không phải dự báo hay lợi nhuận.
+
 - Cohort (trạng thái trước đếm raw pre-T ngày 2026-10-27): script reconcile chỉ so sánh aggregate warehouse; chưa có cầu nối theo điều kiện. Đã được supersede bởi đếm trực tiếp tại `docs/cohort_reconciliation.md` và `outputs/tables/cohort_bridge_verified.json`.
 - Sai khác ngày T: không tìm thấy artifact prediction đã lưu trong `outputs/`; theo phạm vi Amendment 06, không tái tạo prediction và dừng tiểu mục. Không có metric sensitivity mới.
 - UNKNOWN (ghi chú trước chẩn đoán raw pre-T ngày 2026-10-27): warehouse khi đó không chứa các trường source/address; đã được supersede bởi đếm DEV-only trong `docs/unknown_region_diagnostic.md`.

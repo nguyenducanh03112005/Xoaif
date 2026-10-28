@@ -51,6 +51,19 @@ Nguồn `scripts/build_dashboard_cuboids_f4b.py`; protocol SHA-256 `1459e9428c66
 | Quý×RFM gộp 2 nhóm | 0/14 ô ẩn (0%); đạt mục tiêu <30%. | `outputs/metrics/dashboard_cuboids_f4b.json`, `outputs/tables/quarter_rfm_f4b.csv` |
 | Quý×kênh gộp 2 nhóm | 0/14 ô ẩn (0%); đạt mục tiêu <30%. | JSON cùng; `quarter_channel_f4b.csv` |
 
+## F5 — động lực doanh thu và kịch bản (khám phá, DEV-only)
+
+Nguồn `scripts/analyze_revenue_scenarios_f5.py`; protocol SHA-256 `ad318e2814a126aa897d67ee1bd334f3a851d06371420fdb75e517cd6106c4c5`; 3.508 khách thuộc 12 cohort-month đủ 180 ngày; 2.000 bootstrap khách, seed 20261028. Kịch bản là giả định, không dự báo/không phải lợi nhuận.
+
+| Đại lượng | Số chuẩn, cohort và đơn vị | Nguồn aggregate |
+|---|---|---|
+| Giá trị 180 ngày | Doanh thu ghi nhận 1.799.372.687₫; CLV mô tả 512.934₫/khách (95% CI 472.437–559.759); AOV 444.619₫ (410.812–484.816) ×1,154 đơn/khách (1,135–1,174). | `outputs/metrics/revenue_scenarios_f5.json` |
+| Đơn giao dịch đầu | 84,42% doanh thu 180 ngày (95% CI 78,42–88,50%), n=3.508; 87% nằm trong CI, không phải điểm ước lượng. | JSON metric |
+| Repeat rate | 10,40% khách mua lại ở ngày địa phương sau trong 180 ngày (95% CI 9,44–11,46%), n=3.508. | JSON metric |
+| Kịch bản lớn nhất theo giả định đã chọn | Khách mới +10%: +179,9 triệu ₫ doanh thu số học (95% CI 165,7–196,4 triệu ₫). | `outputs/tables/revenue_sensitivity_f5.csv` |
+| Kịch bản nhỏ nhất | Repeat +1 điểm %: +15,6 triệu ₫ (95% CI 14,4–17,0 triệu ₫). | Cùng bảng |
+| Kênh | Bao phủ 62,64%; Facebook AOV 475.919₫, retention 11,67%; Instagram+nguồn hiếm n=130, AOV 344.875₫, retention 6,92%; thiếu kênh n=1.257, AOV 361.998₫, retention 8,51%. Association quan sát. | `outputs/tables/revenue_channel_f5.csv` |
+
 ## Cohort và thời gian
 
 | Đại lượng | Số chuẩn và đơn vị/cohort | Nguồn sự thật |
