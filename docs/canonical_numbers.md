@@ -143,3 +143,15 @@ Nguồn tính: `scripts/analyze_seasonality_dev.py`; protocol hash `588ec1e6161e
 | Event blocks | 12 dòng calendar trong DEV → 9 blocks → 18 so sánh đơn/doanh thu mỗi ngày; tất cả event/control sample <30 ngày, chỉ mô tả. | `outputs/tables/holiday_event_comparisons_dev.csv`; block bootstrap 7 ngày. |
 | Bao phủ kênh | 3.996/6.378 đơn có nguồn kênh (62,64%); mature first-order cohort n=3.641. Facebook 2.254 khách, thiếu 1.257, Instagram + nguồn hiếm 130. | `outputs/metrics/seasonality_business_dev.json`, `outputs/tables/channel_behavior_dev.csv`. |
 | Điều chỉnh giá đầu tiên | Median tỷ lệ dương `total_discount/total_price` = 9,09%; nhóm discount thấp/cao/không có lần lượt 750/713/2.177 khách; nhóm adjustment âm n=5 bị ẩn. | `outputs/tables/discount_behavior_dev.csv`, `outputs/tables/price_adjustment_behavior_dev.csv`. |
+
+## A4 — OLAP/DSS trên Kho DEV (khám phá, DEV-only)
+
+Nguồn: read-only DuckDB `data/restricted/xoaif_dev.duckdb` + enrichment RAM từ `load_dev_orders()`; script `scripts/build_dss_cuboids_dev.py`; protocol hash `170b6f74f7d60ee43e3da2132b2869aef59ddd33122abd9c90bd2d3374a0c745`. HMAC order key chỉ dùng để nối và không được xuất. Kho vật lý không đổi.
+
+| Đại lượng | Số chuẩn, cohort và đơn vị | Nguồn aggregate |
+|---|---|---|
+| Đối soát warehouse | 6.517 đơn DEV; 6.400 status 3 nối đúng 1:1; 6.378 đơn status 3 không quà; 5.169 khách có khóa. | `outputs/metrics/dss_cuboids_dev.json`. |
+| Bao phủ tỉnh | UNKNOWN 5.840/6.378 đơn (91,56%); có tỉnh 538/6.378 (8,44%); 17 nhóm nhỏ được gộp. | `outputs/tables/cube_province_dev.csv`. |
+| Bao phủ kênh | 3.996/6.378 đơn (62,64%). | `outputs/metrics/dss_cuboids_dev.json`. |
+| Suppression | 143/195 ô tháng×kênh×RFM; 156/198 ô tháng×cỡ giỏ×RFM; 22/41 ô tháng×status bị ẩn theo ngưỡng 30. | `outputs/metrics/dss_cuboids_dev.json`; các bảng cube tương ứng. |
+| OLAP thao tác | Roll-up 2 năm/7 quý/19 tháng đối soát order count; slice tháng 2024-04: 9 nhóm; dice Facebook cùng tháng: 4 nhóm; pivot có 3 cột. | `outputs/metrics/dss_cuboids_dev.json`; hàm `olap_operation()` trong script A4. |

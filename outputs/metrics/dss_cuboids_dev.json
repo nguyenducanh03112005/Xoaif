@@ -1,0 +1,56 @@
+{
+  "status": "exploratory_dev_only_not_confirmed_out_of_sample",
+  "test_raw_or_labels_read": false,
+  "warehouse_orders_scanned": 6517,
+  "warehouse_status3_joined": 6400,
+  "status3_dev_non_gift_sales": 6378,
+  "eligible_sales_customers": 5169,
+  "unknown_region_orders": 5840,
+  "province_order_coverage": 0.0843524615867043,
+  "channel_order_coverage": 0.6263719034179994,
+  "suppression_threshold": 30,
+  "province_groups_pooled": 17,
+  "gift_line_audit": {
+    "line_count_by_source": {
+      "flag": 0,
+      "zero_price": 4,
+      "inferred_subset": 903,
+      "not_gift": 29142
+    },
+    "distinct_orders_with_source": {
+      "flag": 0,
+      "zero_price": 4,
+      "inferred_subset": 716,
+      "not_gift": 6391
+    },
+    "gift_line_count": 907,
+    "line_count": 30049,
+    "low_confidence_inferred_line_count": 903,
+    "test_labels_loaded": false,
+    "test_behavior_loaded": false
+  },
+  "cuboid_rows_before_suppression": {
+    "month_channel_segment": 195,
+    "month_basket_segment": 198,
+    "province": 3,
+    "month_status": 41
+  },
+  "cuboid_rows_suppressed": {
+    "month_channel_segment": 143,
+    "month_basket_segment": 156,
+    "province": 0,
+    "month_status": 22
+  },
+  "physical_warehouse_unchanged": true,
+  "order_keys_ephemeral_hmac_only": true,
+  "olap_operations_executed": {
+    "roll_up_year_rows": 2,
+    "roll_up_quarter_rows": 7,
+    "drill_down_month_rows": 19,
+    "slice_month_2024_04_rows": 9,
+    "dice_month_2024_04_facebook_rows": 4,
+    "pivot_month_by_channel_columns": 3,
+    "roll_up_orders_reconcile": true
+  },
+  "analysis_plan_sha256": "170b6f74f7d60ee43e3da2132b2869aef59ddd33122abd9c90bd2d3374a0c745"
+}

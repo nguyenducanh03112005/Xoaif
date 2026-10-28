@@ -1,0 +1,199 @@
+month,basket_size,customer_segment,orders,customers,recognized_revenue_vnd,suppressed,suppression_note
+2024-04,2,Không phân khúc,,,,True,n<30; measures hidden
+2024-04,2,Mua lặp lại gần đây,,,,True,n<30; measures hidden
+2024-04,2,Mua lặp lại đã lâu,,,,True,n<30; measures hidden
+2024-04,2,Một đơn đã lâu,,,,True,n<30; measures hidden
+2024-04,3+,"Giá trị cao, mua lặp lại gần đây",,,,True,n<30; measures hidden
+2024-04,3+,"Giá trị cao, một đơn",,,,True,n<30; measures hidden
+2024-04,3+,Không phân khúc,,,,True,n<30; measures hidden
+2024-04,3+,Mua lặp lại gần đây,,,,True,n<30; measures hidden
+2024-04,3+,Mua lặp lại đã lâu,43.000000,33.000000,15290350.000000,False,
+2024-04,3+,Một đơn đã lâu,176.000000,176.000000,51487500.000000,False,
+2024-05,2,Không phân khúc,,,,True,n<30; measures hidden
+2024-05,2,Mua lặp lại đã lâu,,,,True,n<30; measures hidden
+2024-05,2,Một đơn đã lâu,,,,True,n<30; measures hidden
+2024-05,3+,"Giá trị cao, mua lặp lại gần đây",,,,True,n<30; measures hidden
+2024-05,3+,"Giá trị cao, một đơn",,,,True,n<30; measures hidden
+2024-05,3+,Không phân khúc,,,,True,n<30; measures hidden
+2024-05,3+,Mua lặp lại gần đây,,,,True,n<30; measures hidden
+2024-05,3+,Mua lặp lại đã lâu,69.000000,51.000000,32881000.000000,False,
+2024-05,3+,Một đơn đã lâu,258.000000,258.000000,69909299.000000,False,
+2024-06,0–1,Mua lặp lại đã lâu,,,,True,n<30; measures hidden
+2024-06,2,Mua lặp lại đã lâu,,,,True,n<30; measures hidden
+2024-06,2,Một đơn đã lâu,,,,True,n<30; measures hidden
+2024-06,3+,"Giá trị cao, mua lặp lại gần đây",,,,True,n<30; measures hidden
+2024-06,3+,"Giá trị cao, một đơn",,,,True,n<30; measures hidden
+2024-06,3+,Không phân khúc,,,,True,n<30; measures hidden
+2024-06,3+,Mua lặp lại gần đây,,,,True,n<30; measures hidden
+2024-06,3+,Mua lặp lại đã lâu,67.000000,50.000000,22048200.000000,False,
+2024-06,3+,Một đơn đã lâu,199.000000,199.000000,56855500.000000,False,
+2024-07,2,Không phân khúc,,,,True,n<30; measures hidden
+2024-07,2,Mua lặp lại đã lâu,,,,True,n<30; measures hidden
+2024-07,2,Một đơn đã lâu,,,,True,n<30; measures hidden
+2024-07,3+,"Giá trị cao, mua lặp lại gần đây",,,,True,n<30; measures hidden
+2024-07,3+,"Giá trị cao, một đơn",,,,True,n<30; measures hidden
+2024-07,3+,Không phân khúc,,,,True,n<30; measures hidden
+2024-07,3+,Mua lặp lại gần đây,,,,True,n<30; measures hidden
+2024-07,3+,Mua lặp lại đã lâu,65.000000,54.000000,24132500.000000,False,
+2024-07,3+,Một đơn đã lâu,165.000000,165.000000,52599500.000000,False,
+2024-08,2,Không phân khúc,,,,True,n<30; measures hidden
+2024-08,2,Mua lặp lại đã lâu,,,,True,n<30; measures hidden
+2024-08,2,Một đơn đã lâu,,,,True,n<30; measures hidden
+2024-08,3+,"Giá trị cao, mua lặp lại gần đây",,,,True,n<30; measures hidden
+2024-08,3+,"Giá trị cao, một đơn",,,,True,n<30; measures hidden
+2024-08,3+,Không phân khúc,,,,True,n<30; measures hidden
+2024-08,3+,Mua lặp lại đã lâu,59.000000,48.000000,28615700.000000,False,
+2024-08,3+,Một đơn đã lâu,166.000000,166.000000,53938350.000000,False,
+2024-09,2,Không phân khúc,,,,True,n<30; measures hidden
+2024-09,2,Mua lặp lại đã lâu,,,,True,n<30; measures hidden
+2024-09,2,Một đơn đã lâu,,,,True,n<30; measures hidden
+2024-09,3+,"Giá trị cao, mua lặp lại gần đây",,,,True,n<30; measures hidden
+2024-09,3+,"Giá trị cao, một đơn",,,,True,n<30; measures hidden
+2024-09,3+,Không phân khúc,,,,True,n<30; measures hidden
+2024-09,3+,Mua lặp lại gần đây,,,,True,n<30; measures hidden
+2024-09,3+,Mua lặp lại đã lâu,55.000000,48.000000,19843000.000000,False,
+2024-09,3+,Một đơn đã lâu,172.000000,172.000000,50510500.000000,False,
+2024-10,2,Không phân khúc,,,,True,n<30; measures hidden
+2024-10,2,Mua lặp lại gần đây,,,,True,n<30; measures hidden
+2024-10,2,Mua lặp lại đã lâu,,,,True,n<30; measures hidden
+2024-10,2,Một đơn đã lâu,,,,True,n<30; measures hidden
+2024-10,3+,"Giá trị cao, mua lặp lại gần đây",,,,True,n<30; measures hidden
+2024-10,3+,"Giá trị cao, một đơn",,,,True,n<30; measures hidden
+2024-10,3+,Không phân khúc,,,,True,n<30; measures hidden
+2024-10,3+,Mua lặp lại gần đây,,,,True,n<30; measures hidden
+2024-10,3+,Mua lặp lại đã lâu,132.000000,94.000000,85797297.000000,False,
+2024-10,3+,Một đơn đã lâu,386.000000,386.000000,100863480.000000,False,
+2024-11,2,Không phân khúc,,,,True,n<30; measures hidden
+2024-11,2,Mua lặp lại đã lâu,,,,True,n<30; measures hidden
+2024-11,2,Một đơn đã lâu,,,,True,n<30; measures hidden
+2024-11,3+,"Giá trị cao, mua lặp lại gần đây",,,,True,n<30; measures hidden
+2024-11,3+,"Giá trị cao, một đơn",,,,True,n<30; measures hidden
+2024-11,3+,Không phân khúc,,,,True,n<30; measures hidden
+2024-11,3+,Mua lặp lại gần đây,,,,True,n<30; measures hidden
+2024-11,3+,Mua lặp lại đã lâu,92.000000,72.000000,93936440.000000,False,
+2024-11,3+,Một đơn đã lâu,320.000000,320.000000,107989818.000000,False,
+2024-12,0–1,Không phân khúc,,,,True,n<30; measures hidden
+2024-12,0–1,Một đơn đã lâu,,,,True,n<30; measures hidden
+2024-12,2,"Giá trị cao, mua lặp lại gần đây",,,,True,n<30; measures hidden
+2024-12,2,"Giá trị cao, một đơn",,,,True,n<30; measures hidden
+2024-12,2,Không phân khúc,,,,True,n<30; measures hidden
+2024-12,2,Mua lặp lại gần đây,,,,True,n<30; measures hidden
+2024-12,2,Mua lặp lại đã lâu,,,,True,n<30; measures hidden
+2024-12,2,Một đơn đã lâu,41.000000,41.000000,14096000.000000,False,
+2024-12,3+,"Giá trị cao, mua lặp lại gần đây",,,,True,n<30; measures hidden
+2024-12,3+,"Giá trị cao, một đơn",,,,True,n<30; measures hidden
+2024-12,3+,Không phân khúc,,,,True,n<30; measures hidden
+2024-12,3+,Mua lặp lại gần đây,,,,True,n<30; measures hidden
+2024-12,3+,Mua lặp lại đã lâu,54.000000,48.000000,19834967.000000,False,
+2024-12,3+,Một đơn đã lâu,186.000000,186.000000,62184620.000000,False,
+2025-01,2,Không phân khúc,,,,True,n<30; measures hidden
+2025-01,2,Mua lặp lại đã lâu,,,,True,n<30; measures hidden
+2025-01,2,Một đơn đã lâu,,,,True,n<30; measures hidden
+2025-01,3+,"Giá trị cao, mua lặp lại gần đây",,,,True,n<30; measures hidden
+2025-01,3+,"Giá trị cao, một đơn",79.000000,79.000000,119802600.000000,False,
+2025-01,3+,Không phân khúc,,,,True,n<30; measures hidden
+2025-01,3+,Mua lặp lại gần đây,,,,True,n<30; measures hidden
+2025-01,3+,Mua lặp lại đã lâu,66.000000,44.000000,47859600.000000,False,
+2025-01,3+,Một đơn đã lâu,144.000000,144.000000,61006500.000000,False,
+2025-02,0–1,Mua lặp lại đã lâu,,,,True,n<30; measures hidden
+2025-02,2,"Giá trị cao, mua lặp lại gần đây",,,,True,n<30; measures hidden
+2025-02,2,Mua lặp lại đã lâu,,,,True,n<30; measures hidden
+2025-02,2,Một đơn đã lâu,,,,True,n<30; measures hidden
+2025-02,3+,"Giá trị cao, mua lặp lại gần đây",,,,True,n<30; measures hidden
+2025-02,3+,"Giá trị cao, một đơn",,,,True,n<30; measures hidden
+2025-02,3+,Không phân khúc,,,,True,n<30; measures hidden
+2025-02,3+,Mua lặp lại gần đây,,,,True,n<30; measures hidden
+2025-02,3+,Mua lặp lại đã lâu,46.000000,38.000000,13953870.000000,False,
+2025-02,3+,Một đơn đã lâu,162.000000,162.000000,47745000.000000,False,
+2025-03,0–1,Một đơn đã lâu,,,,True,n<30; measures hidden
+2025-03,2,"Giá trị cao, mua lặp lại gần đây",,,,True,n<30; measures hidden
+2025-03,2,Không phân khúc,,,,True,n<30; measures hidden
+2025-03,2,Mua lặp lại đã lâu,,,,True,n<30; measures hidden
+2025-03,2,Một đơn đã lâu,,,,True,n<30; measures hidden
+2025-03,3+,"Giá trị cao, mua lặp lại gần đây",,,,True,n<30; measures hidden
+2025-03,3+,"Giá trị cao, một đơn",,,,True,n<30; measures hidden
+2025-03,3+,Không phân khúc,,,,True,n<30; measures hidden
+2025-03,3+,Mua lặp lại gần đây,,,,True,n<30; measures hidden
+2025-03,3+,Mua lặp lại đã lâu,83.000000,66.000000,84199300.000000,False,
+2025-03,3+,Một đơn đã lâu,353.000000,353.000000,105795800.000000,False,
+2025-04,0–1,"Giá trị cao, một đơn",,,,True,n<30; measures hidden
+2025-04,0–1,Không phân khúc,,,,True,n<30; measures hidden
+2025-04,0–1,Mua lặp lại đã lâu,,,,True,n<30; measures hidden
+2025-04,0–1,Một đơn đã lâu,,,,True,n<30; measures hidden
+2025-04,2,Không phân khúc,,,,True,n<30; measures hidden
+2025-04,2,Mua lặp lại gần đây,,,,True,n<30; measures hidden
+2025-04,2,Mua lặp lại đã lâu,,,,True,n<30; measures hidden
+2025-04,2,Một đơn đã lâu,,,,True,n<30; measures hidden
+2025-04,3+,"Giá trị cao, mua lặp lại gần đây",,,,True,n<30; measures hidden
+2025-04,3+,"Giá trị cao, một đơn",,,,True,n<30; measures hidden
+2025-04,3+,Không phân khúc,,,,True,n<30; measures hidden
+2025-04,3+,Mua lặp lại gần đây,,,,True,n<30; measures hidden
+2025-04,3+,Mua lặp lại đã lâu,44.000000,35.000000,13584300.000000,False,
+2025-04,3+,Một đơn đã lâu,133.000000,133.000000,34765000.000000,False,
+2025-05,0–1,Không phân khúc,,,,True,n<30; measures hidden
+2025-05,0–1,Mua lặp lại đã lâu,,,,True,n<30; measures hidden
+2025-05,2,Mua lặp lại đã lâu,,,,True,n<30; measures hidden
+2025-05,2,Một đơn đã lâu,,,,True,n<30; measures hidden
+2025-05,3+,"Giá trị cao, mua lặp lại gần đây",,,,True,n<30; measures hidden
+2025-05,3+,"Giá trị cao, một đơn",,,,True,n<30; measures hidden
+2025-05,3+,Không phân khúc,,,,True,n<30; measures hidden
+2025-05,3+,Mua lặp lại gần đây,,,,True,n<30; measures hidden
+2025-05,3+,Mua lặp lại đã lâu,57.000000,49.000000,18182600.000000,False,
+2025-05,3+,Một đơn đã lâu,174.000000,174.000000,45820400.000000,False,
+2025-06,0–1,Một đơn đã lâu,,,,True,n<30; measures hidden
+2025-06,2,Không phân khúc,,,,True,n<30; measures hidden
+2025-06,2,Mua lặp lại gần đây,,,,True,n<30; measures hidden
+2025-06,2,Mua lặp lại đã lâu,,,,True,n<30; measures hidden
+2025-06,2,Một đơn đã lâu,,,,True,n<30; measures hidden
+2025-06,3+,"Giá trị cao, mua lặp lại gần đây",,,,True,n<30; measures hidden
+2025-06,3+,"Giá trị cao, một đơn",,,,True,n<30; measures hidden
+2025-06,3+,Mua lặp lại gần đây,,,,True,n<30; measures hidden
+2025-06,3+,Mua lặp lại đã lâu,50.000000,38.000000,12735520.000000,False,
+2025-06,3+,Một đơn đã lâu,229.000000,229.000000,59375900.000000,False,
+2025-07,2,"Giá trị cao, mua lặp lại gần đây",,,,True,n<30; measures hidden
+2025-07,2,"Giá trị cao, một đơn",,,,True,n<30; measures hidden
+2025-07,2,Không phân khúc,,,,True,n<30; measures hidden
+2025-07,2,Mua lặp lại gần đây,,,,True,n<30; measures hidden
+2025-07,2,Mua lặp lại đã lâu,,,,True,n<30; measures hidden
+2025-07,2,Một đơn gần đây,,,,True,n<30; measures hidden
+2025-07,2,Một đơn đã lâu,,,,True,n<30; measures hidden
+2025-07,3+,"Giá trị cao, mua lặp lại gần đây",,,,True,n<30; measures hidden
+2025-07,3+,"Giá trị cao, một đơn",,,,True,n<30; measures hidden
+2025-07,3+,Không phân khúc,,,,True,n<30; measures hidden
+2025-07,3+,Mua lặp lại gần đây,,,,True,n<30; measures hidden
+2025-07,3+,Mua lặp lại đã lâu,,,,True,n<30; measures hidden
+2025-07,3+,Một đơn gần đây,44.000000,44.000000,10834000.000000,False,
+2025-07,3+,Một đơn đã lâu,125.000000,125.000000,36317000.000000,False,
+2025-08,0–1,Mua lặp lại gần đây,,,,True,n<30; measures hidden
+2025-08,2,Mua lặp lại gần đây,,,,True,n<30; measures hidden
+2025-08,2,Một đơn gần đây,,,,True,n<30; measures hidden
+2025-08,3+,"Giá trị cao, mua lặp lại gần đây",,,,True,n<30; measures hidden
+2025-08,3+,"Giá trị cao, một đơn",,,,True,n<30; measures hidden
+2025-08,3+,Mua lặp lại gần đây,37.000000,31.000000,8463000.000000,False,
+2025-08,3+,Một đơn gần đây,146.000000,146.000000,42311000.000000,False,
+2025-09,0–1,"Giá trị cao, mua lặp lại gần đây",,,,True,n<30; measures hidden
+2025-09,0–1,Một đơn gần đây,,,,True,n<30; measures hidden
+2025-09,2,"Giá trị cao, mua lặp lại gần đây",,,,True,n<30; measures hidden
+2025-09,2,Không phân khúc,,,,True,n<30; measures hidden
+2025-09,2,Mua lặp lại gần đây,,,,True,n<30; measures hidden
+2025-09,2,Một đơn gần đây,,,,True,n<30; measures hidden
+2025-09,3+,"Giá trị cao, mua lặp lại gần đây",,,,True,n<30; measures hidden
+2025-09,3+,"Giá trị cao, một đơn",,,,True,n<30; measures hidden
+2025-09,3+,Không phân khúc,,,,True,n<30; measures hidden
+2025-09,3+,Mua lặp lại gần đây,51.000000,42.000000,11397400.000000,False,
+2025-09,3+,Một đơn gần đây,168.000000,168.000000,44346450.000000,False,
+2025-10,0–1,"Giá trị cao, mua lặp lại gần đây",,,,True,n<30; measures hidden
+2025-10,0–1,"Giá trị cao, một đơn",,,,True,n<30; measures hidden
+2025-10,0–1,Không phân khúc,,,,True,n<30; measures hidden
+2025-10,0–1,Mua lặp lại gần đây,,,,True,n<30; measures hidden
+2025-10,0–1,Một đơn gần đây,,,,True,n<30; measures hidden
+2025-10,2,"Giá trị cao, mua lặp lại gần đây",,,,True,n<30; measures hidden
+2025-10,2,"Giá trị cao, một đơn",,,,True,n<30; measures hidden
+2025-10,2,Không phân khúc,,,,True,n<30; measures hidden
+2025-10,2,Mua lặp lại gần đây,,,,True,n<30; measures hidden
+2025-10,2,Một đơn gần đây,60.000000,60.000000,15110000.000000,False,
+2025-10,3+,"Giá trị cao, mua lặp lại gần đây",46.000000,33.000000,51947689.000000,False,
+2025-10,3+,"Giá trị cao, một đơn",,,,True,n<30; measures hidden
+2025-10,3+,Không phân khúc,,,,True,n<30; measures hidden
+2025-10,3+,Mua lặp lại gần đây,52.000000,40.000000,11987000.000000,False,
+2025-10,3+,Một đơn gần đây,330.000000,330.000000,98439466.000000,False,

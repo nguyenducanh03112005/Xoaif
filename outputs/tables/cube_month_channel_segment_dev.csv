@@ -1,0 +1,196 @@
+month,channel_group,customer_segment,orders,customers,recognized_revenue_vnd,suppressed,suppression_note
+2024-04,Facebook,"Giá trị cao, mua lặp lại gần đây",,,,True,n<30; measures hidden
+2024-04,Facebook,"Giá trị cao, một đơn",,,,True,n<30; measures hidden
+2024-04,Facebook,Mua lặp lại đã lâu,,,,True,n<30; measures hidden
+2024-04,Facebook,Một đơn đã lâu,93.000000,93.000000,27364000.000000,False,
+2024-04,Instagram + nguồn hiếm,"Giá trị cao, một đơn",,,,True,n<30; measures hidden
+2024-04,Instagram + nguồn hiếm,Không phân khúc,,,,True,n<30; measures hidden
+2024-04,Instagram + nguồn hiếm,Mua lặp lại gần đây,,,,True,n<30; measures hidden
+2024-04,Instagram + nguồn hiếm,Mua lặp lại đã lâu,,,,True,n<30; measures hidden
+2024-04,Instagram + nguồn hiếm,Một đơn đã lâu,90.000000,90.000000,24602500.000000,False,
+2024-05,Facebook,"Giá trị cao, mua lặp lại gần đây",,,,True,n<30; measures hidden
+2024-05,Facebook,"Giá trị cao, một đơn",,,,True,n<30; measures hidden
+2024-05,Facebook,Mua lặp lại gần đây,,,,True,n<30; measures hidden
+2024-05,Facebook,Mua lặp lại đã lâu,57.000000,43.000000,30071000.000000,False,
+2024-05,Facebook,Một đơn đã lâu,170.000000,170.000000,50526799.000000,False,
+2024-05,Instagram + nguồn hiếm,"Giá trị cao, mua lặp lại gần đây",,,,True,n<30; measures hidden
+2024-05,Instagram + nguồn hiếm,"Giá trị cao, một đơn",,,,True,n<30; measures hidden
+2024-05,Instagram + nguồn hiếm,Không phân khúc,,,,True,n<30; measures hidden
+2024-05,Instagram + nguồn hiếm,Mua lặp lại gần đây,,,,True,n<30; measures hidden
+2024-05,Instagram + nguồn hiếm,Mua lặp lại đã lâu,,,,True,n<30; measures hidden
+2024-05,Instagram + nguồn hiếm,Một đơn đã lâu,94.000000,94.000000,19972500.000000,False,
+2024-06,Facebook,"Giá trị cao, mua lặp lại gần đây",,,,True,n<30; measures hidden
+2024-06,Facebook,"Giá trị cao, một đơn",,,,True,n<30; measures hidden
+2024-06,Facebook,Mua lặp lại gần đây,,,,True,n<30; measures hidden
+2024-06,Facebook,Mua lặp lại đã lâu,49.000000,36.000000,18750200.000000,False,
+2024-06,Facebook,Một đơn đã lâu,131.000000,131.000000,40056500.000000,False,
+2024-06,Instagram + nguồn hiếm,"Giá trị cao, mua lặp lại gần đây",,,,True,n<30; measures hidden
+2024-06,Instagram + nguồn hiếm,"Giá trị cao, một đơn",,,,True,n<30; measures hidden
+2024-06,Instagram + nguồn hiếm,Không phân khúc,,,,True,n<30; measures hidden
+2024-06,Instagram + nguồn hiếm,Mua lặp lại gần đây,,,,True,n<30; measures hidden
+2024-06,Instagram + nguồn hiếm,Mua lặp lại đã lâu,,,,True,n<30; measures hidden
+2024-06,Instagram + nguồn hiếm,Một đơn đã lâu,71.000000,71.000000,17117000.000000,False,
+2024-07,Facebook,"Giá trị cao, mua lặp lại gần đây",,,,True,n<30; measures hidden
+2024-07,Facebook,"Giá trị cao, một đơn",,,,True,n<30; measures hidden
+2024-07,Facebook,Mua lặp lại đã lâu,46.000000,37.000000,16968500.000000,False,
+2024-07,Facebook,Một đơn đã lâu,105.000000,105.000000,35356500.000000,False,
+2024-07,Instagram + nguồn hiếm,"Giá trị cao, mua lặp lại gần đây",,,,True,n<30; measures hidden
+2024-07,Instagram + nguồn hiếm,Không phân khúc,,,,True,n<30; measures hidden
+2024-07,Instagram + nguồn hiếm,Mua lặp lại gần đây,,,,True,n<30; measures hidden
+2024-07,Instagram + nguồn hiếm,Mua lặp lại đã lâu,,,,True,n<30; measures hidden
+2024-07,Instagram + nguồn hiếm,Một đơn đã lâu,63.000000,63.000000,17708000.000000,False,
+2024-08,Facebook,"Giá trị cao, mua lặp lại gần đây",,,,True,n<30; measures hidden
+2024-08,Facebook,"Giá trị cao, một đơn",,,,True,n<30; measures hidden
+2024-08,Facebook,Mua lặp lại đã lâu,44.000000,34.000000,17912500.000000,False,
+2024-08,Facebook,Một đơn đã lâu,114.000000,114.000000,40453500.000000,False,
+2024-08,Instagram + nguồn hiếm,"Giá trị cao, mua lặp lại gần đây",,,,True,n<30; measures hidden
+2024-08,Instagram + nguồn hiếm,"Giá trị cao, một đơn",,,,True,n<30; measures hidden
+2024-08,Instagram + nguồn hiếm,Không phân khúc,,,,True,n<30; measures hidden
+2024-08,Instagram + nguồn hiếm,Mua lặp lại đã lâu,,,,True,n<30; measures hidden
+2024-08,Instagram + nguồn hiếm,Một đơn đã lâu,57.000000,57.000000,14309850.000000,False,
+2024-09,Facebook,"Giá trị cao, mua lặp lại gần đây",,,,True,n<30; measures hidden
+2024-09,Facebook,"Giá trị cao, một đơn",,,,True,n<30; measures hidden
+2024-09,Facebook,Mua lặp lại gần đây,,,,True,n<30; measures hidden
+2024-09,Facebook,Mua lặp lại đã lâu,41.000000,35.000000,15360000.000000,False,
+2024-09,Facebook,Một đơn đã lâu,108.000000,108.000000,33257500.000000,False,
+2024-09,Instagram + nguồn hiếm,"Giá trị cao, mua lặp lại gần đây",,,,True,n<30; measures hidden
+2024-09,Instagram + nguồn hiếm,"Giá trị cao, một đơn",,,,True,n<30; measures hidden
+2024-09,Instagram + nguồn hiếm,Không phân khúc,,,,True,n<30; measures hidden
+2024-09,Instagram + nguồn hiếm,Mua lặp lại gần đây,,,,True,n<30; measures hidden
+2024-09,Instagram + nguồn hiếm,Mua lặp lại đã lâu,,,,True,n<30; measures hidden
+2024-09,Instagram + nguồn hiếm,Một đơn đã lâu,69.000000,69.000000,18062000.000000,False,
+2024-10,Facebook,"Giá trị cao, mua lặp lại gần đây",,,,True,n<30; measures hidden
+2024-10,Facebook,"Giá trị cao, một đơn",,,,True,n<30; measures hidden
+2024-10,Facebook,Mua lặp lại gần đây,,,,True,n<30; measures hidden
+2024-10,Facebook,Mua lặp lại đã lâu,94.000000,67.000000,74276937.000000,False,
+2024-10,Facebook,Một đơn đã lâu,223.000000,223.000000,61280480.000000,False,
+2024-10,Instagram + nguồn hiếm,"Giá trị cao, một đơn",,,,True,n<30; measures hidden
+2024-10,Instagram + nguồn hiếm,Không phân khúc,,,,True,n<30; measures hidden
+2024-10,Instagram + nguồn hiếm,Mua lặp lại gần đây,,,,True,n<30; measures hidden
+2024-10,Instagram + nguồn hiếm,Mua lặp lại đã lâu,39.000000,33.000000,11961360.000000,False,
+2024-10,Instagram + nguồn hiếm,Một đơn đã lâu,170.000000,170.000000,40188000.000000,False,
+2024-11,Facebook,"Giá trị cao, mua lặp lại gần đây",,,,True,n<30; measures hidden
+2024-11,Facebook,"Giá trị cao, một đơn",,,,True,n<30; measures hidden
+2024-11,Facebook,Mua lặp lại gần đây,,,,True,n<30; measures hidden
+2024-11,Facebook,Mua lặp lại đã lâu,66.000000,50.000000,85461440.000000,False,
+2024-11,Facebook,Một đơn đã lâu,206.000000,206.000000,72974820.000000,False,
+2024-11,Instagram + nguồn hiếm,"Giá trị cao, mua lặp lại gần đây",,,,True,n<30; measures hidden
+2024-11,Instagram + nguồn hiếm,"Giá trị cao, một đơn",,,,True,n<30; measures hidden
+2024-11,Instagram + nguồn hiếm,Không phân khúc,,,,True,n<30; measures hidden
+2024-11,Instagram + nguồn hiếm,Mua lặp lại gần đây,,,,True,n<30; measures hidden
+2024-11,Instagram + nguồn hiếm,Mua lặp lại đã lâu,,,,True,n<30; measures hidden
+2024-11,Instagram + nguồn hiếm,Một đơn đã lâu,122.000000,122.000000,36424998.000000,False,
+2024-12,Facebook,"Giá trị cao, mua lặp lại gần đây",,,,True,n<30; measures hidden
+2024-12,Facebook,"Giá trị cao, một đơn",,,,True,n<30; measures hidden
+2024-12,Facebook,Mua lặp lại gần đây,,,,True,n<30; measures hidden
+2024-12,Facebook,Mua lặp lại đã lâu,42.000000,36.000000,16184000.000000,False,
+2024-12,Facebook,Một đơn đã lâu,145.000000,145.000000,49720620.000000,False,
+2024-12,Instagram + nguồn hiếm,"Giá trị cao, mua lặp lại gần đây",,,,True,n<30; measures hidden
+2024-12,Instagram + nguồn hiếm,"Giá trị cao, một đơn",,,,True,n<30; measures hidden
+2024-12,Instagram + nguồn hiếm,Không phân khúc,,,,True,n<30; measures hidden
+2024-12,Instagram + nguồn hiếm,Mua lặp lại gần đây,,,,True,n<30; measures hidden
+2024-12,Instagram + nguồn hiếm,Mua lặp lại đã lâu,,,,True,n<30; measures hidden
+2024-12,Instagram + nguồn hiếm,Một đơn đã lâu,83.000000,83.000000,26760000.000000,False,
+2025-01,Facebook,"Giá trị cao, mua lặp lại gần đây",,,,True,n<30; measures hidden
+2025-01,Facebook,"Giá trị cao, một đơn",64.000000,64.000000,87478800.000000,False,
+2025-01,Facebook,Mua lặp lại gần đây,,,,True,n<30; measures hidden
+2025-01,Facebook,Mua lặp lại đã lâu,61.000000,39.000000,43959600.000000,False,
+2025-01,Facebook,Một đơn đã lâu,104.000000,104.000000,47080500.000000,False,
+2025-01,Instagram + nguồn hiếm,"Giá trị cao, mua lặp lại gần đây",,,,True,n<30; measures hidden
+2025-01,Instagram + nguồn hiếm,"Giá trị cao, một đơn",,,,True,n<30; measures hidden
+2025-01,Instagram + nguồn hiếm,Không phân khúc,,,,True,n<30; measures hidden
+2025-01,Instagram + nguồn hiếm,Mua lặp lại gần đây,,,,True,n<30; measures hidden
+2025-01,Instagram + nguồn hiếm,Mua lặp lại đã lâu,,,,True,n<30; measures hidden
+2025-01,Instagram + nguồn hiếm,Một đơn đã lâu,47.000000,47.000000,15969000.000000,False,
+2025-02,Facebook,"Giá trị cao, mua lặp lại gần đây",,,,True,n<30; measures hidden
+2025-02,Facebook,"Giá trị cao, một đơn",,,,True,n<30; measures hidden
+2025-02,Facebook,Mua lặp lại gần đây,,,,True,n<30; measures hidden
+2025-02,Facebook,Mua lặp lại đã lâu,,,,True,n<30; measures hidden
+2025-02,Facebook,Một đơn đã lâu,106.000000,106.000000,33733000.000000,False,
+2025-02,Instagram + nguồn hiếm,"Giá trị cao, mua lặp lại gần đây",,,,True,n<30; measures hidden
+2025-02,Instagram + nguồn hiếm,"Giá trị cao, một đơn",,,,True,n<30; measures hidden
+2025-02,Instagram + nguồn hiếm,Không phân khúc,,,,True,n<30; measures hidden
+2025-02,Instagram + nguồn hiếm,Mua lặp lại đã lâu,,,,True,n<30; measures hidden
+2025-02,Instagram + nguồn hiếm,Một đơn đã lâu,58.000000,58.000000,14094000.000000,False,
+2025-03,Facebook,"Giá trị cao, mua lặp lại gần đây",,,,True,n<30; measures hidden
+2025-03,Facebook,"Giá trị cao, một đơn",,,,True,n<30; measures hidden
+2025-03,Facebook,Mua lặp lại gần đây,,,,True,n<30; measures hidden
+2025-03,Facebook,Mua lặp lại đã lâu,48.000000,41.000000,75366300.000000,False,
+2025-03,Facebook,Một đơn đã lâu,184.000000,184.000000,57930800.000000,False,
+2025-03,Instagram + nguồn hiếm,"Giá trị cao, mua lặp lại gần đây",,,,True,n<30; measures hidden
+2025-03,Instagram + nguồn hiếm,"Giá trị cao, một đơn",,,,True,n<30; measures hidden
+2025-03,Instagram + nguồn hiếm,Không phân khúc,,,,True,n<30; measures hidden
+2025-03,Instagram + nguồn hiếm,Mua lặp lại gần đây,,,,True,n<30; measures hidden
+2025-03,Instagram + nguồn hiếm,Mua lặp lại đã lâu,44.000000,32.000000,11563000.000000,False,
+2025-03,Instagram + nguồn hiếm,Một đơn đã lâu,183.000000,183.000000,51691000.000000,False,
+2025-04,Facebook,"Giá trị cao, mua lặp lại gần đây",,,,True,n<30; measures hidden
+2025-04,Facebook,"Giá trị cao, một đơn",,,,True,n<30; measures hidden
+2025-04,Facebook,Mua lặp lại gần đây,,,,True,n<30; measures hidden
+2025-04,Facebook,Mua lặp lại đã lâu,,,,True,n<30; measures hidden
+2025-04,Facebook,Một đơn đã lâu,67.000000,67.000000,18540000.000000,False,
+2025-04,Instagram + nguồn hiếm,"Giá trị cao, mua lặp lại gần đây",,,,True,n<30; measures hidden
+2025-04,Instagram + nguồn hiếm,"Giá trị cao, một đơn",,,,True,n<30; measures hidden
+2025-04,Instagram + nguồn hiếm,Không phân khúc,,,,True,n<30; measures hidden
+2025-04,Instagram + nguồn hiếm,Mua lặp lại gần đây,,,,True,n<30; measures hidden
+2025-04,Instagram + nguồn hiếm,Mua lặp lại đã lâu,,,,True,n<30; measures hidden
+2025-04,Instagram + nguồn hiếm,Một đơn đã lâu,71.000000,71.000000,17020000.000000,False,
+2025-05,Facebook,"Giá trị cao, mua lặp lại gần đây",,,,True,n<30; measures hidden
+2025-05,Facebook,"Giá trị cao, một đơn",,,,True,n<30; measures hidden
+2025-05,Facebook,Mua lặp lại gần đây,,,,True,n<30; measures hidden
+2025-05,Facebook,Mua lặp lại đã lâu,37.000000,30.000000,11042600.000000,False,
+2025-05,Facebook,Một đơn đã lâu,81.000000,81.000000,24163400.000000,False,
+2025-05,Instagram + nguồn hiếm,"Giá trị cao, mua lặp lại gần đây",,,,True,n<30; measures hidden
+2025-05,Instagram + nguồn hiếm,"Giá trị cao, một đơn",,,,True,n<30; measures hidden
+2025-05,Instagram + nguồn hiếm,Không phân khúc,,,,True,n<30; measures hidden
+2025-05,Instagram + nguồn hiếm,Mua lặp lại gần đây,,,,True,n<30; measures hidden
+2025-05,Instagram + nguồn hiếm,Mua lặp lại đã lâu,,,,True,n<30; measures hidden
+2025-05,Instagram + nguồn hiếm,Một đơn đã lâu,100.000000,100.000000,22662000.000000,False,
+2025-06,Facebook,"Giá trị cao, mua lặp lại gần đây",,,,True,n<30; measures hidden
+2025-06,Facebook,"Giá trị cao, một đơn",,,,True,n<30; measures hidden
+2025-06,Facebook,Mua lặp lại gần đây,,,,True,n<30; measures hidden
+2025-06,Facebook,Mua lặp lại đã lâu,,,,True,n<30; measures hidden
+2025-06,Facebook,Một đơn đã lâu,127.000000,127.000000,36421900.000000,False,
+2025-06,Instagram + nguồn hiếm,"Giá trị cao, mua lặp lại gần đây",,,,True,n<30; measures hidden
+2025-06,Instagram + nguồn hiếm,"Giá trị cao, một đơn",,,,True,n<30; measures hidden
+2025-06,Instagram + nguồn hiếm,Không phân khúc,,,,True,n<30; measures hidden
+2025-06,Instagram + nguồn hiếm,Mua lặp lại gần đây,,,,True,n<30; measures hidden
+2025-06,Instagram + nguồn hiếm,Mua lặp lại đã lâu,,,,True,n<30; measures hidden
+2025-06,Instagram + nguồn hiếm,Một đơn đã lâu,109.000000,109.000000,23984000.000000,False,
+2025-07,Facebook,"Giá trị cao, mua lặp lại gần đây",,,,True,n<30; measures hidden
+2025-07,Facebook,"Giá trị cao, một đơn",,,,True,n<30; measures hidden
+2025-07,Facebook,Mua lặp lại gần đây,,,,True,n<30; measures hidden
+2025-07,Facebook,Mua lặp lại đã lâu,,,,True,n<30; measures hidden
+2025-07,Facebook,Một đơn gần đây,,,,True,n<30; measures hidden
+2025-07,Facebook,Một đơn đã lâu,74.000000,74.000000,22736000.000000,False,
+2025-07,Instagram + nguồn hiếm,"Giá trị cao, mua lặp lại gần đây",,,,True,n<30; measures hidden
+2025-07,Instagram + nguồn hiếm,"Giá trị cao, một đơn",,,,True,n<30; measures hidden
+2025-07,Instagram + nguồn hiếm,Không phân khúc,,,,True,n<30; measures hidden
+2025-07,Instagram + nguồn hiếm,Mua lặp lại gần đây,,,,True,n<30; measures hidden
+2025-07,Instagram + nguồn hiếm,Mua lặp lại đã lâu,,,,True,n<30; measures hidden
+2025-07,Instagram + nguồn hiếm,Một đơn gần đây,,,,True,n<30; measures hidden
+2025-07,Instagram + nguồn hiếm,Một đơn đã lâu,54.000000,54.000000,14116000.000000,False,
+2025-08,Facebook,"Giá trị cao, mua lặp lại gần đây",,,,True,n<30; measures hidden
+2025-08,Facebook,"Giá trị cao, một đơn",,,,True,n<30; measures hidden
+2025-08,Facebook,Mua lặp lại gần đây,,,,True,n<30; measures hidden
+2025-08,Facebook,Một đơn gần đây,81.000000,81.000000,24213000.000000,False,
+2025-08,Instagram + nguồn hiếm,"Giá trị cao, mua lặp lại gần đây",,,,True,n<30; measures hidden
+2025-08,Instagram + nguồn hiếm,Mua lặp lại gần đây,,,,True,n<30; measures hidden
+2025-08,Instagram + nguồn hiếm,Một đơn gần đây,72.000000,72.000000,19043000.000000,False,
+2025-09,Facebook,"Giá trị cao, mua lặp lại gần đây",,,,True,n<30; measures hidden
+2025-09,Facebook,"Giá trị cao, một đơn",,,,True,n<30; measures hidden
+2025-09,Facebook,Mua lặp lại gần đây,,,,True,n<30; measures hidden
+2025-09,Facebook,Một đơn gần đây,91.000000,91.000000,26797050.000000,False,
+2025-09,Instagram + nguồn hiếm,"Giá trị cao, mua lặp lại gần đây",,,,True,n<30; measures hidden
+2025-09,Instagram + nguồn hiếm,"Giá trị cao, một đơn",,,,True,n<30; measures hidden
+2025-09,Instagram + nguồn hiếm,Không phân khúc,,,,True,n<30; measures hidden
+2025-09,Instagram + nguồn hiếm,Mua lặp lại gần đây,,,,True,n<30; measures hidden
+2025-09,Instagram + nguồn hiếm,Một đơn gần đây,83.000000,83.000000,18877400.000000,False,
+2025-10,Facebook,"Giá trị cao, mua lặp lại gần đây",,,,True,n<30; measures hidden
+2025-10,Facebook,"Giá trị cao, một đơn",,,,True,n<30; measures hidden
+2025-10,Facebook,Mua lặp lại gần đây,,,,True,n<30; measures hidden
+2025-10,Facebook,Một đơn gần đây,236.000000,236.000000,73775466.000000,False,
+2025-10,Instagram + nguồn hiếm,"Giá trị cao, mua lặp lại gần đây",,,,True,n<30; measures hidden
+2025-10,Instagram + nguồn hiếm,"Giá trị cao, một đơn",,,,True,n<30; measures hidden
+2025-10,Instagram + nguồn hiếm,Không phân khúc,,,,True,n<30; measures hidden
+2025-10,Instagram + nguồn hiếm,Mua lặp lại gần đây,,,,True,n<30; measures hidden
+2025-10,Instagram + nguồn hiếm,Một đơn gần đây,159.000000,159.000000,41254000.000000,False,
