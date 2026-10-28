@@ -1,0 +1,61 @@
+{
+  "status": "exploratory_dev_only_not_confirmed_out_of_sample",
+  "test_raw_or_labels_read": false,
+  "cohort": "DEV multi-snapshot; 12 monthly anchors; N=180; L=7",
+  "snapshots": 21638,
+  "customers": 3508,
+  "s1_score_one_rate": 0.13934426229508196,
+  "s1_score_one_snapshots": 2196,
+  "s1_snapshot_n": 21638,
+  "dev_half_reference": {
+    "first_anchors": [
+      "2024-05-01",
+      "2024-06-01",
+      "2024-07-01",
+      "2024-08-01",
+      "2024-09-01",
+      "2024-10-01"
+    ],
+    "second_anchors": [
+      "2024-11-01",
+      "2024-12-01",
+      "2025-01-01",
+      "2025-02-01",
+      "2025-03-01",
+      "2025-04-01"
+    ],
+    "minimum_cell_n_each_half": 30,
+    "s6": {
+      "rho": 0.9761904761904763,
+      "groups_n": 8,
+      "groups_used": [
+        "1|31-90",
+        "1|91-180",
+        "1|<=30",
+        "2|31-90",
+        "2|91-180",
+        "2|<=30",
+        ">=3|31-90",
+        ">=3|<=30"
+      ]
+    },
+    "rfm": {
+      "rho": 1.0,
+      "groups_n": 6,
+      "groups_used": [
+        "Giá trị cao, mua lặp lại gần đây",
+        "Giá trị cao, một đơn",
+        "Mua lặp lại gần đây",
+        "Mua lặp lại đã lâu",
+        "Một đơn gần đây",
+        "Một đơn đã lâu"
+      ]
+    },
+    "rfm_high_value_cut_vnd": 830000
+  },
+  "h5": {
+    "frozen_combo_count": 24,
+    "k_dev": 1,
+    "criteria": "DEV lift>1 AND Kulczynski>=0.5 AND imbalance_ratio<=0.5"
+  }
+}

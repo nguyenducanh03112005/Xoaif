@@ -270,3 +270,16 @@ Nguồn: `scripts/analyze_gateb_r2_dev.py`, `scripts/summarize_gateb_r2_power.py
 | Quyết định H2 | Trở lại giả thuyết chính: tại RR=CI lower DEV 2,656, công suất H2 100,00% ở nền DEV 7,4% và 99,87% ở mốc 4,6%, vượt 80% ở cả hai. | `outputs/metrics/gateb_r2_power.json`; `docs/gateb_r2_results.md` |
 
 **Giới hạn:** RR là liên hệ snapshot-weighted; không diễn giải nhân quả. Bảng công suất là kịch bản theo xấp xỉ Wald/Hanley–McNeil, không phải kết quả HO2.
+
+## A8 — R4: hiệu chuẩn tiêu chí bằng DEV
+
+Nguồn: `scripts/calibrate_gateb_r4_dev.py`; đăng ký trước tại `docs/analysis_plan_gateb_r4.md` (commit `6737615`). Cohort DEV multi-snapshot 21.638 snapshot/3.508 khách, 12 mốc T, N=180, L=7. Khám phá, chưa xác nhận ngoài mẫu; không đọc test/HO2.
+
+| Đại lượng | Số chuẩn, cohort và đơn vị | Nguồn |
+|---|---|---|
+| S1 điểm 1 | 2.196/21.638 snapshot = 13,93%; điểm 1 khi frequency≥2 | `outputs/metrics/gateb_r4_dev_calibration.json` |
+| H4 S6 | 8 mức đủ n≥30 mỗi nửa; Spearman nửa đầu/nửa sau = 0,9762 | `outputs/metrics/gateb_r4_dev_calibration.json` |
+| H4 RFM | 6 mức đủ n≥30 mỗi nửa; Spearman = 1,0000; cutoff giá trị cao 830.000 VND | `outputs/metrics/gateb_r4_dev_calibration.json` |
+| H5 `k_DEV` | 1/24 combo thỏa lift>1, Kulczynski≥0,5, IR≤0,5; H5 chỉ mô tả | `outputs/metrics/gateb_r4_dev_calibration.json` |
+
+**Giới hạn:** rho là thứ hạng tỷ lệ snapshot giữa hai nửa DEV, không là kiểm định HO2 hay bằng chứng ổn định ngoài mẫu. H5 có ít hơn bốn combo qua bộ lọc nên không có tiêu chí xác nhận.
