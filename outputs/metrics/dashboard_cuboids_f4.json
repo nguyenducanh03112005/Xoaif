@@ -1,0 +1,28 @@
+{
+  "status": "exploratory_dev_only_not_confirmed_out_of_sample",
+  "test_raw_or_labels_read": false,
+  "source_orders": 6093,
+  "threshold": 30,
+  "margins_exported": false,
+  "quarter_channel_rfm": {
+    "rows": 42,
+    "suppressed_primary": 13,
+    "suppressed_complementary": 11,
+    "suppressed_total": 24,
+    "suppression_rate": 0.5714285714285714,
+    "threshold": 30,
+    "dimension_count": 3,
+    "dashboard_target_under_30pct": false
+  },
+  "quarter_basket_rfm": {
+    "rows": 42,
+    "suppressed_primary": 15,
+    "suppressed_complementary": 13,
+    "suppressed_total": 28,
+    "suppression_rate": 0.6666666666666666,
+    "threshold": 30,
+    "dimension_count": 3,
+    "dashboard_target_under_30pct": false
+  },
+  "plan_sha256": "d865e0f5772f78e07c509affe207f52c53611b1d6ac2792eb40784e9e2c3d380"
+}

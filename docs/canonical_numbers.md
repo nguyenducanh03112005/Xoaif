@@ -33,6 +33,15 @@ Nguồn: `scripts/build_combo_recommendation_f3.py`; protocol SHA-256 `c2ecdd207
 | PORTCARD giỏ đầu | 2.472/3.635 khách trưởng thành, 68,01%. | `outputs/tables/product_roles_dev.csv` |
 | Bội so sánh sản phẩm | 77 phép so sánh mô tả; kỳ vọng gần đúng 3,85 dương giả ở mức 5% nếu có 77 kiểm định độc lập dưới null; không hiệu chỉnh vì không đăng ký p-values/kiểm định. | `docs/combo_recommendation_f3.md` |
 
+## F4 — cuboid dashboard (khám phá, DEV-only)
+
+Nguồn `scripts/build_dashboard_cuboids_f4.py`; protocol SHA-256 `d865e0f5772f78e07c509affe207f52c53611b1d6ac2792eb40784e9e2c3d380`; 6.093 đơn DEV status 3 không quà; ngưỡng suppression 30.
+
+| Cuboid | Số chuẩn, mẫu số và tỷ lệ ẩn | Nguồn |
+|---|---|---|
+| Quý×kênh×RFM | 24/42 ô ẩn (13 primary + 11 complementary), 57,14%; không đạt mục tiêu <30%, không dùng trong dashboard. | `outputs/metrics/dashboard_cuboids_f4.json`, `outputs/tables/quarter_channel_rfm_f4.csv` |
+| Quý×cỡ giỏ×RFM | 28/42 ô ẩn (15 primary + 13 complementary), 66,67%; không đạt mục tiêu <30%, không dùng trong dashboard. | JSON cùng; `quarter_basket_rfm_f4.csv` |
+
 ## Cohort và thời gian
 
 | Đại lượng | Số chuẩn và đơn vị/cohort | Nguồn sự thật |

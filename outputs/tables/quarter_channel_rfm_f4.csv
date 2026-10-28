@@ -1,0 +1,43 @@
+quarter,channel_group,rfm_group,orders,customers,recognized_revenue_vnd,suppressed_primary,suppressed_complementary,suppressed,suppression_note
+2024-Q2,Facebook,Mua lặp lại,,,,False,True,True,complementary: tránh suy ra residual
+2024-Q2,Facebook,Một đơn gần đây,,,,True,False,True,primary: orders hoặc customers <30
+2024-Q2,Facebook,Một đơn đã lâu,412.000000,412.000000,149461799.000000,False,False,False,
+2024-Q2,Khác/thiếu,Mua lặp lại,,,,False,True,True,complementary: tránh suy ra residual
+2024-Q2,Khác/thiếu,Một đơn gần đây,,,,True,False,True,primary: orders hoặc customers <30
+2024-Q2,Khác/thiếu,Một đơn đã lâu,260.000000,260.000000,72792000.000000,False,False,False,
+2024-Q3,Facebook,Mua lặp lại,,,,False,True,True,complementary: tránh suy ra residual
+2024-Q3,Facebook,Một đơn gần đây,,,,True,False,True,primary: orders hoặc customers <30
+2024-Q3,Facebook,Một đơn đã lâu,345.000000,345.000000,131023400.000000,False,False,False,
+2024-Q3,Khác/thiếu,Mua lặp lại,,,,False,True,True,complementary: tránh suy ra residual
+2024-Q3,Khác/thiếu,Một đơn gần đây,,,,True,False,True,primary: orders hoặc customers <30
+2024-Q3,Khác/thiếu,Một đơn đã lâu,192.000000,192.000000,67835850.000000,False,False,False,
+2024-Q4,Facebook,Mua lặp lại,,,,False,True,True,complementary: tránh suy ra residual
+2024-Q4,Facebook,Một đơn gần đây,,,,True,False,True,primary: orders hoặc customers <30
+2024-Q4,Facebook,Một đơn đã lâu,613.000000,613.000000,261293920.000000,False,False,False,
+2024-Q4,Khác/thiếu,Mua lặp lại,,,,False,True,True,complementary: tránh suy ra residual
+2024-Q4,Khác/thiếu,Một đơn gần đây,,,,True,False,True,primary: orders hoặc customers <30
+2024-Q4,Khác/thiếu,Một đơn đã lâu,397.000000,397.000000,154747254.000000,False,False,False,
+2025-Q1,Facebook,Mua lặp lại,,,,False,True,True,complementary: tránh suy ra residual
+2025-Q1,Facebook,Một đơn gần đây,,,,True,False,True,primary: orders hoặc customers <30
+2025-Q1,Facebook,Một đơn đã lâu,482.000000,482.000000,269295100.000000,False,False,False,
+2025-Q1,Khác/thiếu,Mua lặp lại,,,,False,True,True,complementary: tránh suy ra residual
+2025-Q1,Khác/thiếu,Một đơn gần đây,,,,True,False,True,primary: orders hoặc customers <30
+2025-Q1,Khác/thiếu,Một đơn đã lâu,311.000000,311.000000,130523550.000000,False,False,False,
+2025-Q2,Facebook,Mua lặp lại,,,,False,True,True,complementary: tránh suy ra residual
+2025-Q2,Facebook,Một đơn gần đây,,,,True,False,True,primary: orders hoặc customers <30
+2025-Q2,Facebook,Một đơn đã lâu,287.000000,287.000000,112148760.000000,False,False,False,
+2025-Q2,Khác/thiếu,Mua lặp lại,,,,False,True,True,complementary: tránh suy ra residual
+2025-Q2,Khác/thiếu,Một đơn gần đây,,,,True,False,True,primary: orders hoặc customers <30
+2025-Q2,Khác/thiếu,Một đơn đã lâu,286.000000,286.000000,72183300.000000,False,False,False,
+2025-Q3,Facebook,Mua lặp lại,123.000000,85.000000,45935863.000000,False,False,False,
+2025-Q3,Facebook,Một đơn gần đây,210.000000,210.000000,76490810.000000,False,False,False,
+2025-Q3,Facebook,Một đơn đã lâu,78.000000,78.000000,29346840.000000,False,False,False,
+2025-Q3,Khác/thiếu,Mua lặp lại,79.000000,62.000000,29842046.000000,False,False,False,
+2025-Q3,Khác/thiếu,Một đơn gần đây,176.000000,176.000000,48548000.000000,False,False,False,
+2025-Q3,Khác/thiếu,Một đơn đã lâu,55.000000,55.000000,14986000.000000,False,False,False,
+2025-Q4,Facebook,Mua lặp lại,,,,False,True,True,complementary: tránh suy ra residual
+2025-Q4,Facebook,Một đơn gần đây,258.000000,258.000000,123943216.000000,False,False,False,
+2025-Q4,Facebook,Một đơn đã lâu,,,,True,False,True,primary: orders hoặc customers <30
+2025-Q4,Khác/thiếu,Mua lặp lại,,,,True,False,True,primary: orders hoặc customers <30
+2025-Q4,Khác/thiếu,Một đơn gần đây,168.000000,168.000000,52256000.000000,False,False,False,
+2025-Q4,Khác/thiếu,Một đơn đã lâu,,,,True,False,True,primary: orders hoặc customers <30

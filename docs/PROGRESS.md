@@ -110,6 +110,10 @@ Updated: 2026-10-28
 
 - 24 combo và thứ hạng A2 được giữ. Sàng lọc mô tả (lift>1, Kulczynski≥0,5, IR≤0,5) có 1 combo qua; combo hạng 1 lift 0,982 không qua. Trong 77 sản phẩm, khoảng 3,85 dương giả kỳ vọng nếu dùng 5% tests độc lập; không hiệu chỉnh và không tuyên bố ý nghĩa thống kê.
 
+## Bổ sung F4 — cuboid
+
+- Hai thiết kế quý×kênh×RFM và quý×cỡ giỏ×RFM đều không đạt mục tiêu suppression <30% (57,14% và 66,67%). Giữ ngưỡng 30; hai cuboid không đưa vào dashboard. Kết quả ghi lại trước khi đăng ký thiết kế thô hơn riêng.
+
 - Cohort (trạng thái trước đếm raw pre-T ngày 2026-10-27): script reconcile chỉ so sánh aggregate warehouse; chưa có cầu nối theo điều kiện. Đã được supersede bởi đếm trực tiếp tại `docs/cohort_reconciliation.md` và `outputs/tables/cohort_bridge_verified.json`.
 - Sai khác ngày T: không tìm thấy artifact prediction đã lưu trong `outputs/`; theo phạm vi Amendment 06, không tái tạo prediction và dừng tiểu mục. Không có metric sensitivity mới.
 - UNKNOWN (ghi chú trước chẩn đoán raw pre-T ngày 2026-10-27): warehouse khi đó không chứa các trường source/address; đã được supersede bởi đếm DEV-only trong `docs/unknown_region_diagnostic.md`.
