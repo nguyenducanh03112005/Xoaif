@@ -12,7 +12,7 @@ Nguồn: `scripts/freeze_gateb_strategies_dev.py`; cohort DEV đa mốc 21.638 s
 | D-005 | Đủ điều kiện; artifact cũ giữ nguyên | `outputs/models/day2_dev_final_model.joblib`, hash khớp amendment 04: `0ac767d24c641f50bdc19634e590dc45a92d9e4cd5513d02871fac50b109cd4a`. |
 | v2 | Đủ điều kiện; artifact cũ giữ nguyên | `outputs/models/repurchase_features_v2.joblib`, hash khớp metadata đóng băng: `5cbe48bb9b4944d91dfba7b85dd5d1608eb836b68574b16d3ac6a6319f8a2f80`. |
 | v3 | Đủ điều kiện, phương án A | Final-fit toàn DEV đa mốc, Logistic Regression C=10 balanced, lbfgs, 2000 iteration, seed 20261028. SHA-256 `fc04ee70693da1a1e16350b99acf80b335705000dac35ba67bde63ef9c5d348b`. |
-| Recency-only | Baseline mô tả | Hệ số chuẩn hóa −0,46545; score tăng khi recency giảm. Không là giả thuyết. |
-| Frequency-only | Baseline mô tả | Hệ số chuẩn hóa +0,42799; score tăng khi frequency tăng. Không là giả thuyết. |
+| Recency-only | Baseline mô tả | Hệ số chuẩn hóa −0,46545; mean=118,62889 ngày, scale=86,96034; score tăng khi recency giảm. Không là giả thuyết. |
+| Frequency-only | Baseline mô tả | Hệ số chuẩn hóa +0,42799; mean=1,13532 đơn, scale=0,47877; score tăng khi frequency tăng. Không là giả thuyết. |
 
 Chiều của hai baseline được xác định theo dấu hệ số từ Logistic Regression đơn biến DEV đã đăng ký, không theo kết quả HO2. S3 và v3 sử dụng cùng phương án A như đã đăng ký; không dùng metric in-sample của các final-fit để đánh giá tổng quát. D-005 vẫn là mô hình chính. R5 không tạo metric HO2 và không mở Phase C.

@@ -101,6 +101,8 @@
       "feature": "recency_days",
       "standardized_coefficient": -0.4654476749977598,
       "direction": -1,
+      "standardizer_mean": 118.62889361308808,
+      "standardizer_scale": 86.9603363746896,
       "scoring_rule": "standardize(recency_days) * sign(coef)"
     },
     "frequency_only": {
@@ -109,6 +111,8 @@
       "feature": "frequency",
       "standardized_coefficient": 0.4279941247053224,
       "direction": 1,
+      "standardizer_mean": 1.1353174969960256,
+      "standardizer_scale": 0.47876578086477317,
       "scoring_rule": "standardize(frequency) * sign(coef)"
     }
   },

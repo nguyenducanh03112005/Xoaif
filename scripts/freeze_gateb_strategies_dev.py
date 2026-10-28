@@ -51,10 +51,13 @@ def _sign_fit(frame, column: str) -> dict:
     ])
     model.fit(x, y)
     coef = float(model.named_steps["classifier"].coef_[0, 0])
+    scaler = model.named_steps["scaler"]
     if not np.isfinite(coef) or coef == 0:
         raise ValueError(f"Non-finite/zero registered baseline coefficient for {column}")
     return {"feature": column, "standardized_coefficient": coef,
             "direction": 1 if coef > 0 else -1,
+            "standardizer_mean": float(scaler.mean_[0]),
+            "standardizer_scale": float(scaler.scale_[0]),
             "scoring_rule": f"standardize({column}) * sign(coef)"}
 
 

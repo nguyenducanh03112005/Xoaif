@@ -292,6 +292,7 @@ Nguồn: `scripts/freeze_gateb_strategies_dev.py`; đăng ký trước tại `do
 |---|---|---|
 | Dấu hệ số recency-only | −0,46545 chuẩn hóa; hướng score là recency thấp hơn | `outputs/metrics/gateb_r5_strategy_freeze.json` |
 | Dấu hệ số frequency-only | +0,42799 chuẩn hóa; hướng score là frequency cao hơn | `outputs/metrics/gateb_r5_strategy_freeze.json` |
+| Chuẩn hóa score baseline | recency mean=118,62889 ngày, scale=86,96034; frequency mean=1,13532 đơn, scale=0,47877 | `outputs/metrics/gateb_r5_strategy_freeze.json` |
 | S3 final-fit | 21.638 snapshot/3.508 khách; SHA-256 artifact `63e47afbe0a1ef73c01d0be2974c354d753a7299f3d1952146b91bd8b2d1706b` | `outputs/metrics/gateb_r5_strategy_freeze.json` |
 | S6 final map | 11 nhóm sau quy tắc gộp min n=100; SHA-256 `17af23fa3a84a40c357856271489badd6a1061fd15cac62ace1573627b64d048` | `outputs/metrics/gateb_r5_strategy_freeze.json` |
 | v3 final-fit | 21.638 snapshot/3.508 khách; SHA-256 artifact `fc04ee70693da1a1e16350b99acf80b335705000dac35ba67bde63ef9c5d348b` | `outputs/metrics/gateb_r5_strategy_freeze.json` |
