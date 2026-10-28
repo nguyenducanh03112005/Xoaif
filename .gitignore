@@ -90,6 +90,7 @@ outputs/tables/*
 !outputs/metrics/gateb_r2_rr_dev.json
 !outputs/metrics/gateb_r2_power.json
 !outputs/metrics/gateb_r4_dev_calibration.json
+!outputs/metrics/gateb_r5_strategy_freeze.json
 !outputs/tables/*_f4.csv
 !outputs/tables/quarter_*_f4b.csv
 !outputs/tables/revenue_*_f5.csv

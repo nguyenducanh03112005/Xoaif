@@ -1,0 +1,121 @@
+{
+  "status": "exploratory_dev_only_not_confirmed_out_of_sample",
+  "test_raw_or_labels_read": false,
+  "preregistration": "docs/analysis_plan_gateb_r5.md",
+  "cohort": "DEV multi-snapshot; 12 anchors; N=180; L=7",
+  "snapshots": 21638,
+  "customers": 3508,
+  "positive_snapshots": 1086,
+  "seed": 20261028,
+  "strategy_population_and_fit": {
+    "S1": {
+      "eligible": true,
+      "fit_population": "fixed rule, no fit"
+    },
+    "S3": {
+      "eligible": true,
+      "fit_population": "all DEV multi-snapshot",
+      "features": [
+        "recency_days",
+        "frequency",
+        "monetary",
+        "mean_days_between_orders",
+        "first_purchase_age_days",
+        "t_month_sin",
+        "t_month_cos"
+      ],
+      "parameters": {
+        "max_depth": 3,
+        "min_samples_leaf": 50,
+        "random_state": 20261028
+      },
+      "path": "outputs/models/gateb_r5/s3_final_dev.joblib",
+      "sha256": "63e47afbe0a1ef73c01d0be2974c354d753a7299f3d1952146b91bd8b2d1706b",
+      "bytes": 3811
+    },
+    "S6": {
+      "eligible": true,
+      "fit_population": "all DEV multi-snapshot",
+      "minimum_train_cell_n": 100,
+      "groups": 11,
+      "artifact": "outputs/models/gateb_r5/s6_final_dev.json",
+      "sha256": "17af23fa3a84a40c357856271489badd6a1061fd15cac62ace1573627b64d048",
+      "bytes": 4646
+    },
+    "D-005": {
+      "eligible": true,
+      "fit_population": "pre-existing frozen DEV artifact; not refit",
+      "feature_columns": [
+        "recency_days",
+        "frequency",
+        "monetary",
+        "average_order_value",
+        "max_order_value",
+        "total_quantity",
+        "distinct_products",
+        "mean_days_between_orders",
+        "first_order_month",
+        "first_order_month_sin",
+        "first_order_month_cos",
+        "nearest_holiday_distance_days",
+        "adjustment_positive_rate",
+        "adjustment_negative_rate",
+        "no_history_after_sensitivity",
+        "province"
+      ],
+      "path": "outputs/models/day2_dev_final_model.joblib",
+      "sha256": "0ac767d24c641f50bdc19634e590dc45a92d9e4cd5513d02871fac50b109cd4a"
+    },
+    "v2": {
+      "eligible": true,
+      "fit_population": "pre-existing frozen DEV artifact; not refit",
+      "path": "outputs/models/repurchase_features_v2.joblib",
+      "sha256": "5cbe48bb9b4944d91dfba7b85dd5d1608eb836b68574b16d3ac6a6319f8a2f80"
+    },
+    "v3": {
+      "eligible": true,
+      "fit_population": "all DEV multi-snapshot",
+      "features": [
+        "recency_days",
+        "frequency",
+        "monetary",
+        "mean_days_between_orders",
+        "first_purchase_age_days",
+        "t_month_sin",
+        "t_month_cos"
+      ],
+      "parameters": {
+        "C": 10,
+        "class_weight": "balanced",
+        "solver": "lbfgs",
+        "max_iter": 2000,
+        "random_state": 20261028
+      },
+      "path": "outputs/models/gateb_r5/v3_final_dev.joblib",
+      "sha256": "fc04ee70693da1a1e16350b99acf80b335705000dac35ba67bde63ef9c5d348b",
+      "bytes": 2273
+    },
+    "recency_only": {
+      "eligible": true,
+      "baseline_only": true,
+      "feature": "recency_days",
+      "standardized_coefficient": -0.4654476749977598,
+      "direction": -1,
+      "scoring_rule": "standardize(recency_days) * sign(coef)"
+    },
+    "frequency_only": {
+      "eligible": true,
+      "baseline_only": true,
+      "feature": "frequency",
+      "standardized_coefficient": 0.4279941247053224,
+      "direction": 1,
+      "scoring_rule": "standardize(frequency) * sign(coef)"
+    }
+  },
+  "metrics_on_holdout2": null,
+  "artifact_hashes_cover": [
+    "scripts/freeze_gateb_strategies_dev.py",
+    "src/features/repurchase_v3.py",
+    "scripts/evaluate_repurchase_wp5c_dev.py"
+  ]
+}

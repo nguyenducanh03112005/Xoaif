@@ -283,3 +283,17 @@ Nguồn: `scripts/calibrate_gateb_r4_dev.py`; đăng ký trước tại `docs/an
 | H5 `k_DEV` | 1/24 combo thỏa lift>1, Kulczynski≥0,5, IR≤0,5; H5 chỉ mô tả | `outputs/metrics/gateb_r4_dev_calibration.json` |
 
 **Giới hạn:** rho là thứ hạng tỷ lệ snapshot giữa hai nửa DEV, không là kiểm định HO2 hay bằng chứng ổn định ngoài mẫu. H5 có ít hơn bốn combo qua bộ lọc nên không có tiêu chí xác nhận.
+
+## A9 — R5: đóng băng bộ chiến lược DEV cho phép chấm tương lai
+
+Nguồn: `scripts/freeze_gateb_strategies_dev.py`; đăng ký trước tại `docs/analysis_plan_gateb_r5.md` (commit `16c1714`). Cohort DEV multi-snapshot 21.638 snapshot/3.508 khách, 1.086 snapshot dương, 12 mốc T, N=180, L=7. Khám phá, chưa xác nhận ngoài mẫu; không đọc test/HO2.
+
+| Đại lượng | Số chuẩn, cohort và đơn vị | Nguồn |
+|---|---|---|
+| Dấu hệ số recency-only | −0,46545 chuẩn hóa; hướng score là recency thấp hơn | `outputs/metrics/gateb_r5_strategy_freeze.json` |
+| Dấu hệ số frequency-only | +0,42799 chuẩn hóa; hướng score là frequency cao hơn | `outputs/metrics/gateb_r5_strategy_freeze.json` |
+| S3 final-fit | 21.638 snapshot/3.508 khách; SHA-256 artifact `63e47afbe0a1ef73c01d0be2974c354d753a7299f3d1952146b91bd8b2d1706b` | `outputs/metrics/gateb_r5_strategy_freeze.json` |
+| S6 final map | 11 nhóm sau quy tắc gộp min n=100; SHA-256 `17af23fa3a84a40c357856271489badd6a1061fd15cac62ace1573627b64d048` | `outputs/metrics/gateb_r5_strategy_freeze.json` |
+| v3 final-fit | 21.638 snapshot/3.508 khách; SHA-256 artifact `fc04ee70693da1a1e16350b99acf80b335705000dac35ba67bde63ef9c5d348b` | `outputs/metrics/gateb_r5_strategy_freeze.json` |
+
+**Giới hạn:** S3/S6/v3 được fit trên toàn DEV để tạo artifact, không báo metric in-sample. D-005/v2 giữ artifact cũ. Không có metric HO2.
