@@ -42,6 +42,15 @@ Nguồn `scripts/build_dashboard_cuboids_f4.py`; protocol SHA-256 `d865e0f5772f7
 | Quý×kênh×RFM | 24/42 ô ẩn (13 primary + 11 complementary), 57,14%; không đạt mục tiêu <30%, không dùng trong dashboard. | `outputs/metrics/dashboard_cuboids_f4.json`, `outputs/tables/quarter_channel_rfm_f4.csv` |
 | Quý×cỡ giỏ×RFM | 28/42 ô ẩn (15 primary + 13 complementary), 66,67%; không đạt mục tiêu <30%, không dùng trong dashboard. | JSON cùng; `quarter_basket_rfm_f4.csv` |
 
+### F4b — cube quý 2 chiều (đăng ký riêng sau khi F4 không đạt)
+
+Nguồn `scripts/build_dashboard_cuboids_f4b.py`; protocol SHA-256 `1459e9428c668c7adf3ac7a8ddc98584e531419e145a884f8d71f353591b846b`; cùng cohort DEV, ngưỡng 30.
+
+| Cuboid | Số chuẩn, mẫu số và tỷ lệ ẩn | Nguồn |
+|---|---|---|
+| Quý×RFM gộp 2 nhóm | 0/14 ô ẩn (0%); đạt mục tiêu <30%. | `outputs/metrics/dashboard_cuboids_f4b.json`, `outputs/tables/quarter_rfm_f4b.csv` |
+| Quý×kênh gộp 2 nhóm | 0/14 ô ẩn (0%); đạt mục tiêu <30%. | JSON cùng; `quarter_channel_f4b.csv` |
+
 ## Cohort và thời gian
 
 | Đại lượng | Số chuẩn và đơn vị/cohort | Nguồn sự thật |

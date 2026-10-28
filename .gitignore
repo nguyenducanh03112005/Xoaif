@@ -84,7 +84,9 @@ outputs/tables/*
 !outputs/tables/prevalence_*_f2.csv
 !outputs/tables/combo_recommendation_screen_f3.csv
 !outputs/metrics/dashboard_cuboids_f4.json
+!outputs/metrics/dashboard_cuboids_f4b.json
 !outputs/tables/*_f4.csv
+!outputs/tables/quarter_*_f4b.csv
 !outputs/tables/gift_line_*.csv
 !report/xoaif_report.pdf
 !slides/xoaif_print.pdf

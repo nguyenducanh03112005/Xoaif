@@ -113,6 +113,7 @@ Updated: 2026-10-28
 ## Bổ sung F4 — cuboid
 
 - Hai thiết kế quý×kênh×RFM và quý×cỡ giỏ×RFM đều không đạt mục tiêu suppression <30% (57,14% và 66,67%). Giữ ngưỡng 30; hai cuboid không đưa vào dashboard. Kết quả ghi lại trước khi đăng ký thiết kế thô hơn riêng.
+- F4b đã đăng ký riêng: quý×RFM hai nhóm và quý×kênh hai nhóm có 0/14 ô bị ẩn mỗi cube; các aggregate sẵn sàng đọc offline, chưa tích hợp giao diện.
 
 - Cohort (trạng thái trước đếm raw pre-T ngày 2026-10-27): script reconcile chỉ so sánh aggregate warehouse; chưa có cầu nối theo điều kiện. Đã được supersede bởi đếm trực tiếp tại `docs/cohort_reconciliation.md` và `outputs/tables/cohort_bridge_verified.json`.
 - Sai khác ngày T: không tìm thấy artifact prediction đã lưu trong `outputs/`; theo phạm vi Amendment 06, không tái tạo prediction và dừng tiểu mục. Không có metric sensitivity mới.

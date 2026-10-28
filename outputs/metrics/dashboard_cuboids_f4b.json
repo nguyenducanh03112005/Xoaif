@@ -1,0 +1,25 @@
+{
+  "status": "exploratory_dev_only_not_confirmed_out_of_sample",
+  "test_raw_or_labels_read": false,
+  "margins_exported": false,
+  "threshold": 30,
+  "quarter_rfm_f4b": {
+    "rows": 14,
+    "primary": 0,
+    "complementary": 0,
+    "suppressed": 0,
+    "suppression_rate": 0.0,
+    "target_under_30pct": true,
+    "threshold": 30
+  },
+  "quarter_channel_f4b": {
+    "rows": 14,
+    "primary": 0,
+    "complementary": 0,
+    "suppressed": 0,
+    "suppression_rate": 0.0,
+    "target_under_30pct": true,
+    "threshold": 30
+  },
+  "plan_sha256": "1459e9428c668c7adf3ac7a8ddc98584e531419e145a884f8d71f353591b846b"
+}
