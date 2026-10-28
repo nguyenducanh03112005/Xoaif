@@ -209,3 +209,9 @@
 - **Triển khai:** Viết hàm tạo snapshot/fold riêng cho v3; không sửa `build_label_samples` hoặc `build_folds` hiện hành và không thay kết quả đã freeze. Tính CI bằng bootstrap theo khách để giữ các snapshot cùng khách trong cùng đơn vị lấy mẫu.
 - **Phạm vi/bảo vệ:** DEV-only, khám phá, chưa xác nhận ngoài mẫu. Không đọc lại nhãn/hành vi/đơn test; chỉ dùng bảng aggregate test đã commit nếu tương thích. Không tuning/chọn mô hình dựa trên test; không thay D-005. Cập nhật này không sửa file cấu hình/lock đã khóa.
 
+## D-026 — WP5b chiến lược diễn giải mua lại DEV
+
+- **Ngày:** 2026-10-28.
+- **Quyết định:** Cho phép đánh giá năm chiến lược WP5b theo `docs/analysis_plan_wp5b.md`, trên đúng snapshot đa mốc và temporal folds WP5. Việc chọn ngưỡng S2 và tạo calibration S4 chỉ dùng dữ liệu train/inner temporal folds; outer validation chỉ chấm điểm.
+- **Giới hạn:** DEV-only, khám phá, chưa xác nhận ngoài mẫu. Không sửa hàm hay kết quả WP5 đã đóng băng, không dùng test và không đổi mô hình chính D-005. Quy tắc chọn ứng viên chỉ là đề xuất cho một bước được duyệt riêng sau này.
+
