@@ -102,6 +102,10 @@ Updated: 2026-10-28
 
 - Đã đăng ký và chạy F1. Đơn cùng ngày không còn là sự kiện mua lại; trên cùng cohort 3.508 khách đủ 180 ngày, KM ngày 30 mới 5,67%, trùng retention cùng cohort. Giữ số A1 cũ để đối chiếu: KM cũ 6,64%, retention tất cả cohort đủ 30 ngày 5,64%.
 
+## Bổ sung F2 — dịch chuyển tỷ lệ nền
+
+- DEV-only: train prevalence trung bình 8,11% so với validation 4,23% (pooled OOF 4,17%). Tỷ lệ cohort-month đủ 180 ngày giảm khoảng 0,465 điểm phần trăm/tháng (95% bootstrap −0,772 đến −0,160). Mức B cho dịch chuyển mô tả; cạnh tranh với giả thuyết class_weight về calibration, chưa kết luận nguyên nhân.
+
 - Cohort (trạng thái trước đếm raw pre-T ngày 2026-10-27): script reconcile chỉ so sánh aggregate warehouse; chưa có cầu nối theo điều kiện. Đã được supersede bởi đếm trực tiếp tại `docs/cohort_reconciliation.md` và `outputs/tables/cohort_bridge_verified.json`.
 - Sai khác ngày T: không tìm thấy artifact prediction đã lưu trong `outputs/`; theo phạm vi Amendment 06, không tái tạo prediction và dừng tiểu mục. Không có metric sensitivity mới.
 - UNKNOWN (ghi chú trước chẩn đoán raw pre-T ngày 2026-10-27): warehouse khi đó không chứa các trường source/address; đã được supersede bởi đếm DEV-only trong `docs/unknown_region_diagnostic.md`.

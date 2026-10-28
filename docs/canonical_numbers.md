@@ -13,6 +13,16 @@ Nguồn: `scripts/analyze_repeat_definition_f1.py`; plan SHA-256 `9854ad2f25adb4
 | Retention cùng cohort | 30/60/90/180 ngày: 5,67%/7,27%/8,49%/10,40%, mỗi kỳ n=3.508; cùng định nghĩa sau-ngày. | `outputs/tables/repeat_definition_retention_f1.csv` |
 | Retention A1 cũ | 30 ngày 5,64% (255/4.524); 60 ngày 7,19% (313/4.351); 90 ngày 8,43% (350/4.154); 180 ngày 10,40% (365/3.508). Giữ để đối chiếu, không ghi đè. | `outputs/tables/customer_retention_dev.csv` |
 
+## F2 — dịch chuyển tỷ lệ nền (khám phá, DEV-only)
+
+Nguồn `scripts/analyze_prevalence_drift_f2.py`; kế hoạch SHA-256 `4a4ff5ded95e8c58cd8ba2a5c2eb4959313c207b44c6b7faac1e95d9651f0e9c`; seed 20261028, 2.000 bootstrap khách.
+
+| Đại lượng | Số chuẩn, cohort và đơn vị | Nguồn aggregate |
+|---|---|---|
+| Tỷ lệ cohort 180 ngày | 3.508 khách trong 12 cohort-month trưởng thành; tỷ lệ tổng 10,40%; xu hướng OLS −0,465 điểm phần trăm/tháng (95% bootstrap −0,772 đến −0,160). | `outputs/tables/prevalence_cohort_month_f2.csv`; JSON metric |
+| Prevalence train | 5 WP5/WP5b folds, trung bình không trọng số 8,11%; fold 1 8,81%, fold 5 7,42%. | `outputs/tables/prevalence_fold_f2.csv` |
+| Prevalence validation | 5 folds, trung bình không trọng số 4,23%; pooled OOF 4,17%; fold 1 4,95%, fold 5 3,62%. | Cùng bảng; `outputs/metrics/repurchase_v3_dev.json` |
+
 ## Cohort và thời gian
 
 | Đại lượng | Số chuẩn và đơn vị/cohort | Nguồn sự thật |

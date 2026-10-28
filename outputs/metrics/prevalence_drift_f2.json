@@ -1,0 +1,124 @@
+{
+  "status": "exploratory_dev_only_not_confirmed_out_of_sample",
+  "test_raw_or_labels_read": false,
+  "plan_sha256": "4a4ff5ded95e8c58cd8ba2a5c2eb4959313c207b44c6b7faac1e95d9651f0e9c",
+  "cohort_customers": 3508,
+  "cohort_month_count": 12,
+  "cohort_trend": {
+    "months": 12,
+    "slope_rate_per_month": -0.004648633540413716,
+    "slope_pp_per_month": -0.4648633540413716,
+    "ci_lower_95_pp_per_month": -0.772231943741805,
+    "ci_upper_95_pp_per_month": -0.16025365151033452,
+    "seed": 20261028,
+    "bootstrap_draws": 2000
+  },
+  "overall_cohort_rate": 0.1040478905359179,
+  "folds": [
+    {
+      "family": "WP5/WP5b chung fold",
+      "fold": 1,
+      "validation_T": "2024-12-01",
+      "side": "train",
+      "snapshots": 227,
+      "customers": 227,
+      "positive_n": 20,
+      "prevalence": 0.0881057268722467
+    },
+    {
+      "family": "WP5/WP5b chung fold",
+      "fold": 1,
+      "validation_T": "2024-12-01",
+      "side": "validation",
+      "snapshots": 2342,
+      "customers": 2342,
+      "positive_n": 116,
+      "prevalence": 0.04953031596925705
+    },
+    {
+      "family": "WP5/WP5b chung fold",
+      "fold": 2,
+      "validation_T": "2025-01-01",
+      "side": "train",
+      "snapshots": 779,
+      "customers": 552,
+      "positive_n": 65,
+      "prevalence": 0.0834403080872914
+    },
+    {
+      "family": "WP5/WP5b chung fold",
+      "fold": 2,
+      "validation_T": "2025-01-01",
+      "side": "validation",
+      "snapshots": 2611,
+      "customers": 2611,
+      "positive_n": 119,
+      "prevalence": 0.045576407506702415
+    },
+    {
+      "family": "WP5/WP5b chung fold",
+      "fold": 3,
+      "validation_T": "2025-02-01",
+      "side": "train",
+      "snapshots": 1586,
+      "customers": 807,
+      "positive_n": 129,
+      "prevalence": 0.08133669609079446
+    },
+    {
+      "family": "WP5/WP5b chung fold",
+      "fold": 3,
+      "validation_T": "2025-02-01",
+      "side": "validation",
+      "snapshots": 2867,
+      "customers": 2867,
+      "positive_n": 115,
+      "prevalence": 0.040111614928496686
+    },
+    {
+      "family": "WP5/WP5b chung fold",
+      "fold": 4,
+      "validation_T": "2025-03-01",
+      "side": "train",
+      "snapshots": 2607,
+      "customers": 1021,
+      "positive_n": 204,
+      "prevalence": 0.07825086306098965
+    },
+    {
+      "family": "WP5/WP5b chung fold",
+      "fold": 4,
+      "validation_T": "2025-03-01",
+      "side": "validation",
+      "snapshots": 3066,
+      "customers": 3066,
+      "positive_n": 123,
+      "prevalence": 0.040117416829745595
+    },
+    {
+      "family": "WP5/WP5b chung fold",
+      "fold": 5,
+      "validation_T": "2025-04-01",
+      "side": "train",
+      "snapshots": 3839,
+      "customers": 1232,
+      "positive_n": 285,
+      "prevalence": 0.07423808283407138
+    },
+    {
+      "family": "WP5/WP5b chung fold",
+      "fold": 5,
+      "validation_T": "2025-04-01",
+      "side": "validation",
+      "snapshots": 3508,
+      "customers": 3508,
+      "positive_n": 127,
+      "prevalence": 0.03620296465222349
+    }
+  ],
+  "mean_train_prevalence": 0.08107433538907871,
+  "mean_validation_prevalence": 0.04230774397728505,
+  "folds_used": 5,
+  "seed": 20261028,
+  "bootstrap_draws": 2000
+}

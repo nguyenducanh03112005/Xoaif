@@ -1,0 +1,11 @@
+family,fold,validation_T,side,snapshots,customers,positive_n,prevalence
+WP5/WP5b chung fold,1,2024-12-01,train,227,227,20,0.088106
+WP5/WP5b chung fold,1,2024-12-01,validation,2342,2342,116,0.049530
+WP5/WP5b chung fold,2,2025-01-01,train,779,552,65,0.083440
+WP5/WP5b chung fold,2,2025-01-01,validation,2611,2611,119,0.045576
+WP5/WP5b chung fold,3,2025-02-01,train,1586,807,129,0.081337
+WP5/WP5b chung fold,3,2025-02-01,validation,2867,2867,115,0.040112
+WP5/WP5b chung fold,4,2025-03-01,train,2607,1021,204,0.078251
+WP5/WP5b chung fold,4,2025-03-01,validation,3066,3066,123,0.040117
+WP5/WP5b chung fold,5,2025-04-01,train,3839,1232,285,0.074238
+WP5/WP5b chung fold,5,2025-04-01,validation,3508,3508,127,0.036203

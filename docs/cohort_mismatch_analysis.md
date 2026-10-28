@@ -51,6 +51,14 @@ WP5b được đăng ký trước trong `docs/analysis_plan_wp5b.md` để so s�
 
 Kết quả WP5b: cây nông đạt AP pooled 0,0745 (95% CI 0,0586–0,0924), luật `frequency>=2` 0,0659 (0,0520–0,0837), Logistic v3 0,0641 (0,0507–0,0836). Khoảng AP chồng lấp; không có chiến lược hoàn chỉnh nào có decile đơn điệu theo quy tắc đăng ký trước nên không chọn ứng viên. S2 và S4 không có inner temporal fold hợp lệ trong cả năm outer fold. Do đó giả thuyết calibration liên quan `class_weight="balanced"` **chưa kiểm chứng được**; không kết luận nguyên nhân và không thay bằng random split hậu nghiệm. Chi tiết metric, calibration và nhật ký chạy ở `docs/repurchase_wp5b_dev.md`.
 
+### Dịch chuyển tỷ lệ nền — giải thích cạnh tranh cho calibration
+
+Trên cùng năm fold WP5/WP5b, prevalence train giảm từ 8,81% ở fold đầu xuống 7,42% fold cuối; trung bình không trọng số 5 fold là 8,11%. Validation giảm từ 4,95% xuống 3,62%, trung bình 4,23%; pooled OOF là 4,17%. Trong cohort mua đầu đủ 180 ngày theo định nghĩa “ngày sau”, tỷ lệ giảm qua 12 tháng trưởng thành; hồi quy tuyến tính mô tả slope −0,465 điểm phần trăm/tháng (95% bootstrap theo khách −0,772 đến −0,160). Mỗi điểm tháng là cohort quan sát riêng, còn bootstrap lấy lại khách trong từng cohort.
+
+**Diễn giải:** dịch chuyển tỷ lệ nền theo thời gian là một giải thích cạnh tranh hợp lý cho calibration pooled yếu, cùng với giả thuyết `class_weight="balanced"`. Đây là bằng chứng mô tả mức B về thay đổi tỷ lệ trong DEV; chưa tách được phần đóng góp của dịch chuyển prevalence, class weighting, cohort selection hay đặc tả mô hình. WP5b không thể chạy S4 do inner temporal folds không khả thi; không kết luận nguyên nhân calibration.
+
+Nguồn: `scripts/analyze_prevalence_drift_f2.py`; bảng theo tháng và fold ở `outputs/tables/prevalence_cohort_month_f2.csv`, `outputs/tables/prevalence_fold_f2.csv`; metric ở `outputs/metrics/prevalence_drift_f2.json`.
+
 ## Phạm vi, truy vết và các lượt chạy
 
 Nguồn DEV: `load_dev_orders()` chỉ dùng status 3 trong DEV, loại quà theo quy tắc hiện hành; hàm chỉ đọc `inserted_at` để loại record ngoài DEV trước khi truy cập trường khác. Nguồn đối chiếu test duy nhất là aggregate pre-T nói trên; script chỉ đọc cột cohort, scheme, số khách, mean recency và mean frequency. Không tạo nhãn hay đặc trưng test.
