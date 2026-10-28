@@ -1,53 +1,201 @@
-# Báo cáo Gate B — 06-HO2 (nhãn vẫn đóng)
+# Báo cáo Gate B — 06-HO2 revision 2 (nhãn vẫn đóng)
 
-Ngày: 2026-10-28. Phạm vi: khóa giao thức, kiểm tra số lượng tiền T2 và độ chính xác kỳ vọng. Đây **không** phải báo cáo đánh giá HO2. Chưa chạy `scripts/evaluate_test_once.py`; không đọc nhãn, đơn hàng hay hành vi trong cửa sổ HO2.
+Ngày: 2026-10-28. Commit mã đã khóa trước khi tạo báo cáo: `26603de6c69784d8bca955f4ecc690c099905ea7`. **Không mở HO2; Phase C chưa bắt đầu.** Không chạy `scripts/evaluate_test_once.py`.
 
-## 1. Kiểm toán ranh giới dữ liệu
+## (a) Hash đối chiếu trực tiếp
 
-- Snapshot cố định: `20261024T052943Z`; T2 là `2026-04-20` theo `Asia/Ho_Chi_Minh`.
-- Script `scripts/count_ho2_eligibility_preregistered.py` kiểm tra `inserted_at` trước. Chỉ nếu ngày địa phương nằm trong `[2024-04-01, 2026-04-20)` mới đọc status, quy tắc quà và mã khách để đếm. Hàng từ T2 trở đi bị bỏ ngay; không truy cập trường khác. Kiểm thử sentinel xác nhận helper chỉ gọi `get("inserted_at")`.
-- Audit lần chạy tiền nhãn: 12.011 hàng được kiểm tra trường `inserted_at`; 9.257 hàng có ngày trước T2 trong phạm vi lịch sử; 0 trường outcome/label của HO2 đọc, 0 nhãn test cũ dùng để fit/chọn. Không ghi định danh, dòng đơn, hay nhóm nhỏ.
-- Rà soát repo: không tìm thấy evaluator/artifact HO2 có trước giao thức; log test hiện hữu thuộc lần mở cửa sổ cũ. Đây là bằng chứng về hoạt động trong repo/runtime dự án được kiểm tra, không phải chứng minh pháp y cho mọi thao tác ngoài repo.
-- Các bước WP5 trước đó dùng `load_dev_orders()` với cổng địa phương `<2025-10-22`; không đọc HO2. Lần đếm hiện tại là lần duy nhất kiểm tra `inserted_at` ở phạm vi mở rộng đến T2 và không xem nội dung khác của hàng từ T2 trở đi.
+SHA-256 lock mới: `193998064725a5d71b07b49edc5c4fb046e08b5292a86dd4649cf23f47c60880`; revision=`2`; supersedes `a6c751a50625d8d98ffb2a8c10573d61cac9158e21dd3e16493715a3c413e94d`; 84 hash nguồn.
 
-## 2. Cohort và độ chính xác kỳ vọng
+| File | SHA-256 file thật | SHA-256 trong lock | Đối chiếu |
+|---|---|---|---|
+| `.gitignore` | `d09f804eae7a8600ee6b8a6b04d70be1f9f1fdabae6f50259d11a88955007e60` | `d09f804eae7a8600ee6b8a6b04d70be1f9f1fdabae6f50259d11a88955007e60` | khớp |
+| `config/amendment_05_gift_lines.yaml` | `27bda2f81cfc963921ecb7a0da235777031996b26563d6425fbfa8d525eed720` | `27bda2f81cfc963921ecb7a0da235777031996b26563d6425fbfa8d525eed720` | khớp |
+| `config/amendment_06_ho2.yaml` | `3061105504b3a9b4ec1966a36060418494d2b4d05b7b8b65cdc933e5d6181a9e` | `3061105504b3a9b4ec1966a36060418494d2b4d05b7b8b65cdc933e5d6181a9e` | khớp |
+| `config/split.lock.json` | `cb6d983a9b32f43bfcbb671f7d71af1b012a70b8af999efbed3691ceb3e04440` | `cb6d983a9b32f43bfcbb671f7d71af1b012a70b8af999efbed3691ceb3e04440` | khớp |
+| `config/split.yaml` | `38d0e35ee8b34016d1246d111eed0315974390ab255daee8b48002373331553e` | `38d0e35ee8b34016d1246d111eed0315974390ab255daee8b48002373331553e` | khớp |
+| `docs/amendment_log.md` | `db00c98f162fc922ed7fdffd957a45d8f4c07a55114391f274d3ef7b4e3e4ff4` | `db00c98f162fc922ed7fdffd957a45d8f4c07a55114391f274d3ef7b4e3e4ff4` | khớp |
+| `docs/analysis_plan_amendment06_ho2.md` | `f1e5d0104390bbdabe7038f03c509e8df4b8831ff337a918ff2e4b10f0a316a6` | `f1e5d0104390bbdabe7038f03c509e8df4b8831ff337a918ff2e4b10f0a316a6` | khớp |
+| `docs/analysis_plan_gateb_r2.md` | `ff8c823e1989e536f75b8ed09a3fc399e3c10af041d678c4672e254ec198be8e` | `ff8c823e1989e536f75b8ed09a3fc399e3c10af041d678c4672e254ec198be8e` | khớp |
+| `docs/analysis_plan_gateb_r4.md` | `b6dac1cd2efd64dcd11f92a93d5570a6e7c2330d7d1db0d9f34c0a23c252e85c` | `b6dac1cd2efd64dcd11f92a93d5570a6e7c2330d7d1db0d9f34c0a23c252e85c` | khớp |
+| `docs/analysis_plan_gateb_r5.md` | `e9195f75d76a1326c816b7ebb67e4051771d0b77d9883b42404ced0c3861a6e9` | `e9195f75d76a1326c816b7ebb67e4051771d0b77d9883b42404ced0c3861a6e9` | khớp |
+| `docs/analysis_plan_wp5.md` | `ebf26802ce20814c93d836c0b67e6c17a8ce53d5e65d23b56622bd034cf5e94f` | `ebf26802ce20814c93d836c0b67e6c17a8ce53d5e65d23b56622bd034cf5e94f` | khớp |
+| `docs/analysis_plan_wp5b.md` | `ed9af7f35e03a41f2462462361f8476ba2b25dee89c6cd59340512419fcdd931` | `ed9af7f35e03a41f2462462361f8476ba2b25dee89c6cd59340512419fcdd931` | khớp |
+| `docs/analysis_plan_wp5c.md` | `8dd4774425659f170de08669d42b2d358cdd6c2ed4cd5a33ed68ebeb6767fbf8` | `8dd4774425659f170de08669d42b2d358cdd6c2ed4cd5a33ed68ebeb6767fbf8` | khớp |
+| `docs/canonical_numbers.md` | `48a07449e9d5096c905dcb7c1fa2416d35ad728e154641662cee377ab2b1ff83` | `48a07449e9d5096c905dcb7c1fa2416d35ad728e154641662cee377ab2b1ff83` | khớp |
+| `docs/cohort_definitions.md` | `2c967bab229509a5d812c8a6102387aca37ad72c23ee57c226941ef3df488ace` | `2c967bab229509a5d812c8a6102387aca37ad72c23ee57c226941ef3df488ace` | khớp |
+| `docs/decisions.md` | `a26ad4da5b0e036fb3773544f56f4d1de484a1b701edecb565f40a38c5f3e3be` | `a26ad4da5b0e036fb3773544f56f4d1de484a1b701edecb565f40a38c5f3e3be` | khớp |
+| `docs/gateb_r2_results.md` | `f5cc8c5a0dffe52381be7ed9bbfcba75852de9d25ff29e2df49f4b881b4460e2` | `f5cc8c5a0dffe52381be7ed9bbfcba75852de9d25ff29e2df49f4b881b4460e2` | khớp |
+| `docs/gateb_r4_results.md` | `d8ee4e2972a8b54e80099382f8ec72a912bbfa1d91cd647efa4cbcaa5f6831ce` | `d8ee4e2972a8b54e80099382f8ec72a912bbfa1d91cd647efa4cbcaa5f6831ce` | khớp |
+| `docs/gateb_r5_results.md` | `1f8a4949ef4157cfe6fc518630adfd41bede67fac635cec687f8ed0a00406803` | `1f8a4949ef4157cfe6fc518630adfd41bede67fac635cec687f8ed0a00406803` | khớp |
+| `docs/ho2_access_audit.md` | `c97ea3640061fd1c9b551fa6bd5fcc1866e32bb3bead77afe74b444f18624d16` | `c97ea3640061fd1c9b551fa6bd5fcc1866e32bb3bead77afe74b444f18624d16` | khớp |
+| `docs/test_provenance_note.md` | `f00531f80169008ccf07902fe4a76ec337938742995a5c5d67e377e28a64646b` | `f00531f80169008ccf07902fe4a76ec337938742995a5c5d67e377e28a64646b` | khớp |
+| `outputs/logs/test_eval_access.jsonl` | `2061ddbc30ca89ee48a7df2530bc29aa0b0fe335a76ff1b37fdd8c2903edebc9` | `2061ddbc30ca89ee48a7df2530bc29aa0b0fe335a76ff1b37fdd8c2903edebc9` | khớp |
+| `outputs/metrics/day3_pretest_freeze.json` | `be57e7a73fb0844ac46ebd3707e65db5008f0cc23f57c46c93afd40bf975727d` | `be57e7a73fb0844ac46ebd3707e65db5008f0cc23f57c46c93afd40bf975727d` | khớp |
+| `outputs/metrics/dev_final_model.json` | `7b0002e4d7c6b61a0b8929dd4af80b47a4a43ed352a066de508167fe97958221` | `7b0002e4d7c6b61a0b8929dd4af80b47a4a43ed352a066de508167fe97958221` | khớp |
+| `outputs/metrics/dev_final_models_v2.json` | `27c2f011a52bf45816b82153270db56522b639c0aada82e777ace1d0611b5c83` | `27c2f011a52bf45816b82153270db56522b639c0aada82e777ace1d0611b5c83` | khớp |
+| `outputs/metrics/frozen_segmenters_dev.json` | `307e6ced38704c5e29789cf503ceb1a8c3d19f14d8318db1707c5624fb3d3b0c` | `307e6ced38704c5e29789cf503ceb1a8c3d19f14d8318db1707c5624fb3d3b0c` | khớp |
+| `outputs/metrics/gateb_r2_power.json` | `8a8113db17c6bc59b53c806f4790f727905c0d663807059fbab141ba2d54031f` | `8a8113db17c6bc59b53c806f4790f727905c0d663807059fbab141ba2d54031f` | khớp |
+| `outputs/metrics/gateb_r2_rr_dev.json` | `ac0572eb47fe43d9768a8ae0b7bd783839d573a852b7f05f3127b82fda474d37` | `ac0572eb47fe43d9768a8ae0b7bd783839d573a852b7f05f3127b82fda474d37` | khớp |
+| `outputs/metrics/gateb_r4_dev_calibration.json` | `60617a9c181d0cd583687d69f84adeba5203c967095d152308d904cd00f127b5` | `60617a9c181d0cd583687d69f84adeba5203c967095d152308d904cd00f127b5` | khớp |
+| `outputs/metrics/gateb_r5_strategy_freeze.json` | `bfac6b9d057189d9655693248532a673e0d2c4c85721a0214a0f7fc9a668cbee` | `bfac6b9d057189d9655693248532a673e0d2c4c85721a0214a0f7fc9a668cbee` | khớp |
+| `outputs/metrics/repurchase_v3_dev.json` | `9cce1e1a55a333d92b1295723a805876b25055491abb91ce4f8c0c122d2a2d26` | `9cce1e1a55a333d92b1295723a805876b25055491abb91ce4f8c0c122d2a2d26` | khớp |
+| `outputs/metrics/repurchase_wp5b_dev.json` | `c618812b21e90237f61ac63555ab533e673b6a44e0020c02b23d53c660b3b3ff` | `c618812b21e90237f61ac63555ab533e673b6a44e0020c02b23d53c660b3b3ff` | khớp |
+| `outputs/metrics/repurchase_wp5c_dev.json` | `03fc1a143897f3e69cc7356ba66f2722df231cc26fbf0d56a9a91128c8fc3c62` | `03fc1a143897f3e69cc7356ba66f2722df231cc26fbf0d56a9a91128c8fc3c62` | khớp |
+| `outputs/metrics/test_eval.json` | `5b502637d05f4a21cfa803b3f1582c8d507335e2dcac64ee63d84826f123c625` | `5b502637d05f4a21cfa803b3f1582c8d507335e2dcac64ee63d84826f123c625` | khớp |
+| `outputs/metrics/test_opened.lock.json` | `74af2c6ccd61f6c071529115b13ff144b25fa264600cb27e1832f764bde6d874` | `74af2c6ccd61f6c071529115b13ff144b25fa264600cb27e1832f764bde6d874` | khớp |
+| `outputs/models/day2_dev_final_model.joblib` | `0ac767d24c641f50bdc19634e590dc45a92d9e4cd5513d02871fac50b109cd4a` | `0ac767d24c641f50bdc19634e590dc45a92d9e4cd5513d02871fac50b109cd4a` | khớp |
+| `outputs/models/gateb_r5/s3_final_dev.joblib` | `63e47afbe0a1ef73c01d0be2974c354d753a7299f3d1952146b91bd8b2d1706b` | `63e47afbe0a1ef73c01d0be2974c354d753a7299f3d1952146b91bd8b2d1706b` | khớp |
+| `outputs/models/gateb_r5/s6_final_dev.json` | `17af23fa3a84a40c357856271489badd6a1061fd15cac62ace1573627b64d048` | `17af23fa3a84a40c357856271489badd6a1061fd15cac62ace1573627b64d048` | khớp |
+| `outputs/models/gateb_r5/v3_final_dev.joblib` | `fc04ee70693da1a1e16350b99acf80b335705000dac35ba67bde63ef9c5d348b` | `fc04ee70693da1a1e16350b99acf80b335705000dac35ba67bde63ef9c5d348b` | khớp |
+| `outputs/models/repurchase_features_v2.joblib` | `5cbe48bb9b4944d91dfba7b85dd5d1608eb836b68574b16d3ac6a6319f8a2f80` | `5cbe48bb9b4944d91dfba7b85dd5d1608eb836b68574b16d3ac6a6319f8a2f80` | khớp |
+| `outputs/models/segmenters_dev_frozen_v1.joblib` | `5babaa2352921f840385bdfe6681948f329b0ee276de2aef1cc8500c9146b93f` | `5babaa2352921f840385bdfe6681948f329b0ee276de2aef1cc8500c9146b93f` | khớp |
+| `outputs/tables/combo_recommendation_screen_f3.csv` | `75069387d808a96fd35b2a0e06b843f4ff04ff01d78a9846d3d6f7b482220b9c` | `75069387d808a96fd35b2a0e06b843f4ff04ff01d78a9846d3d6f7b482220b9c` | khớp |
+| `outputs/tables/combos_v2.csv` | `ae7df8760857a9a7aa2cd667704829e71b076a70b5ca2f0a41fd6396ef0538d6` | `ae7df8760857a9a7aa2cd667704829e71b076a70b5ca2f0a41fd6396ef0538d6` | khớp |
+| `outputs/tables/repurchase_wp5c_train_rates.csv` | `be2845bbd7020c0241aecf36412a8eaa123d3a7fcdbb58070026ec184d3232a3` | `be2845bbd7020c0241aecf36412a8eaa123d3a7fcdbb58070026ec184d3232a3` | khớp |
+| `scripts/analyze_gateb_r2_dev.py` | `a10e17b41abab68209a439d3f0e7a3589c114139563c7244e227234233cede5f` | `a10e17b41abab68209a439d3f0e7a3589c114139563c7244e227234233cede5f` | khớp |
+| `scripts/audit_committed_aggregate_dates.py` | `3e758ce088e573bc9883fbbd8bf253798636accb97f8973828ef677e69dc82ed` | `3e758ce088e573bc9883fbbd8bf253798636accb97f8973828ef677e69dc82ed` | khớp |
+| `scripts/build_amendment06_gateb_report.py` | `eea162a3515006a31f7af59fc8f897cdc433798b5aeae0251d3a7f482d160355` | `eea162a3515006a31f7af59fc8f897cdc433798b5aeae0251d3a7f482d160355` | khớp |
+| `scripts/build_amendment06_lock.py` | `e4c8a47fc0bea4a1b768615928346309e30b0341e849b735c8f28b380e7056cd` | `e4c8a47fc0bea4a1b768615928346309e30b0341e849b735c8f28b380e7056cd` | khớp |
+| `scripts/build_amendment06_revision_log.py` | `332c558b751590fcbc39e6828fc1f19febd067bd6a6613a420c7eeabf4c1dab3` | `332c558b751590fcbc39e6828fc1f19febd067bd6a6613a420c7eeabf4c1dab3` | khớp |
+| `scripts/calibrate_gateb_r4_dev.py` | `9c65803bce23c294b689110b96e5fa6051aff1dd13a44dad98deb76073a01282` | `9c65803bce23c294b689110b96e5fa6051aff1dd13a44dad98deb76073a01282` | khớp |
+| `scripts/count_ho2_eligibility_preregistered.py` | `e6cf124588dc7791fdaf7131c91246a125642ca4d3f7c343362f48ed4be25a10` | `e6cf124588dc7791fdaf7131c91246a125642ca4d3f7c343362f48ed4be25a10` | khớp |
+| `scripts/evaluate_holdout2_once.py` | `35cdf0c9b97d7b44829817e357129cfc9cae6666829be1b2f76ce81ba3ba2d5d` | `35cdf0c9b97d7b44829817e357129cfc9cae6666829be1b2f76ce81ba3ba2d5d` | khớp |
+| `scripts/evaluate_repurchase_wp5b_dev.py` | `99e68c6d1c57ab1595339a72787d385e7fae73d5243e4a561c0fed56969951a4` | `99e68c6d1c57ab1595339a72787d385e7fae73d5243e4a561c0fed56969951a4` | khớp |
+| `scripts/evaluate_repurchase_wp5c_dev.py` | `6a95efeb8465e30f28cbfc6120a7afb41762c04cfa41a77b247750acd128c676` | `6a95efeb8465e30f28cbfc6120a7afb41762c04cfa41a77b247750acd128c676` | khớp |
+| `scripts/fix_sealed_eol.py` | `8c9ae853370e33f0d089843e6799a24b861db7665805f5214d5d063815c65e06` | `8c9ae853370e33f0d089843e6799a24b861db7665805f5214d5d063815c65e06` | khớp |
+| `scripts/freeze_gateb_strategies_dev.py` | `984740129ebc9abe5ad7ba727f40950d5413fd3658823caa94f66b118ee6719d` | `984740129ebc9abe5ad7ba727f40950d5413fd3658823caa94f66b118ee6719d` | khớp |
+| `scripts/run_all.py` | `10dfed97a84038a81ee616cb3262643ecc7feb96e5fb9373c96be5256ce1f192` | `10dfed97a84038a81ee616cb3262643ecc7feb96e5fb9373c96be5256ce1f192` | khớp |
+| `scripts/summarize_gateb_r2_power.py` | `15913f5a2b67a8d8bb61be405f9207a470905ca741c2f597356f6475299a64c0` | `15913f5a2b67a8d8bb61be405f9207a470905ca741c2f597356f6475299a64c0` | khớp |
+| `scripts/summarize_ho2_power.py` | `597098df598d8ad7b7ede5c74be99fcfb6f245cf1f74e9fe2b2e913b4970bb01` | `597098df598d8ad7b7ede5c74be99fcfb6f245cf1f74e9fe2b2e913b4970bb01` | khớp |
+| `scripts/verify_day3_locks.py` | `0e43a87aecca3482a1c7b61fe7001f4437ed7c1deeab21cf40c47d4dab52eead` | `0e43a87aecca3482a1c7b61fe7001f4437ed7c1deeab21cf40c47d4dab52eead` | khớp |
+| `scripts/verify_gateb_lock.py` | `90180f86d41d0656b83877fe1538b4b7cfc74fadc23bf36a89fef831539b2fe7` | `90180f86d41d0656b83877fe1538b4b7cfc74fadc23bf36a89fef831539b2fe7` | khớp |
+| `scripts/verify_pii.py` | `5de909685ce13ab7d14166b00f35dc3534d76c785ce6ee7c1d59f96ef7ac1001` | `5de909685ce13ab7d14166b00f35dc3534d76c785ce6ee7c1d59f96ef7ac1001` | khớp |
+| `scripts/verify_readonly.py` | `a9497845f36a54f892312d8e80bc3487e12062b2bc15840926b732277f837d87` | `a9497845f36a54f892312d8e80bc3487e12062b2bc15840926b732277f837d87` | khớp |
+| `src/features/day2_data.py` | `c8091e7faa4f59f644994ba471fcbc565a1a72878f793044f433f136dba3d52f` | `c8091e7faa4f59f644994ba471fcbc565a1a72878f793044f433f136dba3d52f` | khớp |
+| `src/features/day2b_data.py` | `2e8c79c79a0aef51ec522542e4c6e9879317c3d72027c79cf7825d75fa9147fe` | `2e8c79c79a0aef51ec522542e4c6e9879317c3d72027c79cf7825d75fa9147fe` | khớp |
+| `src/features/gift_lines.py` | `be43bb7caa54a240f60c890e9f56bbdd2c6b537ced8eb60cc9be5ce889385dd0` | `be43bb7caa54a240f60c890e9f56bbdd2c6b537ced8eb60cc9be5ce889385dd0` | khớp |
+| `src/features/holdout2_access.py` | `de3c75d875823c3c6027fba82896b61bb360027f1ad6e646239c6158288938ea` | `de3c75d875823c3c6027fba82896b61bb360027f1ad6e646239c6158288938ea` | khớp |
+| `src/features/holdout2_features.py` | `826c5085a2b3fe0315a4f8501b13155e5f6b4ed6eb6db3e07f5639f1a72f8eac` | `826c5085a2b3fe0315a4f8501b13155e5f6b4ed6eb6db3e07f5639f1a72f8eac` | khớp |
+| `src/features/holdout2_metrics.py` | `9920eebfa62075ecaccfa3713d54a3ac11fe3c7e4abf249b308ae350be276a8e` | `9920eebfa62075ecaccfa3713d54a3ac11fe3c7e4abf249b308ae350be276a8e` | khớp |
+| `src/features/money.py` | `7a22b4da01bdb1c2ca31f5d1a3089177dbd0838ead2c417b9abd828d4b668a3f` | `7a22b4da01bdb1c2ca31f5d1a3089177dbd0838ead2c417b9abd828d4b668a3f` | khớp |
+| `src/features/repurchase_v3.py` | `332f62cd7b6d4737c9783add6e35476b32b75925a153583cad3104484a489398` | `332f62cd7b6d4737c9783add6e35476b32b75925a153583cad3104484a489398` | khớp |
+| `src/ingest/identifiers.py` | `66de4a07a4af32d9d3dda49357f181ec3f242e56be1100d115ba8356590e9dd4` | `66de4a07a4af32d9d3dda49357f181ec3f242e56be1100d115ba8356590e9dd4` | khớp |
+| `src/ingest/settings.py` | `1c8bc9900b97901c13fba834e5379e7d57f8cc418af344605ce16f660f6442a6` | `1c8bc9900b97901c13fba834e5379e7d57f8cc418af344605ce16f660f6442a6` | khớp |
+| `src/models/classify.py` | `35ed02908eeeec0a4ce89893ee1aa0c439bb30eb8e1c47d30609975c66de46fa` | `35ed02908eeeec0a4ce89893ee1aa0c439bb30eb8e1c47d30609975c66de46fa` | khớp |
+| `src/models/classify_v2.py` | `eab950787f56bd42016ceb6c05156946e1b969edc3b73e3b6b3f8a9712642301` | `eab950787f56bd42016ceb6c05156946e1b969edc3b73e3b6b3f8a9712642301` | khớp |
+| `src/models/frozen_segmenters.py` | `1c56234602933d495b0ef5bc665bd4b4f76d9f17a9e8a01320117fb88eae65cf` | `1c56234602933d495b0ef5bc665bd4b4f76d9f17a9e8a01320117fb88eae65cf` | khớp |
+| `src/models/repurchase_v3.py` | `5bf2a685bce70eedff52fe595ceb1475bb4bf372aaab3b452ae59dfd7372f3b3` | `5bf2a685bce70eedff52fe595ceb1475bb4bf372aaab3b452ae59dfd7372f3b3` | khớp |
+| `tests/test_gateb_aggregate_date_audit.py` | `f751fe5090024620e4db41e059fa66a5b3303939a34e6e56d6f40fc5982c8041` | `f751fe5090024620e4db41e059fa66a5b3303939a34e6e56d6f40fc5982c8041` | khớp |
+| `tests/test_gateb_lock_verification.py` | `6a1941b4b06c26594549249ccdfbb95be2415c051da93d064cac46c06fc5d3ee` | `6a1941b4b06c26594549249ccdfbb95be2415c051da93d064cac46c06fc5d3ee` | khớp |
+| `tests/test_gateb_r4_calibration.py` | `dec6c98324f26920588db30aeedc158ab7b182349446892ebf665165a5e754c4` | `dec6c98324f26920588db30aeedc158ab7b182349446892ebf665165a5e754c4` | khớp |
+| `tests/test_gateb_r5_freeze.py` | `79843a63f32bdc279d059effd4da9890bf71f2fbdefd26eda76f0a13de9d76e0` | `79843a63f32bdc279d059effd4da9890bf71f2fbdefd26eda76f0a13de9d76e0` | khớp |
+| `tests/test_gateb_report_hashes.py` | `edfacfd5211afbdc5e9107add47309b8e31749e3ab94140745e1b645c63773ef` | `edfacfd5211afbdc5e9107add47309b8e31749e3ab94140745e1b645c63773ef` | khớp |
+| `tests/test_holdout2_feature_boundary.py` | `657c085056eead45aa427fd55fcb93f73ceb277c9c9a8933f3512a4a93d136bd` | `657c085056eead45aa427fd55fcb93f73ceb277c9c9a8933f3512a4a93d136bd` | khớp |
+| `tests/test_holdout2_metrics.py` | `ecf9c4c9492e7a5534c65a019924de537ac419fd43a3976d4ca153af737bac7b` | `ecf9c4c9492e7a5534c65a019924de537ac419fd43a3976d4ca153af737bac7b` | khớp |
 
-Từ lịch sử hợp lệ trước T2 có **7.282 khách** đủ điều kiện: 988 khách frequency≥2 và 6.294 frequency=1. Đây là số mẫu có thể đánh giá ở T2 theo luật eligibility, không phải số khách có nhãn dương.
+## (b) Nhật ký thay đổi revision 2
 
-| Tham chiếu tỷ lệ nền | Dương kỳ vọng / n | Độ rộng CI 95% tỷ lệ nền (xấp xỉ) | H1: công suất nếu AUC thật 0,60 | H2: công suất nếu RR thật 2 |
-|---|---:|---:|---:|---:|
-| DEV 7,4% | 539 / 7.282 | 1,20 điểm % | 98,3% | 91,6% |
-| Aggregate test cũ 4,6% | 335 / 7.282 | 0,96 điểm % | 91,2% | 75,3% |
+Từng file, SHA-256 cũ/mới, lý do và ngày nằm trong [amendment_06_revision_log.md](amendment_06_revision_log.md). Lock cũ bị supersede bằng đúng hash ghi trên.
 
-H1 dùng xấp xỉ phương sai ROC-AUC Hanley–McNeil với số dương/âm kỳ vọng; CI thực khi được mở vẫn dùng bootstrap theo khách đã khóa. H2 dùng xấp xỉ Wald trên log risk ratio, group size 988/6.294; tỷ lệ hai nhóm được suy từ tỷ lệ nền tham chiếu và RR giả định để giữ tỷ lệ tổng. Các kịch bản không phải dự báo và không bảo đảm công suất thực tế.
+## (c) R2 — H2 trở lại giả thuyết chính
 
-**Điều chỉnh trước khóa:** H2 được hạ từ chính xuống phụ vì công suất tại tham chiếu 4,6% và RR=2 khoảng 75,3%, dưới mốc quy ước 80%. Không nới ngưỡng RR 1,5. H1 là giả thuyết chính duy nhất, kiểm định một phía α=0,05 (Holm family còn một giả thuyết). Tại AUC thật 0,60, công suất xấp xỉ 91,2% ở mốc nền 4,6%; ở hiệu ứng sát ngưỡng, công suất thấp hơn. Không tuyên bố H1 chắc chắn có đủ lực cho mọi AUC>0,55.
+DEV snapshot-weighted RR frequency≥2 / frequency=1 = **3.473**, bootstrap CI 95% **[2.656; 4.520]**; nhóm frequency=1: 780/19442 dương/snapshot; frequency≥2: 306/2196. Khám phá DEV-only, chưa xác nhận ngoài mẫu.
 
-H6 **không kiểm định**: cohort 180 ngày trưởng thành cuối của DEV là 2025-03; ngoại suy đến T2 trở đi vượt một năm. Artifact aggregate hiện có không cung cấp chuỗi/bootstrap theo khách để tạo dải xu hướng đáng tin cho cả AOV, đơn/khách, khách mới/tháng và tỷ lệ mua lại khách mới. Không thay bằng khoảng DEV tĩnh.
+### H1 power: AUC thật so với ngưỡng 0,55
 
-## 3. Tập chiến lược và tiêu chí đã khóa
+| Mốc prevalence | AUC giả định | Công suất |
+|---|---:|---:|
+| DEV 7,4% | 0.55 | 0.0250 |
+| DEV 7,4% | 0.60 | 0.9638 |
+| DEV 7,4% | 0.65 | 1.0000 |
+| DEV 7,4% | 0.70 | 1.0000 |
+| Aggregate test cũ 4,6% | 0.55 | 0.0250 |
+| Aggregate test cũ 4,6% | 0.60 | 0.8499 |
+| Aggregate test cũ 4,6% | 0.65 | 1.0000 |
+| Aggregate test cũ 4,6% | 0.70 | 1.0000 |
 
-- Giữ D-005 và v2 theo hai artifact mô hình đóng băng có sẵn; giữ các chiến lược quy tắc S1, S3, S6 với mã/recipe trong kế hoạch WP5b/WP5c. RFM/phân khúc và 24 combo đóng băng theo artifact hiện hữu.
-- Loại v3, recency-only và frequency-only khỏi chấm HO2: WP5 chỉ lưu các fit theo temporal-CV, chưa có một artifact final-fit cùng quần thể fit cố định. Không tự tạo artifact sau khi khóa để lách giới hạn.
-- Không chọn ứng viên; WP5b không chọn. Không fit/tuning/ngưỡng hóa theo nhãn HO2. Các chiến lược được liệt kê không đồng nghĩa đã chọn mô hình kinh doanh.
+### H2 power: RR thật so với ngưỡng 1,5
 
-**H1 chính:** D-005 ROC-AUC >0,55; đạt nếu cận dưới một phía 95% (bootstrap khách, 2.000 lần, seed 20261028) >0,55.
+| Mốc prevalence | RR giả định | Công suất |
+|---|---:|---:|
+| DEV 7,4% | 1.500000 | 0.0250 |
+| DEV 7,4% | 2.000000 | 0.8570 |
+| DEV 7,4% | 2.500000 | 0.9999 |
+| DEV 7,4% | 3.000000 | 1.0000 |
+| DEV 7,4% | 2.656091 | 1.0000 |
+| Aggregate test cũ 4,6% | 1.500000 | 0.0250 |
+| Aggregate test cũ 4,6% | 2.000000 | 0.6443 |
+| Aggregate test cũ 4,6% | 2.500000 | 0.9923 |
+| Aggregate test cũ 4,6% | 3.000000 | 1.0000 |
+| Aggregate test cũ 4,6% | 2.656091 | 0.9987 |
 
-**Phụ:** H2 risk ratio frequency≥2/frequency=1 >1,5; H3 S1/S3/S6 cận dưới lift top-decile >1 và cận dưới precision@10% > tỷ lệ nền; H4 chiều xếp hạng S6/RFM so với DEV; H5 ít nhất 1/24 combo vượt lift>1, Kulczynski≥0,5, IR≤0,5. H2–H5 không điều chỉnh để tuyên bố xác nhận. H6 không kiểm định. Tỷ lệ nền và calibration-in-the-large chỉ mô tả.
+Quy tắc đăng ký R2: công suất ở RR=cận dưới DEV 2.656 là 100.00% (DEV) và 99.87% (aggregate test cũ), đều ≥80%; H2 là chính. Hai kiểm định chính H1/H2 dùng Holm step-down 0,025/0,05. Bảng đầy đủ và giới hạn trong `docs/gateb_r2_results.md`.
 
-## 4. Hash protocol/config/mô hình
+## (d) R5 — chiến lược và quần thể fit
 
-Lock `config/amendment_06_ho2.lock.json` chứa SHA-256 của protocol, config, các mã nguồn/metric DEV được viện dẫn, các artifact mô hình và bảng aggregate đóng băng. Các hash chính:
+| Chiến lược | Trạng thái | Quần thể fit / mô tả | SHA-256 artifact |
+|---|---|---|---|
+| S1 | đủ điều kiện | fixed rule, no fit | `—` |
+| S3 | đủ điều kiện | all DEV multi-snapshot | `63e47afbe0a1ef73c01d0be2974c354d753a7299f3d1952146b91bd8b2d1706b` |
+| S6 | đủ điều kiện | all DEV multi-snapshot | `17af23fa3a84a40c357856271489badd6a1061fd15cac62ace1573627b64d048` |
+| D-005 | đủ điều kiện | pre-existing frozen DEV artifact; not refit | `0ac767d24c641f50bdc19634e590dc45a92d9e4cd5513d02871fac50b109cd4a` |
+| v2 | đủ điều kiện | pre-existing frozen DEV artifact; not refit | `5cbe48bb9b4944d91dfba7b85dd5d1608eb836b68574b16d3ac6a6319f8a2f80` |
+| v3 | đủ điều kiện | all DEV multi-snapshot | `fc04ee70693da1a1e16350b99acf80b335705000dac35ba67bde63ef9c5d348b` |
+| recency_only | đủ điều kiện | DEV score rule; hệ số -0.46545; dấu -1 | `—` |
+| frequency_only | đủ điều kiện | DEV score rule; hệ số +0.42799; dấu +1 | `—` |
 
-| Artifact | SHA-256 |
-|---|---|
-| Protocol `docs/analysis_plan_amendment06_ho2.md` | `CD9197008D6B41F07DF51F117886DFD883E7234B514BAFEFDDBD3182B31584A8` |
-| Config `config/amendment_06_ho2.yaml` | `E850AF1E85179EBB2C3598FB7F78ADB5FD1051E53A80B4473BC0C8300AD97B4C` |
-| D-005 `outputs/models/day2_dev_final_model.joblib` | `0AC767D24C641F50BDB19634E590DC45A92D9E4CD5513D02871FAC50B109CD4A` |
-| v2 `outputs/models/repurchase_features_v2.joblib` | `5CBE48BB9B4944D91DFBA7B85DD5D1608B68574B16D3AC6A6319F8A2F80` |
-| RFM `outputs/models/segmenters_dev_frozen_v1.joblib` | `5BABAA2352921F840385BDFE6681948F329B0EE276DE2AEF1CC8500C9146B93F` |
-| Combos `outputs/tables/combos_v2.csv` | `AE7DF8760857A9A7AA2CD667704829E71B076A70B5CA2F0A41FD6396EF0538D6` |
+S3, S6, v3 theo phương án A: final-fit toàn DEV đa mốc. `repurchase_wp5c_train_rates.csv` là mapping theo fold train, không phải quần thể final-fit. D-005 giữ mô hình chính.
 
-## 5. Trạng thái cổng
+## (e) Tiêu chí H1–H5 cuối
 
-Gate B bàn giao gồm protocol, config/lock, số đếm/công suất kỳ vọng, quyết định H2/H6, audit ranh giới và commit riêng. Trạng thái Git phải sạch sau commit. **HO2 vẫn đóng. Phase C chưa bắt đầu.** Cửa sổ chỉ được mở khi chủ dự án gửi đúng cụm từ trong protocol.
+- **H1:** D-005 ROC-AUC>0,55; một phía bootstrap 2.000 khách, Holm với H2. Đạt khi AUC điểm vượt ngưỡng và p Holm<0,05. Chênh `AUC−0,70` chỉ mô tả, kèm CI. Đạt H1 không có nghĩa lặp lại AUC test 0,70.
+- **H2:** RR mua lại 180 ngày frequency≥2/frequency=1>1,5; CI bootstrap theo khách, p bootstrap một phía tại RR=1,5; Holm cùng H1.
+- **H3:** S1/S3/S6 × precision@10/lift (6 phép so sánh phụ, không hiệu chỉnh). Tie-aware: K=ceil(0,10N), q=(K−n_above)/n_tie, precision=(pos_above+q×pos_tie)/K, lift=precision/prevalence. Hỗ trợ nếu cận dưới CI95 precision>prevalence và lift>1. S1 nhị phân, S3/S6 điểm rời rạc; ROC/decile chỉ mô tả.
+- **H4:** Spearman S6/RFM DEV-pooled so với HO2; n≥30, ít nhất 4 nhóm, không chọn nhóm theo outcome. Ngưỡng S6 `rho≥0.9761904762`; RFM `rho≥1.0`. DEV tham chiếu gồm 8/6 nhóm đủ điều kiện.
+- **H5:** 24 combo đóng băng; `k_DEV=1`, chỉ mô tả vì k<4. Giỏ status 3 không quà, `T2<date≤T2+180`, bỏ gift line, ≥2 product IDs; cặp <30 bị che và không tính qua bộ lọc.
+- **H6:** không kiểm định; DEV không có dải xu hướng đáng tin đã đăng ký trước.
+
+## (f) Kiểm thử và dry-run
+
+- `run_all.py`: xanh; `pytest`: **169 passed**. PII scan, verify lock và dashboard smoke xanh.
+
+| Test mới | Kiểm tra | Kết quả |
+|---|---|---|
+| `test_gateb_r4_calibration_uses_registered_cells_and_counts_dev_combo_filter` | H4 nhóm cố định; H5 k_DEV filter DEV | PASS |
+| `test_gateb_r5_univariate_direction_comes_from_dev_fit` | chiều recency/frequency theo dấu hệ số | PASS |
+| `test_temporal_parser_orders_dates_and_partials` | parser ngày/tháng/quý aggregate | PASS |
+| `test_csv_audit_reads_only_temporal_column` | scanner chỉ trả cột thời gian | PASS |
+| `test_metrics_match_hand_calculation` | ROC-AUC, RR, tie-aware precision/lift | PASS |
+| `test_holm_step_down_and_customer_cluster_bootstrap_are_deterministic` | Holm và bootstrap cụm khách | PASS |
+| `test_centered_bootstrap_p_uses_registered_effect_threshold` | p bootstrap định tâm tại ngưỡng H1/H2 | PASS |
+| `test_yaml_date_conditions_and_boundary_rows` | T2, T2+1, T2+180, T2+181 khớp YAML | PASS |
+| `test_feature_builder_matches_existing_fixed_t_features_and_excludes_t_or_later` | feature D-005 khớp hàm cũ tại T; không dùng ngày >=T | PASS |
+| `test_holdout2_loader_refuses_to_run_without_open_lock` | loader chặn khi chưa có lock | PASS |
+| `test_dry_run_gate_accepts_only_full_dev_horizon_and_rejects_t2` | dry-run chỉ DEV horizon đủ | PASS |
+| `test_open_lock_is_created_once_after_exact_owner_phrase` | phrase đúng, tạo một lần, lần hai bị từ chối | PASS |
+| `test_closed_lock_verifies_all_required_hashes_and_outputs_absent` | lock hash/EOL/trạng thái đóng | PASS |
+| `test_lock_verifier_rejects_hash_mutation_and_open_outputs` | từ chối hash sai hoặc output đã mở | PASS |
+| `test_report_hash_table_matches_lock_and_file_bytes` | bảng hash report=lock=file thật | PASS |
+| `test_hypothesis_lists_are_consistent_across_config_lock_and_protocol` | danh sách giả thuyết protocol/config/lock/report | PASS |
+
+- Dry-run: **mã chạy đúng**; T=2025-04-20; feature rows=3601; end=2025-10-17. Nhãn: “kiểm thử mã, không phải kết quả, không dùng để chọn hay tinh chỉnh”. Không có metric/AUC dry-run trong báo cáo.
+
+## (g) Kiểm toán truy cập và aggregate
+
+Audit đầy đủ tại [ho2_access_audit.md](ho2_access_audit.md): 89 aggregate CSV/JSON đã quét, 22 có trường thời gian; max ngày kho DuckDB `2025-10-21`; dashboard `2026-04` là tháng partial của test cũ; `2026-10-31` chỉ là lịch tham chiếu. Không thấy event aggregate sau T2. Giới hạn pháp y được ghi rõ.
+
+## (h) Gate trạng thái
+
+Lock revision 2: `prepared_gate_b_not_open`; `test_opened=false`; `phase_c_started=false`. Các hash nguồn khớp file thật tại thời điểm dựng báo cáo. Không tồn tại output mở HO2 trong checkout tại Gate B.
+
+## (i) Phát hiện, rủi ro, và trạng thái công việc
+
+Ba phát hiện chính: (1) H2 DEV RR=3,473, CI[2,656;4,520] và đủ công suất theo quy tắc đã đăng ký; (2) hiệu chuẩn H4 DEV nửa đầu/nửa sau cao nhưng chỉ 8 ô S6, 6 nhóm RFM; (3) `k_DEV=1`, nên H5 không thể là kiểm định xác nhận.
+
+Rủi ro còn lại: một cửa hàng/snapshot hồi cứu; trạng thái đơn có thể thay đổi sau T2; CI không đảm bảo khái quát; metric quan sát không phải nhân quả/lợi nhuận; D-005/v2 có quy trình fit lịch sử khác S3/S6/v3. H6 chưa testable.
+
+| Đã làm | Chưa làm | Cần quyết định của chủ dự án |
+|---|---|---|
+| R2–R7, prereg R4/R5, evaluator/test/hash, R6 audit, báo cáo Gate B | Mở HO2, chạy Phase C, kết luận ngoài mẫu | Có mở HO2 trong lượt riêng hay tiếp tục giữ đóng |
+
+**Gate B revision 2 dừng tại đây.** Báo cáo này không phải yêu cầu hay sự cho phép mở HO2.
