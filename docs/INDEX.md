@@ -31,6 +31,7 @@ Theo toàn bộ lịch 0–120 phút trong [handover](handover.md): phạm vi v�
 - [analysis_plan_wp2.md](analysis_plan_wp2.md) — Giao thức A1 giữ chân và giá trị khách hàng DEV.
 - [customer_value_dev.md](customer_value_dev.md) — Kết quả A1 về retention, thời gian mua lại, Pareto, CLV và RFM; chỉ DEV.
 - [analysis_plan_wp3.md](analysis_plan_wp3.md) — Giao thức đăng ký trước A2 về giỏ đầu, chuỗi mua kế tiếp và 24 combo đã khóa.
+- [product_journey_dev.md](product_journey_dev.md) — Kết quả A2 về sản phẩm giỏ đầu, chuỗi mua kế tiếp, vai trò sản phẩm và thước đo combo; chỉ DEV.
 - [cohort_mismatch_analysis.md](cohort_mismatch_analysis.md) — So sánh mẫu DEV hiện tại, DEV snapshot đa mốc và test aggregate; đọc khi trình bày chênh lệch ROC.
 - [course_alignment.md](course_alignment.md) — Ánh xạ khái niệm giáo trình với nơi áp dụng trong dự án.
 - [data_gap_report.md](data_gap_report.md) — Ghi lại khoảng trống dữ liệu và phạm vi; đọc khi nêu hạn chế.

@@ -1,0 +1,19 @@
+{
+  "analysis_plan_sha256": "ec35ed48b995101ccf622d224ed44a6994858d9a5479175f80de648fe9a21483",
+  "status": "exploratory_dev_only_not_confirmed_out_of_sample",
+  "test_raw_or_labels_read": false,
+  "test_aggregate_source": "outputs/tables/test_combos_frozen.csv",
+  "seed": 20261028,
+  "bootstrap_draws": 2000,
+  "valid_dev_baskets": 6349,
+  "eligible_dev_baskets_for_combos": 6006,
+  "mature_first_basket_customers": 3635,
+  "repeat_customers_within_180d": 378,
+  "first_basket_products_tested_n_ge_30": 77,
+  "first_basket_products_suppressed": 0,
+  "unique_directed_transitions": 2746,
+  "directed_transitions_n_ge_30": 23,
+  "next_product_pairs_reported": 20,
+  "frozen_combo_count": 24,
+  "dev_month_count": 19
+}

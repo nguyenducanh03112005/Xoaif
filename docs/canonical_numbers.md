@@ -118,3 +118,17 @@ Nguồn tính: `scripts/analyze_customer_value_dev.py`; protocol: `docs/analysis
 | RFM hành động | Snapshot 2025-10-22; sáu nhóm, 5.169 khách; ngưỡng giá trị cao p90=830.000₫. Nhóm có n<30 bị ẩn số chỉ tiêu. | `outputs/tables/rfm_action_segments_dev.csv`; quy tắc trong `docs/analysis_plan_wp2.md`. |
 | Độ ổn định phân cụm | K-Means bootstrap ARI median K=2/3/4/5: 0,995/0,985/0,953/0,957; Ward agreement ARI: 0,988/0,766/0,798/0,792. Không xác nhận ý nghĩa kinh doanh. | `outputs/tables/kmeans_stability_ward_dev.csv`. |
 | Proxy ngoại lai | Proxy p99 hiện hành: 62/5.169 khách (1,20%); Tukey log upper fence: 169/5.169 (3,27%), giao 62, Jaccard 0,367. Chỉ là cờ mô tả. | `outputs/tables/customer_outlier_comparison_dev.csv`. |
+
+## A2 — Sản phẩm, giỏ hàng và combo (khám phá, DEV-only)
+
+Nguồn tính: `scripts/analyze_product_journey_dev.py`; protocol hash: `ec35ed48b995101ccf622d224ed44a6994858d9a5479175f80de648fe9a21483`; seed 20261028, 2.000 bootstrap theo khách phân tầng tháng. Test chỉ đối chiếu aggregate đã commit `outputs/tables/test_combos_frozen.csv`; không đọc test raw/nhãn.
+
+| Đại lượng | Số chuẩn, cohort và đơn vị | Nguồn aggregate |
+|---|---|---|
+| Giỏ DEV đủ sản phẩm | 6.349 giỏ có ít nhất một sản phẩm; 6.006 giỏ có ít nhất hai sản phẩm dùng cho combo. | `outputs/metrics/product_journey_dev.json`; `outputs/tables/frozen_combo_supplement_dev.csv`. |
+| Sản phẩm ở giỏ đầu | 3.635 khách đủ 180 ngày; 378 khách có giỏ kế tiếp ở ngày khác trong 180 ngày. Xét 77 sản phẩm n≥30; 5 chênh lệch overlap-month chuẩn hóa có CI trên 0, 8 dưới 0, 64 chứa 0. Không hiệu chỉnh multiplicity. | `outputs/tables/first_basket_product_repeat_dev.csv`; CI bootstrap theo khách. |
+| PORTCARD trong giỏ đầu | 2.472/3.635 khách (68,01%); mua lại thô 11,17% so với 8,77%; chênh lệch chuẩn hóa theo 13/13 tháng trưởng thành +1,07 điểm phần trăm (CI −1,29 đến +3,35). | Cùng bảng trên; DEV, mua lại 180 ngày; khám phá. |
+| Chuỗi sang giỏ kế tiếp | 2.746 cặp sản phẩm có hướng; 23 cặp n≥30, báo 20 cặp nhiều khách nhất. PORTCARD→PORTCARD n=190, median 23,5 ngày (CI 14,5–31); TÚI GIẤY→PORTCARD n=133, 26 ngày (19–33); PORTCARD→TÚI GIẤY n=132, 20 ngày (13–27). | `outputs/tables/next_product_pairs_dev.csv`; khoảng cách ngày theo khách. |
+| 24 combo khóa | DEV 17/24 lift>1; test aggregate đã commit 21/24; 16/24 cùng lift>1. Mỗi cặp xuất hiện trong 16–19/19 tháng DEV; CV support tháng 0,232–1,068, median 0,516. | `outputs/tables/frozen_combo_supplement_dev.csv`; test không được tính lại. |
+| Xếp hạng bundle để thảo luận | Hạng 1 PORTCARD + CHẬU MOCHI: support DEV 8,49% (510/6.006), lift 0,982; test aggregate support 3,17% (69/2.174), lift 1,376; tổng giá niêm yết gộp 61.000₫. Điểm là thứ hạng mô tả, không phải hiệu quả. | Cùng bảng trên; xếp hạng theo công thức đã đăng ký trước. |
+| Vai trò sản phẩm | PORTCARD: 2.472 khách có ở giỏ đầu (68,01%), 241 khách có ở giỏ kế tiếp, median hóa đơn có sản phẩm 255.000₫/4.134 đơn. Không phân bổ hóa đơn xuống mặt hàng. | `outputs/tables/product_roles_dev.csv`. |
