@@ -98,6 +98,10 @@ Updated: 2026-10-28
 - WP5b đã đăng ký trước (commit riêng `a2a46d5`) và chạy trên cùng DEV snapshots/folds WP5. S1/S3/S5 hoàn tất; S2/S4 thất bại do không có inner temporal folds hợp lệ ở cả 5 outer fold. Không chọn ứng viên; không thay D-005. Báo cáo: `docs/repurchase_wp5b_dev.md`.
 - Chưa mở Pha B/HO2. Không chạy evaluator test hay đọc test raw.
 
+## Bổ sung F1 — định nghĩa mua lại
+
+- Đã đăng ký và chạy F1. Đơn cùng ngày không còn là sự kiện mua lại; trên cùng cohort 3.508 khách đủ 180 ngày, KM ngày 30 mới 5,67%, trùng retention cùng cohort. Giữ số A1 cũ để đối chiếu: KM cũ 6,64%, retention tất cả cohort đủ 30 ngày 5,64%.
+
 - Cohort (trạng thái trước đếm raw pre-T ngày 2026-10-27): script reconcile chỉ so sánh aggregate warehouse; chưa có cầu nối theo điều kiện. Đã được supersede bởi đếm trực tiếp tại `docs/cohort_reconciliation.md` và `outputs/tables/cohort_bridge_verified.json`.
 - Sai khác ngày T: không tìm thấy artifact prediction đã lưu trong `outputs/`; theo phạm vi Amendment 06, không tái tạo prediction và dừng tiểu mục. Không có metric sensitivity mới.
 - UNKNOWN (ghi chú trước chẩn đoán raw pre-T ngày 2026-10-27): warehouse khi đó không chứa các trường source/address; đã được supersede bởi đếm DEV-only trong `docs/unknown_region_diagnostic.md`.

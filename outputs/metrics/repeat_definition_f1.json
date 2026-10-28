@@ -1,0 +1,113 @@
+{
+  "eligible_dev_customers": 5169,
+  "mature_180d_customers": 3508,
+  "same_day_second_customers_all_dev": 53,
+  "strict_repeat_customers_all_dev": 594,
+  "same_day_second_customers_mature_180d": 34,
+  "km": [
+    {
+      "horizon_days": 30,
+      "legacy_including_same_day": {
+        "estimate": 0.06641961231470905,
+        "ci_lower_95": 0.05843785632839215,
+        "ci_upper_95": 0.07497149372862022,
+        "n": 3508,
+        "events_by_horizon": 233
+      },
+      "strict_later_date": {
+        "estimate": 0.05672748004560968,
+        "ci_lower_95": 0.04903078677309003,
+        "ci_upper_95": 0.06470923603192724,
+        "n": 3508,
+        "events_by_horizon": 199
+      },
+      "difference_strict_minus_legacy": -0.009692132269099374
+    },
+    {
+      "horizon_days": 60,
+      "legacy_including_same_day": {
+        "estimate": 0.08238312428734318,
+        "ci_lower_95": 0.0732611174458385,
+        "ci_upper_95": 0.09122006841505104,
+        "n": 3508,
+        "events_by_horizon": 289
+      },
+      "strict_later_date": {
+        "estimate": 0.0726909920182437,
+        "ci_lower_95": 0.0644241733181301,
+        "ci_upper_95": 0.08124287343215487,
+        "n": 3508,
+        "events_by_horizon": 255
+      },
+      "difference_strict_minus_legacy": -0.009692132269099485
+    },
+    {
+      "horizon_days": 90,
+      "legacy_including_same_day": {
+        "estimate": 0.09435575826681863,
+        "ci_lower_95": 0.08465649942987381,
+        "ci_upper_95": 0.10461801596351161,
+        "n": 3508,
+        "events_by_horizon": 331
+      },
+      "strict_later_date": {
+        "estimate": 0.0849486887115165,
+        "ci_lower_95": 0.07582668187001118,
+        "ci_upper_95": 0.09379275940707021,
+        "n": 3508,
+        "events_by_horizon": 298
+      },
+      "difference_strict_minus_legacy": -0.009407069555302128
+    },
+    {
+      "horizon_days": 180,
+      "legacy_including_same_day": {
+        "estimate": 0.11316989737742256,
+        "ci_lower_95": 0.10233751425313553,
+        "ci_upper_95": 0.12428734321550661,
+        "n": 3508,
+        "events_by_horizon": 397
+      },
+      "strict_later_date": {
+        "estimate": 0.10404789053591779,
+        "ci_lower_95": 0.09378563283922448,
+        "ci_upper_95": 0.11488027366020549,
+        "n": 3508,
+        "events_by_horizon": 365
+      },
+      "difference_strict_minus_legacy": -0.00912200684150477
+    }
+  ],
+  "retention_same_mature_universe": [
+    {
+      "horizon_days": 30,
+      "customers": 3508,
+      "repeaters": 199,
+      "rate": 0.05672748004561003
+    },
+    {
+      "horizon_days": 60,
+      "customers": 3508,
+      "repeaters": 255,
+      "rate": 0.07269099201824401
+    },
+    {
+      "horizon_days": 90,
+      "customers": 3508,
+      "repeaters": 298,
+      "rate": 0.08494868871151653
+    },
+    {
+      "horizon_days": 180,
+      "customers": 3508,
+      "repeaters": 365,
+      "rate": 0.1040478905359179
+    }
+  ],
+  "status": "exploratory_dev_only_not_confirmed_out_of_sample",
+  "plan_sha256": "9854ad2f25adb400a43cf86b5b646b1b18bf7770342a1b4b0fd13644fec16518",
+  "seed": 20261028,
+  "bootstrap_draws": 2000,
+  "test_raw_or_labels_read": false,
+  "definition": "repeat requires a later local calendar date than the first valid order; same-day split orders excluded"
+}

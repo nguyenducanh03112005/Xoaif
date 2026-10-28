@@ -2,6 +2,17 @@
 
 Cập nhật: 2026-10-28. Mỗi số dưới đây gắn với đơn vị, cohort và nguồn aggregate. Dấu chấm phân tách hàng nghìn, dấu phẩy phân tách thập phân. Với số đã làm tròn, nguồn giữ giá trị đầy đủ.
 
+## F1 — định nghĩa mua lại thống nhất (khám phá, DEV-only)
+
+Nguồn: `scripts/analyze_repeat_definition_f1.py`; plan SHA-256 `9854ad2f25adb400a43cf86b5b646b1b18bf7770342a1b4b0fd13644fec16518`; 2.000 bootstrap khách, seed 20261028. Sự kiện là đơn hợp lệ status 3 không quà ở ngày địa phương **sau** ngày mua đầu. Số cũ được giữ cạnh số sửa.
+
+| Đại lượng | Số chuẩn, cohort và đơn vị | Nguồn aggregate |
+|---|---|---|
+| Đơn tách cùng ngày | 34/397 khách có đơn thứ hai trong cohort đủ 180 ngày; 53 khách trong toàn DEV có đơn thứ hai cùng ngày ở bất kỳ kỳ hạn nào. | `outputs/metrics/customer_value_dev.json` (số cũ); `outputs/metrics/repeat_definition_f1.json` |
+| KM sau ngày 30 | 5,67% (95% CI 4,90–6,47%), 199/3.508 khách cohort đủ 180 ngày; KM cũ gồm cùng-ngày 6,64%. | `outputs/tables/repeat_definition_km_f1.csv` |
+| Retention cùng cohort | 30/60/90/180 ngày: 5,67%/7,27%/8,49%/10,40%, mỗi kỳ n=3.508; cùng định nghĩa sau-ngày. | `outputs/tables/repeat_definition_retention_f1.csv` |
+| Retention A1 cũ | 30 ngày 5,64% (255/4.524); 60 ngày 7,19% (313/4.351); 90 ngày 8,43% (350/4.154); 180 ngày 10,40% (365/3.508). Giữ để đối chiếu, không ghi đè. | `outputs/tables/customer_retention_dev.csv` |
+
 ## Cohort và thời gian
 
 | Đại lượng | Số chuẩn và đơn vị/cohort | Nguồn sự thật |
